@@ -1,0 +1,37 @@
+.Reco-container {
+    margin-top: 80px;
+}
+
+.title-container {
+    margin-left: 64px;
+}
+
+.title1 {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 26px;
+    color: #807A74;
+}
+
+.title2 {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 21px;
+    color: #807A74;
+}
+
+.img-container {
+    margin-left: -1px;
+    display: flex;
+}
+
+.imgbox {
+    width: 477px;
+    height: 665px;
+    margin-right: 4px;
+    background-color: rgba(115, 115, 115, 0.58);
+}

@@ -1,0 +1,50 @@
+.Insight-container {
+  
+}
+
+.Search-container {
+    height: 48px;
+    padding-left: 392px;
+    margin-top: 216px;
+    
+}
+
+.search {
+    width: 1151px;
+    height: 48px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom: 2px  solid #FE6740;
+    padding-left: 16px;
+}
+
+.search::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+}
+
+.search-btn {
+    width: 145px;
+    height: 37px;
+    border: 1px solid #FE6740;
+    box-sizing: border-box;
+    border-radius: 21.5px;
+    background-color: white;
+    margin-left: 64px;
+
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #FE3400;
+}
+
+.Content-container {
+    margin-top: 96px;
+}

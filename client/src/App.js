@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Insight_Read from "../src/component/insight/Read";
 import Insight_Create from "../src/component/insight/Create";
 
+import Landing from "../src/component/landing/Landing";
 import Login from "../src/component/login/Login";
 import SignUp from "../src/component/signup/SignUp";
+
 
 import "./App.css";
 import "./Input.css";
@@ -17,12 +19,14 @@ function App() {
       <div className="nav-bar">
         navigation bar
       </div>
+      
       <Router>
         <Routes>
           <Route exact path="/insight" element={<Insight_Read/>} />
           <Route exact path="/insight/create" element={<Insight_Create/>} />
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/signup" element={<SignUp/>} />
+          <Route exact path="/landing" element={<Landing/>} />
         </Routes>
       </Router>
     </div>

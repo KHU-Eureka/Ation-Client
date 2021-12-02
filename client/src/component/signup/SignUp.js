@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './SignUp.css'
 
 function SignUp() {
@@ -6,10 +7,30 @@ function SignUp() {
     let [password, setPassword] = useState("");
     let [passwordCheck, setPasswordCheck] = useState("");
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    const postUserInfo = async () => {
+        try {
+            const res = await axios.post(
+                'http://163.180.117.22:7218/api/auth/signup',
+                {
+                    email: email,
+                    password: password
+                }
+            )
+            alert("회원가입 되었습니다.");
+        } catch (err) {
+            alert("회원가입에 실패했습니다");
+            console.log(err);
+        }
+    }
+
 
 
     return (
-        <form class="form-wrapper">
+        <form class="form-wrapper" onSubmit={ handleSubmit }>
             <div className="title">
                 회원가입
             </div>
@@ -24,6 +45,7 @@ function SignUp() {
                     type="text"
                     placeholder="이메일 주소"
                     onChange={(e)=>{ setEmail(e.target.value) } }
+                    required
                 />
             </div>
 
@@ -37,6 +59,7 @@ function SignUp() {
                     type="password"
                     placeholder="비밀번호"
                     onChange={ (e)=>{ setPassword(e.target.value) } }
+                    required
                 />
             </div>
 
@@ -50,12 +73,22 @@ function SignUp() {
                     type="password"
                     placeholder="비밀번호 확인"
                     onChange={ (e)=>{ setPasswordCheck(e.target.value) } }
+                    required
                 />
+                {
+                password === passwordCheck
+                ? (password !== "") && <div className="alert-msg" style={{color: 'green'}}>비밀번호가 일치합니다.</div>
+                : (passwordCheck !== "") && <div className="alert-msg" style={{color: 'red'}}>비밀번호가 일치하지 않습니다.</div>
+                }
             </div>
 
 
+
+
             <button className="login-submit"
-            type="submit">
+            type="submit"
+            onClick={ postUserInfo }
+            >
                 센세이션 시작하기
             </button>
         </form>

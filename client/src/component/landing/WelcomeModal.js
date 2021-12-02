@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 function WelcomeModal(props) {
+    const closeModal = () => {
+        props.closeModal();
+    }
     return (
         <div className="modal-background">
             <div className="modal-wrapper">

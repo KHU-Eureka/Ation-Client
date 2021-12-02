@@ -30,6 +30,7 @@ label {
     transition: 0.2s;
     margin-top: 60px;
     margin-bottom: 15px;
+    cursor: pointer;
   }
   
   button:hover {
@@ -62,4 +63,10 @@ label {
     margin-top: 100px;
     margin-bottom: 75px;
     color: #FE3400;
+}
+
+.alert-msg {
+  font-size: 13px;
+  margin: 10px;
+  transition: 0.2s all;
 }

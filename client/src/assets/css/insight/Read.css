@@ -46,5 +46,27 @@
 }
 
 .Content-container {
+    display: flex;
     margin-top: 96px;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: row;
+    /* margin-left: 60px; */
+}
+
+.thumbnail-box {
+    width: 672.49px;
+    height: 305px;
+
+    background: #C4C4C4;
+    border-radius: 10px;
+}
+
+ul li {
+    list-style:none;
+    float: left;
+    margin-left: 19.1px;
+    margin-bottom: 140px;
 }

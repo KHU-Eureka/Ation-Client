@@ -5,7 +5,9 @@ label {
     margin-bottom: 15px;
   }
   
-  input {
+  input[type=text],
+  input[type=password],
+  input[type=number] {
     width: 100%;
     height:  35px;
     border: 1px solid transparent;
@@ -18,6 +20,68 @@ label {
     font-size: 0.75rem;
   }
   
+  input[type=radio]+label {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0px;
+  }
+
+  input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    width: 22px;
+    height: 22px;
+    background-color: #E7E6E5;
+    color: white;
+    border-radius: 50%;
+    transition: 0.2s linear;
+  }
+
+  input[type=radio]:checked {
+    background-color: #FE6740;
+  }
+
+  input[type=checkbox]+label {
+    width: 120px;
+    height: 80px;
+    line-height: 80px;
+    color: #FE6740;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    position: relative;
+    top: -85px;
+    margin: 0px 0px 0px 0px;
+    cursor: pointer;
+  }
+
+  input[type=checkbox],
+  .user-write-box {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    width: 120px;
+    height: 80px;
+    border-radius: 12px;
+    border: 1px solid #FE6740;
+    transition: 0.2s linear all;
+    margin: 0px 0px 0px 0px;
+  }
+
+  input[type=checkbox]:checked+label,
+  input[type=checkbox]:hover+label {
+    color: white;
+  }
+
+  input[type=checkbox]:checked,
+  input[type=checkbox]:hover {
+    background-color: #FE6740;
+  }
+
+
   button {
     width: 100%;
     height: 50px;
@@ -32,9 +96,125 @@ label {
     margin-bottom: 15px;
     cursor: pointer;
   }
+
+  button:disabled,
+  button:disabled:hover {
+    background-color: #FFA48C;
+    cursor: no-drop;
+  } 
   
   button:hover {
     background-color: #d85a3b;
+  }
+
+  input[type=checkbox]+label #new-tag-input {
+    color: #FE6740;
+  }
+  input[type=checkbox]:hover+label #new-tag-input,
+  input[type=checkbox]:checked+label #new-tag-input {
+    color: white;
+  }
+
+#new-tag-input {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  border-bottom: none;
+  text-align: center;
+}
+
+#new-tag-input:hover,
+#new-tag-input:focus {
+  font-size: 15px;
+}
+
+#new-tag-input::placeholder {
+  font-size: 10px;
+  text-align: center;
+  color: #BEBBB9;
+}
+
+.profile-photo-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+#profile-photo-label {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+}
+
+#profile-photo-label:hover {
+  background-color: #807c7630;
+}
+
+#profile-photo-preview {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background-color: #D7D2C830;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto;
+}
+
+.page-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 100px;
+}
+
+.page-elem {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 50%;
+  color: white;
+  font-weight: 500;
+  background-color: #E7E6E5;
+  transition: 0.2s;
+}
+
+  .small-btn {
+    width: 140px;
+    height: 50px;
+    line-height: 50px;
+    margin-top: 40px;
+    float: right;
+  }
+
+  .label-description {
+    font-size: 11px;
+    line-height: 13px;
+    text-align: left;
+    color: #FFA48C;
+  }
+
+  .check-validation-btn {
+    width: 103px;
+    height: 38px;
+    line-height: 38px;
+    color: #FE6740;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: transparent;
+    border: 1px solid #FE6740;
+    border-radius: 30px;
+    margin-top: 0px;
+  }
+
+  .check-validation-btn:hover {
+    background-color: #FE6740;
+    color: white;
   }
   
   .input-wrapper {
@@ -44,7 +224,30 @@ label {
     align-items: flex-start;
     margin-bottom: 40px;
   }
+
+  .radio-wrapper {
+    display: flex;
+  }
+  .checkbox-wrapper {
+    width: 100%;
+    margin: 40px 0px 0px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .radio-elem {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
   
+  .checkbox-elem {
+    display: inline-block;
+    height: 100px;
+  }
+
   .form-wrapper {
     display: flex;
     width: 400px;
@@ -56,17 +259,17 @@ label {
     margin-top: 50px;
   }
 
-  .title {
-    font-family: Noto Serif;
-    font-weight: bold;
-    font-size: 38px;
-    margin-top: 100px;
-    margin-bottom: 75px;
-    color: #FE3400;
+.title {
+  font-family: Noto Serif;
+  font-weight: bold;
+  font-size: 38px;
+  margin-top: 100px;
+  margin-bottom: 75px;
+  color: #FE3400;
 }
 
 .alert-msg {
-  font-size: 13px;
+  font-size: 11px;
   margin: 10px;
   transition: 0.2s all;
 }

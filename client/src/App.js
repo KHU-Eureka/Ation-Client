@@ -8,6 +8,8 @@ import Landing from "../src/component/landing/Landing";
 import Login from "../src/component/login/Login";
 import SignUp from "../src/component/signup/SignUp";
 
+import Persona_Create from "../src/component/persona/Create";
+
 
 import "./App.css";
 import "./Input.css";
@@ -24,9 +26,12 @@ function App() {
         <Routes>
           <Route exact path="/insight" element={<Insight_Read/>} />
           <Route exact path="/insight/create" element={<Insight_Create/>} />
+          
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/signup" element={<SignUp/>} />
           <Route exact path="/landing" element={<Landing/>} />
+
+          <Route exact path="/persona-create" element={<Persona_Create/>} />
         </Routes>
       </Router>
     </div>

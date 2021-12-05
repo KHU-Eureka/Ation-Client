@@ -4,6 +4,7 @@ import './SignUp.css'
 
 function SignUp() {
     let [email, setEmail] = useState("");
+    let [name, setName] = useState("");
     let [password, setPassword] = useState("");
     let [passwordCheck, setPasswordCheck] = useState("");
 
@@ -17,6 +18,7 @@ function SignUp() {
                 'http://163.180.117.22:7218/api/auth/signup',
                 {
                     email: email,
+                    name: name,
                     password: password
                 }
             )
@@ -30,7 +32,7 @@ function SignUp() {
 
 
     return (
-        <form class="form-wrapper" onSubmit={ handleSubmit }>
+        <form class="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
             <div className="title">
                 회원가입
             </div>
@@ -42,9 +44,23 @@ function SignUp() {
                 <input
                     className="login-input"
                     id="id"
-                    type="text"
-                    placeholder="이메일 주소"
+                    type="email"
+                    placeholder="이메일 주소를 입력해주세요."
                     onChange={(e)=>{ setEmail(e.target.value) } }
+                    required
+                />
+            </div>
+
+            <div className="input-wrapper">
+                <label htmlFor="name" className="input-label">
+                    이름
+                </label>
+                <input
+                    className="login-input"
+                    id="name"
+                    type="text"
+                    placeholder="이름을 입력해주세요."
+                    onChange={(e)=>{ setName(e.target.value) } }
                     required
                 />
             </div>
@@ -57,7 +73,7 @@ function SignUp() {
                     className="login-input"
                     id="password"
                     type="password"
-                    placeholder="비밀번호"
+                    placeholder="비밀번호를 입력해주세요.(3자리 이상)"
                     onChange={ (e)=>{ setPassword(e.target.value) } }
                     required
                 />
@@ -71,7 +87,7 @@ function SignUp() {
                     className="login-input"
                     id="password-check"
                     type="password"
-                    placeholder="비밀번호 확인"
+                    placeholder="비밀번호를 확인해주세요."
                     onChange={ (e)=>{ setPasswordCheck(e.target.value) } }
                     required
                 />

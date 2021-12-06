@@ -53,6 +53,8 @@
 .img-container {
     display: flex;
     flex-direction: row;
+    /* padding-right : 10%; */
+    /* padding-top : 15px; */
     /* margin-left: 60px; */
 }
 

@@ -6,9 +6,13 @@
     font-size: 18px;
     line-height: 18px;
     color: #807A74;
-    width: 388px;
+    width: 250px;
 }
 
 li {
     margin-bottom: 24px;
+}
+
+.clicked {
+    color:  #1E140A;
 }

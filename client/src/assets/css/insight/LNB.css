@@ -1,0 +1,18 @@
+.LNB-container {
+    margin-left: 168px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #807A74;
+    width: 250px;
+}
+
+li {
+    margin-bottom: 24px;
+}
+
+.clicked {
+    color:  #1E140A;
+}

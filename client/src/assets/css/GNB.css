@@ -1,0 +1,68 @@
+.GNB-container {
+    display: flex;
+    padding: 0px 64px 0px 65px;
+    height: 82px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.Logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 9px;
+    font-family: Noto Serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 26px;
+    color: #FE3400;
+}
+
+.Btn-container {
+    display: flex;
+    align-items: center;
+    margin-left: 629px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: #807A74;
+}
+
+li {
+    list-style: none;
+    margin-left: 53px;
+}
+
+.Profile-container {
+    display: flex;
+    margin-left: 486px;
+}
+
+.insight-btn {
+    color: #352C23;
+}
+
+.openlounge-btn {
+    width: 154px;
+    height: 36px;
+    margin-top: 26px;
+    margin-bottom: 20px;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 18px;
+    background-color: white;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: #FE3400;
+}
+
+.bell {
+    margin-left: 25px;
+    margin-right: 25px;
+}

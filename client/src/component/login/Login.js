@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-//import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Cookies } from 'react-cookie';
 import './Login.css'
 
 function Login() {
     const cookies = new Cookies(); 
-    //let history = useHistory();
+    const navigate = useNavigate();
 
     let [email, setEmail] = useState("");
     let [password, setPasssword] = useState("");
@@ -25,16 +25,17 @@ function Login() {
                 }
             )
             var token = res.data.token;
+            var name = res.data.name;
             cookies.set('token', token);
             alert('로그인 성공');
-            getPersona(token);
+            getPersona(token, name);
         } catch (err) {
             alert('로그인 실패');
             console.log(err);
         }
     }
 
-    const getPersona = async (token) => {
+    const getPersona = async (token, name) => {
         try {
             const res = await axios.get(
                 'http://163.180.117.22:7218/api/persona/user', {
@@ -44,11 +45,10 @@ function Login() {
             })
             // 아직 등록된 persona가 없는 경우
             if (res.data === '') {
-                //history.push('/landing');
-                window.location.replace('/landing')
+                navigate('/landing', { state: { welcome: true, name: name } })
             } else {
                 //history.push('/mypage');
-                window.location.replace('/mypage')
+                navigate('/mypage')
             }
         } catch (err) {
             console.log(err);

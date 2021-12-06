@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './SignUp.css'
 
 function SignUp() {
+    const navigation = useNavigate();
+
     let [email, setEmail] = useState("");
     let [name, setName] = useState("");
     let [password, setPassword] = useState("");
@@ -23,6 +26,7 @@ function SignUp() {
                 }
             )
             alert("회원가입 되었습니다.");
+            navigation('/login', { replace: true })
         } catch (err) {
             alert("회원가입에 실패했습니다");
             console.log(err);

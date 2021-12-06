@@ -273,3 +273,22 @@ label {
   margin: 10px;
   transition: 0.2s all;
 }
+
+
+.edit-form-box {
+  width: 600px;
+  margin: 40px;
+  display: flex;
+}
+
+.edit-form-input-box {
+  width: calc(100% - 200px);
+}
+
+.edit-form-description-box {
+  width: 150px;
+  margin-right: 50px;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}

@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function WelcomeModal(props) {
-    const closeModal = () => {
-        props.closeModal();
+    console.log(props);
+    const navigation = useNavigate();
+
+    const goToCreatePersona = () => {
+        props.closeWelcome();
+        navigation('/persona-create')
     }
+
     return (
         <div className="modal-background">
             <div className="modal-wrapper">
                 <div className="modal-header">
                     <div className="close-btn"
-                    onClick={ props.closeModal }
+                    onClick={ props.closeWelcome }
                     >
                         X
                     </div>
@@ -18,10 +24,13 @@ function WelcomeModal(props) {
                 <div className="modal-content">
                     <div className="modal-title">Welcome!</div>
                     <div className="modal-sub-title">
-                        { props.userName }님 가입을 환영합니다! 지금 바로 페르소나를 생성해보세요!
+                        { props.name }님 가입을 환영합니다! 지금 바로 페르소나를 생성해보세요!
                     </div>
                     <div className="image">character design image</div>
-                    <button>페르소나 등록하러 가기</button>
+                    <button
+                        onClick={ goToCreatePersona }>
+                        페르소나 등록하러 가기
+                    </button>
                 </div>
 
                 <div className="modal-footer">

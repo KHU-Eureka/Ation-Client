@@ -9,6 +9,9 @@ import Login from "../src/component/login/Login";
 import SignUp from "../src/component/signup/SignUp";
 
 import Persona_Create from "../src/component/persona/Create";
+import Persona_Edit from "../src/component/persona/Edit";
+
+import MyPage from "../src/component/mypage/MyPage";
 
 
 import "./App.css";
@@ -32,6 +35,9 @@ function App() {
           <Route exact path="/landing" element={<Landing/>} />
 
           <Route exact path="/persona-create" element={<Persona_Create/>} />
+          <Route exact path="/persona-edit" element={<Persona_Edit/>} />
+
+          <Route exact path="/mypage" element={<MyPage/>} />
         </Routes>
       </Router>
     </div>

@@ -62,8 +62,8 @@ function Form04(props) {
                     }
                 </div>
             </div>
-            <button class="small-btn" type="submit" onClick={props.nextPage}
-            disabled={props.senseIdList!=[]}
+            <button class="small-btn" type="submit" onClick={props.postPersona}
+            disabled={ props.senseIdList.length===0 }
             >
                 등록 완료
             </button>

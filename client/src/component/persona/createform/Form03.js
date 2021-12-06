@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Form03(props) {
     const charmNameList = ["엉뚱함", "따뜻함", "칭찬봇", "분위기메이커", "능력자"];
@@ -10,28 +10,33 @@ function Form03(props) {
     let [nextCharm1, makeNextCharm1] = useState(false);
     let [nextCharm2, makeNextCharm2] = useState(false);
 
-    let [tempCharm, setTempCharm] = useState("");
-
-    const newCharmIdx = [ 0, 1, 2];
-
-    const changeHandler = (checked, charm, newCharm=false) => {
+    const changeHandler = (checked, charm, newCharmIdx=false) => {
         if (checked) {
             if(props.charmList.length === 3) {
                 alert("최대 3개까지만 선택 가능해요!")
             } else {
                 props.setCharmList([...props.charmList, charm])
-                if (newCharm) {
-                    props.setNewCharmList([...props.newCharmList, charm])
-                    console.log(props.newCharmList);
+                if (newCharmIdx) {
+                    var tempList = [...props.newCharmList]
+                    tempList[newCharmIdx] = charm
+                    props.setNewCharmList(tempList)
                 }
             }
         } else {
             props.setCharmList(props.charmList.filter((el) => el !== charm))
-            if (newCharm) {
-                props.setNewCharmList(props.newCharmList.filter((el) => el !== charm))
+            if (newCharmIdx) {
+                var tempList = [...props.newCharmList]
+                tempList[newCharmIdx] = ""
+                props.setNewCharmList(tempList)
             }
         }
     }
+
+    useEffect(() => {
+        setNewCharm1(props.newCharmList[1]);
+        setNewCharm2(props.newCharmList[2]);
+        setNewCharm3(props.newCharmList[3]);
+    }, [])
 
     return (
         <div style={{width:'100%'}}>
@@ -48,9 +53,9 @@ function Form03(props) {
 
                 <div className="checkbox-wrapper">
                     {
-                        charmNameList && charmNameList.map( function(charm) {
+                        charmNameList && charmNameList.map( function(charm, idx) {
                             return(
-                                <div className="checkbox-elem">
+                                <div className="checkbox-elem" key={ idx }>
                                     <input
                                         id={ charm }
                                         value={ charm }
@@ -72,17 +77,17 @@ function Form03(props) {
                                 id="new-charm1"
                                 name="charm"
                                 type="checkbox"
-                                checked={props.charmList.includes(props.newCharmList[0]) ? true : false}
-                                onChange={ (e)=>{ makeNextCharm1(true); 
-                                                changeHandler(e.currentTarget.checked, newCharm1, true) } }
-                                disabled={newCharm1==="" || !props.newCharmList[0]}
+                                checked={props.charmList.includes(newCharm1) ? true : false}
+                                onChange={ (e)=>{ makeNextCharm1(true);  
+                                                changeHandler(e.currentTarget.checked, newCharm1, 1) } }
+                                disabled={newCharm1===""}
                             />
                             <label htmlFor="new-charm1">
                                 <input 
                                     id="new-tag-input"
                                     type="text"
                                     placeholder="직접 태그를 &#10;입력해보세요!"
-                                    value={props.newCharmList[0]}
+                                    value={newCharm1}
                                     onChange={ (e)=>{ setNewCharm1(e.target.value) } }
                                 />
                             </label>
@@ -90,23 +95,50 @@ function Form03(props) {
                     </div>
 
                     {
-                       props.newCharmList[2] || (nextCharm2 && newCharm2 != "")
+                       nextCharm1 || newCharm1 != ""
+                    ? <div className="checkbox-elem">
+                        <div className="checkbox-elem">
+                            <input
+                                id="new-charm2"
+                                name="charm"
+                                type="checkbox"
+                                checked={props.charmList.includes(newCharm2) ? true : false}
+                                onChange={ (e)=>{ makeNextCharm2(true);
+                                                changeHandler(e.currentTarget.checked, newCharm2, 2)} }
+                                disabled={newCharm2===""}
+                            />
+                            <label htmlFor="new-charm2">
+                                <input 
+                                    id="new-tag-input"
+                                    type="text"
+                                    placeholder="직접 태그를 &#10;입력해보세요!"
+                                    value={newCharm2}
+                                    onChange={ (e)=>{ setNewCharm2(e.target.value) } }
+                                />
+                            </label>
+                        </div>
+                    </div>
+                    : null
+                    }
+
+                    {
+                       nextCharm2 || newCharm2 != ""
                     ? <div className="checkbox-elem">
                         <div className="checkbox-elem">
                             <input
                                 id="new-charm3"
                                 name="charm"
                                 type="checkbox"
-                                checked={props.charmList.includes(props.newCharmList[2]) ? true : false}
-                                onChange={ (e)=>{changeHandler(e.currentTarget.checked, newCharm3, true)} }
-                                disabled={newCharm3==="" || !props.newCharmList[2]}
+                                checked={props.charmList.includes(newCharm3) ? true : false}
+                                onChange={ (e)=>{changeHandler(e.currentTarget.checked, newCharm3, 3)} }
+                                disabled={newCharm3===""}
                             />
                             <label htmlFor="new-charm3">
                                 <input 
                                     id="new-tag-input"
                                     type="text"
                                     placeholder="직접 태그를 &#10;입력해보세요!"
-                                    value={props.newCharmList[2]}
+                                    value={newCharm3}
                                     onChange={ (e)=>{ setNewCharm3(e.target.value) } }
                                 />
                             </label>
@@ -132,7 +164,10 @@ function Form03(props) {
                 />
             </div>
 
-            <button class="small-btn" onClick={props.nextPage} disabled={props.charmList==[]||props.mbti==""}>다음</button>
+            <button class="small-btn" onClick={props.nextPage}
+            disabled={ props.charmList==[] || props.mbti=="" }
+            >다음
+            </button>
         </div>
     );
 }

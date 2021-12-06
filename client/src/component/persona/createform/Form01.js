@@ -4,12 +4,9 @@ import { Cookies } from 'react-cookie';
 
 function Form01(props) {
     const cookies = new Cookies();
-    let [disabled, setDisabled] = useState(false);
-    let [profileSrc, setProfileSrc] = useState("");
     let [nickNameValidation, setNickNameValidation] = useState(false);
     let [nickNameMsg, setNickNameMsg] = useState("");
     let [tempNickName, setTempNickName] = useState(props.nickname);
-    let [isComplete, setIsComplete] = useState(false);
 
     const readImage = (input) => {
         // file이 존재하는 경우
@@ -17,10 +14,21 @@ function Form01(props) {
             console.log(input);
             const reader = new FileReader()
             reader.onload = e => {
-                setProfileSrc(e.target.result)
-                console.log(profileSrc);
+                props.setProfileUrl(e.target.result)
             }
             reader.readAsDataURL(input.files[0])
+        }
+    }
+
+    const onChangeImg = (e) => {
+        e.preventDefault();
+        if (e.target.files) {
+            const uploadFile = e.target.files[0]
+            console.log(uploadFile);
+            const formData = new FormData()
+            formData.append('profileImg', uploadFile)
+            console.log('sldkjflwekj ', formData.get('profileImg'));
+            props.setFormData(formData)
         }
     }
 
@@ -30,6 +38,7 @@ function Form01(props) {
         setNickNameValidation(false)
         setNickNameMsg("닉네임 중복 검사를 해주세요")
     }
+
 
     const validationCheck = async () => {
         var token = cookies.get('token');
@@ -98,9 +107,9 @@ function Form01(props) {
                         className="profile-photo-input"
                         type="file"
                         style={{ display: 'none'}}
-                        onChange={ (e)=>{ readImage(e.target) } }
+                        onChange={ (e)=>{ readImage(e.target); onChangeImg(e); } }
                     />
-                    <div id="profile-photo-preview" style={{backgroundImage: 'url('+profileSrc+')'}}>
+                    <div id="profile-photo-preview" style={{backgroundImage: 'url('+props.profileUrl+')'}}>
                     <label htmlFor="profile-photo" id="profile-photo-label"></label> 
                     </div>            
 
@@ -170,9 +179,9 @@ function Form01(props) {
                             id="female"
                             type="radio"
                             value="1"
-                            checked={props.gender==='1'}
+                            checked={props.gender===1}
                             name="gender"
-                            onChange={ (e)=>{props.setGender(e.target.value)} }
+                            onChange={ (e)=>{props.setGender((e.target.value)*1)} }
                         />
                         <label htmlFor="female">
                             여
@@ -184,9 +193,9 @@ function Form01(props) {
                             id="male"
                             type="radio"
                             value="2"
-                            checked={props.gender==='2'}
+                            checked={props.gender==2}
                             name="gender"
-                            onChange={ (e)=>{props.setGender(e.target.value)} }
+                            onChange={ (e)=>{props.setGender((e.target.value)*1)} }
                         />
                         <label htmlFor="male">
                             남
@@ -196,7 +205,8 @@ function Form01(props) {
 
             </div>
 
-            <button className="small-btn" onClick={formValidationCheck}>
+            <button className="small-btn" onClick={formValidationCheck}
+            disabled={ props.nickname==="" || props.job==="" || props.age===null || props.gender===false }>
                 다음
             </button>
         </div>

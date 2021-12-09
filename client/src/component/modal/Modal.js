@@ -19,8 +19,17 @@ function Modal(props) {
     return (
         <div className={open?'openModal modal':'modal'}>
             {open? (
-                <>{props.children}</>
-                // <section>
+                <>
+                    {props.children}
+                </>
+            ):null}
+        </div>
+    );
+}
+
+export default Modal;
+
+// <section>
                 //     <header className={pageNum!=1?'openHeader':'header'} onClick={onclickHandler}>
                 //         <img src={header}/>
                 //         {/* <button className="close" onClick={close}>&times;</button> */}
@@ -32,9 +41,3 @@ function Modal(props) {
                 //         <button className="close" onClick={close}>취소</button>
                 //     </footer>
                 // </section>
-            ):null}
-        </div>
-    );
-}
-
-export default Modal;

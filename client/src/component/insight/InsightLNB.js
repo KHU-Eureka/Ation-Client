@@ -47,14 +47,6 @@ function InsightLNB(props) {
             {cateMain.map(category => (
                 <li className="category" key={category.id} onClick={cateClickHandler}>{category.name}</li>
             ))}
-            {/* <li onClick={cateClickHandler}>전체</li>
-            <li>디자인</li>
-            <li>개발</li>
-            <li>기획</li>
-            <li>마케팅</li>
-            <li>뮤직 인사이트</li>
-            <li>비즈니스 경험담</li>
-            <li>Your View</li> */}
         </div>
     );
 }

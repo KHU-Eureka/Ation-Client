@@ -11,13 +11,13 @@ function GNB() {
                 <span className="logo-text">Sensation</span>
             </div>
             <div className="Btn-container">
-                <li>
+                <li className="btn-li">
                 <span className="lounge-btn">Lounge</span>
                 </li>
-                <li>
+                <li className="btn-li">
                 <span className="insight-btn">Insight</span>
                 </li>
-                <li>
+                <li className="btn-li">
                 <span className="mypage-btn">Mypage</span>
                 </li>
             </div>

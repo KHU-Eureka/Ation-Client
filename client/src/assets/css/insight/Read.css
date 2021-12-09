@@ -53,9 +53,7 @@
 .img-container {
     display: flex;
     flex-direction: row;
-    /* padding-right : 10%; */
-    /* padding-top : 15px; */
-    /* margin-left: 60px; */
+    margin-left: 60px;
 }
 
 .thumbnail-box {
@@ -66,9 +64,25 @@
     border-radius: 10px;
 }
 
-ul li {
-    list-style:none;
+.img-ul .img-li {
+    list-style: none;
     float: left;
-    margin-left: 19.1px;
+    margin-right: 19.1px;
     margin-bottom: 140px;
+}
+
+.insight-box {
+    position: relative;
+}
+
+.pin-box {
+    position: absolute;
+    display: none;
+    background-color: transparent;
+    top: 24px;
+    left: 623px;
+}
+
+.pin-up {
+    display: inline;
 }

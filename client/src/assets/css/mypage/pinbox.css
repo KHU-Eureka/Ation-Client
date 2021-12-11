@@ -1,0 +1,253 @@
+.PinTool-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10%;
+    margin-right: auto;
+    width: 1580px;
+}
+
+.LeftTool {
+    width: 286px;
+    display: flex;
+}
+
+.RightTool {
+    margin-left: 1133px;
+    width: 40px;
+    display: flex;
+}
+
+.all-pin {
+    width: 119px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 26px;
+    color: #FE3400;
+}
+
+.pin-board {
+    width: 120px;
+    margin-left: 48px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 26px;
+    color: #BEBBB9;
+}
+
+.pin-search {
+    margin-left: 31px;
+}
+
+.pin-bin {
+    margin-left: 20px;
+}
+
+.allPin-content .pin-item{
+    list-style: none;
+}
+
+.pinBoard-content .pinBoard {
+    list-style: none;
+}
+
+.allPin-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1600px;
+}
+
+.pin-item {
+    margin-right: 35.63px;
+}
+
+.pin-img {
+    position: relative;
+    width: 374px;
+    height: 210.04px;
+    border-radius: 10px;
+}
+
+.pin-edit {
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    top: 1072px;
+    width: 352.52px;
+}
+
+.pin-tag-container {
+    position: absolute;
+    top: 1134px;
+    width: 374px;
+    display: flex;
+    justify-content: center;
+}
+
+.pin-board-container {
+    position: absolute;
+    top: 1134px;
+    width: 374px;
+    display: flex;
+    justify-content: center;
+}
+
+.Mypin-tag {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FFFFFF;
+}
+
+.Mypin-board {
+    margin-top: 33px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE6740;
+}
+
+.noclick {
+    display: none;
+}
+
+.clickPin {
+    display: inline;
+}
+
+.noclickDel {
+    display: none;
+}
+
+.clickDel {
+    display: inline;
+}
+
+.pin-del-container {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 39px;
+    top: 1065px;
+}
+
+.pin-title {
+    display: flex;
+    margin-top: 15.17px;
+}
+
+.pin-name {
+    width: 291.45px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    /* line-height: 16px; */
+    color: #352C23;
+}
+
+.pin-description {
+    margin-top: 21px;
+}
+
+.pin-circle {
+    margin-right: 9.32px;
+}
+
+.pin-site {
+    margin-left: 9.32px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #352C23;
+}
+
+.pinBoard-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1600px;
+}
+
+.pinBoard {
+    margin-right: 21.8px;
+}
+
+.pinBoard-img {
+    position: relative;
+    width: 381.47px;
+    height: 217.98px;
+    opacity: 0.5;
+    border-radius: 15px;
+}
+
+.pinBoard-title {
+    position: absolute;
+    top: 1128px;
+}
+
+.pinBoard-name {
+    position: absolute;
+    width: 375px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #1E140A;
+    margin-top: 0px;
+}
+
+.pinBoard-count {
+    position: absolute;
+    width: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #352C23;
+    margin-top: 41.42px;
+}
+
+.pin-search-input-noClick {
+    display: none;
+}
+
+.pin-search-input {
+    display: inline;
+    transition: all ease 2s 0s;
+}
+
+input:checked ~ .pin-search-input {
+    width: 100%;
+    background-color: red;
+}

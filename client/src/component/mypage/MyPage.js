@@ -4,6 +4,10 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import '../../assets/css/mypage/mypage.css';
 
+import Idaition from "./Idaition";
+import Pinbox from "./Pinbox";
+import GNB from "../GNB";
+
 function MyPage() {
     const cookies = new Cookies();
     const navigation = useNavigate();
@@ -84,7 +88,8 @@ function MyPage() {
 
 
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <>
+        <GNB />
             <div className="background-img">
                 <div className="profile-wrapper">
                     {
@@ -116,13 +121,13 @@ function MyPage() {
                 </div>
 
             </div>
-
-            <div className="pin-box-content">
-
+            <div className="Idaition-container">
+                <Idaition />
+            </div>  
+            <div className="Pinbox-container">
+                <Pinbox activePersonaId={activePersonaId}/>
             </div>
-
-
-        </div>
+        </>
     )
 }
 

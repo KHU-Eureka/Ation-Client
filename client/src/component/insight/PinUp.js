@@ -13,7 +13,7 @@ function PinUP(props) {
         console.log(persona)
         const token = cookies.get('token');
         const response = await axios.get(
-            `http://163.180.117.22:7218/api/pin-board/user?personaId=${persona}`,
+            `http://163.180.117.22:7218/api/pin-board/?personaId=${persona}`,
                 {
                     headers: {
                         Authorization: "Bearer " + token,

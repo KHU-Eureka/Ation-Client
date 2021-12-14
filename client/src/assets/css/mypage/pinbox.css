@@ -8,7 +8,7 @@
 }
 
 .LeftTool {
-    width: 286px;
+    width: 1000px;
     display: flex;
 }
 
@@ -40,10 +40,10 @@
 }
 
 .pin-search {
-    margin-left: 31px;
+    
 }
 
-.pin-bin {
+.pin-add {
     margin-left: 20px;
 }
 
@@ -59,10 +59,11 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap : wrap;
     margin-left: 8%;
     margin-right: auto;
     margin-top: 49px;
-    width: 1600px;
+    width: 1800px;
 }
 
 .pin-item {
@@ -76,12 +77,16 @@
     border-radius: 10px;
 }
 
-.pin-edit {
+.pin-edit-del {
     position: absolute;
     display: flex;
     justify-content: right;
     top: 1072px;
-    width: 352.52px;
+    width: 360.02px;
+}
+
+.Mypin-edit {
+    margin-right: 8px;
 }
 
 .pin-tag-container {
@@ -127,22 +132,6 @@
     display: inline;
 }
 
-.noclickDel {
-    display: none;
-}
-
-.clickDel {
-    display: inline;
-}
-
-.pin-del-container {
-    position: absolute;
-    display: flex;
-    justify-content: flex-end;
-    width: 39px;
-    top: 1065px;
-}
-
 .pin-title {
     display: flex;
     margin-top: 15.17px;
@@ -183,14 +172,17 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-wrap : wrap;
     margin-left: 8%;
     margin-right: auto;
     margin-top: 49px;
-    width: 1600px;
+    width: 1800px;
+    height: auto;
+    /* white-space: normal; */
 }
 
 .pinBoard {
-    margin-right: 21.8px;
+    margin-right: 34px;
 }
 
 .pinBoard-img {
@@ -203,7 +195,6 @@
 
 .pinBoard-title {
     position: absolute;
-    top: 1128px;
 }
 
 .pinBoard-name {
@@ -220,6 +211,7 @@
     text-align: center;
     color: #1E140A;
     margin-top: 0px;
+    top: -134px;
 }
 
 .pinBoard-count {
@@ -235,7 +227,7 @@
     font-size: 16px;
     line-height: 16px;
     color: #352C23;
-    margin-top: 41.42px;
+    top: -110.02px;
 }
 
 .pin-search-input-noClick {
@@ -247,7 +239,39 @@
     transition: all ease 2s 0s;
 }
 
-input:checked ~ .pin-search-input {
-    width: 100%;
-    background-color: red;
+.noPinBoard {
+    display: none;
+}
+
+.noPinItem {
+    display: none;
+}
+
+.pinItem-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap : wrap;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1800px;
+    list-style: none;
+}
+
+.pin-board-name {
+    width: auto;
+    height: 26px;
+    margin-left: 10px;
+    padding: 5px 15px;
+    background: #FE3400;
+    border-radius: 16px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
 }

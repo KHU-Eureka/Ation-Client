@@ -26,6 +26,7 @@ function Read() {
     const [personaImg, setPersonaImg] = useState([]);
     const [personaId, setPersonaId] = useState(0);
     const [insightId, setInsightId] = useState(0);
+    const [userName, setUserName] = useState("");
 
     //modal...
     const [modalOpen, setModalOpen] = useState(false);
@@ -78,8 +79,20 @@ function Read() {
         }
     }
 
+    const fetchUserName = async () => {
+        const token = cookies.get('token');
+        const response = await axios.get('http://163.180.117.22:7218/api/auth', {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        setUserName(response.data.name);
+        console.log(response);
+    }
+
     useEffect(() => {
         PersonaSetting();
+        fetchUserName();
     }, [])
 
     useEffect( async () => {
@@ -159,7 +172,7 @@ function Read() {
     return (
         <>
         <GNB />
-        <Reco />
+        <Reco userName={userName}/>
         <div className="Insight-container">
             <div className="Search-container">
                 <input className="search" value={search} onChange={searchHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>

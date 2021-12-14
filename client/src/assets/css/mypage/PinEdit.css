@@ -1,0 +1,118 @@
+.PinEdit-Container {
+    position: absolute;
+    top: 1100px;
+    left: 200px;
+    width: 339px;
+    height: 451px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    z-index: 10;
+}
+
+.PinEdit-Container > .PersonaImg-Container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 249.38px;
+    height: 115.13px;
+}
+
+.PinEdit-Container > .PersonaImg-Container > .persona-img {
+    width: 63.13px;
+    height: 63.13px;
+    border-radius: 100%;
+    margin-left: 15px;
+}
+
+.PinEdit-Container > .PinBoard-Container {
+    display: flex;
+    flex-direction: column;
+    width: 262px;
+    height: 140px;
+    margin-top: 19.88px;
+    margin-left: 42px;
+    overflow: auto;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #313338;
+}
+
+.pinboard-name {
+    margin-bottom: 27px;
+}
+
+/* 스크롤바 설정*/
+.PinBoard-Container::-webkit-scrollbar{
+    width: 4px;
+    height: 140px;
+    border: 1px solid #E7E6E5;
+    box-sizing: border-box;
+    border-radius: 7px;
+}
+
+/* 스크롤바 막대 설정*/
+.PinBoard-Container::-webkit-scrollbar-thumb{
+    background: #C4C4C4;
+    border-radius: 7px;
+}
+
+.PinEdit-Container > .Tag-Container {
+    display: flex;
+    width: 216px;
+    height: 66px;
+    margin-top: 20px;
+    margin-left: 23px;
+}
+
+.Tag-Container > .tag-cover {
+    width: auto;
+    height: 28px;
+    padding-top: 6px;
+    padding-right: 9px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background: transparent;
+    border: 1px solid #FF0000;
+    box-sizing: border-box;
+    border-radius: 18px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.Tag-Container > .tag-cover > .pin-tag {
+    margin-left: 13px;
+}
+
+.Tag-Container > .tag-cover > .tag-close {
+    margin-left: 10px;
+}
+
+.PinEdit-Container > .CloseBtn-Container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 304px;
+    height: 56px;
+}
+
+.PinEdit-Container > .CloseBtn-Container > .close-btn {
+    padding: 10px 16px;
+    background: #FFFFFF;
+    border: 1px solid #BBBBBB;
+    box-sizing: border-box;
+    border-radius: 18px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #BBBBBB;
+}

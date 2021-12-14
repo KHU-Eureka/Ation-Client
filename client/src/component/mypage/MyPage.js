@@ -16,6 +16,10 @@ function MyPage() {
     let [activePersona, setActivePersona] = useState([null]);
     let [activePersonaId, setActivePersonaId] = useState();
 
+    let [EditTrue, setEditTrue] = useState(false);
+    let [EditClickTrue, setEditClickTrue] = useState(false);
+    let [EditModalClose, setEditModalClose] = useState(false);
+
     const goToAddPersona = () => {
         navigation('/create-persona');
     }
@@ -84,11 +88,29 @@ function MyPage() {
         navigation('/persona-edit', { state: { personaId: personaId } })
         console.log(personaId);
     }
-
+    
+    const popupClose = (e) => {
+        setEditModalClose(false);
+        let doc = "";
+        if(EditTrue) {
+            if(!EditClickTrue) {
+                setEditClickTrue(true);
+            } else {
+                if(e.target.className !== "PinEdit-Container") {
+                    doc = e.target.parentNode;
+                } else {
+                    doc = e.target;
+                }
+                if(doc.className !== "PinEdit-Container"){
+                    setEditModalClose(true);
+                }
+            }
+       }
+    }
 
 
     return (
-        <>
+        <div className="background-img2" onClick={popupClose}>
         <GNB />
             <div className="background-img">
                 <div className="profile-wrapper">
@@ -125,9 +147,9 @@ function MyPage() {
                 <Idaition />
             </div>  
             <div className="Pinbox-container">
-                <Pinbox activePersonaId={activePersonaId}/>
+                <Pinbox activePersonaId={activePersonaId} setEditTrue={setEditTrue} setEditClickTrue={setEditClickTrue} EditModalClose={EditModalClose}/>
             </div>
-        </>
+        </div>
     )
 }
 

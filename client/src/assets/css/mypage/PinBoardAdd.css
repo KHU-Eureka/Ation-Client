@@ -1,0 +1,59 @@
+.ModalPinBoardAdd-Container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 339px;
+    height: 167px;
+    top: 1022px;
+    left: 1470px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    z-index: 10;
+}
+
+.ModalPinBoardAdd-Container > .Logo-container {
+    margin-top: 41px;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container {
+    margin-top: 30px;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container > .name-input {
+    width: 204px;
+    height: 36px;
+    padding-left: 10px;
+    padding-top: 7px;
+    border: 1px solid #FF0000;
+    box-sizing: border-box;
+    border-radius: 18px;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container > .name-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: -1.5px;
+    color: #BBBBBB;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container > .close-btn {
+    width: 60px;
+    height: 36px;
+    margin-left: 10px;
+    background: #FFFFFF;
+    border: 1px solid #BBBBBB;
+    box-sizing: border-box;
+    border-radius: 18px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #BBBBBB;
+}

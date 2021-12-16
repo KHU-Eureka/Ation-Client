@@ -88,29 +88,9 @@ function MyPage() {
         navigation('/persona-edit', { state: { personaId: personaId } })
         console.log(personaId);
     }
-    
-    const popupClose = (e) => {
-        setEditModalClose(false);
-        let doc = "";
-        if(EditTrue) {
-            if(!EditClickTrue) {
-                setEditClickTrue(true);
-            } else {
-                if(e.target.className !== "PinEdit-Container") {
-                    doc = e.target.parentNode;
-                } else {
-                    doc = e.target;
-                }
-                if(doc.className !== "PinEdit-Container"){
-                    setEditModalClose(true);
-                }
-            }
-       }
-    }
-
 
     return (
-        <div className="background-img2" onClick={popupClose}>
+        <div className="background-img2">
         <GNB />
             <div className="background-img">
                 <div className="profile-wrapper">
@@ -147,7 +127,7 @@ function MyPage() {
                 <Idaition />
             </div>  
             <div className="Pinbox-container">
-                <Pinbox activePersonaId={activePersonaId} setEditTrue={setEditTrue} setEditClickTrue={setEditClickTrue} EditModalClose={EditModalClose}/>
+                <Pinbox activePersonaId={activePersonaId} EditModalClose={EditModalClose}/>
             </div>
         </div>
     )

@@ -1,25 +1,38 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
 import "../../assets/css/mypage/PinEdit.css";
-import close_icn from "../../assets/svg/close.svg";
-import plus from "../../assets/svg/plus.svg";
 
 function PinEdit(props) {
     const cookies = new Cookies;
-    const { pinEditModalOpen, clickedPin, close, editPosition, setEditTrue, setEditClickTrue } = props;
+    const modalEdit = useRef();
+    const { pinEditModalOpen, clickedPin, closeEditModal, editPosition} = props;
 
     const [personas, setPersonas] = useState([]);
     const [pinboards, setPinboards] = useState([]);
     const [clickedPersonaId, setClickedPersonaId] = useState(0);
     const [afterPinboardId, setAfterPinboardId] = useState(0);
     const [afterTag, setAfterTag] = useState([]);
+    const [tagValue, setTagValue] = useState("");
 
-    const EditPosition = () => {
-        document.querySelector(".PinEdit-Container").style.top=`${editPosition[1]}px`;
-        document.querySelector(".PinEdit-Container").style.left=`${editPosition[0]}px`;
+    let style = {
+        top:editPosition[1],
+        left:editPosition[0]
     }
+
+    const PinEditModalCloseHandler = ({ target }) => {
+        if (pinEditModalOpen && !modalEdit.current.contains(target) && target.className !== 'Mypin-edit' && target.className !== 'tag') {
+            closeEditModal();
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('click', PinEditModalCloseHandler);
+        return () => {
+            window.removeEventListener("click", PinEditModalCloseHandler);
+          };
+    }, [pinEditModalOpen])
 
     const PersonaSetting = async () => {
         const token = cookies.get('token');
@@ -62,11 +75,11 @@ function PinEdit(props) {
     }
 
     useEffect(() => {
-        if(pinEditModalOpen) {
-            EditPosition();
-            setEditTrue(true);
-        }
         PersonaSetting();
+        if(clickedPin) {
+            setAfterPinboardId(clickedPin.pinBoard.id);
+            setAfterTag(clickedPin.tagList);
+        }
     }, [editPosition])
 
     useEffect(() => {
@@ -93,14 +106,46 @@ function PinEdit(props) {
             }
         })
         alert("핀이 수정되었습니다");
-        close();
+        closeEditModal();
+        window.location.reload();
     }
 
+    const tagChangeHandler = (e) => {
+        setTagValue(e.target.value);
+    }
+
+    const tagInputSubmitHandler = () => {
+        const tag_after = document.querySelector('.tag-after');
+        const tags = document.createElement('div');
+        tags.className = 'tag';
+        tags.addEventListener('click', () => {
+            tag_after.removeChild(tags);
+          })
+        if(window.event.keyCode == 13) {
+            if(afterTag.length < 2) {
+                console.log(afterTag.length);
+                setAfterTag( prev => [...prev, tagValue]);
+                setTagValue("");
+            }
+        }
+    }
+
+    useEffect(() => {
+        console.log(afterTag);
+        if(document.querySelector('.tag')){
+            const tags = document.querySelectorAll('.tag');
+            for(var i = 0; i<tags.length; i++) {
+                tags[i].addEventListener('click', (e) => {
+                    setAfterTag(afterTag.filter( tagValue => tagValue !== e.target.innerHTML.substr(2)));
+                  });
+                }
+        }
+    }, [afterTag]);
+
     return (
-        <>
-        {pinEditModalOpen? (
-            
-    <div className="PinEdit-Container" >
+    <>
+    {pinEditModalOpen? (        
+    <div className="PinEdit-Container" ref={modalEdit} style={style}>
         <div className="PersonaImg-Container">
             {personas.map( persona => (
                 <img className="persona-img" id={persona.id} src={persona.profileImgPath} onClick={personaClickHandler}/>
@@ -112,13 +157,13 @@ function PinEdit(props) {
             ))}
         </div>
         <div className="Tag-Container">
-            {clickedPin.tagList.map( tag => (
-                <div className="tag-cover">
-                    <span className="pin-tag">#{tag}&nbsp;</span>
-                    <img className="tag-close" src={close_icn}/>
-                </div>
-            ))}
-            {/* {clickedPin.tagList.length < 3?<div><img src={plus}/></div>:<></>} */}
+            <div className="tag-after">
+                {afterTag?afterTag.map( tag => (
+                    <div className="tag"># {tag}</div>
+                )):<></>}
+            </div>
+                {afterTag.length!==2?
+                <input className="tag-before" value={tagValue} onChange={tagChangeHandler} onKeyPress={tagInputSubmitHandler} maxlength='8'/>:null}
         </div>
         <div className="CloseBtn-Container">
             <button className="close-btn" onClick={closeBtnClickHandler}>저장</button>

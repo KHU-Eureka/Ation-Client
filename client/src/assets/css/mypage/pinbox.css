@@ -1,21 +1,19 @@
 .PinTool-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-left: 10%;
-    margin-right: auto;
-    width: 1580px;
+    width: 1470px;
 }
 
 .LeftTool {
-    width: 1000px;
     display: flex;
+    width: 344px;
 }
 
 .RightTool {
-    margin-left: 1133px;
-    width: 40px;
+    position: relative;
     display: flex;
+    margin-left: 814px;
+    width: 505px;
 }
 
 .all-pin {
@@ -26,6 +24,7 @@
     font-size: 26px;
     line-height: 26px;
     color: #FE3400;
+    cursor: pointer;
 }
 
 .pin-board {
@@ -37,14 +36,45 @@
     font-size: 26px;
     line-height: 26px;
     color: #BEBBB9;
+    cursor: pointer;
 }
 
-.pin-search {
-    
+.pin-search-input {
+    width: 398px;
+    height: 47px;
+    padding-left: 0px;
+    border: 0;
+    border-bottom: 2px solid #FE6740;
+    font-size: 18px;
+}
+
+.pin-search-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+}
+
+.pin-search-input:focus {
+    outline: none;
+}
+
+.pin-searchImg-container {
+    position: absolute;
+    left: 363px;
+    top: 5px;
+}
+
+.pin-search { 
+    cursor: pointer;
 }
 
 .pin-add {
+    position: relative;
     margin-left: 20px;
+    cursor: pointer;
 }
 
 .allPin-content .pin-item{
@@ -68,6 +98,7 @@
 
 .pin-item {
     margin-right: 35.63px;
+    margin-bottom: 48.75px;
 }
 
 .pin-img {
@@ -81,17 +112,24 @@
     position: absolute;
     display: flex;
     justify-content: right;
-    top: 1072px;
+    /* top: 1072px; */
     width: 360.02px;
+    /* height: 200px; */
 }
 
 .Mypin-edit {
-    margin-right: 8px;
+    position: absolute;
+    top: -190.07px;
+    left: 313px;
+}
+
+.pin-del {
+    position: absolute;
+    top: -193px;
 }
 
 .pin-tag-container {
     position: absolute;
-    top: 1134px;
     width: 374px;
     display: flex;
     justify-content: center;
@@ -99,22 +137,24 @@
 
 .pin-board-container {
     position: absolute;
-    top: 1134px;
     width: 374px;
     display: flex;
     justify-content: center;
 }
 
 .Mypin-tag {
+    margin-top: -128.07px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 16px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .Mypin-board {
+    position: absolute;
+    top: -128.82px;
     margin-top: 33px;
     font-family: Pretendard;
     font-style: normal;
@@ -134,7 +174,8 @@
 
 .pin-title {
     display: flex;
-    margin-top: 15.17px;
+    height: 18.75px;
+    margin-top: 0px;
 }
 
 .pin-name {
@@ -146,16 +187,11 @@
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
-    /* line-height: 16px; */
     color: #352C23;
 }
 
 .pin-description {
-    margin-top: 21px;
-}
-
-.pin-circle {
-    margin-right: 9.32px;
+    margin-top: 16px;
 }
 
 .pin-site {
@@ -167,6 +203,8 @@
     line-height: 13px;
     color: #352C23;
 }
+
+/* 핀보드 */
 
 .pinBoard-content {
     display: flex;
@@ -183,6 +221,7 @@
 
 .pinBoard {
     margin-right: 34px;
+    margin-bottom: 30px;
 }
 
 .pinBoard-img {
@@ -230,13 +269,8 @@
     top: -110.02px;
 }
 
-.pin-search-input-noClick {
-    display: none;
-}
-
 .pin-search-input {
     display: inline;
-    transition: all ease 2s 0s;
 }
 
 .noPinBoard {
@@ -274,4 +308,26 @@
     display: flex;
     align-items: center;
     color: #FFFFFF;
+}
+
+.noClickPinBoard {
+    display: none;
+}
+
+.pin-edit-del2 {
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    width: 360.02px;
+}
+
+.Mypin-edit2 {
+    position: absolute;
+    top: -193.07px;
+    left: 313px;
+}
+
+.pin-del2 {
+    position: absolute;
+    top: -196px;
 }

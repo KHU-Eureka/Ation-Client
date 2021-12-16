@@ -61,6 +61,10 @@
 }
 
 .Pinbox-container {
-    width: 1600px;
-    margin-top: 77.13px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
 }

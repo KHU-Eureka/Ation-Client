@@ -1,9 +1,8 @@
-import { React, useState, useEffect, useRef } from "react";
+import { React, useState, useEffect, useRef, useCallback } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
 import "../../assets/css/mypage/PinAdd.css";
-import tag_add from "../../assets/svg/tag_add.svg";
 
 function PinAdd(props) {
     const cookies = new Cookies;
@@ -55,23 +54,37 @@ function PinAdd(props) {
         setTagValue(e.target.value);
     }
 
-    const tagInputSubmitHandler = () => {
+    const tagInputSubmitHandler = useCallback( () => {
         const tag_after = document.querySelector('.tag-after');
         const tags = document.createElement('div');
         tags.className = 'tag';
-        tags.addEventListener('click', () => {
+        tags.addEventListener('click', (e) => {
             tag_after.removeChild(tags);
-            setTagList(tagList.filter( hashtag => hashtag));
           })
         if(window.event.keyCode == 13) {
-            tags.innerHTML = '# ' + tagValue;
-            tag_after.appendChild(tags);
-            setTagList( prev => [...prev, tagValue]);
-            setTagValue("");
-            document.querySelector('.url-input').focus();
+            if(tagList.length < 2) {
+                tags.innerHTML = '# ' + tagValue;
+                tag_after.appendChild(tags);
+                setTagList( prev => [...prev, tagValue]);
+                setTagValue("");
+                document.querySelector('.url-input').focus();
+            }
         }
-    }
+        }, [tagValue, tagList]
+    )
 
+    useEffect(() => {
+        console.log(tagList);
+        if(document.querySelector('.tag')){
+            const tags = document.querySelectorAll('.tag');
+            for(var i = 0; i<tags.length; i++) {
+                tags[i].addEventListener('click', (e) => {
+                    setTagList(tagList.filter( tagValue => tagValue !== e.target.innerHTML.substr(2)));
+                  });
+                }
+        }
+    }, [tagList]);
+    
     return (
     (pinAddModalOpen?
     <div className="ModalAdd-Container" ref={modalAdd}>
@@ -87,7 +100,7 @@ function PinAdd(props) {
             <div className="tag-after"></div>
             {tagList.length!==2?<input className="tag-before" value={tagValue} onChange={tagChangeHandler} onKeyPress={tagInputSubmitHandler} maxlength='8'/>:null}
         </div>
-            {tagList.length===2?<p>최대 2개까지 추가할 수 있습니다</p>:null}
+            {/* {tagList.length===2?<p>최대 2개까지 추가할 수 있습니다</p>:null} */}
         <div className="Close-container">
             <button className="close-btn" onClick={ModalAddCloseHandler}>저장</button>
         </div>

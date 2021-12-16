@@ -4,8 +4,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    top: 1022px;
-    left: 1470px;
+    top: 65px;
+    left: 118px;
     width: 339px;
     height: 382px;
     background: #FFFFFF;
@@ -22,7 +22,7 @@
     width: 274px;
     height: 36px;
     padding-left: 18.8px;
-    padding-top: 10px;
+    padding-top: 5px;
     border: 1px solid #FF0000;
     box-sizing: border-box;
     border-radius: 18px;
@@ -71,6 +71,7 @@
 
 .ModalAdd-Container > .PinBoard-container > .board-name {
     margin-bottom: 27px;
+    cursor: pointer;
 }
 
 .ModalAdd-Container > .Tag-container {
@@ -86,13 +87,17 @@
 }
 
 .ModalAdd-Container > .Tag-container > .tag-after > .tag {
+    position: relative;
     width: auto;
     height: 28px;
     max-width: 103px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin-right: 10px;
     padding-top: 6px;
     padding-left: 13px;
-    padding-right: 13px;
+    padding-right: 20px;
     border: 1px solid #FF0000;
     box-sizing: border-box;
     border-radius: 18px;
@@ -102,6 +107,10 @@
     font-size: 16px;
     line-height: 16px;
     color: #000000;
+    cursor: pointer;
+    background-image: url('../../svg/close.svg');
+    background-position: 90%;
+    background-repeat: no-repeat;
 }
 
 .ModalAdd-Container > .Tag-container > .tag-before {
@@ -115,13 +124,17 @@
     background-image: url('../../svg/tag_add.svg');
     background-position: 16px;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .ModalAdd-Container > .Tag-container > .tag-before:focus {
     width: auto;
     max-width: 103px;
+    overflow: hidden;
+    white-space: nowrap;
     background-image: none; 
     outline: none;
+    cursor: text;
 }
 
 .ModalAdd-Container > .Close-container {
@@ -141,4 +154,5 @@
     font-size: 16px;
     line-height: 16px;
     color: #BBBBBB;
+    cursor: pointer;
 }

@@ -6,19 +6,18 @@ import "../../assets/css/mypage/pinbox.css";
 import plus from "../../assets/svg/plus.svg";
 import search from "../../assets/svg/search.svg";
 import bin from "../../assets/svg/bin.svg";
-import del from "../../assets/svg/delete.svg";
-import del_check from "../../assets/svg/delete_check.svg";
 import circle from "../../assets/svg/circle.svg";
 import edit from "../../assets/svg/edit.svg";
 
 import PinEdit from "./PinEdit";
 import PinAdd from "./PinAdd";
 import PinBoardAdd from "./PinBoardAdd";
+import PinBoardEdit from "./PinBoardEdit";
 
 function Pinbox(props) {
     const cookies = new Cookies;
 
-    const {activePersonaId, setEditTrue, setEditClickTrue, EditModalClose} = props;
+    const {activePersonaId, EditModalClose} = props;
 
     const [pinboard, setPinboard] = useState([]);
     const [allPin, setAllPin] = useState([]);
@@ -26,7 +25,9 @@ function Pinbox(props) {
     const [viewOption, setViewOption] = useState(0);
     const [pinSearch, setPinSearch] = useState("");
     const [clickedPin, setClickedPin] = useState();
+    const [clickedPinBoardID, setClickedPinBoardID] = useState(0);
     const [editPosition, setEditPosition] = useState([]);
+    const [BoardEditPosition, setBoardEditPosition] = useState([]);
     const [pins, setPins] = useState([]);
 
     //modal...
@@ -36,7 +37,6 @@ function Pinbox(props) {
     }
     const closeEditModal = () => {
         setPinEditModalOpen(false);
-        window.location.reload();
     }
     //...modal
      //modal2...
@@ -57,6 +57,15 @@ function Pinbox(props) {
         setPinBoardAddModalOpen(false);
     }
     //...modal3
+    //modal4...
+    const [pinBoardEditModalOpen, setPinBoardEditModalOpen] = useState(false);
+    const openPinBoardEditModal = () => {
+        setPinBoardEditModalOpen(true);
+    }
+    const closePinBoardEditModal = () => {
+        setPinBoardEditModalOpen(false);
+    }
+    //...modal4
 
     const PinBoardImport = async () => {
         const token = cookies.get('token');
@@ -75,8 +84,8 @@ function Pinbox(props) {
         console.log(document.querySelector(".pinBoard-content"))
         document.querySelector(".pinBoard-content").classList.remove("noPinBoard");
         document.querySelector(".pin-board-name").style.display="none";
-        const pinBoardElement = document.querySelector(".pinBoardElement-name");
-        document.querySelector(".pin-board-name").removeChild(pinBoardElement);
+        // const pinBoardElement = document.querySelector(".pinBoardElement-name");
+        // document.querySelector(".pin-board-name").removeChild(pinBoardElement);
     }
 
     const allPinHandler = async () => {
@@ -103,8 +112,10 @@ function Pinbox(props) {
         PinBoardImport();
     }, [activePersonaId, viewOption]);
 
-    const searchBtnClickHandler = () => {
-        document.querySelector(".pin-search-input-noClick").classList.add("pin-search-input")
+    const searchBtnClickHandler = async () => {
+        const response = await axios.get(`http://163.180.117.22:7218/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+        setAllPin(response.data);
+        setViewOption(0);
     }
 
     const pinMouseOnHandler = (e) => {
@@ -197,17 +208,15 @@ function Pinbox(props) {
             }
         });
         setClickedPin(response.data);
+        setEditPosition([e.pageX-280, e.pageY+30]);
         openEditModal();
-        console.log(e);
-        setEditPosition([e.pageX-280, e.pageY+21]);
-        setEditClickTrue(false);
     }
 
-    useEffect(() => {
-        if(EditModalClose) {
-            setPinEditModalOpen(false);
-        }
-    }, [EditModalClose]);
+    // useEffect(() => {
+    //     if(EditModalClose) {
+    //         setPinEditModalOpen(false);
+    //     }
+    // }, [EditModalClose]);
 
     const pinAddClickHandler = async () => {
         if(viewOption === 0) {
@@ -226,14 +235,44 @@ function Pinbox(props) {
             }
         })
         setPins(response.data);
-        document.querySelector(".noPinItem").classList.add("pinItem-content");
-        document.querySelector(".pinBoard-content").classList.add("noPinBoard");
-        document.querySelector(".pin-board-name").style.display="flex";
-        const pinBoardName = document.createElement('div');
-        pinBoardName.className = "pinBoardElement-name";
-        pinBoardName.innerHTML = response.data[0].pinBoard.name;
-        document.querySelector(".pin-board-name").appendChild(pinBoardName);
+        // document.querySelector(".noPinItem").classList.add("pinItem-content");
+        // document.querySelector(".pinBoard-content").classList.add("noPinBoard");
+        // document.querySelector(".pin-board-name").style.display="flex";
+        // const pinBoardName = document.createElement('div');
+        // pinBoardName.className = "pinBoardElement-name";
+        // pinBoardName.innerHTML = response.data[0].pinBoard.name;
+        // document.querySelector(".pin-board-name").appendChild(pinBoardName);
     };
+
+    const pinBoardItemHoverHandler = (e) => {
+        const img_tag = e.currentTarget.querySelector(".pinBoard-img");
+        img_tag.style.filter = "grayscale(60%)";
+        e.currentTarget.querySelector(".noClickPinBoard").classList.add("pin-edit-del2");
+    }
+
+    const pinBoardItemHoverOutHandler = (e) => {
+        const img_tag = e.currentTarget.querySelector(".pinBoard-img");
+        img_tag.style.filter = "grayscale(0%)";
+        e.currentTarget.querySelector(".noClickPinBoard").classList.remove("pin-edit-del2");
+    }
+
+    const pinBoardEditHandler = async (e) => {
+        setClickedPinBoardID(e.target.getAttribute("id"));
+        setBoardEditPosition([e.pageX-280, e.pageY+30]);
+        openPinBoardEditModal();
+    }
+
+    const pinBoardDelHandler = async (e) => {
+        const token = cookies.get('token');
+        const pinBoardId = e.target.getAttribute('id');
+        const response = await axios.delete(`http://163.180.117.22:7218/api/pin-board/${pinBoardId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        alert(`${pinBoardId}삭제되었습니다.`);
+        window.location.reload();
+    }
 
     return (
      <>
@@ -244,8 +283,10 @@ function Pinbox(props) {
                 <div className="pin-board-name"></div>
             </div>
             <div className="RightTool">
-                <input className="pin-search-input-noClick" value={pinSearch} onChange={pinKeywordHandler} onKeyPress={pinSearchHandler}></input>
-                <img className="pin-search" onClick={searchBtnClickHandler} src={search}/>
+                <input className="pin-search-input" value={pinSearch} onChange={pinKeywordHandler} onKeyPress={pinSearchHandler} placeholder="찾고싶은 핀을 검색해보세요!"></input>
+                <div className="pin-searchImg-container">
+                    <img className="pin-search" onClick={searchBtnClickHandler} src={search}/>
+                </div>
                 <img className="pin-add" src={plus} onClick={pinAddClickHandler}/>
                 <PinAdd pinAddModalOpen={pinAddModalOpen} closeAddModal={closeAddModal} pinboard={pinboard}/>
                 <PinBoardAdd pinBoardAddModalOpen={pinBoardAddModalOpen} closePinBoardAddModal={closePinBoardAddModal} activePersonaId={activePersonaId}/>
@@ -273,7 +314,6 @@ function Pinbox(props) {
                                 <p className="Mypin-board">{pin.pinBoard.name}</p>
                             </div>
                         </div>
-                        
                         <div className="pin-title">
                             <p className="pin-name">{pin.insight.title}</p>
                             <div className="pin-description">
@@ -284,37 +324,41 @@ function Pinbox(props) {
                     </div>
                 </li>
                 ))}
-                <PinEdit pinEditModalOpen={pinEditModalOpen} close={closeEditModal} clickedPin={clickedPin} editPosition={editPosition} setEditTrue={setEditTrue} setEditClickTrue={setEditClickTrue} />
+                <PinEdit pinEditModalOpen={pinEditModalOpen} closeEditModal={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/>
             </ul>
             </>:
             <>
             <ul className="pinBoard-content">
             {pinboard.map( board => (
                 <li className="pinBoard" key={board.id}>
-                    <div lassName="pinBoardItem-container" id={board.id} onClick={pinBoardItemClickHandler}>
+                    <div lassName="pinBoardItem-container" id={board.id} onClick={pinBoardItemClickHandler} onMouseOver={pinBoardItemHoverHandler} onMouseOut={pinBoardItemHoverOutHandler}>
                         <img className="pinBoard-img" src={board.imgPath} width="200" height="200"/>
                         <div className="pinBoard-title">
                             <p className="pinBoard-name">{board.name}</p>
                             <p className="pinBoard-count">핀 {board.totalPinNumber}개</p>
                         </div>
+                        {/* 핀보드의 수정 삭제*/}
+                        <div className="noClickPinBoard" id={board.id}>
+                            <img className="Mypin-edit2" src={edit} id={board.id} onMouseDown={pinBoardEditHandler}/>
+                            <img className="pin-del2" src={bin} id={board.id} onMouseDown={pinBoardDelHandler}/>
+                        </div>
                     </div>
-                    <img className="pin-del" src={del} />
                 </li>
             ))}
+            <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID}/>
             </ul>
             </>}
+            
             <ul className="noPinItem">
                 {pins.map( pin => (
                 <li className="pin-item" key={pin.id} id={pin.id}>
                     <div className="Mypin-item" id={pin.id} onMouseOver={pinMouseOnHandler} onMouseOut={pinMouseOutHandler} onMouseDown={pinClickHandler}>
                         <img className="pin-img" src={pin.insight.imgPath}/>
-                        
                         <div className="noclick">
-                            <div className="pin-edit-del">
+                            {/* <div className="pin-edit-del">
                                 <img className="Mypin-edit" src={edit} id={pin.id} onMouseDown={pinEditHandler}/>
                                 <img className="pin-del" src={bin} id={pin.id} onMouseDown={pinDelHandler}/>
-                            </div>
-                           
+                            </div> */}
                             <div className="pin-tag-container">
                                 {pin.tagList.map( tag => (<span className="Mypin-tag">#{tag}&nbsp;</span>))}
                             </div>
@@ -333,7 +377,7 @@ function Pinbox(props) {
                     </div>
                 </li>
                 ))}
-                <PinEdit pinEditModalOpen={pinEditModalOpen} close={closeEditModal} clickedPin={clickedPin} editPosition={editPosition} setEditTrue={setEditTrue} setEditClickTrue={setEditClickTrue} />
+                {/* <PinEdit pinEditModalOpen={pinEditModalOpen} close={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/> */}
             </ul>
         </div>
      </>

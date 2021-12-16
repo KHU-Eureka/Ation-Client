@@ -23,6 +23,7 @@
     height: 63.13px;
     border-radius: 100%;
     margin-left: 15px;
+    cursor: pointer;
 }
 
 .PinEdit-Container > .PinBoard-Container {
@@ -43,6 +44,7 @@
 
 .pinboard-name {
     margin-bottom: 27px;
+    cursor: pointer;
 }
 
 /* 스크롤바 설정*/
@@ -68,14 +70,22 @@
     margin-left: 23px;
 }
 
-.Tag-Container > .tag-cover {
+.PinEdit-Container > .Tag-Container > .tag-after {
+    display: flex;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after > .tag {
+    position: relative;
     width: auto;
     height: 28px;
+    max-width: 103px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
     padding-top: 6px;
-    padding-right: 9px;
-    margin-top: 10px;
-    margin-left: 10px;
-    background: transparent;
+    padding-left: 13px;
+    padding-right: 20px;
     border: 1px solid #FF0000;
     box-sizing: border-box;
     border-radius: 18px;
@@ -85,14 +95,34 @@
     font-size: 16px;
     line-height: 16px;
     color: #000000;
+    cursor: pointer;
+    background-image: url('../../svg/close.svg');
+    background-position: 90%;
+    background-repeat: no-repeat;
 }
 
-.Tag-Container > .tag-cover > .pin-tag {
-    margin-left: 13px;
+.PinEdit-Container > .Tag-Container > .tag-before {
+    width: 53px;
+    height: 28px;
+    margin-right: 10px;
+    padding-left: 23px;
+    border: 1px solid #FF0000;
+    box-sizing: border-box;
+    border-radius: 18px;
+    background-image: url('../../svg/tag_add.svg');
+    background-position: 16px;
+    background-repeat: no-repeat;
+    cursor: pointer;
 }
 
-.Tag-Container > .tag-cover > .tag-close {
-    margin-left: 10px;
+.PinEdit-Container > .Tag-Container > .tag-before:focus {
+    width: auto;
+    max-width: 103px;
+    overflow: hidden;
+    white-space: nowrap;
+    background-image: none; 
+    outline: none;
+    cursor: text;
 }
 
 .PinEdit-Container > .CloseBtn-Container {
@@ -115,4 +145,5 @@
     font-size: 16px;
     line-height: 16px;
     color: #BBBBBB;
+    cursor: pointer;
 }

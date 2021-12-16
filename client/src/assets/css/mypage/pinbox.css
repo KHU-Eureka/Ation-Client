@@ -13,7 +13,7 @@
     position: relative;
     display: flex;
     margin-left: 814px;
-    width: 505px;
+    width: 600px;
 }
 
 .all-pin {
@@ -28,7 +28,8 @@
 }
 
 .pin-board {
-    width: 120px;
+    position: relative;
+    width: 140px;
     margin-left: 48px;
     font-family: Pretendard;
     font-style: normal;
@@ -37,6 +38,29 @@
     line-height: 26px;
     color: #BEBBB9;
     cursor: pointer;
+}
+
+.pin-board-name {
+    position: absolute;
+    left: 140px;
+    top: 0px;
+    width: 83px;
+    height: 26px;
+    padding: 5px 15px;
+    background: #FE3400;
+    border-radius: 16px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pin-search-input {
@@ -278,7 +302,7 @@
 }
 
 .noPinItem {
-    display: none;
+    /* display: none; */
 }
 
 .pinItem-content {
@@ -291,23 +315,6 @@
     margin-top: 49px;
     width: 1800px;
     list-style: none;
-}
-
-.pin-board-name {
-    width: auto;
-    height: 26px;
-    margin-left: 10px;
-    padding: 5px 15px;
-    background: #FE3400;
-    border-radius: 16px;
-    font-family: Pretendard;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 16px;
-    display: flex;
-    align-items: center;
-    color: #FFFFFF;
 }
 
 .noClickPinBoard {

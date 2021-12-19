@@ -22,6 +22,7 @@ function PinEdit(props) {
     }
 
     const PinEditModalCloseHandler = ({ target }) => {
+        console.log(target);
         if (pinEditModalOpen && !modalEdit.current.contains(target) && target.className !== 'Mypin-edit' && target.className !== 'tag') {
             closeEditModal();
         }

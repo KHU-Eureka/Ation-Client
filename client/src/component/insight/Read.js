@@ -11,6 +11,7 @@ import PinUp from "./PinUp";
 
 import prev from "../../assets/svg/prev.svg";
 import pin from "../../assets/svg/pin.svg";
+import search_insight from "../../assets/svg/search_insight.svg";
 
 import "../../assets/css/insight/Read.css";
 
@@ -27,6 +28,7 @@ function Read() {
     const [personaId, setPersonaId] = useState(0);
     const [insightId, setInsightId] = useState(0);
     const [userName, setUserName] = useState("");
+    const [pinPosition, setpinPosition] = useState([]);
 
     //modal...
     const [modalOpen, setModalOpen] = useState(false);
@@ -35,7 +37,6 @@ function Read() {
     }
     const closeModal = () => {
         setModalOpen(false);
-        window.location.reload()
     }
     //...modal
     //modal2...
@@ -45,7 +46,6 @@ function Read() {
     }
     const closeModal2 = () => {
         setModal2Open(false);
-        window.location.reload()
     }
     //...modal2
 
@@ -66,10 +66,10 @@ function Read() {
                 Authorization: "Bearer " + token
             }
         })
+        setPersonaId(response2.data.id);
         for(var i of response.data) {
             if(i.id === response2.data.id) {
                 setPersonaImg([i]);
-                setPersonaId(i.id);
             } 
         }
         for(var i of response.data) {
@@ -120,12 +120,14 @@ function Read() {
       }, [cate]);
 
     const imgClickHandler = async(e) => {
-        let temp = e.target.getAttribute('id');
-        const response = await axios.get(
-            `http://163.180.117.22:7218/api/insight/${temp}`
-          );
-        window.open(response.data.url);
-        console.log(e.target);
+        if(e.target.className !== 'pin') {
+            let temp = e.target.getAttribute('id');
+            const response = await axios.get(
+                `http://163.180.117.22:7218/api/insight/${temp}`
+              );
+            window.open(response.data.url);
+            console.log(e.target);
+        }
     }
 
     const searchHandler = (e) => {
@@ -142,7 +144,7 @@ function Read() {
     }
 
     const imgMouseOverHandler = (e) => {
-        if(e.target.className !== 'pin') {
+        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'siteImg') {
             let temp = e.target.parentNode.getElementsByClassName("pin-box");
             temp[0].classList.add("pin-up");
         } else {
@@ -152,7 +154,7 @@ function Read() {
     }
 
     const imgMouseOutHandler = (e) => {
-        if(e.target.className !== 'pin') {
+        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'siteImg') {
             let temp = e.target.parentNode.getElementsByClassName("pin-box");
             temp[0].classList.remove("pin-up");
         } else {
@@ -163,8 +165,26 @@ function Read() {
 
     const pinClickHandler = (e) => {
         openModal2();
-        setInsightId(e.target.parentNode.parentNode.getAttribute('id'));
+        setInsightId(e.target.getAttribute('id'));
+        setpinPosition([e.pageX-280, e.pageY+30]);
     }
+
+    const searchSubmitHandler = async (e) => {
+        if(e.key === 'Enter') {
+            const response = await axios.get(
+                `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+              );
+              console.log(response.data);
+            setInsight(response.data);
+        }
+    }
+
+    useEffect( async () => {
+        const response = await axios.get(
+            'http://163.180.117.22:7218/api/insight'
+          );
+        setInsight(response.data);
+    }, [insight])
   
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
@@ -172,15 +192,15 @@ function Read() {
     return (
         <>
         <GNB />
-        <Reco userName={userName}/>
         <div className="Insight-container">
+            <Reco userName={userName}/>
             <div className="Search-container">
-                <input className="search" value={search} onChange={searchHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
-                <input className="search-icn" type="button" onClick={searchClickHandler}></input>
+                <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
+                <div className="searchIcn-container">
+                    <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
+                </div>
                 <button className="search-btn" onClick={()=> {setPageNum(1); openModal();}}>+ Insight</button>
-                <Modal open={modalOpen}>
-                    <Create pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev}/>
-                </Modal>
+                <Create modalOpen={modalOpen} pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev}/>
             </div>
             <div className="Content-container">
                 <InsightLNB cate={setCate} setInsight={setInsight}/>
@@ -191,18 +211,21 @@ function Read() {
                         <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
                             <div className="pin-box">
-                                <img className="pin" src={pin} onClick={pinClickHandler}/>
+                                <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
                             </div>
-                        <p id={i.id}>{i.title}</p>
-                        {i.tagList.map(tag => (
-                            <span id={i.id}> #{tag}</span>
+                            <p className="title" id={i.id}>{i.title}</p>
+                            <span className="tag" id={i.id}> #{i.insightMainCategory.name}</span>
+                            {i.insightSubCategoryList.map(tag => (
+                                <span className="tag" id={i.id}> #{tag.name}</span>
                             ))}
+                            <div className="site-container">
+                                <img className="siteImg"/>
+                                <p className="siteName">{i.siteName}</p>
+                            </div>
                         </div>
                     </li>
                     ))}
-                    <Modal open={modal2Open}>
-                        <PinUp pageNum={pageNum2} setPageNum={setPageNum2} close={closeModal2} header={prev} personaImg={personaImg} personaId={personaId} insightId={insightId}/>
-                    </Modal>
+                    <PinUp open={modal2Open} pageNum={pageNum2} setPageNum={setPageNum2} close={closeModal2} header={prev} personaImg={personaImg} personaId={personaId} insightId={insightId} pinPosition={pinPosition}/>
                     </ul>
                 </div>
             </div>

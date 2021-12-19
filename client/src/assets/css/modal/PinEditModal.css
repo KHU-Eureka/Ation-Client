@@ -1,28 +1,216 @@
-.PinEditModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99;
-    background: transparent;
+.Pinup-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 420px;
+    width: 321px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
+    z-index: 10;
 }
 
-.PinEditModal.openPinEditModal {
+.PersonaImg-container {
+    display: flex;
+    margin-left: 83.5px;
+    margin-top: 50px;
+}
+
+.persona-img {
+    width: 40px;
+    height: 40px;
+    border: 0.5px solid #E7E6E5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-right: 17px;
+}
+
+.PersonaImg-container > .clickedPersona {
+    border: 1px solid #FE3400;
+}
+
+.Pinboard-container {
+    margin-top: 35px;
+    margin-left: 18px;
+    width: 262px;
+    height: 140px;
+    overflow: auto;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #352C23;
+}
+
+/* 스크롤바 설정*/
+.Pinboard-container::-webkit-scrollbar{
+    width: 4px;
+    height: 140px;
+    border: 1px solid #E7E6E5;
+    box-sizing: border-box;
+    border-radius: 7px;
+}
+
+/* 스크롤바 막대 설정*/
+.Pinboard-container::-webkit-scrollbar-thumb{
+    background: #C4C4C4;
+    border-radius: 7px;
+}
+
+.Pinup-container > .Pinboard-container > .pinboard {
+    padding-left: 13px;
+    cursor: pointer;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    overflow: hidden;
-    animation: modal-show .3s;
 }
 
-@keyframes modal-show {
-    from {
-        opacity: 0;
-        margin-top: -50px;
-    }
-    to {
-        opacity: 1;
-        margin-top: 0;
-    }
+.Pinup-container > .Pinboard-container > .clickedPinBoard {
+    background: rgba(231, 230, 229, 0.78);
+    border-radius: 7px;
+    height: 41px;
+}
+
+.PinboardInput-container {
+    margin-top: 20px;
+    margin-left: 31px;
+}
+
+.PinboardInput-container > .pinboard-input{
+    width: 192px;
+    border: 0;
+    border-bottom: 2px solid #FE6740;
+}
+
+.PinboardInput-container > .pinboard-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #BBBBBB;
+    letter-spacing: -1px;
+}
+
+.PinboardInput-container > .pinboard-btn {
+    margin-left: 30px;
+    background: transparent;
+    border: 0;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE6740;
+}
+
+.Pinup-container > .PinUpClose-container {
+    margin-top: 34px;
+    margin-left: 215px;
+}
+
+.PinUpClose-container > .PinUpClose-btn {
+    width: 76px;
+    height: 37px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FE3400;
+}
+
+.Pinup-container2 {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 273px;
+    width: 321px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
+    z-index: 10;
+}
+
+.Pinup-container2 > .header-container > .header {
+    display: flex;
+    margin-top: 30px;
+    margin-left: 29px;
+}
+
+.Pinup-container2 > .persona-container > .persona {
+    margin-top: 4px;
+    margin-left: 140.5px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.Pinup-container2 > .pinBoard-container {
+    margin-top: 46px;
+    margin-left: 49.45px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.Pinup-container2 > .pinBoard-container > .pinBoard{
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 0px;
+    color: #352C23;
+}
+
+.Pinup-container2 > .pinBoard-container > .pinBoardComment {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 0px;
+    text-align: right;
+    color: #352C23;
+    margin-top: 0px;
+}
+
+.Pinup-container2 > .pinBoardBTN-container {
+    margin-top: 34.2px;
+    margin-left: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE3400;
+}
+
+.Pinup-container2 > .pinBoardBTN-container > .pinBoardBTN {
+    border-bottom: 1px solid #FE3400;
+    cursor: pointer;
+}
+
+.Pinup-container2 > .pinBoardBTN-container > .closeBTN {
+    margin-left: 41.46px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    width: 76px;
+    height: 37px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FE3400;
+    cursor: pointer;
 }

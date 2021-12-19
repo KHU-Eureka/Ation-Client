@@ -1,5 +1,5 @@
 .LNB-container {
-    margin-left: 168px;
+    margin-left: 8.75%;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
@@ -12,6 +12,8 @@
 .category {
     list-style: none;
     margin-bottom: 24px;
+    width: 160px;
+    cursor: pointer;
 }
 
 .clicked {

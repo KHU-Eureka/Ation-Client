@@ -66,6 +66,15 @@ function Pinbox(props) {
         setPinBoardEditModalOpen(false);
     }
     //...modal4
+    //modal5...
+    const [pinEditModal2Open, setPinEdit2ModalOpen] = useState(false);
+    const openPinEditModal2 = () => {
+        setPinEdit2ModalOpen(true);
+    }
+    const closePinEditModal2 = () => {
+        setPinEdit2ModalOpen(false);
+    }
+    //...modal5
 
     const PinBoardImport = async () => {
         const token = cookies.get('token');
@@ -80,15 +89,13 @@ function Pinbox(props) {
     const pinBoardClickHandler = async () => {
         await PinBoardImport();
         setViewOption(1);
-        document.querySelector(".noPinItem").classList.remove("pinItem-content");
-        console.log(document.querySelector(".pinBoard-content"))
-        document.querySelector(".pinBoard-content").classList.remove("noPinBoard");
+        document.querySelector(".pinBoard-content").style.display="flex";
+        setPins([]);
         document.querySelector(".pin-board-name").style.display="none";
-        // const pinBoardElement = document.querySelector(".pinBoardElement-name");
-        // document.querySelector(".pin-board-name").removeChild(pinBoardElement);
     }
 
     const allPinHandler = async () => {
+        console.log();
         const token = cookies.get('token');
         const response = await axios.get(`http://163.180.117.22:7218/api/pin?personaId=${activePersonaId}`,{
             headers: {
@@ -100,6 +107,7 @@ function Pinbox(props) {
     }
 
     useEffect(() => {
+        document.querySelector(".pin-board-name").style.display="none";
         if(viewOption === 0) {
             allPinHandler();
             document.querySelector(".all-pin").style.color = "#FE3400";
@@ -200,16 +208,20 @@ function Pinbox(props) {
 
     const pinEditHandler = async (e) => {
         e.stopPropagation();
-        const token = cookies.get('token');
-        const pinId = e.target.getAttribute('id');
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/${pinId}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        });
-        setClickedPin(response.data);
-        setEditPosition([e.pageX-280, e.pageY+30]);
-        openEditModal();
+        console.log(e.target);
+        if (viewOption === 0) {
+            e.stopPropagation();
+            const token = cookies.get('token');
+            const pinId = e.target.getAttribute('id');
+            const response = await axios.get(`http://163.180.117.22:7218/api/pin/${pinId}`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+            setClickedPin(response.data);
+            setEditPosition([e.pageX-280, e.pageY+30]);
+            openEditModal();
+        }
     }
 
     // useEffect(() => {
@@ -227,21 +239,20 @@ function Pinbox(props) {
     }
 
     const pinBoardItemClickHandler = async (e) => {
-        const token = cookies.get('token');
-        const pinBoardId = e.currentTarget.getAttribute("id");
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/pin-board/${pinBoardId}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-        setPins(response.data);
-        // document.querySelector(".noPinItem").classList.add("pinItem-content");
-        // document.querySelector(".pinBoard-content").classList.add("noPinBoard");
-        // document.querySelector(".pin-board-name").style.display="flex";
-        // const pinBoardName = document.createElement('div');
-        // pinBoardName.className = "pinBoardElement-name";
-        // pinBoardName.innerHTML = response.data[0].pinBoard.name;
-        // document.querySelector(".pin-board-name").appendChild(pinBoardName);
+        if(e.target.className!=='Mypin-edit2' && e.target.className!=='pin-del2') {
+            const token = cookies.get('token');
+            const pinBoardId = e.currentTarget.getAttribute("id");
+            document.querySelector(".pin-board-name").style.display="flex";
+            document.querySelector(".pin-board-name").innerHTML = e.currentTarget.querySelector(".pinBoard-name").innerHTML;
+            const response = await axios.get(`http://163.180.117.22:7218/api/pin/pin-board/${pinBoardId}`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+            setPins(response.data);
+        }
+        // console.log(e.currentTarget.querySelector(".pinBoard-name").innerHTML)
+        // document.querySelector(".pinBoard-content").style.display="none";
     };
 
     const pinBoardItemHoverHandler = (e) => {
@@ -257,6 +268,7 @@ function Pinbox(props) {
     }
 
     const pinBoardEditHandler = async (e) => {
+        e.stopPropagation();
         setClickedPinBoardID(e.target.getAttribute("id"));
         setBoardEditPosition([e.pageX-280, e.pageY+30]);
         openPinBoardEditModal();
@@ -279,8 +291,9 @@ function Pinbox(props) {
         <div className="PinTool-container" >
             <div className="LeftTool">
                 <span className="all-pin" onClick={allPinHandler}>모든 PIN</span>
-                <span className="pin-board" onClick={pinBoardClickHandler}>PIN Board</span>
-                <div className="pin-board-name"></div>
+                <span className="pin-board" onClick={pinBoardClickHandler}>PIN Board
+                    <div className="pin-board-name"></div>
+                </span>
             </div>
             <div className="RightTool">
                 <input className="pin-search-input" value={pinSearch} onChange={pinKeywordHandler} onKeyPress={pinSearchHandler} placeholder="찾고싶은 핀을 검색해보세요!"></input>
@@ -345,20 +358,18 @@ function Pinbox(props) {
                     </div>
                 </li>
             ))}
-            <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID}/>
             </ul>
-            </>}
-            
-            <ul className="noPinItem">
+            <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID}/>
+            {/* <ul className="pinItem-content">
                 {pins.map( pin => (
                 <li className="pin-item" key={pin.id} id={pin.id}>
                     <div className="Mypin-item" id={pin.id} onMouseOver={pinMouseOnHandler} onMouseOut={pinMouseOutHandler} onMouseDown={pinClickHandler}>
                         <img className="pin-img" src={pin.insight.imgPath}/>
                         <div className="noclick">
-                            {/* <div className="pin-edit-del">
+                            <div className="pin-edit-del">
                                 <img className="Mypin-edit" src={edit} id={pin.id} onMouseDown={pinEditHandler}/>
                                 <img className="pin-del" src={bin} id={pin.id} onMouseDown={pinDelHandler}/>
-                            </div> */}
+                            </div>
                             <div className="pin-tag-container">
                                 {pin.tagList.map( tag => (<span className="Mypin-tag">#{tag}&nbsp;</span>))}
                             </div>
@@ -377,8 +388,9 @@ function Pinbox(props) {
                     </div>
                 </li>
                 ))}
-                {/* <PinEdit pinEditModalOpen={pinEditModalOpen} close={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/> */}
-            </ul>
+                <PinEdit pinEditModal2Open={pinEditModal2Open} closePinEditModal2={closePinEditModal2} clickedPin={clickedPin} editPosition={editPosition}/>
+            </ul> */}
+            </>}
         </div>
      </>
     );

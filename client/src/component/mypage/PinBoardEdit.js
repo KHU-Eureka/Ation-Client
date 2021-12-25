@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
 import "../../assets/css/mypage/PinBoardAdd.css";
-import logo from "../../assets/svg/logo.svg";
+import logo2 from "../../assets/svg/logo2.svg";
 
 function PinBoardEdit(props) {
     const cookies = new Cookies;
@@ -36,49 +36,49 @@ function PinBoardEdit(props) {
         setPinBoardName(e.target.value);
     }
 
-    const PersonaSetting = async () => {
-        const token = cookies.get('token');
-        const response = await axios.get(
-            'http://163.180.117.22:7218/api/persona',
-            {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            }
-          );
-        const response2 = await axios.get(
-            'http://163.180.117.22:7218/api/persona/user', 
-            {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-        setClickedPersonaId(response2.data.id);
-        for(var i of response.data) {
-            if(i.id === response2.data.id) {
-                setPersonas([i]);
-            } 
-        }
-        for(var i of response.data) {
-            if(i.id !== response2.data.id) {
-                setPersonas(prev => [...prev, i]);
-            } 
-        }
-    }
+    // const PersonaSetting = async () => {
+    //     const token = cookies.get('token');
+    //     const response = await axios.get(
+    //         'http://163.180.117.22:7218/api/persona',
+    //         {
+    //             headers: {
+    //                 Authorization: "Bearer " + token
+    //             }
+    //         }
+    //       );
+    //     const response2 = await axios.get(
+    //         'http://163.180.117.22:7218/api/persona/user', 
+    //         {
+    //         headers: {
+    //             Authorization: "Bearer " + token
+    //         }
+    //     })
+    //     setClickedPersonaId(response2.data.id);
+    //     for(var i of response.data) {
+    //         if(i.id === response2.data.id) {
+    //             setPersonas([i]);
+    //         } 
+    //     }
+    //     for(var i of response.data) {
+    //         if(i.id !== response2.data.id) {
+    //             setPersonas(prev => [...prev, i]);
+    //         } 
+    //     }
+    // }
 
-    useEffect(() => {
-        PersonaSetting();
-    }, [BoardEditPosition])
+    // useEffect(() => {
+    //     PersonaSetting();
+    // }, [BoardEditPosition])
 
-    const personaClickHandler = async (e) => {
-        setClickedPersonaId(e.target.getAttribute("id"));
-    }
+    // const personaClickHandler = async (e) => {
+    //     setClickedPersonaId(e.target.getAttribute("id"));
+    // }
 
     const closeBtnClickHandler = async () => {
         const token = cookies.get('token');
         const response = await axios.put(`http://163.180.117.22:7218/api/pin-board/${clickedPinBoardID}`, {
                 "name": pinBoardName,
-                "personaId": clickedPersonaId
+                "personaId": 2
         }, {
             headers: {
                 Authorization: "Bearer " + token
@@ -91,13 +91,8 @@ function PinBoardEdit(props) {
     return (
     (pinBoardEditModalOpen?
     <div className="ModalPinBoardAdd-Container" ref={modalPinBoardEdit} style={style}>
-        <div className="PersonaImg-Container">
-            {personas.map( persona => (
-                <img className="persona-img" id={persona.id} src={persona.profileImgPath} onClick={personaClickHandler} width={100} height={100}/>
-            ))}
-        </div>
         <div className="Logo-container">
-            <img className="logo" src={logo}/>
+            <img className="logo" src={logo2}/>
         </div>
         <div className="NameInput-container">
             <input className="name-input" value={pinBoardName} onChange={nameInputChange} placeholder="새 핀보드명을 입력해주세요."/>

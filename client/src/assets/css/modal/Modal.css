@@ -196,6 +196,9 @@
 }
 
 .page1 {
+    position: absolute;
+    z-index: 99;
+    top: 1220px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -203,19 +206,15 @@
     background-color: #fff;
     border-radius: 18px;
     padding-bottom: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
 }
 
 .page2 {
-    animation: modal-show .3s;
-    margin:0 auto;
-    width: 321px;
-    height: 428px;
-    background-color: #fff;
-    border-radius: 18px;
-    padding-bottom: 24px;
-}
-
-.page3 {
+    position: absolute;
+    z-index: 99;
+    top: 1220px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -223,6 +222,25 @@
     background-color: #fff;
     border-radius: 18px;
     padding-bottom: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
+}
+
+.page3 {
+    position: absolute;
+    z-index: 99;
+    top: 1220px;
+    animation: modal-show .3s;
+    margin:0 auto;
+    width: 321px;
+    height: 362px;
+    background-color: #fff;
+    border-radius: 18px;
+    padding-bottom: 24px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
 }
 
 .prev {
@@ -247,7 +265,7 @@
 }
 
 .cate1 {
-    margin-top: 22px;
+    margin-top: 39px;
     margin-left: 34px;
 }
 

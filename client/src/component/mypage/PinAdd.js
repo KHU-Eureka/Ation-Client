@@ -46,7 +46,7 @@ function PinAdd(props) {
                 Authorization: "Bearer " + token
             }
         });
-        closeAddModal();
+        await closeAddModal();
         window.location.reload();
     }
 

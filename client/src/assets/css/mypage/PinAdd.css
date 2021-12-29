@@ -1,47 +1,90 @@
 .ModalAdd-Container {
     position: absolute;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
     top: 65px;
     left: 118px;
     width: 339px;
-    height: 382px;
+    height: auto;
     background: #FFFFFF;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 18px;
     z-index: 10;
 }
 
+.ModalAdd-Container > .Header-container {
+    margin-top: 32px;
+    margin-left: 35px;
+    height: 76px;
+}
+
+.ModalAdd-Container > .Header-container > .prev-img {
+    cursor: pointer;
+}
+
+.ModalAdd-Container > .Header-container > .header-title {
+    margin-top: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #352C23;
+    cursor: default;
+}
+
+.ModalAdd-Container > .Header-container > #header-title {
+    margin-top: 25px;
+}
+
+.ModalAdd-Container > .Header-container > .header-description {
+    margin-top: -5px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 0px;
+    color: #BEBBB9;
+    cursor: default;
+}
+
+.ModalAdd-Container > .Header-container > #header-description {
+    margin-top: 20px;
+}
+
 .ModalAdd-Container > .Url-container {
-    margin-top: 22px;
+    margin-left: 25px;
+    margin-top: 42px;
+    height: 162px;
 }
 
 .ModalAdd-Container > .Url-container > .url-input {
-    width: 274px;
-    height: 36px;
-    padding-left: 18.8px;
-    padding-top: 5px;
-    border: 1px solid #FF0000;
-    box-sizing: border-box;
-    border-radius: 18px;
+    padding-left: 6.5px;
+    padding-bottom: 7.5px;
+    width: 271px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom: 1px solid #807A74;
 }
 
 .ModalAdd-Container > .Url-container > .url-input::placeholder {
     font-family: Pretendard;
     font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 16px;
-    color: #BBBBBB;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #BEBBB9;
 }
 
 .ModalAdd-Container > .Url-container > .url-input:focus {
     outline: none;
 }
 
-.ModalAdd-Container > .PinBoard-container {
+
+
+
+/* .ModalAdd-Container > .Pinboard-container {
     width: 262px;
     height: 140px;
     margin-top: 20px;
@@ -54,8 +97,8 @@
     color: #313338;
 }
 
-/* 스크롤바 설정*/
-.ModalAdd-Container > .PinBoard-container::-webkit-scrollbar{
+
+.ModalAdd-Container > .Pinboard-container::-webkit-scrollbar{
     width: 4px;
     height: 140px;
     border: 1px solid #E7E6E5;
@@ -63,56 +106,191 @@
     border-radius: 7px;
 }
 
-/* 스크롤바 막대 설정*/
-.ModalAdd-Container > .PinBoard-container::-webkit-scrollbar-thumb{
+
+.ModalAdd-Container > .Pinboard-container::-webkit-scrollbar-thumb{
     background: #C4C4C4;
     border-radius: 7px;
 }
 
-.ModalAdd-Container > .PinBoard-container > .board-name {
+.ModalAdd-Container > .Pinboard-container > .board-name {
+    margin-bottom: 27px;
+    cursor: pointer;
+} */
+
+
+.ModalAdd-Container > .PersonaImg-container {
+    display: flex;
+    /* justify-content: flex-end;
+    align-items: flex-end; */
+    width: 154px;
+    height: 40px;
+    margin-top: 50px;
+    margin-left: 83.5px;
+}
+
+.ModalAdd-Container > .PersonaImg-container > .persona-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 17px;
+    border: 1px solid #E7E6E5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ModalAdd-Container > .Pinboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 260px;
+    height: 140px;
+    margin-top: 19.88px;
+    margin-left: 42px;
+    overflow: auto;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #313338;
+    cursor: pointer;
+}
+
+.ModalAdd-Container > .Pinboard-container > .pinboard {
+    cursor: pointer;
+}
+
+.pinboard-name {
     margin-bottom: 27px;
     cursor: pointer;
 }
 
-.ModalAdd-Container > .Tag-container {
-    display: flex;
-    width: 216px;
-    height: 66px;
+/* 스크롤바 설정*/
+.Pinboard-container::-webkit-scrollbar{
+    width: 4px;
+    height: 140px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+/* 스크롤바 막대 설정*/
+.Pinboard-container::-webkit-scrollbar-thumb{
+    background: #C4C4C4;
+    border-radius: 7px;
+}
+
+.ModalAdd-Container > .PinboardInput-container {
     margin-top: 20px;
-    margin-right: 42px;
+    margin-left: 31px;
 }
 
-.ModalAdd-Container > .Tag-container > .tag-after {
-    display: flex;
+.ModalAdd-Container > .PinboardInput-container > .pinboard-input {
+    width: 192px;
+    border: 0;
+    border-bottom: 2px solid #FE6740;
 }
 
-.ModalAdd-Container > .Tag-container > .tag-after > .tag {
-    position: relative;
-    width: auto;
-    height: 28px;
-    max-width: 103px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-right: 10px;
-    padding-top: 6px;
-    padding-left: 13px;
-    padding-right: 20px;
-    border: 1px solid #FF0000;
-    box-sizing: border-box;
-    border-radius: 18px;
+.ModalAdd-Container > .PinboardInput-container > .pinboard-input::placeholder {
     font-family: Pretendard;
     font-style: normal;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    color: #000000;
-    cursor: pointer;
-    background-image: url('../../svg/close.svg');
-    background-position: 90%;
+    color: #BBBBBB;
+}
+
+.ModalAdd-Container > .PinboardInput-container > .pinboard-input:focus {
+    outline: none;
+}
+
+.ModalAdd-Container > .PinboardInput-container > .pinboardInput-btn {
+    margin-left: 30px;
+    background: transparent;
+    border: 0;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE6740;
+}
+
+
+
+
+.ModalAdd-Container > .Tag-container > .tag-input {
+    position: relative;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom: 1px solid #807A74;
+    margin-top: 49px;
+    margin-left: 34px;
+    padding-bottom: 8.5px;
+    padding-left: 20px;
+    width: 253px;
+    background: url('../../svg/tag_insight.svg');
     background-repeat: no-repeat;
 }
 
+.ModalAdd-Container > .Tag-container > .tag-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #BEBBB9;
+}
+
+.ModalAdd-Container > .Tag-container > .tag-input:focus {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #352C23;
+    outline: none;
+}
+
+.ModalAdd-Container > .Tag-container > .tag-length {
+    position: absolute;
+    top: 188px;
+    left: 15px;
+    width: 292px;
+    height: 13px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    color: #F24822;
+}
+
+.ModalAdd-Container > .TagAfter-container {
+    width: 262px;
+    margin-left: 34px;
+    margin-top: 40px;
+}
+
+.ModalAdd-Container > .TagAfter-container > .tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 14px 5px 25.73px;
+    background: #FE6740;
+    border-radius: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: url('../../svg/close_inTag.svg') #FE6740;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    cursor: pointer;
+}
+
+/* 
 .ModalAdd-Container > .Tag-container > .tag-before {
     width: 53px;
     height: 28px;
@@ -135,24 +313,45 @@
     background-image: none; 
     outline: none;
     cursor: text;
+} */
+
+.ModalAdd-Container > .Next-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 314px;
+    margin-top: 59px;
+    margin-bottom: 24px;
 }
 
-.ModalAdd-Container > .Close-container {
-    margin-top: 20px;
-    padding-left: 198px;
-}
-
-.ModalAdd-Container > .Close-container > .close-btn {
-    padding: 10px 16px;
-    background: #FFFFFF;
-    border: 1px solid #BBBBBB;
-    box-sizing: border-box;
-    border-radius: 18px;
+.ModalAdd-Container > .Next-container > .next-btn {
+    padding: 10px 25px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
-    line-height: 16px;
-    color: #BBBBBB;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FE3400;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.ModalAdd-Container > .Next-container > .skip-btn {
+    padding: 10px 25px;
+    margin-right: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    color: #FFA48C;
+    background: #FFFFFF;
+    border: 1px solid #FFA48C;
+    box-sizing: border-box;
+    border-radius: 50px;
     cursor: pointer;
 }

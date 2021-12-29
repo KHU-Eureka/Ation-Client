@@ -24,11 +24,13 @@ function Read() {
     const [error, setError] = useState(null);
     const [search, setSearch] = useState("");
     const [cate, setCate] = useState("전체");
+    const [cateId, setCateId] = useState(0);
     const [personaImg, setPersonaImg] = useState([]);
     const [personaId, setPersonaId] = useState(0);
     const [insightId, setInsightId] = useState(0);
     const [userName, setUserName] = useState("");
     const [pinPosition, setpinPosition] = useState([]);
+    const [addTrue, setAddTrue] = useState(false);
 
     //modal...
     const [modalOpen, setModalOpen] = useState(false);
@@ -102,20 +104,19 @@ function Read() {
             const response = await axios.get(
                 'http://163.180.117.22:7218/api/insight'
               );
-            console.log(response.data);
+            console.log(cate);
             for (var i of response.data) { 
                if(cate === i.insightMainCategory.name) {
                 cateList.push(i);
                }
               }
-            setInsight(cateList);
+            await setInsight(cateList);
             console.log(cateList);
         } else {
             const response = await axios.get(
                 'http://163.180.117.22:7218/api/insight'
               );
             setInsight(response.data);
-            console.log("asdf");
         }
       }, [cate]);
 
@@ -144,7 +145,7 @@ function Read() {
     }
 
     const imgMouseOverHandler = (e) => {
-        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'siteImg') {
+        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'pin-circle') {
             let temp = e.target.parentNode.getElementsByClassName("pin-box");
             temp[0].classList.add("pin-up");
         } else {
@@ -154,7 +155,7 @@ function Read() {
     }
 
     const imgMouseOutHandler = (e) => {
-        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'siteImg') {
+        if(e.target.className !== 'pin' && e.target.className !== 'siteName' && e.target.className !== 'pin-circle') {
             let temp = e.target.parentNode.getElementsByClassName("pin-box");
             temp[0].classList.remove("pin-up");
         } else {
@@ -171,6 +172,28 @@ function Read() {
 
     const searchSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
+            // let searchInsight = []
+            // if(cate === '전체') {
+            //     const response = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+            //       );
+            //     setInsight(response.data);
+            // } else {
+            //     const response = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/main-category/${cateId}`
+            //     );
+            //     const response2 = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+            //     );
+            //     for(var i of response.data) {
+            //         for(var j of response2.data) {
+            //             if(i.id === j.id) {
+            //                 searchInsight.push(j);
+            //             }
+            //         }
+            //     }
+            //     setInsight(searchInsight);
+            // }
             const response = await axios.get(
                 `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
               );
@@ -180,11 +203,14 @@ function Read() {
     }
 
     useEffect( async () => {
-        const response = await axios.get(
-            'http://163.180.117.22:7218/api/insight'
-          );
-        setInsight(response.data);
-    }, [insight])
+        if(addTrue) {
+            const response = await axios.get(
+                'http://163.180.117.22:7218/api/insight'
+              );
+            setInsight(response.data);
+            setCate("전체");
+        }
+    }, [addTrue])
   
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
@@ -200,10 +226,10 @@ function Read() {
                     <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
                 </div>
                 <button className="search-btn" onClick={()=> {setPageNum(1); openModal();}}>+ Insight</button>
-                <Create modalOpen={modalOpen} pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev}/>
+                <Create modalOpen={modalOpen} pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev} setAddTrue={setAddTrue}/>
             </div>
             <div className="Content-container">
-                <InsightLNB cate={setCate} setInsight={setInsight}/>
+                <InsightLNB cate1={cate} cate={setCate} setInsight={setInsight} search={search} setCateId={setCateId}/>
                 <div className="img-container">
                     <ul className="img-ul">
                     {insight.map(i => (
@@ -219,7 +245,7 @@ function Read() {
                                 <span className="tag" id={i.id}> #{tag.name}</span>
                             ))}
                             <div className="site-container">
-                                <img className="siteImg"/>
+                                <img className="pin-circle" src={i.icon}></img>
                                 <p className="siteName">{i.siteName}</p>
                             </div>
                         </div>

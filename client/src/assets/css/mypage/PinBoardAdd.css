@@ -38,8 +38,11 @@
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    letter-spacing: -1.5px;
     color: #BBBBBB;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container > .name-input:focus {
+    outline: none;
 }
 
 .ModalPinBoardAdd-Container > .NameInput-container > .close-btn {
@@ -56,4 +59,5 @@
     font-size: 16px;
     line-height: 16px;
     color: #BBBBBB;
+    cursor: pointer;
 }

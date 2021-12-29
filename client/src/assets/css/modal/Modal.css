@@ -148,6 +148,7 @@
     font-weight: 500;
     font-size: 18px;
     line-height: 18px;
+    cursor: default;
 }
 
 .create-input {
@@ -171,7 +172,9 @@
     color: #BEBBB9;
 }
 
-
+.create-input:focus {
+    outline: none;
+}
 
 
 
@@ -179,20 +182,20 @@
     margin-left: 230px;
     margin-top: 178.5px;
 
-    background-color: #fff;
-    border: 1px solid #FE6740;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
     box-sizing: border-box;
-    border-radius: 14.5px;
+    border-radius: 50px;
 
-    width: 67px;
-    height: 29px;
+    width: 76px;
+    height: 37px;
 
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
-    line-height: 17px;
-    color: #FE6740;
+    color: #FE3400;
+    cursor: pointer;
 }
 
 .page1 {
@@ -228,13 +231,15 @@
 }
 
 .page3 {
+    display: inline-block;
     position: absolute;
     z-index: 99;
     top: 1220px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
-    height: 362px;
+    /* height: 362px; */
+    height: auto;
     background-color: #fff;
     border-radius: 18px;
     padding-bottom: 24px;
@@ -246,11 +251,13 @@
 .prev {
     margin-top: 32px;
     margin-left: 35px;
+    cursor: pointer;
 }
 
 .create-title {
     margin-top: 14px;
     margin-left: 34px;
+    cursor: default;
 }
 
 .page2-description {
@@ -262,6 +269,7 @@
     font-size: 11px;
     line-height: 13px;
     color: #BEBBB9;
+    cursor: default;
 }
 
 .cate1 {
@@ -287,36 +295,99 @@
     height: 28px;
 
     margin-right: 8px;
+    cursor: pointer;
+}
+
+.page3 > .main-category {
+    margin-top: 39px;
+    margin-left: 29px;
+    display:inline-block;
+    width: auto;
+    background: #FE6740;
+    border-radius: 14px;
+    padding: 5px 20px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    /* display: flex;
+    align-items: center; */
+    color: #FFFFFF;
+}
+
+.page3 > .subCate-Container {
+    margin-top: 15px;
+    margin-left: 29px;
+    width: 290px;
+}
+
+.page3 > .subCate-Container > .category-btn {
+    display:inline-block;
+    width: auto;
+    margin-right: 8px;
+    margin-bottom: 15px;
+    padding: 5px 20px;
+    border: 1px solid #807A74;
+    box-sizing: border-box;
+    border-radius: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #807A74;
+}
+
+.cateBtn-clicked {
+    border: none;
+    background: #FE6740;
+    color: #FFFFFF;
+}
+
+.page3 > .subCate-Container > .cateBtn2-clicked {
+    border: none;
+    background: #FE6740;
+    color: #FFFFFF;
 }
 
 .tag-title {
-    margin-top: 33px;
+    margin-top: 14px;
     margin-left: 34px;
-
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
     line-height: 18px;
-
     color: #352C23;
+    cursor: default;
+}
+
+.tag-description {
+    margin-top: 4px;
+    margin-left: 34px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #BEBBB9;
+    cursor: default;
 }
 
 .tag-input {
+    position: relative;
     border-left-width: 0px;
     border-right-width: 0px;
     border-top-width: 0px;
     border-bottom: 1px solid #807A74;
-
-    margin-top: 14px;
+    margin-top: 49px;
     margin-left: 34px;
     padding-bottom: 8.5px;
     padding-left: 20px;
-
-    width: 255px;
-    background: transparent;
-
-    /* display:inline; */
+    width: 253px;
+    background: url('../../svg/tag_insight.svg');
+    background-repeat: no-repeat;
+    /* background-position: 16px; */
 }
 
 .tag-input::placeholder {
@@ -325,8 +396,59 @@
     font-weight: 500;
     font-size: 11px;
     line-height: 13px;
-
     color: #BEBBB9;
+}
+
+.tag-input:focus {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #352C23;
+    outline: none;
+}
+
+.page3 > .tag-after {
+    position: relative;
+    display: inline-block;
+    width: 267px;
+    height: auto;
+    margin-left: 34px;
+    margin-top: 40px;
+}
+
+.page3 > .tag-after > .tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 14px 5px 25.73px;
+    background: #FE6740;
+    border-radius: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: url('../../svg/close_inTag.svg') #FE6740;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    cursor: pointer;
+}
+
+.page3 > .tag-length {
+    position: absolute;
+    top: 185px;
+    left: 15px;
+    width: 292px;
+    height: 13px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    color: #F24822;
 }
 
 .tag-btn {
@@ -348,63 +470,99 @@
     left: 55.5%;
 }
 
+.page3 >.skip-btn {
+    /* position: absolute; */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* top: 221px;
+    left: 104px; */
+    width: 102px;
+    height: 37px;
+    background: #FFFFFF;
+    border: 1px solid #FFA48C;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FFA48C;
+    margin-left: 104px;
+    margin-top: 0px;
+}
+
+.page3 > .create-btn2 {
+    margin-left: 14px;
+    margin-top: 0px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+
+    width: 76px;
+    height: 37px;
+
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #FE3400;
+    cursor: pointer;
+}
+
 .complete-title {
     margin-top: 14px;
     margin-left: 28px;
+    cursor: default;
 }
 
 .complete-description {
     margin-top: 13px;
     margin-left: 30px;
-
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
-        
     color: #BEBBB9;
+    cursor: default;
 }
 
 .close {
     border: 1px solid #BEBBB9;
     box-sizing: border-box;
     border-radius: 14.5px;
-
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     line-height: 17px;
     color: #BEBBB9;
-
     background-color: transparent;
-
     width: 67px;
     height: 29px;
-
     margin-left: 147px;
     margin-top: 50.5px;
+    cursor: pointer;
 }
 
 .complete-btn {
-    /* margin-left: 230px;
-    margin-top: 178.5px; */
-
-    background-color: #fff;
-    border: 1px solid #FE6740;
+    margin-top: 41px;
+    margin-left: 230px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
     box-sizing: border-box;
-    border-radius: 14.5px;
-
-    width: 67px;
-    height: 29px;
-
+    border-radius: 50px;
+    width: 76px;
+    height: 37px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
     font-size: 15px;
     line-height: 17px;
-    color: #FE6740;
+    color: #FE3400;
+    cursor: pointer;
 }
 
 .filebox .upload-file {
@@ -415,23 +573,20 @@
 .filebox label {
     display: inline-block;
     vertical-align: middle;
-    background-color: transparent;
-   
+    background-color: transparent; 
     margin-left: 106px;
     margin-top: 15px;
     padding-bottom: 2.5px;
-
-    width: 105px;
+    width: 90.5px;
     height: 12px;
     border-bottom: 1px solid #807A74;
-
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
-
     color: #807A74;
+    cursor: pointer;
 }
 
 .filebox input[type="file"] {
@@ -449,15 +604,12 @@
     border-radius: 11.5px;
     width: 152px;
     height: 80px;
-
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
     color: #E7E6E5;
-
-    padding-left: 34px;
     margin-top: 41px;
     margin-left: 81px;
 }
@@ -473,7 +625,6 @@
     font-size: 18px;
     line-height: 18px;
     color: #352C23;
-
     position: absolute;
     top: 58.7%;
     left: 43.7%;

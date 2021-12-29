@@ -54,7 +54,7 @@
 }
 
 .Idaition-container {
-    background-color: #f751db91;
+    background-color: #FE6740;
     width: 100%;
     height: 139.87px;
     margin-top: 197px;
@@ -67,4 +67,6 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 80px;
+    height: auto;
+    min-height: 1000px;
 }

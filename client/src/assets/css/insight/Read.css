@@ -78,7 +78,7 @@
 .img-container {
     display: flex;
     flex-direction: row;
-    /* margin-left: 72px; */
+    margin-left: 72px;
 }
 
 .thumbnail-box {

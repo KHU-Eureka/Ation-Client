@@ -2,6 +2,8 @@ import { React, useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
+import Create from "./Create";
+
 import "../../assets/css/modal/PinEditModal.css";
 import prev from "../../assets/svg/prev.svg";
 
@@ -17,6 +19,9 @@ function PinUP(props) {
     const [pinBoardId, setPinBoardId] = useState(0);
     const [pinBoardName, setPinBoardName] = useState("");
     const [clickPersonaImg, setClickPersonaImg] = useState("");
+    const [prevImgUrl, setPrevImgUrl] = useState("");
+    const [ChangeImgFormdata, setChangeImgFormdata] = useState(null);
+    const [newPinId, setNewPinId] = useState(0);
 
     let style = {
         top: pinPosition[1],
@@ -25,8 +30,12 @@ function PinUP(props) {
 
     const PinUpCloseHandler = ({ target }) => {
         console.log(target);
-        if(open && !PinUp.current.contains(target) && target.className !== 'pin' && target.className !== 'PinUpClose-btn') {
-            close();
+        if(target.className !== 'complete-btn') {
+            if(open && !PinUp.current.contains(target) && target.className !== 'pin' && target.className !== 'PinUpClose-btn') {
+                setPageNum(1);
+                setPinBoardId(0);
+                close();
+            }
         }
     }
 
@@ -52,6 +61,7 @@ function PinUP(props) {
     }
     
     const personaImgClickHandler = (e) => {
+        setPinBoardId(0);
         setPersona(e.target.getAttribute("value"));
         // setClickPersonaImg(e.target.getAttribute("src"))
         console.log(e.target.getAttribute("src"));
@@ -65,9 +75,10 @@ function PinUP(props) {
 
     useEffect(() => {
         setPersona(personaId);
-        if(personaImg.length===3) {
+        const persona_img = document.querySelectorAll('.persona-img');
+        if(open && personaImg.length===3 && persona_img[0]!==undefined) {
             setClickPersonaImg(personaImg[0].profileImgPath);
-            console.log(personaImg[0].profileImgPath);
+            persona_img[0].classList.add('clickedPersona');
         }
     }, [open, personaImg])
 
@@ -97,6 +108,26 @@ function PinUP(props) {
             setPinBoardName(pinInputValue);
     }
 
+    const pinboardCreateSubmitHandler = async (e) => {
+        if(e.key === 'Enter') {
+            const token = cookies.get('token');
+            const response = await axios.post(
+                'http://163.180.117.22:7218/api/pin-board',
+                {
+                    "name": pinInputValue,
+                    "personaId": persona
+                }
+                ,
+                    {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                        }
+                    }
+                );
+                setPinBoardName(pinInputValue);
+        }
+    }
+
     const pinboadClickHandler = async (e) => {
         setPinBoardId(e.target.getAttribute('id'));
         setPinBoardName(e.target.innerHTML);
@@ -108,34 +139,63 @@ function PinUP(props) {
     }
 
     const nextPageHandler = async () => {
-        console.log(pageNum);
         const token = cookies.get('token');
         if(pageNum < 2) {
             setPageNum(pageNum+1);
-            if(pageNum == 1) {
-                await axios.post('http://163.180.117.22:7218/api/pin/up', {
-                        "insightId": insightId,
-                        "pinBoardId": pinBoardId
-                },
-                {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    }
-                });
+            if(pageNum === 1) {
+                if(pinBoardId !== 0) {
+                    const response = await axios.post('http://163.180.117.22:7218/api/pin/up', {
+                            "insightId": insightId,
+                            "pinBoardId": pinBoardId
+                    },
+                    {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                        }
+                    });
+                    setNewPinId(response.data);
+                } else {
+                    setPageNum(1);
+                }
             }
         } else {
-            setPageNum(2);
+            if(ChangeImgFormdata !== null) {
+                const response = await axios.post(`http://163.180.117.22:7218/api/pin/image/${newPinId}`, ChangeImgFormdata);
+            }
+            setPinBoardId(0);
+            setPageNum(1);
+            close();
         }
     }
 
-    const closeBtnClickHandler = () => {
-        close();
-        window.location.reload();
+    const onPrevHandler=() => {
+        if(pageNum > 1) {
+            setPageNum(pageNum-1);
+        } else {
+            setPageNum(1);
+        }
     }
 
-    const pinBoardGoClickHandler = () => {
-        window.location.replace('/mypage');
+    async function readImage (e) {
+        var formData = new FormData();
+        formData.append('pinImg', e.target.files[0]);
+        console.log(formData);
+        setChangeImgFormdata(formData);
+        const reader = new FileReader();
+        setPrevImgUrl(URL.createObjectURL(e.target.files[0]));
+        reader.readAsDataURL(e.target.files[0]);
     }
+
+    useEffect( async () => {
+        const response = await axios.get(`http://163.180.117.22:7218/api/insight/${insightId}`);
+        setPrevImgUrl(response.data.imgPath);
+    }, [insightId]);
+
+    useEffect(() => {
+        const previewImage = document.getElementsByClassName("upload-file");
+        previewImage.src = prevImgUrl.substring(5);
+        console.log(prevImgUrl.substring(5))
+    }, [prevImgUrl])
 
     if(open) {
         if(pageNum === 1) {
@@ -152,7 +212,7 @@ function PinUP(props) {
                     ))}
                 </div>
                 <div className="PinboardInput-container">
-                    <input className="pinboard-input" value={pinInputValue} onChange={pinboardChangeHandler} placeholder="새 핀보드명을 입력해주세요." />
+                    <input className="pinboard-input" value={pinInputValue} onChange={pinboardChangeHandler} onKeyPress={pinboardCreateSubmitHandler} placeholder="새 핀보드명을 입력해주세요." />
                     <button className="pinboard-btn" onClick={pinboardCreateClickHandler}>추가</button>
                 </div>
                 <div className="PinUpClose-container">
@@ -162,24 +222,21 @@ function PinUP(props) {
             );
         } else if (pageNum === 2) {
             return (
-            <div className="Pinup-container2" ref={PinUp} style={style}>
-                <div className="header-container">
-                    <img className="header" src={prev}/>
-                </div>
-                <div className="persona-container">
-                    <img className="persona" src={clickPersonaImg}/>
-                </div>
-                <div className="pinBoard-container">
-                    <p className="pinBoard">{pinBoardName}</p>
-                    <p className="pinBoardComment">에 저장 했어요 !</p>
-                </div>
-                <div className="pinBoardBTN-container">
-                    <span className="pinBoardBTN" onClick={pinBoardGoClickHandler}>핀 보드로 바로 가기</span>
-                    <button className="closeBTN" onClick={closeBtnClickHandler}>다음</button>
-                </div>
+            <div className="Pinup-container" ref={PinUp} style={style} ref={PinUp}>
+                <img className="prev" src={prev} onClick={onPrevHandler}/>
+                <div className="complete-title">인사이트 추가 완료!</div>
+                    <div className="complete-description">당신의 인사이트가 누군가에겐 큰 영감이 될 거에요:)</div>
+                    <div className="filebox">
+                        <img className="upload-file" value="Thumbnail" src={prevImgUrl}/>
+                        <label for="file">썸네일 이미지 변경</label> 
+                        <input type="file" id="file" onChange={readImage}/>
+                    </div>
+                    <div className="completeBtn-container">
+                        <button className="complete-btn" onClick={nextPageHandler}>완료</button>
+                    </div>
             </div>
             );
-        }
+        } 
     } else {
         return(
             null

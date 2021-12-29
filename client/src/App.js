@@ -5,6 +5,8 @@ import Insight_Read from "../src/component/insight/Read";
 import Insight_Create from "../src/component/insight/Create";
 import MyPage from "../src/component/mypage/MyPage";
 
+import './App.css';
+
 function App() {
   return (
     <div className="App">

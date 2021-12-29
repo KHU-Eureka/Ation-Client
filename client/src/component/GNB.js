@@ -1,4 +1,5 @@
 import { React } from "react";
+import { Link } from "react-router-dom";
 
 import "../assets/css/GNB.css";
 import bell from "../assets/svg/bell.svg";
@@ -15,10 +16,14 @@ function GNB() {
                 <span className="lounge-btn">Lounge</span>
                 </li>
                 <li className="btn-li">
+                <Link to="/insight">
                 <span className="insight-btn">Insight</span>
+                </Link>
                 </li>
                 <li className="btn-li">
+                <Link to="/mypage">
                 <span className="mypage-btn">Mypage</span>
+                </Link>
                 </li>
             </div>
             <div className="Profile-container">

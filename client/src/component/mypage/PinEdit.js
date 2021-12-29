@@ -15,6 +15,7 @@ function PinEdit(props) {
     const [afterPinboardId, setAfterPinboardId] = useState(0);
     const [afterTag, setAfterTag] = useState([]);
     const [tagValue, setTagValue] = useState("");
+    const [pinboardInputValue, setPinBoardInputValue] = useState("");
 
     let style = {
         top:editPosition[1],
@@ -85,14 +86,32 @@ function PinEdit(props) {
 
     useEffect(() => {
         pinboardImport();
-    }, [clickedPersonaId]);
+    }, [clickedPersonaId, afterPinboardId]);
+
+    useEffect(() => {
+        const persona_img = document.querySelectorAll('.persona-img');
+        if(pinEditModalOpen && personas.length===3 && persona_img[0]!==undefined) {
+            setClickedPersonaId(personas[0].id);
+            persona_img[0].style.border="1px solid #FE3400";
+        }
+    }, [pinEditModalOpen]);
 
     const personaClickHandler = async (e) => {
         setClickedPersonaId(e.target.getAttribute("id"));
+        const personaList = document.querySelectorAll('.persona-img');
+        for(var i=0;i<personaList.length;i++) {
+            personaList[i].style.border="0";
+        }
+        e.target.style.border="1px solid #FE3400";
     }
 
     const pinboardClickHandler = (e) => {
         setAfterPinboardId(e.target.getAttribute("id"));
+        const pinBoardList = document.querySelectorAll('.pinboard-name');
+        for(var i=0;i<pinBoardList.length;i++) {
+            pinBoardList[i].style.color="#352C23";
+        }
+        e.target.style.color="#FE3400";
     }
 
     const closeBtnClickHandler = async () => {
@@ -106,8 +125,7 @@ function PinEdit(props) {
                 Authorization: "Bearer " + token
             }
         })
-        alert("핀이 수정되었습니다");
-        closeEditModal();
+        await closeEditModal();
         window.location.reload();
     }
 
@@ -120,10 +138,10 @@ function PinEdit(props) {
         const tags = document.createElement('div');
         tags.className = 'tag';
         tags.addEventListener('click', () => {
-            tag_after.removeChild(tags);
+            setAfterTag(afterTag.filter( tag => tag !== tags.innerHTML));
           })
-        if(window.event.keyCode == 13) {
-            if(afterTag.length < 2) {
+        if(window.event.keyCode === 13) {
+            if(afterTag.length < 5) {
                 console.log(afterTag.length);
                 setAfterTag( prev => [...prev, tagValue]);
                 setTagValue("");
@@ -131,17 +149,51 @@ function PinEdit(props) {
         }
     }
 
-    useEffect(() => {
-        console.log(afterTag);
-        if(document.querySelector('.tag')){
-            const tags = document.querySelectorAll('.tag');
-            for(var i = 0; i<tags.length; i++) {
-                tags[i].addEventListener('click', (e) => {
-                    setAfterTag(afterTag.filter( tagValue => tagValue !== e.target.innerHTML.substr(2)));
-                  });
+    const tagClickHandler = (e) => {
+        setAfterTag(afterTag.filter( tag => tag !== e.target.innerHTML));
+    }
+
+    const pinboardInputChangeHandler = (e) => {
+        setPinBoardInputValue(e.target.value);
+    }
+
+    const pinboardCreateClickHandler = async () => {
+        const token = cookies.get('token');
+        const response = await axios.post(
+            'http://163.180.117.22:7218/api/pin-board',
+            {
+                "name": pinboardInputValue,
+                "personaId": clickedPersonaId
+              }
+            ,
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    }
                 }
+            );
+        setAfterPinboardId(response.data);
+    }
+
+    const pinboardCreateSubmitHandler = async (e) => {
+        if(e.key === 'Enter') {
+            const token = cookies.get('token');
+        const response = await axios.post(
+            'http://163.180.117.22:7218/api/pin-board',
+            {
+                "name": pinboardInputValue,
+                "personaId": clickedPersonaId
+              }
+            ,
+                {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                    }
+                }
+            );
+        setAfterPinboardId(response.data);
         }
-    }, [afterTag]);
+    }
 
     return (
     <>
@@ -157,17 +209,21 @@ function PinEdit(props) {
                 <p className="pinboard-name" id={pinboard.id} onClick={pinboardClickHandler}>{pinboard.name}</p>
             ))}
         </div>
+        <div className="PinBoardName-Container">
+            <input className="pinboard-input" value={pinboardInputValue} onChange={pinboardInputChangeHandler} onKeyPress={pinboardCreateSubmitHandler} placeholder="새 핀보드명을 입력해주세요."/>
+            <button className="pinboardInput-btn" onClick={pinboardCreateClickHandler}>추가</button>
+        </div>
         <div className="Tag-Container">
             <div className="tag-after">
                 {afterTag?afterTag.map( tag => (
-                    <div className="tag"># {tag}</div>
+                    <div className="tag" onClick={tagClickHandler}>{tag}</div>
                 )):<></>}
+                {afterTag.length<5?
+                <input className="tag-before" value={tagValue} onChange={tagChangeHandler} onKeyPress={tagInputSubmitHandler} maxlength='8' placeholder="태그"/>:null}
             </div>
-                {afterTag.length!==2?
-                <input className="tag-before" value={tagValue} onChange={tagChangeHandler} onKeyPress={tagInputSubmitHandler} maxlength='8'/>:null}
         </div>
         <div className="CloseBtn-Container">
-            <button className="close-btn" onClick={closeBtnClickHandler}>저장</button>
+            <button className="close-btn" onClick={closeBtnClickHandler}>완료</button>
         </div>
     </div>
     ):null}

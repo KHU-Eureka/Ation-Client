@@ -1,0 +1,89 @@
+.DeleteModal-bg {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    background-color: rgba(34, 34, 34, 0.63);
+}
+
+.DeleteModal {
+    width: 339px;
+    height: 167px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+}
+
+.DeleteModal > .title-container {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    margin-top: 40px;
+    /* margin-left: 76px; */
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 21px;
+    color: #352C23;
+    cursor: default;
+}
+
+.DeleteModal > .description-container {
+    display: flex;
+    justify-content: center;
+    width: 330px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #352C23;
+    margin-top: 10px;
+    /* margin-left: 90px; */
+    cursor: default;
+}
+
+.DeleteModal > .closeBtn-container {
+    display: flex;
+    justify-content: space-around;
+    width: 190px;
+    margin-top: 19px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.DeleteModal > .closeBtn-container > .cancle-btn {
+    padding: 10px 25px;
+    background: #FFFFFF;  
+    border: 1px solid #807A74;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #807A74;
+    cursor: pointer;
+}
+
+.DeleteModal > .closeBtn-container > .delete-btn {
+    padding: 10px 25px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FE3400;
+    cursor: pointer;
+}

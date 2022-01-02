@@ -8,7 +8,7 @@ function Delete(props) {
     const cookies = new Cookies;
     const DelModal = useRef();
 
-    const {DeleteOpen, title, description, closeDeleteModal, deletePinId} = props;
+    const {DeleteOpen, title, description, closeDeleteModal, deletePinId, setAddTrue} = props;
 
     const DeleteModalCloseHandler = ({ target }) => {
         if (DeleteOpen && target.className==="DeleteModal-bg") {
@@ -30,20 +30,23 @@ function Delete(props) {
     const deleteClickHandler = async () => {
         if(description === "카드") {
             const token = cookies.get('token');
-            const response = await axios.delete(`http://163.180.117.22:7218/api/pin/${deletePinId}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/pin/${deletePinId}`, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
             })
+            closeDeleteModal();
             window.location.reload();
         } else {
             const token = cookies.get('token');
-            const response = await axios.delete(`http://163.180.117.22:7218/api/pin-board/${deletePinId}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/pin-board/${deletePinId}`, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
             });
-            window.location.reload();
+            setAddTrue(true);
+            closeDeleteModal();
+            // window.location.reload();
         }
     }
 

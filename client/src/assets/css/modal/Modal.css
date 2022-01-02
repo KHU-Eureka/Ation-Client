@@ -119,6 +119,15 @@
     }
 }
 
+.noPlayBtn {
+    color: #FFA48C !important;
+    border: 1px solid #FFA48C !important;
+}
+
+.noPlayBtn:hover {
+    background-color: transparent !important;
+}
+
 .header {
     display: none;
 }
@@ -196,6 +205,10 @@
     font-size: 15px;
     color: #FE3400;
     cursor: pointer;
+}
+
+.create-btn:hover {
+    background: #F5F5F5;
 }
 
 .page1 {
@@ -296,6 +309,14 @@
 
     margin-right: 8px;
     cursor: pointer;
+}
+
+.category-btn:hover {
+    background-color: #F5F5F5;
+}
+
+.cateBtn-clicked:hover {
+    background: #FE6740;
 }
 
 .page3 > .main-category {
@@ -490,6 +511,11 @@
     color: #FFA48C;
     margin-left: 104px;
     margin-top: 0px;
+    cursor: pointer;
+}
+
+.page3 >.skip-btn:hover {
+    background-color: #F5F5F5;
 }
 
 .page3 > .create-btn2 {
@@ -509,6 +535,10 @@
     font-size: 15px;
     color: #FE3400;
     cursor: pointer;
+}
+
+.page3 > .create-btn2:hover {
+    background-color: #F5F5F5;
 }
 
 .complete-title {
@@ -563,6 +593,10 @@
     line-height: 17px;
     color: #FE3400;
     cursor: pointer;
+}
+
+.complete-btn:hover {
+    background-color: #F5F5F5;
 }
 
 .filebox .upload-file {

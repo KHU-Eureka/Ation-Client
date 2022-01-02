@@ -134,6 +134,7 @@
     width: 374px;
     height: 210.04px;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .pin-edit-del {

@@ -234,3 +234,11 @@
     margin-bottom: 24px;
     cursor: pointer;
 }
+
+.PinUpClose-container > .PinUpClose-btn:hover {
+    background: #F5F5F5;
+}
+
+.Pinup-container > .completeBtn-container > .complete-btn:hover {
+    background: #F5F5F5;
+}

@@ -87,6 +87,7 @@
 
     background: #C4C4C4;
     border-radius: 10px;
+    object-fit: cover;
 }
 
 .img-ul .img-li {
@@ -124,9 +125,9 @@
 
 .site-container {
     position: absolute;
-    top: 327px;
+    top: 323px;
     left: 600px;
-    width: 83.75px;
+    width: 70px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
@@ -143,4 +144,16 @@
     line-height: 18px;
     color: #BEBBB9;
     margin-right: 15.95px;
+}
+
+.Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .pin-circle {
+    float: right;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+}
+
+.Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .siteName {
+    font-size: 18px;
 }

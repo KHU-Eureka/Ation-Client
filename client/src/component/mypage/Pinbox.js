@@ -33,6 +33,7 @@ function Pinbox(props) {
     const [deletePinId, setDeletePinId] = useState(0);
     const [deletePinBoardId, setDeletePinBoardId] = useState(0);
     const [searchTrue, setSearchTrue] = useState(false);
+    const [addTrue, setAddTrue] = useState(false);
 
     //modal...
     const [pinEditModalOpen, setPinEditModalOpen] = useState(false);
@@ -100,7 +101,7 @@ function Pinbox(props) {
 
     const PinBoardImport = async () => {
         const token = cookies.get('token');
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin-board/?personaId=${activePersonaId}`,{
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board/?personaId=${activePersonaId}`,{
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -121,10 +122,10 @@ function Pinbox(props) {
     const allPinHandler = async () => {
         const token = cookies.get('token');
         if(searchTrue) {
-            const response = await axios.get(`http://163.180.117.22:7218/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
             setAllPin(response.data);
         } else {
-            const response = await axios.get(`http://163.180.117.22:7218/api/pin?personaId=${activePersonaId}`,{
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin?personaId=${activePersonaId}`,{
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -154,7 +155,7 @@ function Pinbox(props) {
     // }, [input])
 
     const searchBtnClickHandler = async () => {
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
         setAllPin(response.data);
         setViewOption(0);
         setSearchTrue(true);
@@ -212,7 +213,7 @@ function Pinbox(props) {
             doc = e.target.parentNode.parentNode.parentNode;
         }
         const pinId = doc.getAttribute("id");
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/${pinId}`, {
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${pinId}`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -233,7 +234,7 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            // const response = await axios.get(`http://163.180.117.22:7218/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+            // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
             // setAllPin(response.data);
             setViewOption(0);
             setSearchTrue(true);
@@ -245,7 +246,7 @@ function Pinbox(props) {
         console.log(e.target);
         const token = cookies.get('token');
         const pinId = e.target.getAttribute('id');
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/${pinId}`, {
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${pinId}`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -275,7 +276,7 @@ function Pinbox(props) {
             const pinBoardId = e.currentTarget.getAttribute("id");
             document.querySelector(".pin-board-name").style.display="flex";
             document.querySelector(".pin-board-name").innerHTML = e.currentTarget.querySelector(".pinBoard-name").innerHTML;
-            const response = await axios.get(`http://163.180.117.22:7218/api/pin/pin-board/${pinBoardId}`, {
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/pin-board/${pinBoardId}`, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -312,6 +313,13 @@ function Pinbox(props) {
         openDeleteBoardModal();
     }
 
+    useEffect(() => {
+        if(addTrue) {
+            PinBoardImport();
+            setAddTrue(false);
+        }
+    }, [addTrue])
+
     return (
      <>
         <div className="PinTool-container" >
@@ -328,7 +336,7 @@ function Pinbox(props) {
                 </div>
                 <img className="pin-add" src={plus} onClick={pinAddClickHandler}/>
                 <PinAdd pinAddModalOpen={pinAddModalOpen} closeAddModal={closeAddModal} activePersonaId={activePersonaId}/>
-                <PinBoardAdd pinBoardAddModalOpen={pinBoardAddModalOpen} closePinBoardAddModal={closePinBoardAddModal} activePersonaId={activePersonaId}/>
+                <PinBoardAdd pinBoardAddModalOpen={pinBoardAddModalOpen} closePinBoardAddModal={closePinBoardAddModal} activePersonaId={activePersonaId} setAddTrue={setAddTrue}/>
             </div>
         </div>
         <div className="InsightContent-container">
@@ -386,8 +394,8 @@ function Pinbox(props) {
                 </li>
             ))}
             </ul>
-            <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID}/>
-            <Delete DeleteOpen={DeleteBoardOpen} closeDeleteModal={closeDeleteBoardModal} title={'핀보드'} description={'보드'} deletePinId={deletePinBoardId}/>
+            <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID} setAddTrue={setAddTrue}/>
+            <Delete DeleteOpen={DeleteBoardOpen} closeDeleteModal={closeDeleteBoardModal} title={'핀보드'} description={'보드'} deletePinId={deletePinBoardId} setAddTrue={setAddTrue}/>
             <ul className="pinItem-content">
                 {pins.length!==0?pins.map( pin => (
                 <li className="pin-item" key={pin.id} id={pin.id}>

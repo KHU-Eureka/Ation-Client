@@ -6,11 +6,12 @@ import Form01 from './createform/Form01';
 import Form02 from './createform/Form02';
 import Form03 from './createform/Form03';
 import Form04 from './createform/Form04';
+import Form05 from './createform/Form05';
 
 function Create() {
     const cookies = new Cookies();
     const navigation = new useNavigate();
-    const pageList = [ 1, 2, 3, 4 ]
+    const pageList = [ 1, 2, 3, 4, 5 ]
 
     let [formPage, setFormPage] = useState(1)
     let [formData, setFormData] = useState(null)
@@ -25,8 +26,8 @@ function Create() {
     let [mbti, setMbti] = useState("")
     let [job, setJob] = useState("")
     let [newCharmList, setNewCharmList] = useState(["","","",""])
-
-    let [postSuccess, setPostSuccess] = useState(false)
+    let [introduction, setIntroduction] = useState("")
+    let [isFirstPersona, setIsFirstPersona] = useState(false)
 
 
     const handleSubmit = (e) => {
@@ -39,10 +40,9 @@ function Create() {
 
     const postPersona = async () => {
         var token = cookies.get('token');
-        setPostSuccess(true);
         try {
             const res = await axios.post(
-                'http://163.180.117.22:7218/api/persona', 
+                'http://52.78.105.195/api/persona', 
                 {
                     nickname: nickname,
                     age: age,
@@ -52,6 +52,7 @@ function Create() {
                     job: job,
                     senseIdList: senseIdList,
                     interestIdList: interestIdList,
+                    introduction: introduction
                   }, {
                     headers: {
                         Authorization: "Bearer " + token
@@ -64,17 +65,15 @@ function Create() {
             if (formData != null) {
                 postProfileImg(personaId)
             }
-            alert("페르소나 등록에 성공했습니다!")
 
-            var isFirst = isFirstPersona(token)
             // 신규 유저라면
-            if (isFirst) {
+            if (isFirstPersona) {
                 changeActivePersona(personaId);
                 navigation('/landing', { state: {personaCreate: true}, replace: true })
             } 
             // 신규 유저가 아니라면
             else {
-                navigation('/mypage', { replace: true })                
+                navigation('/mypage', { state: {alert:{title: "페르소나 생성을 완료했습니다", subtitle: "활동을 시작해보세요!"}}})              
             }
             
 
@@ -84,30 +83,11 @@ function Create() {
         }
     }
 
-    const isFirstPersona = async (token) => {
-        try {
-            const res = await axios.get(
-                'http://163.180.117.22:7218/api/persona/user', {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            })
-            // 신규 페르소나인 경우
-            if (res.data.length === 1) {
-                return true;
-            } else {
-                return false
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     const postProfileImg = async (personaId) => {
         var token = cookies.get('token');
         try {
             await axios.post(
-                'http://163.180.117.22:7218/api/persona/image/' + personaId, formData, 
+                'http://52.78.105.195/api/persona/image/' + personaId, formData, 
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -124,10 +104,10 @@ function Create() {
         const token = cookies.get('token');
         try {
             await axios.put(
-                'http://163.180.117.22:7218/api/persona/user/' + personaId, 
+                'http://52.78.105.195/api/persona/user/' + personaId, {},
                 {
                     headers: {
-                        Authorizaation: "Bearee " + token
+                        Authorizaation: "Bearer " + token
                     }
                 }
             )
@@ -135,6 +115,30 @@ function Create() {
             console.log(err)
         }
     }
+
+    useEffect(()=> { // 신규 유저인지 파악
+        const getPersonaLength = async (token) => {
+            try {
+                const res = await axios.get(
+                    'http://52.78.105.195/api/persona', {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
+                // 신규 페르소나인 경우
+                if (res.data.length < 1) {
+                    setIsFirstPersona(true)
+                } else {
+                    setIsFirstPersona(false)
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        getPersonaLength();
+    
+    }, [])
 
     return (
         <form className="form-wrapper" onSubmit={ handleSubmit }>
@@ -161,7 +165,8 @@ function Create() {
                 { formPage===1 &&  <Form01 formData={formData} setFormData={setFormData} profileUrl={profileUrl} setProfileUrl={setProfileUrl}  setPhoto={setPhoto} nickname={nickname} setNickName={setNickName} job={job} setJob={setJob} age={age} setAge={setAge} gender={gender} setGender={setGender} nextPage={nextPage}></Form01> }
                 { formPage===2 &&  <Form02 interestIdList={interestIdList} setInterestIdList={setInterestIdList} nextPage={nextPage}></Form02> }
                 { formPage===3 &&  <Form03 nickname={nickname} charmList={charmList} setCharmList={setCharmList} newCharmList={newCharmList} setNewCharmList={setNewCharmList} mbti={mbti} setMbti={setMbti} nextPage={nextPage}></Form03> }
-                { formPage===4 &&  <Form04 senseIdList={senseIdList} setSenseIdList={setSenseIdList} nextPage={nextPage} postPersona={postPersona}></Form04> }
+                { formPage===4 &&  <Form04 senseIdList={senseIdList} setSenseIdList={setSenseIdList} nextPage={nextPage}></Form04> }
+                { formPage===5 &&  <Form05 introduction={introduction} setIntroduction={setIntroduction} postPersona={postPersona}></Form05> }
             </div>
 
 

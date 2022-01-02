@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
+import axios from 'axios';
+import Alert from '../views/Alert';
 import './MyPage.css';
 
 function MyPage() {
     const cookies = new Cookies();
     const navigation = useNavigate();
+    const { state } = useLocation();
 
+    let [showAlert, setShowAlert] = useState(false);
+    let [alertTitle, setAlertTitle] = useState("");
+    let [alertSubtitle, setAlertSubtitle] = useState("");
     let [personaList, setPersonaList] = useState([{}, {}, {}]);
+    let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState([null]);
     let [activePersonaId, setActivePersonaId] = useState();
 
@@ -16,18 +22,34 @@ function MyPage() {
         navigation('/create-persona');
     }
 
+    useEffect(() => { // state 존재 여부 검사
+        if (state !== null) {
+            // Alert 띄워야 하는지 검사
+            if (state.alert !== null) {
+                setAlertTitle(state.alert.title);
+                setAlertSubtitle(state.alert.subTitle);
+                setShowAlert(true);
+            }
+        }
+    }, [])
+
     useEffect(() => {
         const getPersonaList = async () => {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona', {
+                    'http://52.78.105.195/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
                     }
                 )
                 setPersonaList(res.data)
+                var temp = []
+                for(var persona of res.data) {
+                    temp = [...temp, persona.id]
+                }
+                setPersonaIdList(temp)
                 console.log(res.data)
                 console.log("personaList",personaList);
             } catch (err) {
@@ -40,7 +62,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona/user', {
+                    'http://52.78.105.195/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -58,10 +80,9 @@ function MyPage() {
 
     const changeActivePersona = async (personaId) => {
         const token = cookies.get('token')
-        console.log('token', token);
         try {
-            const res = await axios.put(
-                'http://163.180.117.22:7218/api/persona/user/' + personaId, {},
+            await axios.put(
+                'http://52.78.105.195/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -69,15 +90,13 @@ function MyPage() {
                 }
             )
             setActivePersonaId(personaId)
-            alert("활동 페르소나 변경 성공")
         } catch (err) {
-            alert("활동 페르소나 변경 실패")
             console.log(err)
         }
     }
 
     const editPersona = (personaId) => {
-        navigation('/persona-edit', { state: { personaId: personaId } })
+        navigation('/persona-edit', { state: { personaId: personaId, personaIdList: personaIdList } })
         console.log(personaId);
     }
 
@@ -85,6 +104,7 @@ function MyPage() {
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
+            <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div className="background-img">
                 <div className="profile-wrapper">
                     {

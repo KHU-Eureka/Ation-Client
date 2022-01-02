@@ -15,6 +15,7 @@ import MyPage from "../src/component/mypage/MyPage";
 
 
 import "./App.css";
+import "./Fonts.css";
 import "./Input.css";
 import "./Modal.css";
 

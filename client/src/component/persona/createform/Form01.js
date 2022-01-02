@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { MdCloudUpload } from 'react-icons/md';
+import { BsCheck2 } from 'react-icons/bs';
 
 function Form01(props) {
     const cookies = new Cookies();
@@ -45,7 +47,7 @@ function Form01(props) {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://163.180.117.22:7218/api/persona/duplicate?nickname=' + temp, {
+                'http://52.78.105.195/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
@@ -71,19 +73,19 @@ function Form01(props) {
             alertMsg += "닉네임 중복검사를 해주세요! \n"
         }
 
-        if (props.nickname == "") {
+        if (props.nickname === "") {
             validation = false
             alertMsg += " 닉네임"  
         }
-        if (props.job == "") {
+        if (props.job === "") {
             validation = false
             alertMsg += " 직업"
         }
-        if (props.age == false) {
+        if (props.age === false) {
             validation = false
             alertMsg += " 나이"
         }
-        if (props.gender == false) {
+        if (props.gender === false) {
             validation = false
             alertMsg += " 성별"
         }
@@ -110,7 +112,9 @@ function Form01(props) {
                         onChange={ (e)=>{ readImage(e.target); onChangeImg(e); } }
                     />
                     <div id="profile-photo-preview" style={{backgroundImage: 'url('+props.profileUrl+')'}}>
-                    <label htmlFor="profile-photo" id="profile-photo-label"></label> 
+                    <label htmlFor="profile-photo" id="profile-photo-label">
+                        <MdCloudUpload />
+                    </label> 
                     </div>            
 
             </div>
@@ -130,7 +134,7 @@ function Form01(props) {
                         value={ tempNickName }
                     />
                     <div
-                     style={{ position: 'relative', right: '-70px', color: (nickNameValidation ? '#0075FF' : '#F24822') }}
+                     style={{ color: (nickNameValidation ? '#0075FF' : '#F24822') }}
                      className="alert-msg">{ nickNameMsg }
                      </div>
                 </div>
@@ -183,7 +187,11 @@ function Form01(props) {
                             name="gender"
                             onChange={ (e)=>{props.setGender((e.target.value)*1)} }
                         />
-                        <label htmlFor="female">
+                        <BsCheck2
+                        id="check-icon"
+                        onClick={ (e)=>{props.setGender(1)} }
+                        />
+                        <label htmlFor="female" class="gender-label">
                             여
                         </label>
                     </div>
@@ -193,11 +201,16 @@ function Form01(props) {
                             id="male"
                             type="radio"
                             value="2"
-                            checked={props.gender==2}
+                            checked={props.gender===2}
                             name="gender"
+                            class="gender-radio"
                             onChange={ (e)=>{props.setGender((e.target.value)*1)} }
                         />
-                        <label htmlFor="male">
+                        <BsCheck2
+                        id="check-icon"
+                        onClick={ (e)=>{props.setGender(2)} }
+                        />
+                        <label htmlFor="male" class="gender-label">
                             남
                         </label>
                     </div>

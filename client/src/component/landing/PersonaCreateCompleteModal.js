@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BsCheck2 } from 'react-icons/bs';
 
 function PersonaCreateCompleteModal(props) {
 
@@ -12,7 +13,7 @@ function PersonaCreateCompleteModal(props) {
         >
             <div className="modal-wrapper">
                 <div className="modal-header" style={{ height: '100px' }}>
-                    <div className="completed-circle"></div>
+                    <div className="completed-circle"><BsCheck2 /></div>
                 </div>
 
                 <div className="modal-content">

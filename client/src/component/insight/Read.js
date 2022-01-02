@@ -54,7 +54,7 @@ function Read() {
     const PersonaSetting = async () => {
         const token = cookies.get('token');
         const response = await axios.get(
-            'http://163.180.117.22:7218/api/persona',
+            process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
                 headers: {
                     Authorization: "Bearer " + token
@@ -62,7 +62,7 @@ function Read() {
             }
           );
         const response2 = await axios.get(
-            'http://163.180.117.22:7218/api/persona/user', 
+            process.env.REACT_APP_SERVER_HOST + '/api/persona/user', 
             {
             headers: {
                 Authorization: "Bearer " + token
@@ -83,7 +83,7 @@ function Read() {
 
     const fetchUserName = async () => {
         const token = cookies.get('token');
-        const response = await axios.get('http://163.180.117.22:7218/api/auth', {
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth', {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -102,7 +102,7 @@ function Read() {
         if(cate !== "전체") {
             let cateList = [];
             const response = await axios.get(
-                'http://163.180.117.22:7218/api/insight'
+                process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
             console.log(cate);
             for (var i of response.data) { 
@@ -114,7 +114,7 @@ function Read() {
             console.log(cateList);
         } else {
             const response = await axios.get(
-                'http://163.180.117.22:7218/api/insight'
+                process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
             setInsight(response.data);
         }
@@ -124,7 +124,7 @@ function Read() {
         if(e.target.className !== 'pin') {
             let temp = e.target.getAttribute('id');
             const response = await axios.get(
-                `http://163.180.117.22:7218/api/insight/${temp}`
+                `${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`
               );
             window.open(response.data.url);
             console.log(e.target);
@@ -138,7 +138,7 @@ function Read() {
 
     const searchClickHandler = async() => {
         const response = await axios.get(
-            `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+            `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
           );
           console.log(response.data);
         setInsight(response.data);
@@ -195,7 +195,7 @@ function Read() {
             //     setInsight(searchInsight);
             // }
             const response = await axios.get(
-                `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+                `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
               );
               console.log(response.data);
             setInsight(response.data);
@@ -205,10 +205,11 @@ function Read() {
     useEffect( async () => {
         if(addTrue) {
             const response = await axios.get(
-                'http://163.180.117.22:7218/api/insight'
+                process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
             setInsight(response.data);
             setCate("전체");
+            setAddTrue(false);
         }
     }, [addTrue])
   

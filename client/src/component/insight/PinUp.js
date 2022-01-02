@@ -50,7 +50,7 @@ function PinUP(props) {
         console.log(persona)
         const token = cookies.get('token');
         const response = await axios.get(
-            `http://163.180.117.22:7218/api/pin-board/?personaId=${persona}`,
+            `${process.env.REACT_APP_SERVER_HOST}/api/pin-board/?personaId=${persona}`,
                 {
                     headers: {
                         Authorization: "Bearer " + token,
@@ -93,7 +93,7 @@ function PinUP(props) {
     const pinboardCreateClickHandler = async () => {
         const token = cookies.get('token');
         const response = await axios.post(
-            'http://163.180.117.22:7218/api/pin-board',
+            process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
             {
                 "name": pinInputValue,
                 "personaId": persona
@@ -110,21 +110,26 @@ function PinUP(props) {
 
     const pinboardCreateSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
+            console.log(persona)
             const token = cookies.get('token');
-            const response = await axios.post(
-                'http://163.180.117.22:7218/api/pin-board',
-                {
-                    "name": pinInputValue,
-                    "personaId": persona
-                }
-                ,
+            if(pinInputValue !== "" && persona !== undefined) {
+                const response = await axios.post(
+                    process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
                     {
-                        headers: {
-                            Authorization: "Bearer " + token,
-                        }
+                        "name": pinInputValue,
+                        "personaId": persona
                     }
-                );
-                setPinBoardName(pinInputValue);
+                    ,
+                        {
+                            headers: {
+                                Authorization: "Bearer " + token,
+                            }
+                        }
+                    );
+                    setPinBoardName(pinInputValue);
+            } else {
+                console.log('활동 페르소나를 설정하세요');
+            }
         }
     }
 
@@ -144,7 +149,7 @@ function PinUP(props) {
             setPageNum(pageNum+1);
             if(pageNum === 1) {
                 if(pinBoardId !== 0) {
-                    const response = await axios.post('http://163.180.117.22:7218/api/pin/up', {
+                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin/up', {
                             "insightId": insightId,
                             "pinBoardId": pinBoardId
                     },
@@ -160,7 +165,7 @@ function PinUP(props) {
             }
         } else {
             if(ChangeImgFormdata !== null) {
-                const response = await axios.post(`http://163.180.117.22:7218/api/pin/image/${newPinId}`, ChangeImgFormdata);
+                const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/pin/image/${newPinId}`, ChangeImgFormdata);
             }
             setPinBoardId(0);
             setPageNum(1);
@@ -187,7 +192,12 @@ function PinUP(props) {
     }
 
     useEffect( async () => {
-        const response = await axios.get(`http://163.180.117.22:7218/api/insight/${insightId}`);
+        const token = cookies.get('token');
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${insightId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
         setPrevImgUrl(response.data.imgPath);
     }, [insightId]);
 
@@ -195,7 +205,17 @@ function PinUP(props) {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
         console.log(prevImgUrl.substring(5))
-    }, [prevImgUrl])
+    }, [prevImgUrl]);
+
+    useEffect(() => {
+        if(pageNum === 1) {
+            if(document.querySelector('.PinUpClose-btn') && pinBoardId === 0) {
+                document.querySelector('.PinUpClose-btn').classList.add('noPlayBtn');
+            } else if (pinBoardId !== 0) {
+                document.querySelector('.PinUpClose-btn').classList.remove('noPlayBtn');
+            }
+        }
+    }, [open, pageNum, pinBoardId]);
 
     if(open) {
         if(pageNum === 1) {

@@ -208,3 +208,7 @@
     color: #FE3400;
     cursor: pointer;
 }
+
+.PinEdit-Container > .CloseBtn-Container > .close-btn:hover {
+    background: #F5F5F5;
+}

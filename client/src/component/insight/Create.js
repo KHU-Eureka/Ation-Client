@@ -1,9 +1,11 @@
 import { React, useState, useEffect, useRef } from "react";
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
 import "../../assets/css/modal/Modal.css";
 
 function Create(props) {
+    const cookies = new Cookies;
     // const [pageNum, setPageNum] = useState(1);
     const {modalOpen, pageNum, setPageNum, close, header, setAddTrue} = props;
     const modalCreate = useRef();
@@ -52,19 +54,23 @@ function Create(props) {
         if(pageNum < 5) {
             setPageNum(pageNum+1);
             if(pageNum === 4) {
+                if(e.target.className === 'create-btn2') {
+                    if(hashtag.length === 0) {
+                        setPageNum(4);
+                    }
+                }
                 console.log("good");
-                const response = await axios.post('http://163.180.117.22:7218/api/insight', {
+                const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
                     "insightMainCategoryId": mainCategory,
                     "insightSubCategoryIdList": ClickedSubCategory,
                     "tagList": hashtag,
                     "url": url
                 });
                 setInsightId(response.data);
-                setAddTrue(true);
             } else if (pageNum === 1) {
                 if(url === "") {
                     setPageNum(1);
-                }
+                } 
             } else if (pageNum === 2) {
                 if(mainCategory === 0) {
                     setPageNum(2);
@@ -79,18 +85,26 @@ function Create(props) {
             setClickedSubCategory([]);
             setHashTag([]);
             setChangeImgFormdata();
-            setAddTrue(false);
-            await close();
             if(e.target.className === 'complete-btn') {
-                const response = await axios.post(`http://163.180.117.22:7218/api/insight/image/${InsightId}`, ChangeImgFormdata);
-                await setImgURL(response.data.imgPath);
-                window.location.reload();
+                if(ChangeImgFormdata) {
+                    const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/insight/image/${InsightId}`, ChangeImgFormdata);
+                    await setImgURL(response.data.imgPath);
+                }
+                setAddTrue(true);
+                // window.location.reload();
             }
+            await close();
         }
     }
 
     useEffect( async () => {
-        const response = await axios.get(`http://163.180.117.22:7218/api/insight/${InsightId}`);
+        const token = cookies.get('token');
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${InsightId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }
+        );
         setPrevImgUrl(response.data.imgPath);
     }, [InsightId]);
 
@@ -103,6 +117,15 @@ function Create(props) {
     }
 
     const urlChangeHandler = (e) => {
+        if(e.target.value === "") {
+            // document.querySelector('.create-btn').style.color="#FFA48C";
+            // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
+            document.querySelector('.create-btn').classList.add('noPlayBtn');
+        } else {
+            // document.querySelector('.create-btn').style.color="#FE3400";
+            // document.querySelector('.create-btn').style.border="1px solid #FE3400";
+            document.querySelector('.create-btn').classList.remove('noPlayBtn');
+        }
         setUrl(e.target.value);
     }
 
@@ -111,7 +134,7 @@ function Create(props) {
         setMainCategory(e.target.value);
         setMainCategoryName(e.target.innerHTML);
         console.log(e.target);
-        const response = await axios.get(`http://163.180.117.22:7218/api/insight-category/sub?insightMainCategoryId=${e.target.value}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight-category/sub?insightMainCategoryId=${e.target.value}`);
         setSubCategory(response.data);
         const cateBtn = document.querySelectorAll('.category-btn');
         for(var i=0;i<cateBtn.length;i++) {
@@ -128,7 +151,6 @@ function Create(props) {
             setTag(e.target.value);
         } else {
             e.preventDefault();
-            alert("해시태그는 최대 2개입니다.")
         }
     }
 
@@ -153,7 +175,21 @@ function Create(props) {
 
     useEffect(() => {
         if(pageNum===1) {
+            if(document.querySelector('.create-btn') && url === "") {
+                // document.querySelector('.create-btn').style.color="#FFA48C";
+                // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
+                document.querySelector('.create-btn').classList.add('noPlayBtn');
+            }
         } else if(pageNum===2) {
+            if(mainCategory === 0) {
+                // document.querySelector('.create-btn').style.color="#FFA48C";
+                // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
+                document.querySelector('.create-btn').classList.add('noPlayBtn');
+            } else {
+                // document.querySelector('.create-btn').style.color="#FE3400";
+                // document.querySelector('.create-btn').style.border="1px solid #FE3400";
+                document.querySelector('.create-btn').classList.remove('noPlayBtn');
+            }
             const cateBtn = document.querySelectorAll('.category-btn');
             for(var i=0;i<cateBtn.length;i++) {
                 if(mainCategory!==cateBtn[i].getAttribute('value')) {
@@ -171,8 +207,18 @@ function Create(props) {
                     cateBtn[i].classList.add('cateBtn2-clicked');
                 }
             }
+        } else if(pageNum===4) {
+            if(document.querySelector('.create-btn2') && hashtag.length === 0) {
+                // document.querySelector('.create-btn2').style.color="#FFA48C";
+                // document.querySelector('.create-btn2').style.border="1px solid #FFA48C";
+                document.querySelector('.create-btn2').classList.add('noPlayBtn');
+            } else if(hashtag.length !== 0) {
+                // document.querySelector('.create-btn2').style.color="#FE3400";
+                // document.querySelector('.create-btn2').style.border="1px solid #FE3400";
+                document.querySelector('.create-btn2').classList.remove('noPlayBtn');
+            }
         }
-    }, [pageNum])
+    }, [modalOpen, url, pageNum, mainCategory, hashtag])
 
     async function readImage (e) {
         var formData = new FormData();

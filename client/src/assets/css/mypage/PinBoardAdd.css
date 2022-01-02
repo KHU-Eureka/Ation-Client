@@ -46,18 +46,23 @@
 }
 
 .ModalPinBoardAdd-Container > .NameInput-container > .close-btn {
-    width: 60px;
-    height: 36px;
+    /* width: 60px; */
+    /* height: 36px; */
+    padding: 10px 16px;
     margin-left: 10px;
-    background: #FFFFFF;
-    border: 1px solid #BBBBBB;
-    box-sizing: border-box;
-    border-radius: 18px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 16px;
-    color: #BBBBBB;
+    color: #FE3400;
     cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+}
+
+.ModalPinBoardAdd-Container > .NameInput-container > .close-btn:hover {
+    background: #F5F5F5;
 }

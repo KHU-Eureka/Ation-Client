@@ -338,6 +338,10 @@
     cursor: pointer;
 }
 
+.ModalAdd-Container > .Next-container > .next-btn:hover {
+    background: #F5F5F5;
+}
+
 .ModalAdd-Container > .Next-container > .skip-btn {
     padding: 10px 25px;
     margin-right: 14px;

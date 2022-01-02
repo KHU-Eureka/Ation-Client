@@ -29,7 +29,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -48,7 +48,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona/user', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -69,7 +69,7 @@ function MyPage() {
         console.log('token', token);
         try {
             const res = await axios.put(
-                'http://163.180.117.22:7218/api/persona/user/' + personaId, {},
+                process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token

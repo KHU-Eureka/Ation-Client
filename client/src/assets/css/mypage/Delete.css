@@ -87,3 +87,11 @@
     color: #FE3400;
     cursor: pointer;
 }
+
+.DeleteModal > .closeBtn-container > .cancle-btn:hover {
+    background: #F5F5F5;
+}
+
+.DeleteModal > .closeBtn-container > .delete-btn:hover {
+    background: #F5F5F5;
+}

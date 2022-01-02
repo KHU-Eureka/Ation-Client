@@ -48,7 +48,7 @@ function PinAdd(props) {
     const PersonaSetting = async () => {
         const token = cookies.get('token');
         const response = await axios.get(
-            'http://163.180.117.22:7218/api/persona',
+            process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
                 headers: {
                     Authorization: "Bearer " + token
@@ -56,7 +56,7 @@ function PinAdd(props) {
             }
           );
         const response2 = await axios.get(
-            'http://163.180.117.22:7218/api/persona/user', 
+            process.env.REACT_APP_SERVER_HOST + '/api/persona/user', 
             {
             headers: {
                 Authorization: "Bearer " + token
@@ -78,7 +78,7 @@ function PinAdd(props) {
     const pinboardImport = async () => {
         if(clickedPersonaId !== null) {
             const token = cookies.get('token');
-            const response = await axios.get(`http://163.180.117.22:7218/api/pin-board?personaId=${clickedPersonaId}`, {
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board?personaId=${clickedPersonaId}`, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -107,8 +107,34 @@ function PinAdd(props) {
                 setClickedPersonaId(personas[0].id);
                 persona_img[0].style.border="1px solid #FE3400";
             }
+        } else if(pageNum === 1) {
+            if(document.querySelector('.next-btn') && urlValue === "") {
+                document.querySelector('.next-btn').classList.add('noPlayBtn');
+            } else if(urlValue !== "") {
+                document.querySelector('.next-btn').classList.remove('noPlayBtn');
+            }
+        } else if(pageNum === 3) {
+            if(document.querySelector('.next-btn') && tagList.length === 0) {
+                document.querySelector('.next-btn').classList.add('noPlayBtn');
+            } else if(tagList.length !== 0) {
+                document.querySelector('.next-btn').classList.remove('noPlayBtn');
+            }
         }
-    }, [pinAddModalOpen, pageNum])
+    }, [pinAddModalOpen, pageNum, urlValue, tagList])
+
+    useEffect(() => {
+        if(pageNum === 2) {
+            if(document.querySelector('.next-btn') && pinBoardId === 0) {
+                document.querySelector('.next-btn').classList.add('noPlayBtn');
+                const pinBoard = document.querySelectorAll('.pinboard');
+                for(var i=0;i<pinBoard.length;i++) {
+                    pinBoard[i].style.color="#352C23";
+                }
+            } else if (pinBoardId !== 0) {
+                document.querySelector('.next-btn').classList.remove('noPlayBtn');
+            }
+        }
+    }, [pageNum, pinBoardId]);
 
     useEffect(() => {
         pinboardImport();
@@ -119,7 +145,7 @@ function PinAdd(props) {
             setPageNum(pageNum+1);
             if(pageNum === 3) {
                 const token = cookies.get('token');
-                const response = await axios.post('http://163.180.117.22:7218/api/pin', {
+                const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
                     "pinBoardId": pinBoardId,
                     "tagList": tagList,
                     "url": urlValue
@@ -140,7 +166,7 @@ function PinAdd(props) {
             }
         } else {
             if(ChangeImgFormdata !== null) {
-                const response = await axios.post(`http://163.180.117.22:7218/api/pin/image/${newPinId}`, ChangeImgFormdata);
+                const response = await axios.post(process.env.REACT_APP_SERVER_HOST + `/api/pin/image/${newPinId}`, ChangeImgFormdata);
             }
             setUrlValue("");
             setPageNum(1);
@@ -210,7 +236,7 @@ function PinAdd(props) {
     const pinboardCreateClickHandler = async () => {
         const token = cookies.get('token');
         const response = await axios.post(
-            'http://163.180.117.22:7218/api/pin-board',
+            process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
             {
                 "name": pinBoardInputValue,
                 "personaId": clickedPersonaId
@@ -229,7 +255,7 @@ function PinAdd(props) {
         if(e.key === 'Enter') {
             const token = cookies.get('token');
             const response = await axios.post(
-                'http://163.180.117.22:7218/api/pin-board',
+                process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
                 {
                     "name": pinBoardInputValue,
                     "personaId": clickedPersonaId
@@ -247,7 +273,7 @@ function PinAdd(props) {
 
     // const ModalAddCloseHandler = async () => {
     //     const token = cookies.get('token');
-    //     const response = await axios.post('http://163.180.117.22:7218/api/pin', {
+    //     const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
     //             "pinBoardId": pinBoardId,
     //             "tagList": tagList,
     //             "url": urlValue
@@ -301,7 +327,7 @@ function PinAdd(props) {
 
     useEffect( async () => {
         const token = cookies.get('token');
-        const response = await axios.get(`http://163.180.117.22:7218/api/pin/${newPinId}`,
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${newPinId}`,
         {
             headers: {
                 Authorization: "Bearer " + token,

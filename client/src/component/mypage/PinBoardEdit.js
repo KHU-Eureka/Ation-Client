@@ -8,7 +8,7 @@ import logo2 from "../../assets/svg/logo2.svg";
 function PinBoardEdit(props) {
     const cookies = new Cookies;
     const modalPinBoardEdit = useRef();
-    const {pinBoardEditModalOpen, closePinBoardEditModal, BoardEditPosition, clickedPinBoardID} = props;
+    const {pinBoardEditModalOpen, closePinBoardEditModal, BoardEditPosition, clickedPinBoardID, setAddTrue} = props;
 
     const [pinBoardName, setPinBoardName] = useState("");
     const [personas, setPersonas] = useState([]);
@@ -21,6 +21,7 @@ function PinBoardEdit(props) {
 
     const PinBoardAddModalCloseHandler = ({ target }) => {
         if (pinBoardEditModalOpen && !modalPinBoardEdit.current.contains(target) && target.className !== 'Mypin-edit2') {
+            setPinBoardName("");
             closePinBoardEditModal();
         }
       };
@@ -76,7 +77,7 @@ function PinBoardEdit(props) {
 
     const closeBtnClickHandler = async () => {
         const token = cookies.get('token');
-        const response = await axios.put(`http://163.180.117.22:7218/api/pin-board/${clickedPinBoardID}`, {
+        const response = await axios.put(process.env.REACT_APP_SERVER_HOST + `/api/pin-board/${clickedPinBoardID}`, {
                 "name": pinBoardName,
                 "personaId": 2
         }, {
@@ -84,9 +85,21 @@ function PinBoardEdit(props) {
                 Authorization: "Bearer " + token
             }
         })
+        await setAddTrue(true);
+        await setPinBoardName("");
         closePinBoardEditModal();
-        window.location.reload();
+        // window.location.reload();
     }
+
+    useEffect(() => {
+        if(pinBoardEditModalOpen) {
+            if(document.querySelector('.close-btn') && pinBoardName === "") {
+                document.querySelector('.close-btn').classList.add('noPlayBtn');
+            } else if(pinBoardName !== "") {
+                document.querySelector('.close-btn').classList.remove('noPlayBtn');
+            }
+        }
+    }, [pinBoardEditModalOpen, pinBoardName])
 
     return (
     (pinBoardEditModalOpen?

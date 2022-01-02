@@ -9,13 +9,14 @@ import logo2 from "../../assets/svg/logo2.svg";
 function PinBoardAdd(props) {
     const cookies = new Cookies;
     const modalPinBoardAdd = useRef();
-    const {pinBoardAddModalOpen, closePinBoardAddModal, activePersonaId} = props;
+    const {pinBoardAddModalOpen, closePinBoardAddModal, activePersonaId, setAddTrue} = props;
 
     const [pinBoardName, setPinBoardName] = useState("");
 
     const PinBoardAddModalCloseHandler = ({ target }) => {
         if (pinBoardAddModalOpen && !modalPinBoardAdd.current.contains(target)) {
             closePinBoardAddModal();
+            setPinBoardName("");
         }
       };
 
@@ -32,7 +33,7 @@ function PinBoardAdd(props) {
 
     const closeBtnClickHandler = async () => {
         const token = cookies.get('token');
-        const response = await axios.post('http://163.180.117.22:7218/api/pin-board', {
+        const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin-board', {
                 "name": pinBoardName,
                 "personaId": activePersonaId
         }, {
@@ -40,8 +41,21 @@ function PinBoardAdd(props) {
                 Authorization: "Bearer " + token
             }
         })
-        window.location.reload();
+        await setAddTrue(true);
+        await setPinBoardName("");
+        closePinBoardAddModal();
+        // window.location.reload();
     }
+
+    useEffect(() => {
+        if(pinBoardAddModalOpen) {
+            if(document.querySelector('.close-btn') && pinBoardName === "") {
+                document.querySelector('.close-btn').classList.add('noPlayBtn');
+            } else if(pinBoardName !== "") {
+                document.querySelector('.close-btn').classList.remove('noPlayBtn');
+            }
+        }
+    }, [pinBoardAddModalOpen, pinBoardName])
 
     return (
     (pinBoardAddModalOpen?

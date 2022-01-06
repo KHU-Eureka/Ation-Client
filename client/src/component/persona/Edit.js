@@ -79,9 +79,9 @@ function Edit() {
         e.preventDefault();
         if (e.target.files) {
             const uploadFile = e.target.files[0]
-            const formData = new FormData()
-            formData.append('profileImg', uploadFile)
-            setFormData(formData)
+            const tempFormData = new FormData()
+            tempFormData.append('profileImg', uploadFile)
+            setFormData(tempFormData)
         }
     }
 
@@ -312,10 +312,29 @@ function Edit() {
                     }
                 }
             )
+            if (formData) {
+                postProfileImg();
+            }
             // 마이페이지로 이동
             navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: ""}}})
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    const postProfileImg = async () => {
+        var token = cookies.get('token');
+        try {
+            await axios.post(
+                'http://52.78.105.195/api/persona/image/' + personaId, formData, 
+                {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }
+            )
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -461,7 +480,7 @@ function Edit() {
                         id="check-icon"
                         onClick={ (e)=>{setGender(1)} }
                         />
-                        <label htmlFor="female" class="gender-label">
+                        <label htmlFor="female" className="gender-label">
                             여
                         </label>
                     </div>
@@ -473,14 +492,14 @@ function Edit() {
                             value="2"
                             checked={gender===2}
                             name="gender"
-                            class="gender-radio"
+                            className="gender-radio"
                             onChange={ (e)=>{setGender((e.target.value)*1)} }
                         />
                         <BsCheck2
                         id="check-icon"
                         onClick={ (e)=>{setGender(2)} }
                         />
-                        <label htmlFor="male" class="gender-label">
+                        <label htmlFor="male" className="gender-label">
                             남
                         </label>
                     </div>
@@ -495,7 +514,7 @@ function Edit() {
                         분야태그(최대 3개)
                     </label>
                     <div style={{textAlign: 'left'}}>
-                        <div class="label-description">
+                        <div className="label-description">
                             본인의 직업/분야와 관련한 핵심 키워드를 입력해주세요. <br/>
                             크리에이터님의 프로필 메인에 노출되는 키워드입니다.
                         </div>
@@ -539,7 +558,7 @@ function Edit() {
                         { nickname }님의 매력
                     </label>
                     <div style={{textAlign: 'left'}}>
-                        <div class="label-description">
+                        <div className="label-description">
                             매력 정보는 다른 크리에이터들에게 본인을 어필 할 수 있는 기타 정보입니다.
                         </div>
                     </div>
@@ -583,9 +602,9 @@ function Edit() {
                                             charmChangeHandler(e.currentTarget.checked, newCharm1, 1) } }
                             disabled={newCharm1===""}
                         />
-                        <label htmlFor="new-charm1" class="center">
+                        <label htmlFor="new-charm1" className="center">
                             <textarea 
-                                class="new-tag-input"
+                                className="new-tag-input"
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm1}
@@ -606,9 +625,9 @@ function Edit() {
                                                 charmChangeHandler(e.currentTarget.checked, newCharm2, 2)} }
                                 disabled={newCharm2===""}
                             />
-                            <label htmlFor="new-charm2" class="center">
+                            <label htmlFor="new-charm2" className="center">
                                 <textarea
-                                    class="new-tag-input"
+                                    className="new-tag-input"
                                     rows="1"
                                     placeholder="직접 태그를 &#10;입력해보세요!"
                                     value={newCharm2}
@@ -630,9 +649,9 @@ function Edit() {
                                 onChange={ (e)=>{charmChangeHandler(e.currentTarget.checked, newCharm3, 3)} }
                                 disabled={newCharm3===""}
                             />
-                            <label htmlFor="new-charm3" class="center">
+                            <label htmlFor="new-charm3" className="center">
                                 <textarea 
-                                    class="new-tag-input"
+                                    className="new-tag-input"
                                     rows="1"
                                     placeholder="직접 태그를 &#10;입력해보세요!"
                                     value={newCharm3}
@@ -652,7 +671,7 @@ function Edit() {
                         { nickname }님의 MBTI
                     </label>
                     <div style={{textAlign: 'left'}}>
-                        <div class="label-description">
+                        <div className="label-description">
                                 MBTI는 다른 크리에이터들이 페르소나의 성격을 이해할 수 있는 기타 정보입니다.
                         </div>
                     </div>
@@ -676,7 +695,7 @@ function Edit() {
                         발달감각 선택(최대 2개)
                     </label>
                     <div>
-                        <div class="label-description">
+                        <div className="label-description">
                             우리는 크리에이터들의 능력을 [감각]으로 표현합니다.<br/> 사람들과 아이데이션하며 성장시키고 싶은 감각을 선택해주세요!
                         </div>
                     </div>
@@ -740,7 +759,7 @@ function Edit() {
                         한줄 소개
                     </label>
                     <div>
-                        <div class="label-description">
+                        <div className="label-description">
                             다른 크리에이터들에게 본인을 소개해보세요!
                         </div>
                     </div>

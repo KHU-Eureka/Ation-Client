@@ -5,14 +5,18 @@ import './Alert.css';
 function Alert(props) {
     let [time, setTime] = useState(0)
 
-    useEffect( () => { // 2초 띄우고 다시 위로 올림
-        const interval = setInterval(() => {
-            setTime(time+1)
-            if (time === 2) {
-                props.setShowAlert(false)
-            }
-        }, 1000)
-        return () => {clearInterval(interval)}
+    useEffect( () => { // 2초 띄우고 다시 숨김
+        if (props.showAlert) {
+            const interval = setInterval(() => {
+                setTime(time + 1)
+                if (time === 2) {
+                    props.setShowAlert(false)
+                }
+            }, 1000)
+            return () => {clearInterval(interval)}
+        } else {
+            setTime(0)
+        }
     }, [time, props.showAlert])
 
     return (

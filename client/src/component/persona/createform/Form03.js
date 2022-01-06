@@ -55,7 +55,7 @@ function Form03(props) {
                     { props.nickname }님의 매력을 입력해주세요!(최대 3개)
                 </label>
                 <div style={{width:'240px'}}>
-                    <div class="label-description">
+                    <div className="label-description">
                         매력 정보는 다른 크리에이터들에게 본인을 어필 할 수 있는 기타 정보입니다.
                     </div>
                 </div>
@@ -97,9 +97,9 @@ function Form03(props) {
                                             changeHandler(e.currentTarget.checked, newCharm1, 1) } }
                             disabled={newCharm1===""}
                         />
-                        <label htmlFor="new-charm1" class="center">
+                        <label htmlFor="new-charm1" className="center">
                             <textarea 
-                                class="new-tag-input"
+                                className="new-tag-input"
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm1}
@@ -120,9 +120,9 @@ function Form03(props) {
                                             changeHandler(e.currentTarget.checked, newCharm2, 2)} }
                             disabled={newCharm2===""}
                         />
-                        <label htmlFor="new-charm2" class="center">
+                        <label htmlFor="new-charm2" className="center">
                             <textarea 
-                                class="new-tag-input"
+                                className="new-tag-input"
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm2}
@@ -144,9 +144,9 @@ function Form03(props) {
                             onChange={ (e)=>{changeHandler(e.currentTarget.checked, newCharm3, 3)} }
                             disabled={newCharm3===""}
                         />
-                        <label htmlFor="new-charm3" class="center">
+                        <label htmlFor="new-charm3" className="center">
                             <textarea
-                                class="new-tag-input"
+                                className="new-tag-input"
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm3}
@@ -164,7 +164,7 @@ function Form03(props) {
                     { props.nickname }님의 MBTI를 입력해주세요!
                 </label>
                 <div style={{width:'240px'}}>
-                    <div class="label-description">
+                    <div className="label-description">
                         MBTI는 다른 크리에이터들이 페르소나의 성격을 <br></br>이해할 수 있는 기타 정보입니다.
                     </div>
                 </div>
@@ -189,7 +189,7 @@ function Form03(props) {
                 </div>
             </div>
 
-            <button class="small-btn" onClick={props.nextPage}
+            <button className="small-btn" onClick={props.nextPage}
             disabled={ props.charmList===[] || props.mbti==="" }
             >다음
             </button>

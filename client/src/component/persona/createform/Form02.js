@@ -49,7 +49,7 @@ function Form02(props) {
                     분야태그(최대 3개)
                 </label>
                 <div style={{width:'240px'}}>
-                    <div class="label-description">
+                    <div className="label-description">
                         본인의 직업/분야와 관련한 핵심 키워드를 입력해주세요.
                         크리에이터님의 프로필 메인에 노출되는 키워드입니다.
                     </div>
@@ -83,7 +83,7 @@ function Form02(props) {
                     }
                 </div>
             </div>
-            <button class="small-btn" onClick={formValidationCheck} disabled={props.interestIdList.length===0} >다음</button>
+            <button className="small-btn" onClick={formValidationCheck} disabled={props.interestIdList.length===0} >다음</button>
         </div>
     );
 }

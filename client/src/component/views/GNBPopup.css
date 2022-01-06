@@ -1,0 +1,84 @@
+.nav-bar .active-persona-image {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute;
+    top: calc(40px - 19px);
+    right: 80px;
+}
+
+.gnb-popup {
+    width: 320px;
+    padding: 22px;
+    position: absolute;
+    top: 80px;
+    right: 70px;
+    background-color: white;
+    border-radius: 18px;
+    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.1));
+}
+
+.gnb-popup .header,
+.gnb-popup .content {
+    width: 100%;
+    text-align: left;
+}
+
+.gnb-popup .header #close-popup {
+    color: #FE3400;
+    cursor: pointer;
+}
+
+.gnb-popup .persona-preview {
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    border-radius: 12px;
+    transition: background-color 0.2s;
+}
+
+.persona-preview .persona-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.gnb-popup .active-persona {
+    color: #FE3400;
+}
+
+.active-persona #close-popup {
+    position: absolute;
+    right: 30px;
+    cursor: pointer;
+}
+
+.gnb-popup .see-more {
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.see-more .persona-preview:hover {
+    background-color: #E7E6E5;
+    cursor: pointer;
+}
+
+.persona-preview .persona-name {
+    font-weight: 700;
+}
+
+.gnb-popup .content-wrapper {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.gnb-popup .content-title {
+    margin-bottom: 15px;
+}
+
+.gnb-popup .email {
+    color: #807A74;
+}

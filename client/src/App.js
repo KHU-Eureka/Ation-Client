@@ -1,6 +1,8 @@
 import { React } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import NavigationBar from "./component/views/NavigationBar";
+
 import Insight_Read from "../src/component/insight/Read";
 import Insight_Create from "../src/component/insight/Create";
 
@@ -22,9 +24,7 @@ import "./Modal.css";
 function App() {
   return (
     <div className="App">
-      <div className="nav-bar">
-        navigation bar
-      </div>
+      <NavigationBar></NavigationBar>
       
       <Router>
         <Routes>

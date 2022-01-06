@@ -36,7 +36,7 @@ function SignUp() {
 
 
     return (
-        <form class="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
+        <form className="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
             <div className="title">
                 회원가입
             </div>

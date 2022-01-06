@@ -76,7 +76,7 @@ function Form04(props) {
                     발달감각 선택(최대 2개)
                 </label>
                 <div style={{width:'240px'}}>
-                    <div class="label-description">
+                    <div className="label-description">
                         센세이션은 크리에이터들의 [능력]을 [감각]으로 표현합니다. 사람들과 아이데이션하며 성장시키고 싶은 감각을 선택해주세요!
                     </div>
                 </div>
@@ -92,10 +92,9 @@ function Form04(props) {
                     {
                         senseInfoList.map( function(sense, idx) {
                             return(
-                                <div className="checkbox-elem">
+                                <div className="checkbox-elem" key={ idx }>
                                     <input
                                         id={ sense.senseId }
-                                        key={ idx }
                                         value={ sense.senseId }
                                         name="sense"
                                         type="checkbox"
@@ -134,7 +133,7 @@ function Form04(props) {
                 </div>
             </div>
             
-            <button class="small-btn" onClick={props.nextPage}
+            <button className="small-btn" onClick={props.nextPage}
             disabled={ props.senseIdList.length===0 }
             >다음
             </button>

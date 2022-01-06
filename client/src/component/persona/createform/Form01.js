@@ -13,7 +13,6 @@ function Form01(props) {
     const readImage = (input) => {
         // file이 존재하는 경우
         if (input.files && input.files[0]) {
-            console.log(input);
             const reader = new FileReader()
             reader.onload = e => {
                 props.setProfileUrl(e.target.result)
@@ -26,10 +25,8 @@ function Form01(props) {
         e.preventDefault();
         if (e.target.files) {
             const uploadFile = e.target.files[0]
-            console.log(uploadFile);
             const formData = new FormData()
             formData.append('profileImg', uploadFile)
-            console.log('sldkjflwekj ', formData.get('profileImg'));
             props.setFormData(formData)
         }
     }
@@ -191,7 +188,7 @@ function Form01(props) {
                         id="check-icon"
                         onClick={ (e)=>{props.setGender(1)} }
                         />
-                        <label htmlFor="female" class="gender-label">
+                        <label htmlFor="female" className="gender-label">
                             여
                         </label>
                     </div>
@@ -203,14 +200,14 @@ function Form01(props) {
                             value="2"
                             checked={props.gender===2}
                             name="gender"
-                            class="gender-radio"
+                            className="gender-radio"
                             onChange={ (e)=>{props.setGender((e.target.value)*1)} }
                         />
                         <BsCheck2
                         id="check-icon"
                         onClick={ (e)=>{props.setGender(2)} }
                         />
-                        <label htmlFor="male" class="gender-label">
+                        <label htmlFor="male" className="gender-label">
                             남
                         </label>
                     </div>

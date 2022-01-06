@@ -9,7 +9,7 @@ function Form05(props) {
                 한줄 소개
             </label>
             <div style={{width:'240px'}}>
-                <div class="label-description">
+                <div className="label-description">
                     다른 크리에이터들에게 본인을 소개해보세요!
                 </div>
             </div>
@@ -25,7 +25,7 @@ function Form05(props) {
             <div className="introduction-length">{props.introduction.length}/100</div>
         </div>
 
-        <button class="small-btn" type="submit"
+        <button className="small-btn" type="submit"
         onClick={props.postPersona}
         disabled={ props.introduction.length===0 }
         >

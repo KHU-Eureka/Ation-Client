@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SelectBox from '../../views/input/SelectBox';
+import SelectBox2 from '../../views/input/SelectBox2';
 import { Cookies } from 'react-cookie';
 import { MdCloudUpload } from 'react-icons/md';
-import { BsCheck2 } from 'react-icons/bs';
+// import { AiFillCaretDown } from 'react-icons/ai';
+// import { BsCheck2 } from 'react-icons/bs';
 
 function Form01(props) {
     const cookies = new Cookies();
+    const ageList = [...Array(100)].map((v,i) => i+1);
+    const genderList = [{id: 1, value: "여"}, {id: 2, value: "남"}]
+
     let [nickNameValidation, setNickNameValidation] = useState(false);
     let [nickNameMsg, setNickNameMsg] = useState("");
     let [tempNickName, setTempNickName] = useState(props.nickname);
@@ -52,48 +58,19 @@ function Form01(props) {
             )
             const duplicate = res.data;
             setNickNameValidation(!duplicate); 
+            console.log("!@!@")
             if (duplicate) {
                 setNickNameMsg("이미 사용중인 닉네임입니다.");
             } else {
                 setNickNameMsg("사용 가능한 닉네임입니다.");
                 props.setNickName(tempNickName);
             }       
+            console.log(nickNameMsg);
         } catch (err) {
             console.log(err);
         }
     }
 
-    const formValidationCheck = () => {
-        var validation = true;
-        var alertMsg = "";
-        if (nickNameValidation) {
-            alertMsg += "닉네임 중복검사를 해주세요! \n"
-        }
-
-        if (props.nickname === "") {
-            validation = false
-            alertMsg += " 닉네임"  
-        }
-        if (props.job === "") {
-            validation = false
-            alertMsg += " 직업"
-        }
-        if (props.age === false) {
-            validation = false
-            alertMsg += " 나이"
-        }
-        if (props.gender === false) {
-            validation = false
-            alertMsg += " 성별"
-        }
-        
-        if (validation) {
-            props.nextPage();
-        } else {
-            alertMsg += "칸이 누락되었어요!\n 다시 한번 확인해주세요!"
-            alert(alertMsg);
-        }
-    }
 
     return (
         <div style={{width:'100%'}}>
@@ -121,18 +98,19 @@ function Form01(props) {
                     닉네임
                 </label>
                 <div style={{width:'100%', display: 'flex', alignItems: 'baseline'}}>
-                <div>
+                <div className="nickname-wrapper">
                     <input
                         style={{width: '300px'}}
                         id="nickname"
                         type="text"
+                        maxLength="10"
                         placeholder="활동할 페르소나의 닉네임을 입력해주세요."
                         onChange={ NickNameChange }
                         value={ tempNickName }
                     />
                     <div
                      style={{ color: (nickNameValidation ? '#0075FF' : '#F24822') }}
-                     className="alert-msg">{ nickNameMsg }
+                     className="alert-msg nickname">{ nickNameMsg }
                      </div>
                 </div>
                 <button className="check-validation-btn"
@@ -150,12 +128,14 @@ function Form01(props) {
                     style={{width: '300px'}}
                     id="job"
                     type="text"
+                    maxLength="10"
                     placeholder="현재 직업을 입력해주세요."
                     onChange={ (e)=>{ props.setJob(e.target.value) } }
                     value={ props.job }
                 />
             </div>
 
+            {/* Age input form - text version
             <div className="input-wrapper">
                 <label htmlFor="age">
                     나이
@@ -169,11 +149,21 @@ function Form01(props) {
                     value={ props.age }
                 />
             </div>
+            */}
+
+            <div className="input-wrapper">
+                <label htmlFor="age">
+                    나이
+                </label>
+                <SelectBox selectedValue={props.age} setValue={props.setAge} optionList={ageList} defaultValue={"나이를 선택하세요."}></SelectBox>
+            </div>
 
             <div className="input-wrapper">
                 <label htmlFor="gender">
                     성별
                 </label>
+                <SelectBox2 selectedValue={props.gender} setValue={props.setGender} optionList={genderList} defaultValue={"성별을 선택하세요."}></SelectBox2>
+                {/*  gender input radio version
                 <div className="radio-wrapper">
                     <div className="radio-elem">
                         <input
@@ -212,10 +202,12 @@ function Form01(props) {
                         </label>
                     </div>
                 </div>
-
+                */}
             </div>
 
-            <button className="small-btn" onClick={formValidationCheck}
+            <button
+            className="small-btn"
+            onClick={()=>{props.nextPage()}}
             disabled={ props.nickname==="" || props.job==="" || props.age===null || props.gender===false }>
                 다음
             </button>

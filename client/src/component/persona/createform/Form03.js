@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SelectBox from '../../views/input/SelectBox';
 import './SenseTag.css';
 
 function Form03(props) {
@@ -59,6 +60,7 @@ function Form03(props) {
                         매력 정보는 다른 크리에이터들에게 본인을 어필 할 수 있는 기타 정보입니다.
                     </div>
                 </div>
+                <div className="checkbox-wrapper">
                 <div
                 className="alert-msg-wrapper"
                 style={showCharmAlertMsg ? {opacity: 1} : {opacity: 0}}>
@@ -67,7 +69,6 @@ function Form03(props) {
                         최대 3개까지 선택 가능합니다.
                     </div>}
                 </div>
-                <div className="checkbox-wrapper">
                     {
                         charmNameList && charmNameList.map( function(charm, idx) {
                             return(
@@ -158,7 +159,7 @@ function Form03(props) {
                     }
                 </div>
             </div>
-
+            
             <div className="input-wrapper" style={{marginBottom: '0px'}}>
                 <label htmlFor="mbti" style={{marginBottom: '8px'}}>
                     { props.nickname }님의 MBTI를 입력해주세요!
@@ -168,6 +169,8 @@ function Form03(props) {
                         MBTI는 다른 크리에이터들이 페르소나의 성격을 <br></br>이해할 수 있는 기타 정보입니다.
                     </div>
                 </div>
+                <SelectBox selectedValue={props.mbti} setValue={props.setMbti} optionList={MBTIList} defaultValue={"MBTI를 선택하세요."}></SelectBox>
+                {/* mbti form checkbox version
                 <div className="checkbox-wrapper">
                     {
                         MBTIList.map(function(mbti, idx) {
@@ -187,6 +190,7 @@ function Form03(props) {
                         })
                     }  
                 </div>
+                */}
             </div>
 
             <button className="small-btn" onClick={props.nextPage}

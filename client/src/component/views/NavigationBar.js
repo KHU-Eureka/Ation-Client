@@ -100,7 +100,8 @@ function NavigationBar() {
                     }
                 }
             )
-            setActivePersona(persona)
+            /*setActivePersona(persona)*/
+            window.location.reload();
         } catch (err) {
             console.log(err)
         }

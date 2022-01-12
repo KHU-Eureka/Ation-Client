@@ -1,5 +1,7 @@
-import { React } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 import NavigationBar from "./component/views/NavigationBar";
 
@@ -22,6 +24,28 @@ import "./Input.css";
 import "./Modal.css";
 
 function App() {
+  const cookies = new Cookies();
+  let [isAuthorized, setIsAuthorized] = useState(null)
+
+  useEffect(() => {
+    const getAuthorization = async () => {
+      var token = cookies.get('token');
+      try {
+          const res = await axios.get(
+              'http://52.78.105.195/api/auth/login', {
+                headers: {
+                  Authorization: "Bearer " + token
+                }
+              }
+          )
+          setIsAuthorized(res.message==="Unathorized" ? false : true)
+      } catch (err) {
+          console.log(err);
+      }
+    }
+    getAuthorization();
+  }, [])
+
   return (
     <div className="App">
       <NavigationBar></NavigationBar>
@@ -39,6 +63,11 @@ function App() {
           <Route exact path="/persona-edit" element={<Persona_Edit/>} />
 
           <Route exact path="/mypage" element={<MyPage/>} />
+
+          { isAuthorized !== null && isAuthorized
+          ? null
+          : <Route path="*" element={<Navigate to="/login" />} />
+          }
         </Routes>
       </Router>
     </div>

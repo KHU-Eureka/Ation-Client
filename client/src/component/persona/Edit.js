@@ -315,6 +315,9 @@ function Edit() {
             if (formData) {
                 postProfileImg();
             }
+
+            window.scrollTo(0,0)
+
             // 마이페이지로 이동
             navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: ""}}})
         } catch (err) {
@@ -521,15 +524,15 @@ function Edit() {
                     </div>
                 </div>
                 <div className="edit-form-input-box">
+                <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                 <div
                 className="alert-msg-wrapper"
-                style={showInterestAlertMsg ? {opacity: 1, top:"-10px"} : {opacity: 0, top:"-10px"}}>
+                style={showInterestAlertMsg ? {opacity: 1} : {opacity: 0}}>
                     {showInterestAlertMsg &&
                     <div className="alert-msg bounce">
                         최대 3개까지 선택 가능합니다.
                     </div>}
                 </div>
-                <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                     {
                         [...interestList].map( function(interest, idx) {
                             return(
@@ -564,6 +567,7 @@ function Edit() {
                     </div>
                 </div>
                 <div className="edit-form-input-box">
+                <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                 <div
                 className="alert-msg-wrapper"
                 style={showCharmAlertMsg ? {opacity: 1, top:"-10px"} : {opacity: 0, top:"-10px"}}>
@@ -572,7 +576,6 @@ function Edit() {
                         최대 3개까지 선택 가능합니다.
                     </div>}
                 </div>
-                <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                     {
                         pastCharmList && pastCharmList.map( function(charm, idx) {
                             return(
@@ -701,6 +704,7 @@ function Edit() {
                     </div>
                 </div>
                 <div className="edit-form-input-box">
+                    <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                     <div
                     className="alert-msg-wrapper"
                     style={showSenseAlertMsg ? {opacity: 1, top:"-10px"} : {opacity: 0, top:"-10px"}}>
@@ -709,7 +713,6 @@ function Edit() {
                             최대 2개까지 선택 가능합니다.
                         </div>}
                     </div>
-                    <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                         {
                             senseInfoList.map( function(sense, idx) {
                                 return(

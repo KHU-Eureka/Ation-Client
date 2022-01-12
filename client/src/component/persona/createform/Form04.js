@@ -80,6 +80,7 @@ function Form04(props) {
                         센세이션은 크리에이터들의 [능력]을 [감각]으로 표현합니다. 사람들과 아이데이션하며 성장시키고 싶은 감각을 선택해주세요!
                     </div>
                 </div>
+                <div className="checkbox-wrapper">
                 <div
                 className="alert-msg-wrapper"
                 style={showSenseAlertMsg ? {opacity: 1} : {opacity: 0}}>
@@ -88,7 +89,6 @@ function Form04(props) {
                         최대 2개까지 선택 가능합니다.
                     </div>}
                 </div>
-                <div className="checkbox-wrapper">
                     {
                         senseInfoList.map( function(sense, idx) {
                             return(

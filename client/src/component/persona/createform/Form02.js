@@ -54,6 +54,7 @@ function Form02(props) {
                         크리에이터님의 프로필 메인에 노출되는 키워드입니다.
                     </div>
                 </div>
+                <div className="checkbox-wrapper">
                 <div
                 className="alert-msg-wrapper"
                 style={showInterestAlertMsg ? {opacity: 1} : {opacity: 0}}>
@@ -62,7 +63,6 @@ function Form02(props) {
                         최대 3개까지 선택 가능합니다.
                     </div>}
                 </div>
-                <div className="checkbox-wrapper">
                     {
                         [...interestList].map( function(interest, idx) {
                             return(

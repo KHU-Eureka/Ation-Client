@@ -26,11 +26,9 @@ function Login() {
             )
             var token = res.data.token;
             var name = res.data.name;
-            cookies.set('token', token);
-            alert('로그인 성공');
-            getPersona(token, name);
+            cookies.set('token', token); // 받은 token을 cookie에 저장
+            getPersona(token, name); // user의 active persona 정보를 얻음
         } catch (err) {
-            alert('로그인 실패');
             console.log(err);
         }
     }
@@ -47,7 +45,6 @@ function Login() {
             if (res.data === '') {
                 navigate('/landing', { state: { welcome: true, name: name } })
             } else {
-                //history.push('/mypage');
                 navigate('/mypage')
             }
         } catch (err) {
@@ -94,6 +91,7 @@ function Login() {
             >
                 로그인 하기
             </button>
+            <div onClick={()=>{navigate('/signup')}}>회원가입 하기</div>
         </form>
     );
 }

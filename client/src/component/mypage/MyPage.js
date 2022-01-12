@@ -134,13 +134,15 @@ function MyPage() {
                     }
                 }
             )
+            /*
             // personaList의 가운데에 위치하도록 swap
             for (var i=0; i<3; i++) {
                 if (personaList[i] && personaList[i].id === personaId) {
                     swapActivePersona(i);
                 }
             }
-            setActivePersonaId(personaId)
+            */
+            window.location.reload();
         } catch (err) {
             console.log(err)
         }

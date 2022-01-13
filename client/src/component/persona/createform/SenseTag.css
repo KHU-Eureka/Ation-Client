@@ -7,7 +7,7 @@
 }
 
 .sense-description .wrapper {
-    width: calc(100% - 62px);
+    width: calc(100% - 64px);
     padding: 0px 32px;
     display: flex;
     align-items: center;
@@ -27,7 +27,6 @@
 }
 
 .sense-description .description {
-    width: 245px;
     font-size: 18px;
     text-align: left;
 }

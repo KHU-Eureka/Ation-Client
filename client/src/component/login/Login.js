@@ -44,8 +44,10 @@ function Login() {
             // 아직 등록된 persona가 없는 경우
             if (res.data === '') {
                 navigate('/landing', { state: { welcome: true, name: name } })
+                window.location.reload()
             } else {
                 navigate('/mypage')
+                window.location.reload()
             }
         } catch (err) {
             console.log(err);

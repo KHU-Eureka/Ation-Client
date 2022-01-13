@@ -117,8 +117,8 @@ function NavigationBar() {
         onClick={()=>{setShowGNBPopup(!showGNBPopup)}}>
         </img>
         }
-        { showGNBPopup && 
-        <GNBPopup email={email} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona} personaList={personaList}></GNBPopup> 
+        { activePersona &&
+        <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona} personaList={personaList}></GNBPopup> 
         }
         </div>
     )

@@ -704,7 +704,7 @@ function Edit() {
                     </div>
                 </div>
                 <div className="edit-form-input-box">
-                    <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
+                <div className="checkbox-wrapper"  style={{marginTop:'0px'}}>
                     <div
                     className="alert-msg-wrapper"
                     style={showSenseAlertMsg ? {opacity: 1, top:"-10px"} : {opacity: 0, top:"-10px"}}>

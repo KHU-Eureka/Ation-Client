@@ -75,10 +75,9 @@ function Form04(props) {
                 <label htmlFor="job" style={{marginBottom: '8px'}}>
                     발달감각 선택(최대 2개)
                 </label>
-                <div style={{width:'240px'}}>
-                    <div className="label-description">
-                        센세이션은 크리에이터들의 [능력]을 [감각]으로 표현합니다. 사람들과 아이데이션하며 성장시키고 싶은 감각을 선택해주세요!
-                    </div>
+                <div className="label-description">
+                    센세이션은 크리에이터들의 [능력]을 [감각]으로 표현합니다.
+                    <br/>사람들과 아이데이션하며 성장시키고 싶은 감각을 선택해주세요!
                 </div>
                 <div className="checkbox-wrapper">
                 <div

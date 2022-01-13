@@ -53,12 +53,17 @@
     border-radius: 0px 0px 10px 10px;
     border: 1px solid #FE6740;
     border-top: 1px solid #F5F5F5;
-    display: none;
+    animation: 0.1s hideBox;
+    animation-fill-mode: forwards;
     z-index: 10;
 }
 
+@keyframes hideBox {
+    100% {transform: translateY(-10px); max-height: 0px; overflow: hidden; opacity: 0;}
+}
+
 @keyframes showBox {
-    0% {transform: translateY(-10px);}
+    0% {transform: translateY(-10px); max-height: 0px; overflow: hidden; opacity:0;}
     100% {}
 }
 

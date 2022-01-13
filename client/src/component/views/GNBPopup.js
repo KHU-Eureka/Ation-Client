@@ -6,18 +6,12 @@ import './GNBPopup.css';
 
 function GNBPopup(props) {
     const cookies = new Cookies();
-    
-    // persona 관련
-    let [personaList, setPersonaList] = useState([]);
-    let [personaIdList, setPersonaIdList] = useState([]);
-    let [activePersona, setActivePersona] = useState(null);
-    let [activePersonaId, setActivePersonaId] = useState();
 
     // persona 더보기 관련
     let [seeMore, setSeeMore] = useState(true)
 
     return (
-        <div className="gnb-popup">
+        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}>
             <div className="header">
                 <IoIosArrowDown 
                 id="close-popup"
@@ -27,7 +21,7 @@ function GNBPopup(props) {
                 <div className="content-wrapper">
                     <div className="content-title">현재 활동중인 페르소나</div>
                     <div className="persona-preview active-persona">
-                        <img className="persona-image" src={props.activePersona.profileImgPath} alt="persona image"></img>
+                        <img className="persona-image" src={props.activePersona.profileImgPath} alt="persona profile"></img>
                         <div className="persona-name">{props.activePersona.nickname}</div>
                         <div id="close-popup">
                             {seeMore ? 
@@ -44,7 +38,7 @@ function GNBPopup(props) {
                                 className="persona-preview"
                                 key={idx}
                                 onClick={()=>{props.changeActivePersona(persona)}}>
-                                    <img className="persona-image" src={persona.profileImgPath} alt="persona image"></img>
+                                    <img className="persona-image" src={persona.profileImgPath} alt="persona profile"></img>
                                     <div className="persona-name">{persona.nickname}</div>
                                 </div>
                             )

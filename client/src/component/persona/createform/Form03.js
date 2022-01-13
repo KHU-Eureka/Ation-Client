@@ -57,7 +57,7 @@ function Form03(props) {
                 </label>
                 <div style={{width:'240px'}}>
                     <div className="label-description">
-                        매력 정보는 다른 크리에이터들에게 본인을 어필 할 수 있는 기타 정보입니다.
+                        매력 정보는 다른 크리에이터들에게<br/> 본인을 어필 할 수 있는 기타 정보입니다.
                     </div>
                 </div>
                 <div className="checkbox-wrapper">
@@ -166,7 +166,7 @@ function Form03(props) {
                 </label>
                 <div style={{width:'240px'}}>
                     <div className="label-description">
-                        MBTI는 다른 크리에이터들이 페르소나의 성격을 <br></br>이해할 수 있는 기타 정보입니다.
+                        MBTI는 다른 크리에이터들이 페르소나의 성격을 <br/>이해할 수 있는 기타 정보입니다.
                     </div>
                 </div>
                 <SelectBox selectedValue={props.mbti} setValue={props.setMbti} optionList={MBTIList} defaultValue={"MBTI를 선택하세요."}></SelectBox>

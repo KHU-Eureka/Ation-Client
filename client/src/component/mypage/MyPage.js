@@ -41,6 +41,17 @@ function MyPage() {
         navigation('/persona-create'); // persona 생성 페이지로 이동
     }
 
+    useEffect(() => {
+        if (state) {
+            if (state.alert) {
+                var alertInfo = state.alert;
+                setAlertTitle(alertInfo.title);
+                setAlertSubtitle(alertInfo.subtitle);
+                setShowAlert(true);
+            }
+        }
+    }, [])
+
     useEffect(() => {   
         for (var i = 0; i < 3; i++) {
             if (personaList[i] && personaList[i].id === activePersonaId) {
@@ -160,7 +171,10 @@ function MyPage() {
 
     const editPersona = (personaId) => {
         navigation('/persona-edit', { state: { personaId: personaId, personaIdList: personaIdList } })
-        console.log(personaId);
+    }
+
+    const goToMyPersona = (personaId) => {
+        navigation('/mypersona/view', { state: { personaId: personaId, personaIdList: personaIdList } })
     }
 
     const readImage = (input) => {
@@ -279,16 +293,19 @@ function MyPage() {
                                             <div className="content-wrapper">
                                                 <div
                                                 className="content-button"
+                                                onClick={(e)=>{e.preventDefault(); goToMyPersona(persona.id)}}
                                                 >
                                                     <div className="button-icon"><AiOutlinePlus /></div>
                                                     <div className="button-text">더보기</div>
                                                 </div>
+                                                {/*
                                                 <div
                                                 className="content-button"
                                                 onClick={(e)=>{e.preventDefault(); editPersona(persona.id)}}>
                                                     <div className="button-icon"><MdEdit /></div>
                                                     <div className="button-text">수정하기</div>
                                                 </div>
+                                                */}
                                             </div>
                                         </div>
                                     </div>

@@ -1,0 +1,118 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.hide-elem {
+    display: none;
+}
+
+.mypersona .background-img {
+    position: relative;
+}
+
+.mypersona .content {
+    width: 940px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 300px;
+}
+
+.mypersona .title {
+    margin-top: 135px;
+    margin-bottom: 95px;
+    color: #1E140A;
+    font-weight: bold;
+    font-size: 38px;
+    text-align: left;
+}
+
+.mypersona label {
+    color: #807A74;
+    width: 150px;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.mypersona .checkbox-wrapper input[type=checkbox]+label {
+    text-align: center;
+}
+
+.mypersona .input-wrapper2 {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 80px;
+}
+
+.mypersona .edit-form-input-box {
+    width: calc(100% - 150px);
+}
+
+.mypersona input[type=text]:disabled {
+    background-color: transparent;
+}
+
+.mypersona input[type=checkbox]:disabled {
+    background-color: #FE6740;
+}
+
+.mypersona input[type=checkbox]:disabled+label {
+    cursor: default;
+}
+
+.mypersona #new-charm1:disabled,
+.mypersona #new-charm2:disabled,
+.mypersona #new-charm3:disabled {
+    background-color: transparent;
+}
+
+.mypersona .introduction-textarea:disabled {
+    background-color: white;
+    border: 1px solid #D7D2C8;
+    font-weight: 500;
+}
+
+.mypersona .profile {
+    margin-right: 90px;
+}
+
+.mypersona #mbti {
+    font-weight: bold;
+    font-size: 38px;
+}
+
+.mypersona .inputs {
+    width: 100%;
+}
+
+.mypersona #profile-photo-preview {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+}
+
+.mypersona #profile-photo-label {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    margin-bottom: 0;
+    background: rgba(231, 230, 229, 0.4);
+    visibility: visible;
+    line-height: 55px;
+    opacity: 1;
+    transition: 0.2s;
+}   
+
+.mypersona #profile-photo-label:hover {
+    background: rgba(231, 230, 229, 0.8);
+}

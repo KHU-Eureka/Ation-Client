@@ -19,6 +19,25 @@
     filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.1));
 }
 
+.show-gnbpopup {
+    animation: 0.2s showGNBPopup;
+}
+
+.hide-gnbpopup {
+    animation: 0.2s hideGNBPopup;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showGNBPopup {
+    0% {width: 0px; max-height: 0px; overflow: hidden; opacity: 0; border-radius: 0 0 10px 0; transform: translateY(-20px);}
+    50% {opacity: 0;}
+}
+
+@keyframes hideGNBPopup {
+    100% {width: 0px; max-height: 0px; overflow: hidden; opacity: 0; border-radius: 0 0 10px 0; transform: translateY(-20px);}
+    50% {opacity: 0;}
+}
+
 .gnb-popup .header,
 .gnb-popup .content {
     width: 100%;

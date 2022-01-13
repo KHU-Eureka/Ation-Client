@@ -6,7 +6,7 @@ function Form05(props) {
 
         <div className="input-wrapper">
             <label htmlFor="introduction" style={{marginBottom: '8px'}}>
-                한줄 소개
+                한 줄 소개
             </label>
             <div style={{width:'240px'}}>
                 <div className="label-description">

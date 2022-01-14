@@ -4,9 +4,9 @@
     height: 82px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
     background-color: white;
-    /* position: fixed;
+    position: fixed;
     top: 0;
-    z-index: 5; */
+    z-index: 5;
 }
 
 .Logo-container {
@@ -46,6 +46,10 @@
 
 .insight-btn {
     color: #352C23;
+}
+
+.mypage-btn {
+    color: #807A74;
 }
 
 .openlounge-btn {

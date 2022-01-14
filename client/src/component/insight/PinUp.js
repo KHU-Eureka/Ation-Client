@@ -29,7 +29,6 @@ function PinUP(props) {
     }
 
     const PinUpCloseHandler = ({ target }) => {
-        console.log(target);
         if(target.className !== 'complete-btn') {
             if(open && !PinUp.current.contains(target) && target.className !== 'pin' && target.className !== 'PinUpClose-btn') {
                 setPageNum(1);

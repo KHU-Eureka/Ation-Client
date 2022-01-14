@@ -28,4 +28,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
         run: |
-          aws s3 cp --recursive --region ap-northeast-2 client/build s3://ation.com
+          aws s3 cp --recursive --region ap-northeast-2 client/build s3://ation.seohyuni.com

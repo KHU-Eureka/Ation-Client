@@ -18,7 +18,7 @@ function Login() {
     const login = async () => {
         try {
             const res = await axios.post(
-                'http://52.78.105.195/api/auth/login',
+                'http://52.78.105.195:8081/api/auth/login',
                 {
                     email: email,
                     password: password,
@@ -36,7 +36,7 @@ function Login() {
     const getPersona = async (token, name) => {
         try {
             const res = await axios.get(
-                'http://52.78.105.195/api/persona/user', {
+                'http://52.78.105.195:8081/api/persona/user', {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }

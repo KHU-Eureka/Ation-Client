@@ -50,7 +50,7 @@ function Form01(props) {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://52.78.105.195/api/persona/duplicate?nickname=' + temp, {
+                'http://52.78.105.195:8081/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
@@ -58,14 +58,12 @@ function Form01(props) {
             )
             const duplicate = res.data;
             setNickNameValidation(!duplicate); 
-            console.log("!@!@")
             if (duplicate) {
                 setNickNameMsg("이미 사용중인 닉네임입니다.");
             } else {
                 setNickNameMsg("사용 가능한 닉네임입니다.");
                 props.setNickName(tempNickName);
             }       
-            console.log(nickNameMsg);
         } catch (err) {
             console.log(err);
         }

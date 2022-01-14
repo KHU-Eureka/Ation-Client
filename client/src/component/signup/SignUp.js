@@ -18,7 +18,7 @@ function SignUp() {
     const postUserInfo = async () => {
         try {
             const res = await axios.post(
-                'http://52.78.105.195/api/auth/signup',
+                'http://52.78.105.195:8081/api/auth/signup',
                 {
                     email: email,
                     name: name,

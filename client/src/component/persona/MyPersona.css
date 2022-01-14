@@ -32,6 +32,10 @@
     text-align: left;
 }
 
+.mypersona #introduction {
+    width: calc(100% - 40px);
+}
+
 .mypersona label {
     color: #807A74;
     width: 150px;

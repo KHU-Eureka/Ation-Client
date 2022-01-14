@@ -56,7 +56,6 @@ function Form04(props) {
     const onSenseMouseEnter = (sense) => { // hover event가 일어날 때
         setCurrSense(sense) // 현재 sense의 설명을 띄움
         if (!props.senseIdList.includes(sense.senseId)) {
-            console.log(sense.name)
             reverseIconColor(sense.senseId - 1, true) // 아이콘을 흰색으로 띄워야 함
         }
     }

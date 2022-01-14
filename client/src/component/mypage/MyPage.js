@@ -18,7 +18,7 @@ import hand from '../../asset/images/sense/손_white.png';
 function MyPage() {
     const cookies = new Cookies();
     const navigation = useNavigate();
-    const { state } = useLocation();
+    var { state } = useLocation();
     
     const senseIcons = [eye, nose, mouse, ears, hand];
     
@@ -48,6 +48,7 @@ function MyPage() {
                 setAlertTitle(alertInfo.title);
                 setAlertSubtitle(alertInfo.subtitle);
                 setShowAlert(true);
+                state.alert = null;
             }
         }
     }, [])
@@ -66,7 +67,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/persona', {
+                    'http://52.78.105.195:8081/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -86,11 +87,6 @@ function MyPage() {
                 }
                 setPersonaIdList(tempIdList)
 
-                // active Persona의 위치를 중간으로 오도록
-                console.log(1)
-                console.log("activePersonaID", activePersonaId)
-
-                console.log(2)
             } catch (err) {
                 console.log(err);
             }
@@ -100,7 +96,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/persona/user', {
+                    'http://52.78.105.195:8081/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -108,7 +104,6 @@ function MyPage() {
                 )
                 setActivePersona(res.data)
                 setActivePersonaId(res.data.id)
-                console.log(3)
             } catch (err) {
                 console.log(err);
             }
@@ -118,7 +113,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/auth', {
+                    'http://52.78.105.195:8081/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -138,7 +133,7 @@ function MyPage() {
         const token = cookies.get('token')
         try {
             await axios.put(
-                'http://52.78.105.195/api/persona/user/' + personaId, {},
+                'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -153,6 +148,7 @@ function MyPage() {
                 }
             }
             */
+            //navigation('/mypage')
             window.location.reload();
         } catch (err) {
             console.log(err)
@@ -203,7 +199,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 await axios.post(
-                    'http://52.78.105.195/api/mypage/image', formData, {
+                    'http://52.78.105.195:8081/api/mypage/image', formData, {
                         headers: {
                             Authorization: "Bearer " + token
                         }

@@ -37,7 +37,7 @@
 
 .login-input {
     width: 100%;
-    height:  35px;
+    height: 35px;
     border: 1px solid transparent;
     border-bottom: 1px solid #FE6740;
     transition: font-size 0.2s;
@@ -45,7 +45,6 @@
 
 .login-input:focus-visible {
     outline: 1px solid transparent;
-    font-size: 0.75rem;
 }
 
 .login-submit {

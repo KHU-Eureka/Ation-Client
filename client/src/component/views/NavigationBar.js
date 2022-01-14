@@ -23,7 +23,7 @@ function NavigationBar() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/auth', {
+                    'http://52.78.105.195:8081/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -39,7 +39,7 @@ function NavigationBar() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/persona', {
+                    'http://52.78.105.195:8081/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -67,7 +67,7 @@ function NavigationBar() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/persona/user', {
+                    'http://52.78.105.195:8081/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -93,7 +93,7 @@ function NavigationBar() {
         const token = cookies.get('token')
         try {
             await axios.put(
-                'http://52.78.105.195/api/persona/user/' + persona.id, {},
+                'http://52.78.105.195:8081/api/persona/user/' + persona.id, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token

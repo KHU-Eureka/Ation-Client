@@ -79,7 +79,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195/api/auth', {
+                    'http://52.78.105.195:8081/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -127,7 +127,7 @@ function MyPersona ({match}) {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://52.78.105.195/api/persona/duplicate?nickname=' + temp, {
+                'http://52.78.105.195:8081/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
@@ -244,7 +244,7 @@ function MyPersona ({match}) {
             const getInterestList = async () => {
                 try {
                     const res = await axios.get(
-                        'http://52.78.105.195/api/persona-category/interest'
+                        'http://52.78.105.195:8081/api/persona-category/interest'
                     )
                     var temp = res.data;
                     setInterestList(temp);
@@ -257,7 +257,7 @@ function MyPersona ({match}) {
             const getSenseList = async () => {
                 try {
                     const res = await axios.get(
-                        'http://52.78.105.195/api/persona-category/sense'
+                        'http://52.78.105.195:8081/api/persona-category/sense'
                     )
                     var temp = res.data;
                     setSenseList(temp);
@@ -288,7 +288,7 @@ function MyPersona ({match}) {
                     const token = cookies.get('token');
                     try {
                         const res = await axios.get(
-                            'http://52.78.105.195/api/persona/' + personaId, {
+                            'http://52.78.105.195:8081/api/persona/' + personaId, {
                                 headers: {
                                     Authorization: 'Bearer ' + token
                                 }
@@ -325,7 +325,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token');
             try {
                 await axios.put(
-                    'http://52.78.105.195/api/persona/'+personaId, 
+                    'http://52.78.105.195:8081/api/persona/'+personaId, 
                     {
                         nickname: nickname,
                         age: age,
@@ -359,7 +359,7 @@ function MyPersona ({match}) {
             var token = cookies.get('token');
             try {
                 await axios.post(
-                    'http://52.78.105.195/api/persona/image/' + personaId, formData, 
+                    'http://52.78.105.195:8081/api/persona/image/' + personaId, formData, 
                     {
                         headers: {
                             Authorization: "Bearer " + token
@@ -375,7 +375,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 await axios.put(
-                    'http://52.78.105.195/api/persona/user/' + personaId, {},
+                    'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
                     {
                         headers: {
                             Authorization: "Bearer " + token
@@ -391,7 +391,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 await axios.delete(
-                    'http://52.78.105.195/api/persona/'+personaId, {
+                    'http://52.78.105.195:8081/api/persona/'+personaId, {
                         headers: {
                             Authorization: 'Bearer ' + token
                         }
@@ -751,21 +751,19 @@ function MyPersona ({match}) {
                             </div>
                         </div>
 
-                        <div className="input-wrapper2">
+                        <div className="input-wrapper">
                             <label>한줄소개</label>
-                            <div className="edit-form-input-box">
-                                <textarea
-                                    id="introduction"
-                                    value={introduction}
-                                    maxLength={100}
-                                    placeholder="자기소개를 입력해주세요"
-                                    onChange={(e)=>{setIntroduction(e.target.value)}}
-                                    className="introduction-textarea"
-                                    disabled={mode==="view"}
-                                ></textarea>
-                                { mode==="edit" && 
-                                <div className="introduction-length">{introduction.length}/100</div> }
-                            </div>
+                            <textarea
+                                id="introduction"
+                                value={introduction}
+                                maxLength={100}
+                                placeholder="자기소개를 입력해주세요"
+                                onChange={(e)=>{setIntroduction(e.target.value)}}
+                                className="introduction-textarea"
+                                disabled={mode==="view"}
+                            ></textarea>
+                            { mode==="edit" && 
+                            <div className="introduction-length">{introduction.length}/100</div> }
                         </div>
 
                     </div>

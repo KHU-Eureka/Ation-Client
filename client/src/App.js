@@ -33,7 +33,7 @@ function App() {
       var token = cookies.get('token');
       try {
           const res = await axios.get(
-              'http://52.78.105.195/api/auth', {
+              'http://52.78.105.195:8081/api/auth', {
                 headers: {
                   Authorization: "Bearer " + token
                 }

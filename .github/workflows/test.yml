@@ -1,6 +1,6 @@
 name: Main deploy
 on:
-  push:
+  pull_request:
     branches:
       - master
 jobs:
@@ -22,10 +22,3 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: ${{ env.working-directory }}
-
-      - name: Deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-        run: |
-          aws s3 cp --recursive --region ap-northeast-2 client/build s3://ation.com

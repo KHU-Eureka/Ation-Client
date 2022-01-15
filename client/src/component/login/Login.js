@@ -18,7 +18,7 @@ function Login() {
     const login = async () => {
         try {
             const res = await axios.post(
-                'http://163.180.117.22:7218/api/auth/login',
+                'http://52.78.105.195:8081/api/auth/login',
                 {
                     email: email,
                     password: password,
@@ -26,11 +26,9 @@ function Login() {
             )
             var token = res.data.token;
             var name = res.data.name;
-            cookies.set('token', token);
-            alert('로그인 성공');
-            getPersona(token, name);
+            cookies.set('token', token); // 받은 token을 cookie에 저장
+            getPersona(token, name); // user의 active persona 정보를 얻음
         } catch (err) {
-            alert('로그인 실패');
             console.log(err);
         }
     }
@@ -38,7 +36,7 @@ function Login() {
     const getPersona = async (token, name) => {
         try {
             const res = await axios.get(
-                'http://163.180.117.22:7218/api/persona/user', {
+                'http://52.78.105.195:8081/api/persona/user', {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -46,9 +44,10 @@ function Login() {
             // 아직 등록된 persona가 없는 경우
             if (res.data === '') {
                 navigate('/landing', { state: { welcome: true, name: name } })
+                window.location.reload()
             } else {
-                //history.push('/mypage');
                 navigate('/mypage')
+                window.location.reload()
             }
         } catch (err) {
             console.log(err);
@@ -94,6 +93,7 @@ function Login() {
             >
                 로그인 하기
             </button>
+            <div onClick={()=>{navigate('/signup')}}>회원가입 하기</div>
         </form>
     );
 }

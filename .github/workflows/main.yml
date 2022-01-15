@@ -1,0 +1,31 @@
+name: Main deploy
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./client
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+
+      - name: Check Node v
+        run: node -v
+
+      - name: Install Dependencies
+        run: npm i
+        working-directory: ${{ env.working-directory }}
+
+      - name: Build
+        run: npm run build
+        working-directory: ${{ env.working-directory }}
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp --recursive --region ap-northeast-2 client/build s3://ation.com

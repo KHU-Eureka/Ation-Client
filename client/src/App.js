@@ -19,9 +19,6 @@ import Persona_Create from "../src/component/persona/Create";
 import Persona_Edit from "../src/component/persona/Edit";
 import MyPersona from "../src/component/persona/MyPersona";
 
-
-import MyPage from "../src/component/mypage/MyPage";
-
 import "./App.css";
 import "./Fonts.css";
 import "./Input.css";
@@ -53,7 +50,7 @@ function App() {
 
   return (
     <div className="App">
-      <NavigationBar></NavigationBar>
+      {/*<NavigationBar></NavigationBar>*/}
       
       <Router>
         <Routes>

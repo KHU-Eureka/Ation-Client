@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import '../../assets/css/mypage/mypage.css';
+
+import Idaition from "./Idaition";
+import Pinbox from "./Pinbox";
+import GNB from "../GNB";
 import './MyPage.css';
 
 function MyPage() {
@@ -11,6 +16,9 @@ function MyPage() {
     let [personaList, setPersonaList] = useState([{}, {}, {}]);
     let [activePersona, setActivePersona] = useState([null]);
     let [activePersonaId, setActivePersonaId] = useState();
+    let [EditTrue, setEditTrue] = useState(false);
+    let [EditClickTrue, setEditClickTrue] = useState(false);
+    let [EditModalClose, setEditModalClose] = useState(false);
 
     const goToAddPersona = () => {
         navigation('/create-persona');
@@ -21,7 +29,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -40,7 +48,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona/user', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -61,7 +69,7 @@ function MyPage() {
         console.log('token', token);
         try {
             const res = await axios.put(
-                'http://163.180.117.22:7218/api/persona/user/' + personaId, {},
+                process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -81,10 +89,9 @@ function MyPage() {
         console.log(personaId);
     }
 
-
-
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div className="background-img2" style={{ width: '100%', height: '100%' }}>
+        <GNB />
             <div className="background-img">
                 <div className="profile-wrapper">
                     {
@@ -116,12 +123,12 @@ function MyPage() {
                 </div>
 
             </div>
-
-            <div className="pin-box-content">
-
+            <div className="Idaition-container">
+                <Idaition />
+            </div>  
+            <div className="Pinbox-container">
+                <Pinbox activePersonaId={activePersonaId} EditModalClose={EditModalClose}/>
             </div>
-
-
         </div>
     )
 }

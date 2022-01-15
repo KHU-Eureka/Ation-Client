@@ -1,0 +1,214 @@
+.PinEdit-Container {
+    display: inline-block;
+    position: absolute;
+    top: 1100px;
+    left: 200px;
+    width: 321px;
+    /* height: 470px; */
+    height: auto;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    z-index: 10;
+}
+
+.PinEdit-Container > .PersonaImg-Container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 154px;
+    height: 40px;
+    margin-top: 50px;
+    margin-left: 83.5px;
+}
+
+.PinEdit-Container > .PersonaImg-Container > .persona-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 17px;
+    border: 1px solid #E7E6E5;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.PinEdit-Container > .PinBoard-Container {
+    display: flex;
+    flex-direction: column;
+    width: 262px;
+    height: 140px;
+    margin-top: 19.88px;
+    margin-left: 42px;
+    overflow: auto;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #313338;
+}
+
+.pinboard-name {
+    margin-bottom: 27px;
+    cursor: pointer;
+}
+
+/* 스크롤바 설정*/
+.PinBoard-Container::-webkit-scrollbar{
+    width: 4px;
+    height: 140px;
+    border-radius: 7px;
+}
+
+/* 스크롤바 막대 설정*/
+.PinBoard-Container::-webkit-scrollbar-thumb{
+    background: #C4C4C4;
+    border-radius: 7px;
+}
+
+.PinEdit-Container > .PinBoardName-Container {
+    margin-top: 20px;
+    margin-left: 31px;
+}
+
+.PinEdit-Container > .PinBoardName-Container > .pinboard-input {
+    width: 192px;
+    border: 0;
+    border-bottom: 2px solid #FE6740;
+}
+
+.PinEdit-Container > .PinBoardName-Container > .pinboard-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #BBBBBB;
+}
+
+.PinEdit-Container > .PinBoardName-Container > .pinboard-input:focus {
+    outline: none;
+}
+
+.PinEdit-Container > .PinBoardName-Container > .pinboardInput-btn {
+    margin-left: 30px;
+    background: transparent;
+    border: 0;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE6740;
+}
+
+.PinEdit-Container > .Tag-Container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 258px;
+    /* height: 27px; */
+    height: auto;
+    margin-top: 20px;
+    margin-left: 23px;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after > .tag {
+    position: relative;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+    white-space: nowrap;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 5px 14px 5px 25.73px;
+    background: #FE6740;
+    border-radius: 14px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FFFFFF;
+    background: url('../../svg/close_inTag.svg') #FE6740;
+    background-repeat: no-repeat;
+    background-position: 10px;
+    cursor: pointer;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after > .tag-before {
+    width: 65.73px;
+    height: 27px;
+    margin-right: 10px;
+    padding-left: 25.73px;
+    border: 1px solid #FF0000;
+    box-sizing: border-box;
+    border-radius: 18px;
+    background-image: url('../../svg/close_inTag2.svg');
+    background-position: 10px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after > .tag-before::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #BEBBB9;
+}
+
+.PinEdit-Container > .Tag-Container > .tag-after > .tag-before:focus {
+    display: inline-block;
+    width: auto;
+    max-width: 104.73px;
+    overflow: hidden;
+    white-space: nowrap;
+    background-image: url('../../svg/close_inTag2.svg');
+    background-position: 10px;
+    background-repeat: no-repeat;
+    outline: none;
+    cursor: text;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FE3400;
+}
+
+.PinEdit-Container > .CloseBtn-Container {
+    /* position: absolute;
+    top: 390px; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 304px;
+    /* height: 56px; */
+    height: auto;
+    margin-top: 19.99px;
+    margin-bottom: 30px;
+}
+
+.PinEdit-Container > .CloseBtn-Container > .close-btn {
+    padding: 10px 25px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #FE3400;
+    cursor: pointer;
+}
+
+.PinEdit-Container > .CloseBtn-Container > .close-btn:hover {
+    background: #F5F5F5;
+}

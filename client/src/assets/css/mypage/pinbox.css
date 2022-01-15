@@ -1,0 +1,390 @@
+.PinTool-container {
+    display: flex;
+    justify-content: space-between;
+    width: 1470px;
+}
+
+.LeftTool {
+    display: flex;
+    width: 344px;
+}
+
+.RightTool {
+    position: relative;
+    display: flex;
+    margin-left: 814px;
+    width: 600px;
+}
+
+.all-pin {
+    width: 119px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 26px;
+    color: #FE3400;
+    cursor: pointer;
+}
+
+.pin-board {
+    position: relative;
+    width: 140px;
+    margin-left: 48px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 26px;
+    color: #BEBBB9;
+    cursor: pointer;
+}
+
+.pin-board-name {
+    position: absolute;
+    left: 140px;
+    top: 0px;
+    width: 83px;
+    height: 26px;
+    padding: 5px 15px;
+    background: #FE3400;
+    border-radius: 16px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pin-search-input {
+    width: 398px;
+    height: 47px;
+    padding-left: 0px;
+    border: 0;
+    border-bottom: 2px solid #FE6740;
+    font-size: 18px;
+}
+
+.pin-search-input::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+}
+
+.pin-search-input:focus {
+    outline: none;
+}
+
+.pin-searchImg-container {
+    position: absolute;
+    left: 363px;
+    top: 5px;
+}
+
+.pin-search { 
+    cursor: pointer;
+}
+
+.pin-add {
+    position: relative;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.allPin-content .pin-item{
+    list-style: none;
+}
+
+.pinBoard-content .pinBoard {
+    list-style: none;
+}
+
+.allPin-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap : wrap;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1800px;
+}
+
+.pin-item {
+    margin-right: 35.63px;
+    margin-bottom: 48.75px;
+}
+
+.Mypin-item {
+    cursor: pointer;
+}
+
+.pin-img {
+    position: relative;
+    width: 374px;
+    height: 210.04px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.pin-edit-del {
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    /* top: 1072px; */
+    width: 360.02px;
+    /* height: 200px; */
+}
+
+.Mypin-edit {
+    position: absolute;
+    top: -190.07px;
+    left: 313px;
+}
+
+.pin-del {
+    position: absolute;
+    top: -193px;
+}
+
+.pin-tag-board-container {
+    margin-top: 70px;
+    margin-left: -330px;
+    position: absolute;
+    width: 292.36px;
+    height: auto;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    white-space: normal;
+    flex-wrap: wrap;
+    /* margin-right: auto;
+    margin-left: auto; */
+}
+
+.pin-tag-container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.Mypin-tag {
+    white-space: nowrap;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+    /* color: black; */
+}
+
+.Mypin-board {
+    /* position: absolute; */
+    /* top: -128.82px; */
+    /* margin-left: 0px;
+    margin-top: 33px; */
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #FE6740;
+}
+
+.noclick {
+    display: none;
+}
+
+.clickPin {
+    display: inline;
+}
+
+.pin-title {
+    display: flex;
+    height: 18.75px;
+    margin-top: 0px;
+}
+
+.pin-name {
+    width: 291.45px;
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #352C23;
+}
+
+.pin-circle {
+    width: 12.86px;
+    height: 12.84px;
+}
+
+.pin-description {
+    margin-top: 16px;
+}
+
+.pin-site {
+    margin-left: 9.32px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #352C23;
+}
+
+/* 핀보드 */
+
+.pinBoard-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap : wrap;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1800px;
+    height: auto;
+    /* white-space: normal; */
+}
+
+.pinBoardItem-container {
+    cursor: pointer;
+}
+
+.pinBoard {
+    margin-right: 34px;
+    margin-bottom: 30px;
+}
+
+.pinBoard-img {
+    position: relative;
+    width: 381.47px;
+    height: 217.98px;
+    opacity: 0.5;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.pinBoard-title {
+    position: absolute;
+    cursor: pointer;
+}
+
+.pinBoard-name {
+    position: absolute;
+    width: 375px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 26px;
+    line-height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #1E140A;
+    margin-top: 0px;
+    top: -134px;
+    cursor: pointer;
+}
+
+.pinBoard-count {
+    position: absolute;
+    width: 370px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #352C23;
+    top: -110.02px;
+    cursor: pointer;
+}
+
+.pin-search-input {
+    display: inline;
+}
+
+.noPinBoard {
+    display: none;
+}
+
+.noPinItem {
+    /* display: none; */
+}
+
+.pinItem-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap : wrap;
+    margin-left: 8%;
+    margin-right: auto;
+    margin-top: 49px;
+    width: 1800px;
+    list-style: none;
+}
+
+.noClickPinBoard {
+    display: none;
+}
+
+.pin-edit-del2 {
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    width: 360.02px;
+    cursor: pointer;
+}
+
+.Mypin-edit2 {
+    position: absolute;
+    top: -193.07px;
+    left: 313px;
+    cursor: pointer;
+}
+
+.pin-del2 {
+    position: absolute;
+    top: -196px;
+    cursor: pointer;
+}
+
+.noPinsPinBoard {
+    display: flex;
+    justify-content: center;
+    width: 1470px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 100px;
+    padding-right: 200px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 21px;
+    color: #C4C4C4;
+}

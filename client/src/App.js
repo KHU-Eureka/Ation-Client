@@ -14,7 +14,7 @@ import SignUp from "../src/component/signup/SignUp";
 import Persona_Create from "../src/component/persona/Create";
 import Persona_Edit from "../src/component/persona/Edit";
 
-import MyPage from "../src/component/mypage/MyPage";
+// import MyPage from "../src/component/mypage/MyPage";
 
 
 import "./App.css";

@@ -124,6 +124,7 @@ function Create() {
             )
             // landing 페이지로 이동함
             navigation('/landing', { state: {personaCreate: true}, replace: true })
+            window.location.reload()
         } catch (err) {
             console.log(err)
         }

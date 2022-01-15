@@ -109,7 +109,9 @@ function Form04(props) {
                                         src={ senseColorInfo[idx] ? sense.colorImg : sense.whiteImg }
                                         alt="sense icon"
                                         ></img>
-                                        <div className="sense-name">{ sense.name }</div>
+                                        <div className="sense-name"
+                                        style={{left: sense.senseId >= 4 &&'160px'}}
+                                        >{ sense.name }</div>
                                     </label>
                                 </div>
                                 

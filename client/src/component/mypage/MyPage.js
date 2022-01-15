@@ -43,12 +43,12 @@ function MyPage() {
 
     useEffect(() => {
         if (state) {
-            if (state.alert) {
+            if (state.alert && state.alert.show) {
                 var alertInfo = state.alert;
                 setAlertTitle(alertInfo.title);
                 setAlertSubtitle(alertInfo.subtitle);
                 setShowAlert(true);
-                state.alert = null;
+                state.alert.show = false;
             }
         }
     }, [])

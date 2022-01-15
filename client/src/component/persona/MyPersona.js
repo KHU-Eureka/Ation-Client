@@ -349,7 +349,7 @@ function MyPersona ({match}) {
                 window.scrollTo(0,0)
     
                 // 마이페이지로 이동
-                navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: ""}}})
+                navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: "", show: true}}})
             } catch (err) {
                 console.log(err)
             }
@@ -479,7 +479,7 @@ function MyPersona ({match}) {
                         disabled={mode==="view"}
                         />
                     </div>
-                    <div className="input-wrapper2">
+                    <div className="input-wrapper2" style={{marginBottom: '60px'}}>
                         <div className="input-wrapper" style={{marginRight: '50px'}}>
                             <label>나이</label>
                             {
@@ -727,7 +727,9 @@ function MyPersona ({match}) {
                                                     src={ senseColorInfo[idx] ? sense.colorImg : sense.whiteImg }
                                                     alt="sense icon"
                                                     ></img>
-                                                    { mode==="edit" && <div className="sense-name">{ sense.name }</div> }
+                                                    { mode==="edit" && <div className="sense-name"
+                                                    style={mode==="view" ? null : {left: sense.senseId >= 4 &&'175px'}}
+                                                    >{ sense.name }</div> }
                                                 </label>
                                             </div>  
                                         )

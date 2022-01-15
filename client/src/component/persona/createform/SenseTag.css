@@ -37,13 +37,12 @@
 }
 
 .checkbox-elem .sense-img {
-    width: 100%;
     height: 80px;
     padding: 0px calc(50% - 40px);
 }
 
 .checkbox-elem .sense-name {
-    position: relative;
-    left: -25px;
+    position: absolute;
     top: -20px;
+    right: 10px;
 }

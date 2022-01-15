@@ -7,6 +7,9 @@ import NavigationBar from "./component/views/NavigationBar";
 
 import Insight_Read from "../src/component/insight/Read";
 import Insight_Create from "../src/component/insight/Create";
+import MyPage from "../src/component/mypage/MyPage";
+
+import './App.css';
 
 import Landing from "../src/component/landing/Landing";
 import Login from "../src/component/login/Login";

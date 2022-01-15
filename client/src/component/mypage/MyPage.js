@@ -7,6 +7,10 @@ import { FaExchangeAlt } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { IoMdSettings } from 'react-icons/io';
 import Alert from '../views/Alert';
+import '../../assets/css/mypage/mypage.css';
+import Idaition from "./Idaition";
+import Pinbox from "./Pinbox";
+import GNB from "../GNB";
 import './MyPage.css';
 
 import eye from '../../asset/images/sense/눈_white.png';
@@ -36,6 +40,9 @@ function MyPage() {
     let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState([null]);
     let [activePersonaId, setActivePersonaId] = useState();
+    let [EditTrue, setEditTrue] = useState(false);
+    let [EditClickTrue, setEditClickTrue] = useState(false);
+    let [EditModalClose, setEditModalClose] = useState(false);
 
     const goToAddPersona = () => {
         navigation('/persona-create'); // persona 생성 페이지로 이동
@@ -67,7 +74,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -96,7 +103,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona/user', {
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -132,8 +139,8 @@ function MyPage() {
     const changeActivePersona = async (personaId) => {
         const token = cookies.get('token')
         try {
-            await axios.put(
-                'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
+            const res = await axios.put(
+                process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -168,6 +175,7 @@ function MyPage() {
     const editPersona = (personaId) => {
         navigation('/persona-edit', { state: { personaId: personaId, personaIdList: personaIdList } })
     }
+
 
     const goToMyPersona = (personaId) => {
         navigation('/mypersona/view', { state: { personaId: personaId, personaIdList: personaIdList } })
@@ -220,7 +228,8 @@ function MyPage() {
 
 
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div className="background-img2" style={{ width: '100%', height: '100%' }}>
+            <GNB />
             <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div 
             className="background-img"
@@ -323,12 +332,12 @@ function MyPage() {
                 </div>
 
             </div>
-
-            <div className="pin-box-content">
-
+            <div className="Idaition-container">
+                <Idaition />
+            </div>  
+            <div className="Pinbox-container">
+                <Pinbox activePersonaId={activePersonaId} EditModalClose={EditModalClose}/>
             </div>
-
-
         </div>
     )
 }

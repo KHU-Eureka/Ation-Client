@@ -7,6 +7,7 @@ import '../../assets/css/mypage/mypage.css';
 import Idaition from "./Idaition";
 import Pinbox from "./Pinbox";
 import GNB from "../GNB";
+import './MyPage.css';
 
 function MyPage() {
     const cookies = new Cookies();
@@ -15,7 +16,6 @@ function MyPage() {
     let [personaList, setPersonaList] = useState([{}, {}, {}]);
     let [activePersona, setActivePersona] = useState([null]);
     let [activePersonaId, setActivePersonaId] = useState();
-
     let [EditTrue, setEditTrue] = useState(false);
     let [EditClickTrue, setEditClickTrue] = useState(false);
     let [EditModalClose, setEditModalClose] = useState(false);
@@ -90,7 +90,7 @@ function MyPage() {
     }
 
     return (
-        <div className="background-img2">
+        <div className="background-img2" style={{ width: '100%', height: '100%' }}>
         <GNB />
             <div className="background-img">
                 <div className="profile-wrapper">

@@ -1,12 +1,13 @@
 .LNB-container {
-    margin-left: 8.75%;
+    margin-left: 4.5%;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
     line-height: 18px;
     color: #807A74;
-    width: 160px;
+    /* width: 160px; */
+    width: 8.3%;
 }
 
 .category {

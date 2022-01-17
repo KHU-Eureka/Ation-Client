@@ -1,5 +1,9 @@
 .GNB-container {
     display: flex;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 0px 64px 0px 65px;
     height: 82px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
@@ -7,6 +11,15 @@
     position: fixed;
     top: 0;
     z-index: 5;
+}
+
+.gnb-flex-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 93%;
+    flex-grow: 1;
 }
 
 .Logo-container {
@@ -19,12 +32,19 @@
     font-size: 24px;
     line-height: 26px;
     color: #FE3400;
+    margin-left: 0px;
+    width: 87px;
+    
+}
+
+.Logo-container .logo {
+    margin-bottom: 85px;
 }
 
 .Btn-container {
     display: flex;
     align-items: center;
-    margin-left: 629px;
+    margin-left: 400px;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
@@ -41,7 +61,7 @@
 
 .Profile-container {
     display: flex;
-    margin-left: 486px;
+    margin-left: 300px;
 }
 
 .insight-btn {

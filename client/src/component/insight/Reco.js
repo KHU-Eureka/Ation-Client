@@ -48,9 +48,9 @@ function Reco(props) {
         setSlotTrue(slotTrue+1);
     }
 
-    useEffect(() => {
-        imgSet();
-    }, [slotTrue]);
+    // useEffect(() => {
+    //     imgSet();
+    // }, [slotTrue]);
 
     return (
         <div className="Reco-container">
@@ -59,30 +59,35 @@ function Reco(props) {
                     <p className="title1">지금의 컨텐츠가, 당신의 영감으로</p>
                     <p className="title2">{props.userName}님에게 추천하는 오늘의 인사이트</p>
                 </div>
-                <div className="recoBtn-container" onClick={slotCilckHandler}>
+                {/* <div className="recoBtn-container" onClick={slotCilckHandler}>
                     <span>슬롯을 당겨 랜덤으로 인사이트를 얻어보세요!</span>
                     <img src={reco} />
-                </div>
+                </div> */}
             </div>
-            {RecoList.length === 4?
+            {/* {RecoList.length === 4? */}
             <div className="img-container2">
-                <div>
+                {/* <div>
                     <span className="title-reco">{RecoList[0].title}</span>
-                </div>
-                <img className="imgbox" src={RecoList[0].imgPath}></img>
-                <div>
+                </div> */}
+                {/* <img className="imgbox"/> src={RecoList[0].imgPath}></img> */}
+                {/* <div>
                     <span className="title-reco">{RecoList[1].title}</span>
-                </div>
-                <img className="imgbox" src={RecoList[1].imgPath}></img>
-                <div>
+                </div> */}
+                <img className="imgbox"/> 
+                <img className="imgbox"/> 
+                <img className="imgbox"/> 
+                <img className="imgbox"/> 
+                {/* src={RecoList[1].imgPath}></img> */}
+                {/* <div>
                     <span className="title-reco">{RecoList[2].title}</span>
-                </div>
-                <img className="imgbox" src={RecoList[2].imgPath}></img>
-                <div>
+                </div> */}
+                {/* <img className="imgbox"/> src={RecoList[2].imgPath}></img> */}
+                {/* <div>
                     <span className="title-reco">{RecoList[3].title}</span>
-                </div>
-                <img className="imgbox" src={RecoList[3].imgPath}></img>
-            </div>:<></>}
+                </div> */}
+                {/* <img className="imgbox"/> src={RecoList[3].imgPath}></img> */}
+            </div>
+            {/* :<></>} */}
         </div>
     );
 }

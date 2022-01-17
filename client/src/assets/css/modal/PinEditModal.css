@@ -32,10 +32,13 @@
 }
 
 .Pinboard-container {
+    display: inline-flex;
+    align-items: flex-start;
+    height: auto;
     margin-top: 35px;
     margin-left: 18px;
     width: 262px;
-    height: 140px;
+    min-height: 140px;
     overflow: auto;
     font-family: Pretendard;
     font-style: normal;

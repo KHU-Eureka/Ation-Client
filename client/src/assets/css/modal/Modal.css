@@ -214,7 +214,7 @@
 .page1 {
     position: absolute;
     z-index: 99;
-    top: 1220px;
+    top: 1130px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -230,7 +230,7 @@
 .page2 {
     position: absolute;
     z-index: 99;
-    top: 1220px;
+    top: 1130px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -247,7 +247,7 @@
     display: inline-block;
     position: absolute;
     z-index: 99;
-    top: 1220px;
+    top: 1130px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;

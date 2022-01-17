@@ -5,6 +5,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 80px;
+    width: 100%;
 }
 
 .title-container {
@@ -36,13 +37,14 @@
 
 .imgbox {
     position: relative;
-    width: 477px;
+    width: 25%;
     height: 665px;
     margin-right: 4px;
-    object-fit: cover;
+    background-color: thistle;
+    /* object-fit: cover;
     filter: grayscale(44%);
     opacity: 0.58;
-    animation: modal-bg-show .3s;
+    animation: modal-bg-show .3s; */
 }
 
 .title-reco {

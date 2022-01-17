@@ -15,7 +15,7 @@ function Landing() {
 
     let [personaCreateModal, showPersonaCreateModal] = useState(false);
 
-    useEffect(()=> {
+    useEffect(()=> { // state 검사
         if (state != null) {
             // 신규 유저일 때
             if (state.welcome != null) {

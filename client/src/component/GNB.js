@@ -9,6 +9,7 @@ import profile from "../assets/svg/profile.svg";
 function GNB() {
     return (
         <div className="GNB-container">
+            <div className="gnb-flex-container">
             <div className="Logo-container">
                 <img className="logo" src={logo} />
             </div>
@@ -31,6 +32,7 @@ function GNB() {
                 <button className="openlounge-btn">Open Lounge</button>
                 <img className="bell" src ={bell} width="30px" />
                 <img src ={profile} width="30px" />
+            </div>
             </div>
         </div>
     );

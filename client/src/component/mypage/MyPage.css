@@ -1,16 +1,23 @@
 .background-img {
     width: 100%;
     height: 460px;
+    padding-top: 80px;
     background-color: #FFA48C;
-    position: absolute;
+    /* position: absolute; */
     top: 0px;
     background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: cover;
+    background-position-y: 80px;
     transition: 0.2s;
 }
 
-.background-img:hover {
-    background-color: #cf907e;
+.background-img #background-image-label {
+    color: #807A74;
+    font-size: 30px;
+    position: absolute;
+    top: 470px;
+    right: 5%;
+    cursor: pointer;
 }
 
 .profile-wrapper {
@@ -19,7 +26,7 @@
     justify-content: space-around;
     align-items: center;
     position: relative;
-    top: 230px;
+    top: 140px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -30,6 +37,92 @@
     background-color: white;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s;
+}
+
+.persona-profile .card-contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-contents .card-header,
+.card-contents .card-footer {
+    width: 100%;
+}
+
+.card-header .card-font {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.card-header .persona-name {
+    margin-top: 34px;
+    font-size: 26px;
+    
+}
+
+.card-header .persona-job {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.card-footer .sense-wrapper {
+    margin: 10px 16px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.sense-wrapper .sense-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.persona-profile .card-hover {
+    width: 100%;
+    height: 100%;
+    background-color: #807A7450;
+    border-radius: 10px;
+    color: #ffffff70;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.persona-profile .card-hover:hover {
+    opacity: 1;
+}
+
+.card-hover .content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-wrapper .content-button {
+    width: 52px;
+    margin: 0px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-button .button-icon {
+    color: white;
+    font-size: 40px;
+}
+
+.content-button .button-text {
+    color: white;
+    font-size: 15px;
 }
 
 #active-persona-profile {
@@ -47,9 +140,15 @@
     line-height: 40px;
     text-align: center;
     border-radius: 20px;
+    color: #FE6740;
     border: 1px solid #FE6740;
     font-size: 19px;
     transition: 0.2s;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    top: calc(50% - 20px);
 }
 
 .add-persona-btn:hover {

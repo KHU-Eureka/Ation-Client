@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Alert from '../views/Alert';
 import axios from 'axios';
 import './SignUp.css'
 
@@ -11,6 +12,11 @@ function SignUp() {
     let [password, setPassword] = useState("");
     let [passwordCheck, setPasswordCheck] = useState("");
 
+    // alert 관련
+    let [showAlert, setShowAlert] = useState(false);
+    let [alertTitle, setAlertTitle] = useState("");
+    let [alertSubtitle, setAlertSubtitle] = useState("");
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -18,17 +24,18 @@ function SignUp() {
     const postUserInfo = async () => {
         try {
             const res = await axios.post(
-                'http://163.180.117.22:7218/api/auth/signup',
+                'http://52.78.105.195:8081/api/auth/signup',
                 {
                     email: email,
                     name: name,
                     password: password
                 }
             )
-            alert("회원가입 되었습니다.");
             navigation('/login', { replace: true })
         } catch (err) {
-            alert("회원가입에 실패했습니다");
+            setAlertTitle("회원가입에 실패했습니다")
+            setAlertSubtitle("다시 시도해주세요")
+            setShowAlert(true)
             console.log(err);
         }
     }
@@ -36,7 +43,8 @@ function SignUp() {
 
 
     return (
-        <form class="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
+        <form className="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
+            <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div className="title">
                 회원가입
             </div>

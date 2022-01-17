@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { VscClose } from 'react-icons/vsc';
+import character from '../../asset/images/character.png';
 
 function WelcomeModal(props) {
     console.log(props);
@@ -17,17 +19,18 @@ function WelcomeModal(props) {
                     <div className="close-btn"
                     onClick={ props.closeWelcome }
                     >
-                        X
+                        <VscClose/>
                     </div>
                 </div>
 
                 <div className="modal-content">
+                    <img src={character}></img>
                     <div className="modal-title">Welcome!</div>
                     <div className="modal-sub-title">
                         { props.name }님 가입을 환영합니다! 지금 바로 페르소나를 생성해보세요!
                     </div>
-                    <div className="image">character design image</div>
                     <button
+                        className="modal-btn"
                         onClick={ goToCreatePersona }>
                         페르소나 등록하러 가기
                     </button>

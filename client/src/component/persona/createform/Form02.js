@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function Form02(props) {
     let [interestList, setInterestList] = useState([]);  
+    let [showInterestAlertMsg, setShowInterestAlertMsg] = useState(false);
 
     const formValidationCheck = () => {
         if (props.interestIdList.length === 0) {
@@ -15,13 +16,14 @@ function Form02(props) {
     const changeHandler = (checked, id) => {
         if (checked) {
             if(props.interestIdList.length === 3) {
-                alert("최대 3개까지만 선택 가능해요!")
+                setShowInterestAlertMsg(true)
             } else {
                 props.setInterestIdList([...props.interestIdList, id])
             }
             
         } else {
             props.setInterestIdList(props.interestIdList.filter((el) => el !== id))
+            setShowInterestAlertMsg(false)
         }
     }
 
@@ -29,7 +31,7 @@ function Form02(props) {
         const getInterestList = async () => {
             try {
                 const res = await axios.get(
-                    'http://163.180.117.22:7218/api/persona-category/interest'
+                    'http://52.78.105.195:8081/api/persona-category/interest'
                 )
                 var temp = res.data;
                 setInterestList(temp);
@@ -47,12 +49,20 @@ function Form02(props) {
                     분야태그(최대 3개)
                 </label>
                 <div style={{width:'240px'}}>
-                    <div class="label-description">
+                    <div className="label-description">
                         본인의 직업/분야와 관련한 핵심 키워드를 입력해주세요.
                         크리에이터님의 프로필 메인에 노출되는 키워드입니다.
                     </div>
                 </div>
                 <div className="checkbox-wrapper">
+                <div
+                className="alert-msg-wrapper"
+                style={showInterestAlertMsg ? {opacity: 1} : {opacity: 0}}>
+                    {showInterestAlertMsg &&
+                    <div className="alert-msg bounce">
+                        최대 3개까지 선택 가능합니다.
+                    </div>}
+                </div>
                     {
                         [...interestList].map( function(interest, idx) {
                             return(
@@ -73,7 +83,7 @@ function Form02(props) {
                     }
                 </div>
             </div>
-            <button class="small-btn" onClick={formValidationCheck} disabled={props.interestIdList.length===0} >다음</button>
+            <button className="small-btn" onClick={formValidationCheck} disabled={props.interestIdList.length===0} >다음</button>
         </div>
     );
 }

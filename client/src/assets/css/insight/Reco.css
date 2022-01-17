@@ -5,6 +5,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 80px;
+    width: 100%;
 }
 
 .title-container {
@@ -36,7 +37,7 @@
 
 .imgbox {
     position: relative;
-    width: 477px;
+    width: 25%;
     height: 665px;
     margin-right: 4px;
     background-color: thistle;

@@ -1,0 +1,120 @@
+.select-box {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    line-height: 60px;
+    position: relative;
+}
+
+.select-box .select-value {
+    width: calc(100% - 60px);
+    height: 60px;
+    border-radius: 10px;
+    border: 1px solid #FE6740;
+    padding: 0px 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.select-box .default-text {
+    color: #BEBBB9;
+}
+
+.select-value .down-icon {
+    float: right;
+    font-size: 20px;
+    color: #FFA48C;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.select-box .active {
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.select-box .active .down-icon {
+    color: #E7E6E5;
+}
+
+.select-box #selected-item {
+    color: #FE6740;
+}
+
+.select-box .option-wrapper {
+    width: calc(100% - 20px);
+    max-height: calc(60px * 5);
+    position: absolute;
+    padding: 10px 10px;
+    top: 60px;
+    background-color: white;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px solid #FE6740;
+    border-top: 1px solid #F5F5F5;
+    animation: 0.1s hideBox;
+    animation-fill-mode: forwards;
+    z-index: 10;
+}
+
+@keyframes hideBox {
+    100% {transform: translateY(-10px); max-height: 0px; overflow: hidden; opacity: 0;}
+}
+
+@keyframes showBox {
+    0% {transform: translateY(-10px); max-height: 0px; overflow: hidden; opacity:0;}
+    100% {}
+}
+
+@keyframes showShdow {
+    0% {opacity: 0; box-shadow: none;}
+    100% {opacity: 1}
+}
+
+.active + .option-wrapper {
+    display: flex;
+    animation: 0.2s ease-out showBox;
+}
+
+/* for focus box shadow */
+.active + .option-wrapper::after {
+    content: "";
+    width: 100%;
+    height: calc(100% + 60px);
+    position: absolute;
+    top: -60px;
+    left: 0px;
+    background-color: #FFFFFF00;
+    animation: 0.2s showShdow;
+    pointer-events: none;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+.option-wrapper .option-list {
+    width: 100%;
+    overflow: auto;
+    max-height: calc(60px * 5);
+}
+
+.option-wrapper .option-list::-webkit-scrollbar {
+    width: 4px;
+    margin-right: 10px;
+}
+
+.option-wrapper .option-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #C4C4C4;
+}
+
+.option-list .option-item {
+    width: calc(100% - 30px);
+    height: 60px;
+    padding-left: 20px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.option-list .option-item:hover {
+    color: #FE6740;
+}

@@ -1,11 +1,12 @@
-.nav-bar .active-persona-image {
+.GNB-container .active-persona-image {
     width: 38px;
     height: 38px;
     border-radius: 50%;
     object-fit: cover;
     position: absolute;
     top: calc(40px - 19px);
-    right: 80px;
+    right: 30px;
+    cursor: pointer;
 }
 
 .gnb-popup {

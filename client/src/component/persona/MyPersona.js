@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import GNB from '../GNB';
 import SelectBox from '../views/input/SelectBox';
 import SelectBox2 from '../views/input/SelectBox2';
 import { MdEdit } from 'react-icons/md';
@@ -422,6 +423,7 @@ function MyPersona ({match}) {
 
     return (
         <div className="mypersona">
+            <GNB></GNB>
             <div 
             className="background-img"
             style={{backgroundImage: "url('"+backgroundImgUrl+"')"}}

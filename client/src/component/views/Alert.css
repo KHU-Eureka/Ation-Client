@@ -1,0 +1,33 @@
+.alert-wrapper {
+    width: 340px;
+    height: 140px;
+    border-radius: 15px;
+    position: fixed;
+    flex-direction: column;
+    left: calc(50% - 170px);
+    background: white;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    z-index: 3;
+    transition: ease 1.3s;
+}
+
+.alert-wrapper .completed-circle {
+    width: 33px;
+    height: 33px;
+    line-height: 40px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.alert-wrapper .alert-title {
+    font-size: 21px;
+    font-weight: 700;
+    margin-top: 12px;   
+}
+
+.alert-wrapper .alert-subtitle {
+    font-size: 16px;
+    margin-top: 10px;
+}

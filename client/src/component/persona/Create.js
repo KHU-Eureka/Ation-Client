@@ -40,6 +40,7 @@ function Create() {
     }
 
     const nextPage = () => {
+        window.scrollTo(0,0)
         setFormPage(formPage + 1);
     }
 

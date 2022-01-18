@@ -123,9 +123,11 @@ function Read() {
     const imgClickHandler = async(e) => {
         if(e.target.className !== 'pin') {
             let temp = e.target.getAttribute('id');
-            const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`
-              );
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
             window.open(response.data.url);
             console.log(e.target);
         }

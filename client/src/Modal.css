@@ -40,6 +40,7 @@
 .modal-content {
     width: 400px;
     min-height: 250px;
+    display: contents;
 }
 
 .modal-title {
@@ -89,6 +90,7 @@
     height: 50px;
     line-height: 60px;
     font-size: 40px;
+    text-align: center;
     border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
@@ -98,6 +100,17 @@
 }
 
 .modal-btn {
+    width: 400px;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 100px;
+    border: none;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-family: pretendard;
+    font-weight: 500;
     background-color: #FE3400;
     transition: 0.2s;
     margin-top: 36px;

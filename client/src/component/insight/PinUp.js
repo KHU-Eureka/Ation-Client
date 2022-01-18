@@ -70,6 +70,12 @@ function PinUP(props) {
             persona_img[i].classList.remove('clickedPersona');
         }
         e.target.classList.add('clickedPersona');
+        if(e.target.getAttribute("value")!== persona && document.querySelectorAll('.pinboard')) {
+            const pinBoard = document.querySelectorAll('.pinboard');
+            for(var i=0;i<pinBoard.length;i++) {
+                pinBoard[i].classList.remove('clickedPinBoard');
+            }
+        }
     }
 
     useEffect(() => {
@@ -227,7 +233,7 @@ function PinUP(props) {
                 </div>
                 <div className="Pinboard-container">
                     {pinboard.map( pin => (
-                        <p className="pinboard" id={pin.id} onClick={pinboadClickHandler}>{pin.name}</p>
+                        <div className="pinboard" id={pin.id} onClick={pinboadClickHandler}>{pin.name}</div>
                     ))}
                 </div>
                 <div className="PinboardInput-container">

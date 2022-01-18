@@ -50,7 +50,7 @@ function Form01(props) {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://52.78.105.195:8081/api/persona/duplicate?nickname=' + temp, {
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }

@@ -4,6 +4,8 @@ import { Cookies } from 'react-cookie';
 import axios from 'axios';
 
 import NavigationBar from "./component/views/NavigationBar";
+// import GNB from "../src/component/GNB";
+import GNB from "./component/GNB";
 
 import Insight_Read from "../src/component/insight/Read";
 import Insight_Create from "../src/component/insight/Create";
@@ -33,7 +35,7 @@ function App() {
       var token = cookies.get('token');
       try {
           const res = await axios.get(
-              'http://52.78.105.195:8081/api/auth', {
+              process.env.REACT_APP_SERVER_HOST+'/api/auth', {
                 headers: {
                   Authorization: "Bearer " + token
                 }
@@ -50,9 +52,10 @@ function App() {
 
   return (
     <div className="App">
-      {/*<NavigationBar></NavigationBar>*/}
       
+      {/* <NavigationBar /> */}
       <Router>
+      <GNB />
         <Routes>
           <Route exact path="/insight" element={<Insight_Read/>} />
           <Route exact path="/insight/create" element={<Insight_Create/>} />

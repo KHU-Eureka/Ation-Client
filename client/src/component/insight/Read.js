@@ -218,7 +218,6 @@ function Read() {
     if (!insight) return null;
     return (
         <>
-        <GNB />
         <div className="Insight-container">
             <Reco userName={userName}/>
             <div className="Search-container">
@@ -241,10 +240,12 @@ function Read() {
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
                             </div>
                             <p className="title" id={i.id}>{i.title}</p>
+                            <div className="tag-container">
                             <span className="tag" id={i.id}> #{i.insightMainCategory.name}</span>
                             {i.insightSubCategoryList.map(tag => (
                                 <span className="tag" id={i.id}> #{tag.name}</span>
                             ))}
+                            </div>
                             <div className="site-container">
                                 <img className="pin-circle" src={i.icon}></img>
                                 <p className="siteName">{i.siteName}</p>

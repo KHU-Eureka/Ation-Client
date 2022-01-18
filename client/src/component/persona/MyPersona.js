@@ -80,7 +80,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -128,7 +128,7 @@ function MyPersona ({match}) {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://52.78.105.195:8081/api/persona/duplicate?nickname=' + temp, {
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
@@ -245,7 +245,7 @@ function MyPersona ({match}) {
             const getInterestList = async () => {
                 try {
                     const res = await axios.get(
-                        'http://52.78.105.195:8081/api/persona-category/interest'
+                        process.env.REACT_APP_SERVER_HOST+'/api/persona-category/interest'
                     )
                     var temp = res.data;
                     setInterestList(temp);
@@ -258,7 +258,7 @@ function MyPersona ({match}) {
             const getSenseList = async () => {
                 try {
                     const res = await axios.get(
-                        'http://52.78.105.195:8081/api/persona-category/sense'
+                        process.env.REACT_APP_SERVER_HOST+'/api/persona-category/sense'
                     )
                     var temp = res.data;
                     setSenseList(temp);
@@ -289,7 +289,7 @@ function MyPersona ({match}) {
                     const token = cookies.get('token');
                     try {
                         const res = await axios.get(
-                            'http://52.78.105.195:8081/api/persona/' + personaId, {
+                            process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
                                 headers: {
                                     Authorization: 'Bearer ' + token
                                 }
@@ -326,7 +326,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token');
             try {
                 await axios.put(
-                    'http://52.78.105.195:8081/api/persona/'+personaId, 
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
                     {
                         nickname: nickname,
                         age: age,
@@ -360,7 +360,7 @@ function MyPersona ({match}) {
             var token = cookies.get('token');
             try {
                 await axios.post(
-                    'http://52.78.105.195:8081/api/persona/image/' + personaId, formData, 
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
                     {
                         headers: {
                             Authorization: "Bearer " + token
@@ -376,7 +376,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 await axios.put(
-                    'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
                     {
                         headers: {
                             Authorization: "Bearer " + token
@@ -392,7 +392,7 @@ function MyPersona ({match}) {
             const token = cookies.get('token')
             try {
                 await axios.delete(
-                    'http://52.78.105.195:8081/api/persona/'+personaId, {
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {
                         headers: {
                             Authorization: 'Bearer ' + token
                         }
@@ -423,7 +423,6 @@ function MyPersona ({match}) {
 
     return (
         <div className="mypersona">
-            <GNB></GNB>
             <div 
             className="background-img"
             style={{backgroundImage: "url('"+backgroundImgUrl+"')"}}
@@ -725,7 +724,7 @@ function MyPersona ({match}) {
                                                 onMouseLeave={()=>{onSenseMouseLeave(sense)}}
                                                 >
                                                     <img className="sense-img"
-                                                    style={mode==="view" ? null : {padding: sense.senseId >= 4 &&'0px 55px'}} /* 귀, 손일 때에만 padding을 다르게 줌 */
+                                                    style={mode==="view" ? null : {padding: sense.senseId >= 4 &&'0px 70px'}} /* 귀, 손일 때에만 padding을 다르게 줌 */
                                                     src={ senseColorInfo[idx] ? sense.colorImg : sense.whiteImg }
                                                     alt="sense icon"
                                                     ></img>

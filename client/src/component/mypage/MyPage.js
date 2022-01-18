@@ -120,7 +120,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -207,7 +207,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 await axios.post(
-                    'http://52.78.105.195:8081/api/mypage/image', formData, {
+                    process.env.REACT_APP_SERVER_HOST+'/api/mypage/image', formData, {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -229,7 +229,6 @@ function MyPage() {
 
     return (
         <div className="background-img2" style={{ width: '100%', height: '100%' }}>
-            <GNB />
             <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div 
             className="background-img"

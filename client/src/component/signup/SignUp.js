@@ -24,7 +24,7 @@ function SignUp() {
     const postUserInfo = async () => {
         try {
             const res = await axios.post(
-                'http://52.78.105.195:8081/api/auth/signup',
+                process.env.REACT_APP_SERVER_HOST+'/api/auth/signup',
                 {
                     email: email,
                     name: name,

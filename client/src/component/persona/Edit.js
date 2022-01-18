@@ -98,7 +98,7 @@ function Edit() {
         const temp = tempNickName;
         try {
             const res = await axios.get(
-                'http://52.78.105.195:8081/api/persona/duplicate?nickname=' + temp, {
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/duplicate?nickname=' + temp, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
@@ -214,7 +214,7 @@ function Edit() {
         const getInterestList = async () => {
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona-category/interest'
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona-category/interest'
                 )
                 var temp = res.data;
                 setInterestList(temp);
@@ -227,7 +227,7 @@ function Edit() {
         const getSenseList = async () => {
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona-category/sense'
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona-category/sense'
                 )
                 var temp = res.data;
                 setSenseList(temp);
@@ -258,7 +258,7 @@ function Edit() {
                 const token = cookies.get('token');
                 try {
                     const res = await axios.get(
-                        'http://52.78.105.195:8081/api/persona/' + personaId, {
+                        process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
                             headers: {
                                 Authorization: 'Bearer ' + token
                             }
@@ -295,7 +295,7 @@ function Edit() {
         const token = cookies.get('token');
         try {
             await axios.put(
-                'http://52.78.105.195:8081/api/persona/'+personaId, 
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
                 {
                     nickname: nickname,
                     age: age,
@@ -329,7 +329,7 @@ function Edit() {
         var token = cookies.get('token');
         try {
             await axios.post(
-                'http://52.78.105.195:8081/api/persona/image/' + personaId, formData, 
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -345,7 +345,7 @@ function Edit() {
         const token = cookies.get('token')
         try {
             await axios.put(
-                'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -361,7 +361,7 @@ function Edit() {
         const token = cookies.get('token')
         try {
             await axios.delete(
-                'http://52.78.105.195:8081/api/persona/'+personaId, {
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }

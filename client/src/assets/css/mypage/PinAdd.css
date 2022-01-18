@@ -165,17 +165,24 @@
 }
 
 /* 스크롤바 설정*/
-.Pinboard-container::-webkit-scrollbar{
+.ModalAdd-Container .Pinboard-container::-webkit-scrollbar{
     width: 4px;
     height: 140px;
     border-radius: 7px;
     cursor: pointer;
 }
 
+.section::-webkit-scrollbar-track { 
+    background-color: transparent; 
+    width: 4px;
+}
+
+
 /* 스크롤바 막대 설정*/
-.Pinboard-container::-webkit-scrollbar-thumb{
+.ModalAdd-Container .Pinboard-container::-webkit-scrollbar-thumb{
     background: #C4C4C4;
     border-radius: 7px;
+    width: 4px;
 }
 
 .ModalAdd-Container > .PinboardInput-container {

@@ -18,6 +18,7 @@
     height: 33px;
     line-height: 40px;
     font-size: 24px;
+    text-align: center;
 }
 
 .alert-wrapper .alert-title {

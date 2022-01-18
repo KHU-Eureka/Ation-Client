@@ -47,7 +47,7 @@ function Create() {
         var token = cookies.get('token');
         try {
             const res = await axios.post(
-                'http://52.78.105.195:8081/api/persona', 
+                process.env.REACT_APP_SERVER_HOST+'/api/persona', 
                 {
                     nickname: nickname,
                     age: age,
@@ -95,7 +95,7 @@ function Create() {
         var token = cookies.get('token');
         try {
             await axios.post(
-                'http://52.78.105.195:8081/api/persona/image/' + personaId, formData, 
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -115,7 +115,7 @@ function Create() {
         try {
             // Active persona를 생성한 페르소나로 변경하고
             await axios.put(
-                'http://52.78.105.195:8081/api/persona/user/' + personaId, {},
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -135,7 +135,7 @@ function Create() {
             const token = cookies.get('token');
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona', {
                     headers: {
                         Authorization: 'Bearer ' + token
                     }

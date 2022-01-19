@@ -122,6 +122,7 @@
     margin-right: auto;
     margin-top: 49px;
     width: 1800px;
+    /* width: 100%; */
     padding-left: 120px;
 }
 
@@ -286,7 +287,7 @@
     width: 381.47px;
     height: 217.98px;
     opacity: 0.5;
-    border-radius: 15px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
@@ -352,6 +353,7 @@
     margin-top: 49px;
     width: 1800px;
     list-style: none;
+    padding-left: 120px;
 }
 
 .noClickPinBoard {

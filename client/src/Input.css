@@ -222,7 +222,7 @@ textarea:focus {
 
   .form-wrapper .small-btn,
   .mypersona .small-btn {
-    width: 140px;
+    width: 140px !important;
     height: 50px;
     line-height: 50px;
     margin-top: 40px;

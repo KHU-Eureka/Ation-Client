@@ -18,6 +18,11 @@
     margin-top: 29px;
 }
 
+.ModalPinBoardAdd-Container > .Logo-container > .logo {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .ModalPinBoardAdd-Container > .NameInput-container {
     margin-top: 24px;
 }

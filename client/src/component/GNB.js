@@ -29,7 +29,7 @@ function GNB() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -45,7 +45,7 @@ function GNB() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -73,7 +73,7 @@ function GNB() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona/user', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -99,7 +99,7 @@ function GNB() {
         const token = cookies.get('token')
         try {
             await axios.put(
-                'http://52.78.105.195:8081/api/persona/user/' + persona.id, {},
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + persona.id, {},
                 {
                     headers: {
                         Authorization: "Bearer " + token
@@ -138,7 +138,7 @@ function GNB() {
             <div className="Profile-container">
                 <button className="openlounge-btn">Open Lounge</button>
                 <img className="bell" src ={bell} width="30px" />
-                <img className="active-persona-image" src ={activePersona? activePersona.profileImgPath : profile} alt="persona profile" width="30px"
+                <img className="profile-persona" src ={activePersona? activePersona.profileImgPath : profile} alt="persona profile" width="30px"
                 onClick={()=>{setShowGNBPopup(!showGNBPopup)}}/>
                 { activePersona &&
                 <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona} personaList={personaList}></GNBPopup> 

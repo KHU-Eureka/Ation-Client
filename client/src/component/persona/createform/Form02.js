@@ -31,7 +31,7 @@ function Form02(props) {
         const getInterestList = async () => {
             try {
                 const res = await axios.get(
-                    'http://52.78.105.195:8081/api/persona-category/interest'
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona-category/interest'
                 )
                 var temp = res.data;
                 setInterestList(temp);

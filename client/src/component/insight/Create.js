@@ -24,18 +24,19 @@ function Create(props) {
 
     const CreateInsightCloseHandler = async ({ target }) => {
         console.log(modalCreate.current);
-        if(target.className!=='complete-btn' && target.className!=='tag' && target.className!=='close' && target.className!=='skip-btn' && target.className!=='create-btn2') {
-            if(modalOpen && !modalCreate.current.contains(target) && target.className!=='create-btn' && target.className!=='prev' && target.className!=='close' && target.className!=='complete-btn') {
-                await setClickedSubCategory([]);
-                await setMainCategory(0);
-                await setMainCategoryName("");
-                await setUrl("");
-                await setHashTag([]);
-                await setChangeImgFormdata();
-                await setAddTrue(false);
-                close();
+        if(target.className!=='create-btn2') {
+            if(target.className!=='complete-btn' && target.className!=='tag' && target.className!=='close' && target.className!=='skip-btn') {
+                if(modalOpen && !modalCreate.current.contains(target) && target.className!=='create-btn' && target.className!=='prev' && target.className!=='close' && target.className!=='complete-btn') {
+                    await setClickedSubCategory([]);
+                    await setMainCategory(0);
+                    await setMainCategoryName("");
+                    await setUrl("");
+                    await setHashTag([]);
+                    await setChangeImgFormdata();
+                    await setAddTrue(false);
+                    close();
+                }
             }
-
         }
     }
 
@@ -54,19 +55,28 @@ function Create(props) {
         if(pageNum < 5) {
             setPageNum(pageNum+1);
             if(pageNum === 4) {
-                if(e.target.className === 'create-btn2') {
+                if(e.target.classList.contains('create-btn2') ) {
                     if(hashtag.length === 0) {
                         setPageNum(4);
+                    } else {
+                        const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
+                            "insightMainCategoryId": mainCategory,
+                            "insightSubCategoryIdList": ClickedSubCategory,
+                            "tagList": hashtag,
+                            "url": url
+                        });
+                        setInsightId(response.data);
                     }
+                } else {
+                    console.log("good");
+                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
+                        "insightMainCategoryId": mainCategory,
+                        "insightSubCategoryIdList": ClickedSubCategory,
+                        "tagList": [],
+                        "url": url
+                    });
+                    setInsightId(response.data);
                 }
-                console.log("good");
-                const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                    "insightMainCategoryId": mainCategory,
-                    "insightSubCategoryIdList": ClickedSubCategory,
-                    "tagList": hashtag,
-                    "url": url
-                });
-                setInsightId(response.data);
             } else if (pageNum === 1) {
                 if(url === "") {
                     setPageNum(1);

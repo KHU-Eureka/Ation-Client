@@ -18,7 +18,7 @@ function Login() {
     const login = async () => {
         try {
             const res = await axios.post(
-                'http://52.78.105.195:8081/api/auth/login',
+                process.env.REACT_APP_SERVER_HOST+'/api/auth/login',
                 {
                     email: email,
                     password: password,
@@ -36,7 +36,7 @@ function Login() {
     const getPersona = async (token, name) => {
         try {
             const res = await axios.get(
-                'http://52.78.105.195:8081/api/persona/user', {
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/user', {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }

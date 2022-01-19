@@ -40,7 +40,9 @@
 .modal-content {
     width: 400px;
     min-height: 250px;
-    display: contents;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .modal-title {
@@ -48,15 +50,17 @@
     font-size: 38px;
     line-height: 26px;
     text-align: center;
-    margin: 20px 0px;
+    /* margin: 20px 0px; */
+    margin-bottom: 20px;
     color: #FE3400;
 }
 
 .modal-sub-title {
+    color: #ffa48c;
+    font-size: 15px;
     font-style: normal;
     font-weight: 500;
-    font-size: 15px;
-    color: #FFA48C;
+    text-align: center;
 }
 
 .image {
@@ -67,6 +71,13 @@
     background-size: auto 100%;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.modal-wrapper .character {
+    width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
 }
 
 .modal-footer {

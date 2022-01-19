@@ -234,8 +234,13 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
-            // setAllPin(response.data);
+            const token = cookies.get('token');
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+            setAllPin(response.data);
             setViewOption(0);
             setSearchTrue(true);
         }

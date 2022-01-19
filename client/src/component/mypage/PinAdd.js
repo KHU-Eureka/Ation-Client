@@ -25,7 +25,7 @@ function PinAdd(props) {
     const [pinBoardName, setPinBoardName] = useState("");
 
     const PinAddModalCloseHandler = ({ target }) => {
-        if(target.className !== 'prev-img' && target.className !== 'next-btn' && target.className !== 'tag') {
+        if(target.className !== 'prev-img' && !target.classList.contains('next-btn') && target.className !== 'tag') {
             if (pinAddModalOpen && !modalAdd.current.contains(target) && target.className !== 'skip-btn') {
                 setUrlValue("");
                 setPageNum(1);
@@ -140,21 +140,38 @@ function PinAdd(props) {
         pinboardImport();
     }, [clickedPersonaId, pinBoardId]);
 
-    const NextHandler = async () => {
+    const NextHandler = async (e) => {
+        e.stopPropagation();
         if(pageNum < 4) {
             setPageNum(pageNum+1);
             if(pageNum === 3) {
-                const token = cookies.get('token');
-                const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
-                    "pinBoardId": pinBoardId,
-                    "tagList": tagList,
-                    "url": urlValue
-                }, {
-                    headers: {
-                        Authorization: "Bearer " + token
-                    }
-                });
-                setNewPinId(response.data);
+                if(e.target.classList.contains('next-btn') && tagList.length === 0) {
+                    setPageNum(3);
+                } else if(e.target.classList.contains('next-btn') && tagList.length !== 0) {
+                    const token = cookies.get('token');
+                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
+                        "pinBoardId": pinBoardId,
+                        "tagList": tagList,
+                        "url": urlValue
+                    }, {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    });
+                    setNewPinId(response.data);
+                } else if(e.target.className === 'skip-btn') {
+                    const token = cookies.get('token');
+                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
+                        "pinBoardId": pinBoardId,
+                        "tagList": [],
+                        "url": urlValue
+                    }, {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    });
+                    setNewPinId(response.data);
+                }  
             } else if(pageNum === 1) {
                 if(urlValue === "") {
                     setPageNum(1);
@@ -249,6 +266,7 @@ function PinAdd(props) {
                 }
             );
         setPinBoardName(pinBoardInputValue);
+        setPinBoardInputValue("");
     }
 
     const pinboardCreateSubmitHandler = async (e) => {
@@ -268,8 +286,15 @@ function PinAdd(props) {
                     }
                 );
             setPinBoardName(pinBoardInputValue);
+            setPinBoardInputValue("");
         }
     }
+
+    useEffect(() => {
+        if(document.querySelector('.Pinboard-container')) {
+            document.querySelector('.Pinboard-container').scrollTop = document.querySelector('.Pinboard-container').scrollHeight;
+        }
+    }, [pinBoardName]);
 
     // const ModalAddCloseHandler = async () => {
     //     const token = cookies.get('token');

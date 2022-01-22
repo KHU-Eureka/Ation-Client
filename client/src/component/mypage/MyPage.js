@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
-import { IoMdSettings } from 'react-icons/io';
+import { IoMdBody, IoMdSettings } from 'react-icons/io';
 import Alert from '../views/Alert';
 import '../../assets/css/mypage/mypage.css';
 import Idaition from "./Idaition";
@@ -47,6 +47,10 @@ function MyPage() {
     const goToAddPersona = () => {
         navigation('/persona-create'); // persona 생성 페이지로 이동
     }
+
+    useEffect(() => {
+        document.body.scrollTop = window.scrollTo(0,0);
+    }, [])
 
     useEffect(() => {
         if (state) {

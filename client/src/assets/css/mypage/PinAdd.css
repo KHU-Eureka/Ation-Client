@@ -120,8 +120,7 @@
 
 .ModalAdd-Container > .PersonaImg-container {
     display: flex;
-    /* justify-content: flex-end;
-    align-items: flex-end; */
+    justify-content: space-around;
     width: 154px;
     height: 40px;
     margin-top: 50px;
@@ -131,7 +130,7 @@
 .ModalAdd-Container > .PersonaImg-container > .persona-img {
     width: 40px;
     height: 40px;
-    margin-right: 17px;
+    /* margin-right: 17px; */
     border: 1px solid #E7E6E5;
     box-sizing: border-box;
     border-radius: 10px;
@@ -139,10 +138,11 @@
 }
 
 .ModalAdd-Container > .Pinboard-container {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     width: 260px;
-    height: 140px;
+    min-height: 0px;
+    max-height: 140px;
     margin-top: 19.88px;
     margin-left: 42px;
     overflow: auto;
@@ -156,7 +156,19 @@
 }
 
 .ModalAdd-Container > .Pinboard-container > .pinboard {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 41px;
+    width: 230px;
     cursor: pointer;
+}
+
+.ModalAdd-Container > .Pinboard-container > .pinboard:hover {
+    background: rgba(231, 230, 229, 0.78);
+    border-radius: 7px;
+    height: 41px;
+    width: 230px;
 }
 
 .pinboard-name {
@@ -295,6 +307,7 @@
     background-repeat: no-repeat;
     background-position: 10px;
     cursor: pointer;
+    margin-right: 8px;
 }
 
 /* 
@@ -365,4 +378,17 @@
     box-sizing: border-box;
     border-radius: 50px;
     cursor: pointer;
+}
+
+.ModalAdd-Container > .header-title2 {
+    margin-top: -30px;
+    padding-bottom: 30px;
+    margin-left: 38px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #352C23;
+    cursor: default;
 }

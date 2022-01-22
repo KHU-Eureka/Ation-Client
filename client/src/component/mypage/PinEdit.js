@@ -16,6 +16,7 @@ function PinEdit(props) {
     const [afterTag, setAfterTag] = useState([]);
     const [tagValue, setTagValue] = useState("");
     const [pinboardInputValue, setPinBoardInputValue] = useState("");
+    const [PinboardScroll, setPinboardScroll] = useState(0);
 
     let style = {
         top:editPosition[1],
@@ -25,6 +26,7 @@ function PinEdit(props) {
     const PinEditModalCloseHandler = ({ target }) => {
         console.log(target);
         if (pinEditModalOpen && !modalEdit.current.contains(target) && target.className !== 'Mypin-edit' && target.className !== 'tag') {
+            setPinBoardInputValue("");
             closeEditModal();
         }
     };
@@ -86,11 +88,14 @@ function PinEdit(props) {
 
     useEffect(() => {
         pinboardImport();
+        if(document.querySelector('.PinBoard-Container')) {
+            document.querySelector('.PinBoard-Container').scrollTop = document.querySelector('.PinBoard-Container').scrollTo(0,0);
+        }
     }, [clickedPersonaId, afterPinboardId]);
 
     useEffect(() => {
         const persona_img = document.querySelectorAll('.persona-img');
-        if(pinEditModalOpen && personas.length===3 && persona_img[0]!==undefined) {
+        if(pinEditModalOpen && persona_img[0]!==undefined) {
             setClickedPersonaId(personas[0].id);
             persona_img[0].style.border="1px solid #FE3400";
         }
@@ -173,6 +178,8 @@ function PinEdit(props) {
                 }
             );
         setAfterPinboardId(response.data);
+        setPinboardScroll(document.querySelector('.PinBoard-Container').scrollHeight);
+        setPinBoardInputValue("");
     }
 
     const pinboardCreateSubmitHandler = async (e) => {
@@ -192,8 +199,18 @@ function PinEdit(props) {
                 }
             );
         setAfterPinboardId(response.data);
+        setPinboardScroll(document.querySelector('.PinBoard-Container').scrollHeight);
+        setPinBoardInputValue("");
         }
     }
+
+    useEffect(() => {
+        if(document.querySelector('.PinBoard-Container')) {
+            document.querySelector('.PinBoard-Container').scrollTop = PinboardScroll;
+            console.log(document.querySelector('.PinBoard-Container').scrollTop, document.querySelector('.PinBoard-Container').scrollHeight)
+        }
+    }, [PinboardScroll]);
+    
 
     return (
     <>
@@ -206,7 +223,7 @@ function PinEdit(props) {
         </div>
         <div className="PinBoard-Container">
             {pinboards.map( pinboard => (
-                <p className="pinboard-name" id={pinboard.id} onClick={pinboardClickHandler}>{pinboard.name}</p>
+                <div className="pinboard-name" id={pinboard.id} onClick={pinboardClickHandler}>{pinboard.name}</div>
             ))}
         </div>
         <div className="PinBoardName-Container">

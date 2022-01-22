@@ -23,6 +23,8 @@ function PinAdd(props) {
     const [prevImgUrl, setPrevImgUrl] = useState("");
     const [ChangeImgFormdata, setChangeImgFormdata] = useState(null);
     const [pinBoardName, setPinBoardName] = useState("");
+    const [urlTrue, setUrlTrue] = useState(false);
+    const [pinAddTrue, setPinAddTrue] = useState(0);
 
     const PinAddModalCloseHandler = ({ target }) => {
         if(target.className !== 'prev-img' && !target.classList.contains('next-btn') && target.className !== 'tag') {
@@ -33,6 +35,8 @@ function PinAdd(props) {
                 setTagValue("");
                 setPinBoardId(0);
                 setPinBoardInputValue("");
+                setUrlTrue(false);
+                setPinAddTrue(0);
                 closeAddModal();
             }
         }
@@ -103,14 +107,14 @@ function PinAdd(props) {
     useEffect(() => {
         if(pageNum === 2 && pinBoardId === 0) {
             const persona_img = document.querySelectorAll('.persona-img');
-            if(pinAddModalOpen && personas.length===3 && persona_img[0]!==undefined) {
+            if(pinAddModalOpen && persona_img[0]!==undefined) {
                 setClickedPersonaId(personas[0].id);
                 persona_img[0].style.border="1px solid #FE3400";
             }
         } else if(pageNum === 1) {
-            if(document.querySelector('.next-btn') && urlValue === "") {
+            if(document.querySelector('.next-btn') && !urlTrue) {
                 document.querySelector('.next-btn').classList.add('noPlayBtn');
-            } else if(urlValue !== "") {
+            } else if(urlTrue) {
                 document.querySelector('.next-btn').classList.remove('noPlayBtn');
             }
         } else if(pageNum === 3) {
@@ -120,7 +124,7 @@ function PinAdd(props) {
                 document.querySelector('.next-btn').classList.remove('noPlayBtn');
             }
         }
-    }, [pinAddModalOpen, pageNum, urlValue, tagList])
+    }, [pinAddModalOpen, pageNum, urlTrue, tagList])
 
     useEffect(() => {
         if(pageNum === 2) {
@@ -159,6 +163,7 @@ function PinAdd(props) {
                         }
                     });
                     setNewPinId(response.data);
+                    setPinAddTrue(response.status);
                 } else if(e.target.className === 'skip-btn') {
                     const token = cookies.get('token');
                     const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
@@ -171,6 +176,7 @@ function PinAdd(props) {
                         }
                     });
                     setNewPinId(response.data);
+                    setPinAddTrue(response.status);
                 }  
             } else if(pageNum === 1) {
                 if(urlValue === "") {
@@ -224,6 +230,15 @@ function PinAdd(props) {
     }, [pageNum, clickedPersonaId, pinBoardId])
 
     const urlInputChange = (e) => {
+        if(e.target.value === "") {
+            setUrlTrue(false);
+        } else {
+            if(!e.target.value.includes("https://")) {
+                setUrlTrue(false);
+            } else {
+                setUrlTrue(true);
+            }
+        }
         setUrlValue(e.target.value);
     }
 
@@ -399,7 +414,7 @@ function PinAdd(props) {
                     </div>
                     <div className="Pinboard-container">
                         {pinboards.map( pin => (
-                            <p className="pinboard" id={pin.id} onClick={pinBoardClickHandler}>{pin.name}</p>
+                            <div className="pinboard" id={pin.id} onClick={pinBoardClickHandler}>{pin.name}</div>
                         ))}
                     </div>
                     <div className="PinboardInput-container">
@@ -436,7 +451,7 @@ function PinAdd(props) {
                     </div>
                 </div>
             );
-        } else if(pageNum === 4) {
+        } else if(pageNum === 4 && pinAddTrue) {
             return (
                 <div className="ModalAdd-Container" ref={modalAdd}>
                     <div className="Header-container">
@@ -457,6 +472,17 @@ function PinAdd(props) {
                         <button className="next-btn" onClick={NextHandler}>완료</button>
                     </div>
                 </div>
+            );
+        } else {
+            return(
+            <div className="ModalAdd-Container" ref={modalAdd}>
+                <div className="Header-container">
+                    <img className="prev-img" src={prev} onClick={PrevHandler}/>
+                </div>
+                <p className="header-title2">
+                    인사이트 핀 추가 실패 :(
+                </p>
+            </div>
             );
         }
     } else {

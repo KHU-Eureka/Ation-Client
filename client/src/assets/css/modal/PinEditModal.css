@@ -13,6 +13,8 @@
 
 .PersonaImg-container {
     display: flex;
+    justify-content: space-around;
+    width: 154px;
     margin-left: 83.5px;
     margin-top: 50px;
 }
@@ -23,7 +25,7 @@
     border: 0.5px solid #E7E6E5;
     box-sizing: border-box;
     border-radius: 10px;
-    margin-right: 17px;
+    /* margin-right: 17px; */
     cursor: pointer;
 }
 
@@ -34,11 +36,12 @@
 .Pinboard-container {
     /* display: inline-flex; */
     align-items: flex-start;
-    height: 140px;
+    /* height: 140px; */
     margin-top: 35px;
     margin-left: 18px;
     width: 262px;
-    min-height: 140px;
+    min-height: 0px;
+    max-height: 140px;
     overflow-y: auto;
     overflow-x: hidden;
     font-family: Pretendard;
@@ -69,7 +72,6 @@
 .Pinup-container > .Pinboard-container > .pinboard {
     padding-left: 13px;
     cursor: pointer;
-    /* margin-bottom: 20px; */
     display: flex;
     align-items: center;
     background-color: white;
@@ -77,11 +79,15 @@
     width: 230px;
 }
 
-.Pinup-container > .Pinboard-container > .clickedPinBoard {
+.Pinup-container > .Pinboard-container > .pinboard:hover {
     background: rgba(231, 230, 229, 0.78);
     border-radius: 7px;
     height: 41px;
     width: 230px;
+}
+
+.Pinup-container > .Pinboard-container > .clickedPinBoard {
+    color: #FE3400;
 }
 
 .PinboardInput-container {

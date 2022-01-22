@@ -14,8 +14,7 @@
 
 .PinEdit-Container > .PersonaImg-Container {
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+    justify-content: space-around;
     width: 154px;
     height: 40px;
     margin-top: 50px;
@@ -25,7 +24,6 @@
 .PinEdit-Container > .PersonaImg-Container > .persona-img {
     width: 40px;
     height: 40px;
-    margin-right: 17px;
     border: 1px solid #E7E6E5;
     box-sizing: border-box;
     border-radius: 10px;
@@ -33,10 +31,11 @@
 }
 
 .PinEdit-Container > .PinBoard-Container {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     width: 262px;
-    height: 140px;
+    min-height: 0px;
+    max-height: 140px;
     margin-top: 19.88px;
     margin-left: 42px;
     overflow: auto;
@@ -48,9 +47,21 @@
     color: #313338;
 }
 
-.pinboard-name {
-    margin-bottom: 27px;
+.PinEdit-Container > .PinBoard-Container > .pinboard-name {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 41px;
+    width: 230px;
     cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.PinEdit-Container > .PinBoard-Container > .pinboard-name:hover {
+    background: rgba(231, 230, 229, 0.78);
+    border-radius: 7px;
+    height: 41px;
+    width: 230px;
 }
 
 /* 스크롤바 설정*/

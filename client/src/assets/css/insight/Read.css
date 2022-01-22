@@ -78,7 +78,7 @@
     display: flex;
     flex-direction: row;
     margin-top: 96px;
-    
+
     /* width: 1920px; */
     width: 100%;
 }
@@ -200,12 +200,16 @@
 
 .Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .pin-circle {
     float: right;
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
+    object-fit: cover;
+    margin-top: 13px;
 }
 
 .Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .siteName {
     font-size: 18px;
+    float: right;
+    margin-top: 14px;
 }

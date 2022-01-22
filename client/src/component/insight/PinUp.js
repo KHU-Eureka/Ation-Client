@@ -29,10 +29,11 @@ function PinUP(props) {
     }
 
     const PinUpCloseHandler = ({ target }) => {
-        if(target.className !== 'complete-btn') {
+        if(target.className !== 'complete-btn' && target.className !== 'prev') {
             if(open && !PinUp.current.contains(target) && target.className !== 'pin' && target.className !== 'PinUpClose-btn') {
                 setPageNum(1);
                 setPinBoardId(0);
+                setPinInputValue("");
                 close();
             }
         }
@@ -81,7 +82,7 @@ function PinUP(props) {
     useEffect(() => {
         setPersona(personaId);
         const persona_img = document.querySelectorAll('.persona-img');
-        if(open && personaImg.length===3 && persona_img[0]!==undefined) {
+        if(open && persona_img[0]!==undefined) {
             setClickPersonaImg(personaImg[0].profileImgPath);
             persona_img[0].classList.add('clickedPersona');
         }
@@ -111,6 +112,7 @@ function PinUP(props) {
                 }
             );
             setPinBoardName(pinInputValue);
+            setPinInputValue("");
     }
 
     const pinboardCreateSubmitHandler = async (e) => {
@@ -132,6 +134,7 @@ function PinUP(props) {
                         }
                     );
                     setPinBoardName(pinInputValue);
+                    setPinInputValue("");
             } else {
                 console.log('활동 페르소나를 설정하세요');
             }
@@ -174,6 +177,7 @@ function PinUP(props) {
             }
             setPinBoardId(0);
             setPageNum(1);
+            setPinInputValue("");
             close();
         }
     }

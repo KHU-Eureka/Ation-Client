@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -24,6 +25,9 @@ function MyPage() {
     const navigation = useNavigate();
     var { state } = useLocation();
     
+    let activePersonaId = useSelector((state) => state.activePersonaId);
+    let dispatch = useDispatch();
+
     const senseIcons = [eye, nose, mouse, ears, hand];
     
     // alert 관련
@@ -39,7 +43,6 @@ function MyPage() {
     let [personaList, setPersonaList] = useState([]);
     let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState([null]);
-    let [activePersonaId, setActivePersonaId] = useState();
     let [EditTrue, setEditTrue] = useState(false);
     let [EditClickTrue, setEditClickTrue] = useState(false);
     let [EditModalClose, setEditModalClose] = useState(false);
@@ -98,6 +101,7 @@ function MyPage() {
             }
         }
 
+        /*
         const getActivePersona = async () => {
             const token = cookies.get('token')
             try {
@@ -109,11 +113,13 @@ function MyPage() {
                     }
                 )
                 setActivePersona(res.data)
-                setActivePersonaId(res.data.id)
+                //setActivePersonaId(res.data.id)
             } catch (err) {
                 console.log(err);
             }
         }  
+        */
+        
 
         const getBackgroundImg = async () => {
             const token = cookies.get('token')
@@ -131,14 +137,23 @@ function MyPage() {
             }
         }
         getBackgroundImg();
-        getActivePersona();
+        //getActivePersona();
         getPersonaList();  
     }, [])
+
+    useEffect(() => {
+        for(var persona of personaList) {
+            if (persona && persona.id === activePersonaId) {
+                setActivePersona(persona);
+                break;
+            }
+        }
+    }, [activePersonaId])
 
     const changeActivePersona = async (personaId) => {
         const token = cookies.get('token')
         try {
-            const res = await axios.put(
+            await axios.put(
                 process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
                 {
                     headers: {
@@ -155,7 +170,7 @@ function MyPage() {
             }
             */
             //navigation('/mypage')
-            window.location.reload();
+            dispatch({type: 'CHANGEPERSONA', data: personaId});
         } catch (err) {
             console.log(err)
         }
@@ -170,11 +185,6 @@ function MyPage() {
             setPersonaList(tempList);
         }
     }
-
-    const editPersona = (personaId) => {
-        navigation('/persona-edit', { state: { personaId: personaId, personaIdList: personaIdList } })
-    }
-
 
     const goToMyPersona = (personaId) => {
         navigation('/mypersona/view', { state: { personaId: personaId, personaIdList: personaIdList } })

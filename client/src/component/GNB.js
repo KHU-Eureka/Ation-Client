@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 import "../assets/css/GNB.css";
 import logo from "../assets/svg/logo_main.svg";
@@ -11,18 +12,28 @@ import GNBPopup from './views/GNBPopup';
 
 function GNB() {
     const cookies = new Cookies();
+    let activePersonaId = useSelector((state) => state.activePersonaId);
+    let dispatch = useDispatch();
 
     // GNB Popup 관련
     let [showGNBPopup, setShowGNBPopup] = useState(false);
-    
-    // user 관련
-    let [email, setEmail] = useState("");
 
     // persona 관련
     let [personaList, setPersonaList] = useState([]);
     let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState(null);
-    let [activePersonaId, setActivePersonaId] = useState();
+
+    // user 관련
+    let [email, setEmail] = useState(""); 
+
+    useEffect(() => { // active persona id 가 변결될 때 active persona를 찾기
+        for (var persona of personaList) {
+            if (persona && persona.id === activePersonaId) {
+                setActivePersona(persona);
+                break;
+            }
+        }
+    }, [activePersonaId])
 
     useEffect(() => {
         const getEmail = async () => {
@@ -35,10 +46,10 @@ function GNB() {
                         }
                     }
                 )
-                setEmail(res.data.email)
+                setEmail(res.data.email);
             } catch(err) {
                 console.log(err);
-            } 
+            }
         }
 
         const getPersonaList = async () => {
@@ -65,32 +76,9 @@ function GNB() {
                 console.log(err);
             }
         }
-
-        const getActivePersona = async () => {
-            const token = cookies.get('token')
-            try {
-                const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/persona/user', {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    }
-                )
-                setActivePersona(res.data)
-                setActivePersonaId(res.data.id)
-            } catch (err) {
-                console.log(err);
-            }
-        }  
-
         getEmail();
         getPersonaList();
-        getActivePersona();
     }, [])
-
-    const openGNBPopup = () => {
-        setShowGNBPopup(true)
-    }
 
     const changeActivePersona = async (persona) => {
         const token = cookies.get('token')
@@ -103,8 +91,7 @@ function GNB() {
                     }
                 }
             )
-            /*setActivePersona(persona)*/
-            window.location.reload();
+            dispatch({type: 'CHANGEPERSONA', data: persona.id})
         } catch (err) {
             console.log(err)
         }
@@ -115,7 +102,7 @@ function GNB() {
         <div className="GNB-container">
             <div className="gnb-flex-container">
             <div className="Logo-container">
-                <img className="logo" src={logo} />
+                <img className="logo" src={logo} alt="logo" />
             </div>
             <div className="Btn-container">
                 <li className="btn-li">
@@ -134,11 +121,13 @@ function GNB() {
             </div>
             <div className="Profile-container">
                 <button className="openlounge-btn">Open Lounge</button>
-                <img className="bell" src ={bell} width="30px" />
+                <img className="bell" src ={bell} width="30px" alt="bell" />
                 <img className="profile-persona" src ={activePersona? activePersona.profileImgPath : profile} alt="persona profile" width="30px"
-                onClick={()=>{setShowGNBPopup(!showGNBPopup)}}/>
-                { activePersona &&
-                <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona} personaList={personaList}></GNBPopup> 
+                onClick={()=>{setShowGNBPopup(true)}}
+                />
+                { 
+                activePersona && showGNBPopup &&
+                <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona}></GNBPopup> 
                 }
             </div>
             </div>

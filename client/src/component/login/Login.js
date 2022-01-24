@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import { Cookies } from 'react-cookie';
 import logo from '../../asset/images/logo.png';
@@ -8,6 +9,7 @@ import './Login.css'
 function Login() {
     const cookies = new Cookies(); 
     const navigate = useNavigate();
+    let dispatch = useDispatch();
 
     let [email, setEmail] = useState("");
     let [password, setPasssword] = useState("");
@@ -51,10 +53,9 @@ function Login() {
             // 아직 등록된 persona가 없는 경우
             if (res.data === '') {
                 navigate('/landing', { state: { welcome: true, name: name } })
-                window.location.reload()
             } else {
+                dispatch({type: 'CHANGEPERSONA', data: res.data.id})
                 navigate('/mypage')
-                window.location.reload()
             }
         } catch (err) {
             console.log(err);

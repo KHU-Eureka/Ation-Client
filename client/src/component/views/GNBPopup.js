@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { Cookies } from 'react-cookie';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import axios from 'axios';
@@ -6,12 +6,46 @@ import './GNBPopup.css';
 
 function GNBPopup(props) {
     const cookies = new Cookies();
+    const ref = useRef();
 
-    // persona 더보기 관련
-    let [seeMore, setSeeMore] = useState(true)
+    let [personaList, setPersonaList] = useState([]);
+    let [seeMore, setSeeMore] = useState(true); // persona 더보기 관련
+
+    useLayoutEffect(() => {
+        const getPersonaList = async () => {
+            const token = cookies.get('token')
+            try {
+                const res = await axios.get(
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona', {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    }
+                )
+                setPersonaList(res.data)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    getPersonaList();
+    }, [])
+
+
+    const handleCloseModal = (e) => {
+        if(props.showGNBPopup && (!ref.current || !ref.current.contains(e.target)))
+            props.setShowGNBPopup(false);
+    }
+
+    useEffect(()=> { // 다른 곳 누르면 창 닫히도록
+        window.addEventListener('click', handleCloseModal);
+        return () => {
+            window.removeEventListener('click', handleCloseModal);
+        }
+    }, [])
 
     return (
-        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}>
+        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}
+        ref={ref}>
             <div className="header">
                 <IoIosArrowDown 
                 id="close-popup"
@@ -25,7 +59,7 @@ function GNBPopup(props) {
                         <div className="persona-name">{props.activePersona.nickname}</div>
                         <div id="close-popup">
                         { /* active persona말고 다른 persona가 있다면,, */ 
-                        props.personaList.length > 1 && 
+                        personaList.length > 1 && 
                             (seeMore ? 
                             <IoIosArrowUp onClick={()=>{setSeeMore(false)}}/> 
                             : <IoIosArrowDown onClick={()=>{setSeeMore(true)}}/> )
@@ -35,7 +69,7 @@ function GNBPopup(props) {
                     <div className="see-more"
                     style={seeMore ? null : {height: '0px'}}>
                     {
-                        props.personaList && props.personaList.map(function(persona, idx) {
+                        personaList && personaList.map(function(persona, idx) {
                             return (
                                 persona && persona.id !== props.activePersona.id && 
                                 <div 

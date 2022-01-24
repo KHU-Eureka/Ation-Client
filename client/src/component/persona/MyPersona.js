@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import GNB from '../GNB';
 import SelectBox from '../views/input/SelectBox';
 import SelectBox2 from '../views/input/SelectBox2';
@@ -28,6 +29,7 @@ function MyPersona ({match}) {
     const navigation = useNavigate();
     const { state } = useLocation();
     const { mode } = useParams();
+    let dispatch = useDispatch();
 
     // alert 관련
     let [showAlert, setShowAlert] = useState(false);
@@ -441,6 +443,7 @@ function MyPersona ({match}) {
                         }
                     }
                 )
+                dispatch({type: 'CHANGEPERSONA', data: personaId});
             } catch (err) {
                 console.log(err)
             }
@@ -458,6 +461,7 @@ function MyPersona ({match}) {
                 )
                 // 마이페이지로 이동
                 navigation('/mypage', { state: {alert:{title: "페르소나를 삭제했습니다", subtitle: ""}}})  
+                window.scrollTo(0,0)
             } catch(err) {
                 console.log(err)
             }

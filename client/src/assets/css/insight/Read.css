@@ -5,6 +5,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .Search-container {
@@ -78,21 +79,44 @@
     display: flex;
     flex-direction: row;
     margin-top: 96px;
-
-    /* width: 1920px; */
-    width: 100%;
 }
 
 .img-container {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     margin-left: auto;
     margin-right: auto;
     flex-direction: row;
-    /* margin-left: 0px; */
-    /* width: 35%; */
-    width: 100%;
+    /* width: 100%; */
     padding-left: 58px;
+}
+
+.img-ul {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    /* flex-grow: 1; */
+}
+
+.img-ul .img-li {
+    list-style: none;
+    margin-bottom: 180px;
+    margin-top: -25px;
+    width: 547px;
+    margin-right: 20px;
+}
+
+.insight-box {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: -100px;
+    width: 547px;
+    height: 389px;
+    margin-right: 20px;
+    margin-left: 0px;
 }
 
 .thumbnail-box {
@@ -105,43 +129,12 @@
     object-fit: cover;
 }
 
-.img-ul {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    flex-wrap: wrap;
-    flex-grow: 1;
-}
-
-.img-ul .img-li {
-    list-style: none;
-    /* float: left; */
-    /* margin-right: -105px; */
-    margin-bottom: 180px;
-    margin-top: -25px;
-    width: 38%;
-    /* margin-right: -30px; */
-    margin-right: 130px;
-}
-
-.insight-box {
-    position: relative;
-    cursor: pointer;
-    margin-bottom: -100px;
-    width: 40%;
-    height: 389px;
-    margin-right: 0px;
-    margin-left: 0px;
-}
-
 .pin-box {
     position: absolute;
     display: none;
     background-color: transparent;
     top: 24px;
-    left: 280%;
+    left: 500px;
 }
 
 .pin-up {
@@ -153,8 +146,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /* width: 586px; */
-    width: 56%;
+    width: 430px;
     height: 21.27px;
     font-family: Pretendard;
     font-style: normal;
@@ -166,7 +158,6 @@
     margin-right: 0px;
     margin-bottom: 18px;
     margin-left: 0px;
-    width: 200%;
 }
 
 .site-container {

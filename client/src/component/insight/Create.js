@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
 import "../../assets/css/modal/Modal.css";
+import fail_logo from "../../assets/svg/fail_logo.svg";
 
 function Create(props) {
     const cookies = new Cookies;
@@ -22,7 +23,8 @@ function Create(props) {
     const [ChangeImgFormdata, setChangeImgFormdata] = useState();
     const [prevImgUrl, setPrevImgUrl] = useState("");
     const [urlTrue, setUrlTrue] = useState(false);
-    const [insightTrue, setInsightTrue] = useState(0);
+    const [insightTrue, setInsightTrue] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const CreateInsightCloseHandler = async ({ target }) => {
         console.log(modalCreate.current);
@@ -37,7 +39,7 @@ function Create(props) {
                     await setChangeImgFormdata();
                     await setAddTrue(false);
                     await setUrlTrue(false);
-                    await setInsightTrue(0);
+                    await setInsightTrue(null);
                     close();
                 }
             }
@@ -70,7 +72,7 @@ function Create(props) {
                             "url": url
                         });
                         setInsightId(response.data);
-                        setInsightTrue(response.status);
+                        await setInsightTrue(response.status);
                     }
                 } else {
                     console.log("good");
@@ -81,6 +83,8 @@ function Create(props) {
                         "url": url
                     });
                     setInsightId(response.data);
+                    await setInsightTrue(response.status);
+                    await console.log(response.status);
                 }
             } else if (pageNum === 1) {
                 if(!urlTrue) {
@@ -100,6 +104,7 @@ function Create(props) {
             setClickedSubCategory([]);
             setHashTag([]);
             setChangeImgFormdata();
+            setInsightTrue(null);
             if(e.target.className === 'complete-btn') {
                 if(ChangeImgFormdata) {
                     const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/insight/image/${InsightId}`, ChangeImgFormdata);
@@ -370,9 +375,12 @@ function Create(props) {
             } else {
                 return(
                 <div className="page3" ref={modalCreate}>
-                    <img className="prev" src={header} onClick={onPrevHandler}/>
+                    <div>
+                        <img className="prev" src={header} onClick={onPrevHandler}/>
+                    </div>
+                    <img className="fail_logo" src={fail_logo}/>
                     <p className="header-title2">
-                        인사이트 핀 추가 실패 :(
+                        인사이트 추가 실패
                     </p>
                 </div>
             );

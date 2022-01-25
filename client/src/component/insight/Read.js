@@ -229,7 +229,9 @@ function Read() {
         <div className="Insight-container">
             <Reco userName={userName} auth={auth}/>
             <div className="Search-container">
-                <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
+                <div className="SearchBar-container">
+                    <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
+                </div>
                 <div className="searchIcn-container">
                     <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
                 </div>

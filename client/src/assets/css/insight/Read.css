@@ -9,29 +9,30 @@
 }
 
 .Search-container {
+    position: relative;
     display: flex;
     justify-content: flex-end;
     height: 48px;
     /* width: 1700px; */
-    width: 70%;
+    /* width: 70%; */
     /* padding-left: 392px; */
     margin-top: 216px;
     margin-left: auto;
     margin-right: auto;
     min-width: 1360px;
+    padding-left: 256px;
 }
 
 .search {
-    position: relative;
     /* width: 1151px; */
-    width: 60%;
+    /* width: 60%; */
     height: 48px;
     border-left-width: 0px;
     border-right-width: 0px;
     border-top-width: 0px;
     border-bottom: 2px  solid #FE6740;
     padding-left: 16px;
-    min-width: 900px;
+    min-width: 1151px;
 }
 
 .search:focus {
@@ -49,11 +50,13 @@
 
 .searchIcn-container {
     position: absolute;
+    left: 1370px;
 }
 
 .search-icn {
-    position: absolute;
-    margin-left: -260px;
+    /* position: absolute; */
+    /* margin-left: -260px; */
+    
     cursor: pointer;
 }
 
@@ -64,7 +67,7 @@
     box-sizing: border-box;
     border-radius: 21.5px;
     background-color: white;
-    margin-left: 64px;
+    margin-left: 55px;
     margin-top: 5.5px;
     font-family: Pretendard;
     font-style: normal;
@@ -78,51 +81,62 @@
 .Content-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     margin-top: 96px;
+    overflow-x: hidden;
 }
 
 .img-container {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
     flex-direction: row;
     /* width: 100%; */
-    padding-left: 58px;
+    /* padding-left: 140px; */
+    /* margin-left: 7.29%; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .img-ul {
     width: 100%;
+    /* min-width: 1360px; */
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin-left: auto;
     margin-right: auto;
     flex-wrap: wrap;
+    margin-top: 0px;
     /* flex-grow: 1; */
+    padding-left: 0px;
 }
 
 .img-ul .img-li {
     list-style: none;
     margin-bottom: 180px;
-    margin-top: -25px;
-    width: 547px;
+    /* margin-top: -25px; */
+    max-width: 670px;
     margin-right: 20px;
+    width: auto;
 }
 
 .insight-box {
     position: relative;
     cursor: pointer;
     margin-bottom: -100px;
-    width: 547px;
+    width: 670px;
     height: 389px;
-    margin-right: 20px;
+    margin-right: 0px;
     margin-left: 0px;
 }
 
 .thumbnail-box {
     /* width: 672.49px; */
-    width: 547px;
-    height: 305px;
+    width: 670px;
+    height: 300px;
 
     background: #C4C4C4;
     border-radius: 10px;
@@ -134,7 +148,7 @@
     display: none;
     background-color: transparent;
     top: 24px;
-    left: 500px;
+    left: 620px;
 }
 
 .pin-up {
@@ -146,7 +160,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 430px;
+    width: 500px;
     height: 21.27px;
     font-family: Pretendard;
     font-style: normal;
@@ -162,8 +176,8 @@
 
 .site-container {
     position: absolute;
-    top: 323px;
-    left: 600px;
+    top: 320px;
+    left: 725px;
     width: 70px;
     font-family: Pretendard;
     font-style: normal;

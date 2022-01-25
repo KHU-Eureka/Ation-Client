@@ -234,8 +234,13 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
-            // setAllPin(response.data);
+            const token = cookies.get('token');
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+            setAllPin(response.data);
             setViewOption(0);
             setSearchTrue(true);
         }
@@ -372,7 +377,7 @@ function Pinbox(props) {
                 </li>
                 ))}
                 <PinEdit pinEditModalOpen={pinEditModalOpen} closeEditModal={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/>
-                <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'인사이트 카드'} description={'카드'} deletePinId={deletePinId}/>
+                <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'핀 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
             </div>:
             <>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
 import "../../assets/css/modal/Modal.css";
+import fail_logo from "../../assets/svg/fail_logo.svg";
 
 function Create(props) {
     const cookies = new Cookies;
@@ -21,6 +22,9 @@ function Create(props) {
     const [imgUrl, setImgURL] = useState("");
     const [ChangeImgFormdata, setChangeImgFormdata] = useState();
     const [prevImgUrl, setPrevImgUrl] = useState("");
+    const [urlTrue, setUrlTrue] = useState(false);
+    const [insightTrue, setInsightTrue] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const CreateInsightCloseHandler = async ({ target }) => {
         console.log(modalCreate.current);
@@ -34,6 +38,8 @@ function Create(props) {
                     await setHashTag([]);
                     await setChangeImgFormdata();
                     await setAddTrue(false);
+                    await setUrlTrue(false);
+                    await setInsightTrue(null);
                     close();
                 }
             }
@@ -66,6 +72,7 @@ function Create(props) {
                             "url": url
                         });
                         setInsightId(response.data);
+                        await setInsightTrue(response.status);
                     }
                 } else {
                     console.log("good");
@@ -76,9 +83,11 @@ function Create(props) {
                         "url": url
                     });
                     setInsightId(response.data);
+                    await setInsightTrue(response.status);
+                    await console.log(response.status);
                 }
             } else if (pageNum === 1) {
-                if(url === "") {
+                if(!urlTrue) {
                     setPageNum(1);
                 } 
             } else if (pageNum === 2) {
@@ -95,6 +104,7 @@ function Create(props) {
             setClickedSubCategory([]);
             setHashTag([]);
             setChangeImgFormdata();
+            setInsightTrue(null);
             if(e.target.className === 'complete-btn') {
                 if(ChangeImgFormdata) {
                     const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/insight/image/${InsightId}`, ChangeImgFormdata);
@@ -128,13 +138,16 @@ function Create(props) {
 
     const urlChangeHandler = (e) => {
         if(e.target.value === "") {
-            // document.querySelector('.create-btn').style.color="#FFA48C";
-            // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
             document.querySelector('.create-btn').classList.add('noPlayBtn');
+            setUrlTrue(false);
         } else {
-            // document.querySelector('.create-btn').style.color="#FE3400";
-            // document.querySelector('.create-btn').style.border="1px solid #FE3400";
-            document.querySelector('.create-btn').classList.remove('noPlayBtn');
+            if(e.target.value.includes('https://')) {
+                document.querySelector('.create-btn').classList.remove('noPlayBtn');
+                setUrlTrue(true);
+            } else {
+                document.querySelector('.create-btn').classList.add('noPlayBtn');
+                setUrlTrue(false);
+            }
         }
         setUrl(e.target.value);
     }
@@ -144,7 +157,7 @@ function Create(props) {
         setMainCategory(e.target.value);
         setMainCategoryName(e.target.innerHTML);
         console.log(e.target);
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight-category/sub?insightMainCategoryId=${e.target.value}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/category/sub?mainCategoryId=${e.target.value}`);
         setSubCategory(response.data);
         const cateBtn = document.querySelectorAll('.category-btn');
         for(var i=0;i<cateBtn.length;i++) {
@@ -338,7 +351,7 @@ function Create(props) {
                     <button className="create-btn2" id="create-btn" onClick={onNextHandler} style={{marginTop: '51.5px'}}>다음</button>
                 </div>
             );
-        } else {
+        } else if(insightTrue === 201) {
             return (
                 <>
                 <div className="page3" ref={modalCreate}>
@@ -359,6 +372,18 @@ function Create(props) {
                 </div>
                 </>
                 ); 
+            } else {
+                return(
+                <div className="page3" ref={modalCreate}>
+                    <div>
+                        <img className="prev" src={header} onClick={onPrevHandler}/>
+                    </div>
+                    <img className="fail_logo" src={fail_logo}/>
+                    <p className="header-title2">
+                        인사이트 추가 실패
+                    </p>
+                </div>
+            );
             }
     } else {
         return(<></>);

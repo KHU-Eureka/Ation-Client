@@ -1,5 +1,5 @@
 .LNB-container {
-    margin-left: 4.5%;
+    margin-left: 8.75%;
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
@@ -7,13 +7,14 @@
     line-height: 18px;
     color: #807A74;
     /* width: 160px; */
-    width: 8.3%;
+    /* width: 8.3%; */
+    width: 232px;
 }
 
 .category {
     list-style: none;
     margin-bottom: 24px;
-    width: 160px;
+    width: 232px;
     cursor: pointer;
 }
 

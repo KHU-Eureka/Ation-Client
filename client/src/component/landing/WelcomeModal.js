@@ -24,7 +24,7 @@ function WelcomeModal(props) {
                 </div>
 
                 <div className="modal-content">
-                    <img src={character}></img>
+                    <img className="character" alt="character" src={character}></img>
                     <div className="modal-title">Welcome!</div>
                     <div className="modal-sub-title">
                         { props.name }님 가입을 환영합니다! 지금 바로 페르소나를 생성해보세요!

@@ -61,7 +61,7 @@
 .DeleteModal > .closeBtn-container > .cancle-btn {
     padding: 10px 25px;
     background: #FFFFFF;  
-    border: 1px solid #807A74;
+    border: 1px solid #FFA48C;
     box-sizing: border-box;
     border-radius: 50px;
     font-family: Pretendard;
@@ -69,7 +69,7 @@
     font-weight: bold;
     font-size: 15px;
     line-height: 17px;
-    color: #807A74;
+    color: #FFA48C;
     cursor: pointer;
 }
 

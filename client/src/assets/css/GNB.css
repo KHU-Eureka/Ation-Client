@@ -77,8 +77,12 @@
     flex-grow: 1;
 }
 
+.lounge-btn {
+    color: #807A74;
+}
+
 .insight-btn {
-    color: #352C23;
+    color: #807A74;
 }
 
 .mypage-btn {

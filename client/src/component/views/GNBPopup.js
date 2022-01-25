@@ -1,15 +1,27 @@
 import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
-import { Cookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import axios from 'axios';
 import './GNBPopup.css';
 
 function GNBPopup(props) {
     const cookies = new Cookies();
+    const [cookie, setCookie, removeCookie] = useCookies(['token'])
+    let auth = useSelector((state) => state.auth);
+    let dispatch = useDispatch();
     const ref = useRef();
+    const navigation = useNavigate();
 
     let [personaList, setPersonaList] = useState([]);
     let [seeMore, setSeeMore] = useState(true); // persona 더보기 관련
+
+    const logOut = () => {
+        removeCookie('token');
+        dispatch({type: 'AUTH', data: false});
+        navigation('/login');
+    }
 
     useLayoutEffect(() => {
         const getPersonaList = async () => {
@@ -88,6 +100,8 @@ function GNBPopup(props) {
                     <div className="content-title">로그인 계정</div>
                     <div className="email">{props.email}</div>
                 </div>
+                <div className="logout"
+                onClick={()=>logOut()}>로그아웃</div>
             </div>
         </div>
     )

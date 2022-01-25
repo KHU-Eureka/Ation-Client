@@ -11,12 +11,16 @@ function activePersonaReducer(state = null, action) {
 */
 
 let initialState = {
+  auth: false,
   activePersonaId: null,
 }
 
 function reducer(state = initialState, action) {
   let tempState = {...state};
   switch (action.type) {
+    case 'AUTH':
+      tempState.auth = action.data;
+      break;
     case 'CHANGEPERSONA':
       tempState.activePersonaId = action.data;
       break;

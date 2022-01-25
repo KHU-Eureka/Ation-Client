@@ -36,6 +36,7 @@ function Login() {
             var name = res.data.name;
             cookies.set('token', token); // 받은 token을 cookie에 저장
             getPersona(token, name); // user의 active persona 정보를 얻음
+            dispatch({type: 'AUTH', data: true});
         } catch (err) {
             setShowLoginAlertMsg(true);
             console.log(err);

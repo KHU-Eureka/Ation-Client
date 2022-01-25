@@ -100,3 +100,13 @@
 .gnb-popup .email {
     color: #807A74;
 }
+
+.gnb-popup .logout {
+    color: #D7D2C8;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.gnb-popup .logout:hover{
+    color: #FE6740;
+}

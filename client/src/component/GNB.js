@@ -13,6 +13,7 @@ import GNBPopup from './views/GNBPopup';
 function GNB() {
     const cookies = new Cookies();
     let activePersonaId = useSelector((state) => state.activePersonaId);
+    let auth = useSelector((state) => state.auth);
     let dispatch = useDispatch();
 
     // GNB Popup 관련
@@ -20,20 +21,21 @@ function GNB() {
 
     // persona 관련
     let [personaList, setPersonaList] = useState([]);
-    let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState(null);
 
     // user 관련
     let [email, setEmail] = useState(""); 
 
     useEffect(() => { // active persona id 가 변결될 때 active persona를 찾기
-        for (var persona of personaList) {
-            if (persona && persona.id === activePersonaId) {
-                setActivePersona(persona);
-                break;
-            }
-        }
-    }, [activePersonaId])
+        if (auth) {
+            for (var persona of personaList) {
+                if (persona && persona.id === activePersonaId) {
+                    setActivePersona(persona);
+                    break;
+                }
+            } 
+        } 
+    }, [activePersonaId, auth])
 
     useEffect(() => {
         const getEmail = async () => {
@@ -51,7 +53,6 @@ function GNB() {
                 console.log(err);
             }
         }
-
         const getPersonaList = async () => {
             const token = cookies.get('token')
             try {
@@ -62,22 +63,38 @@ function GNB() {
                         }
                     }
                 )
-                // persona List 의 length를 3으로 맞춰줌
+
                 var tempPersonaList = res.data;
                 setPersonaList(tempPersonaList)
-
-                // personaIdList를 만듦
-                var tempIdList = []
-                for(var persona of res.data) {
-                    tempIdList = [...tempIdList, persona.id]
-                }
-                setPersonaIdList(tempIdList)
             } catch (err) {
                 console.log(err);
             }
         }
-        getEmail();
-        getPersonaList();
+        if (auth) {
+            getPersonaList();
+            getEmail();
+        }
+    }, [auth])
+
+    useEffect(() => {
+        const getActivePersona = async () => {
+            const token = cookies.get('token')
+            try {
+                const res = await axios.get(
+                    process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    }
+                )
+                dispatch({type: 'CHANGEPERSONA', data: res.data.id});
+                dispatch({type: 'AUTH', data: true});
+                console.log(auth,res.data.id);
+            } catch (err) {
+                console.log(err);
+            }
+        } 
+        getActivePersona();
     }, [])
 
     const changeActivePersona = async (persona) => {
@@ -122,11 +139,11 @@ function GNB() {
             <div className="Profile-container">
                 <button className="openlounge-btn">Open Lounge</button>
                 <img className="bell" src ={bell} width="30px" alt="bell" />
-                <img className="profile-persona" src ={activePersona? activePersona.profileImgPath : profile} alt="persona profile" width="30px"
+                <img className="profile-persona" src ={(auth && activePersona && activePersona.profileImgPath) ? activePersona.profileImgPath : profile} alt="persona profile" width="30px"
                 onClick={()=>{setShowGNBPopup(true)}}
                 />
                 { 
-                activePersona && showGNBPopup &&
+                (auth && showGNBPopup && personaList.length > 1) &&
                 <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona}></GNBPopup> 
                 }
             </div>

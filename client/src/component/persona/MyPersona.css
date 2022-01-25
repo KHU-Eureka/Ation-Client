@@ -110,8 +110,13 @@
     color: white;
 }
 
-.mypersona input[type=checkbox]:disabled+label {
-    cursor: default;
+.mypersona .checkbox-wrapper input,
+.mypersona .checkbox-wrapper label {
+    cursor: pointer !important;
+}
+
+.mypersona .checkbox-wrapper input[type=checkbox]:disabled+label {
+    cursor: default !important;
 }
 
 .mypersona .checkbox-elem .charm-text {

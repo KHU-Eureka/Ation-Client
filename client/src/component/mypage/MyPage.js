@@ -100,7 +100,6 @@ function MyPage() {
                 console.log(err);
             }
         }
-
         /*
         const getActivePersona = async () => {
             const token = cookies.get('token')
@@ -117,9 +116,8 @@ function MyPage() {
             } catch (err) {
                 console.log(err);
             }
-        }  
+        } 
         */
-        
 
         const getBackgroundImg = async () => {
             const token = cookies.get('token')

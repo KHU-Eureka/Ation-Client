@@ -28,7 +28,7 @@ import "./Modal.css";
 
 function App() {
   const cookies = new Cookies();
-  let [isAuthorized, setIsAuthorized] = useState(null)
+  let [isAuthorized, setIsAuthorized] = useState(null);
 
   useEffect(() => {
     const getAuthorization = async () => {

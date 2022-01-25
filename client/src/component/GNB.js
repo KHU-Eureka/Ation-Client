@@ -25,6 +25,21 @@ function GNB() {
     let [activePersonaId, setActivePersonaId] = useState();
 
     useEffect(() => {
+        const target = localStorage.getItem('target');
+        if (target !== null) {
+            if(document.querySelector('.btn-li')) {
+                const btn = document.querySelectorAll('.btn-li');
+                for(var i = 0; i<btn.length; i++) {
+                    if(target === btn[i].firstChild.firstChild.className) {
+                        console.log(btn[i].firstChild);
+                        btn[i].firstChild.firstChild.style.color = '#352C23';
+                    }
+                }
+            }
+        }
+    }, [])
+
+    useEffect(() => {
         const getEmail = async () => {
             const token = cookies.get('token')
             try {
@@ -113,6 +128,18 @@ function GNB() {
         }
     }
 
+    const colorHandler = (e) => {
+        if(document.querySelector('.Btn-container')) {
+            const btn = document.querySelectorAll('.btn-li');
+            for(var i = 0; i<btn.length; i++) {
+                btn[i].firstChild.firstChild.style.color = '#807A74';
+                console.log(btn[i].firstChild.firstChild)
+            }
+        }
+        e.target.style.color = '#352C23';
+        localStorage.setItem('target', e.target.className);
+    }
+
 
     return (
         <div className="GNB-container">
@@ -122,16 +149,18 @@ function GNB() {
             </div>
             <div className="Btn-container">
                 <li className="btn-li">
+                <Link to="/lounge" style={{textDecoration: 'none'}}>
                     <span className="lounge-btn">Lounge</span>
+                </Link>
                 </li>
                 <li className="btn-li">
                 <Link to="/insight" style={{textDecoration: 'none'}}>
-                    <span className="insight-btn">Insight</span>
+                    <span className="insight-btn" onClick={colorHandler}>Insight</span>
                 </Link>
                 </li>
                 <li className="btn-li">
                 <Link to="/mypage" style={{textDecoration: 'none'}}>
-                    <span className="mypage-btn">Mypage</span>
+                    <span className="mypage-btn" onClick={colorHandler}>Mypage</span>
                 </Link>
                 </li>
             </div>

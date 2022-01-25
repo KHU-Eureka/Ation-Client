@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Cookies } from 'react-cookie';
@@ -10,6 +10,10 @@ function Login() {
 
     let [email, setEmail] = useState("");
     let [password, setPasssword] = useState("");
+
+    useEffect(() => {
+        localStorage.setItem('target', '');
+    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -47,6 +51,7 @@ function Login() {
                 window.location.reload()
             } else {
                 navigate('/mypage')
+                localStorage.setItem('target', 'mypage-btn');
                 window.location.reload()
             }
         } catch (err) {

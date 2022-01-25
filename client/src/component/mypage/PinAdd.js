@@ -4,6 +4,7 @@ import { Cookies } from 'react-cookie';
 
 import "../../assets/css/mypage/PinAdd.css";
 import prev from "../../assets/svg/prev.svg";
+import fail_logo from "../../assets/svg/fail_logo.svg";
 
 function PinAdd(props) {
     const cookies = new Cookies;
@@ -451,7 +452,7 @@ function PinAdd(props) {
                     </div>
                 </div>
             );
-        } else if(pageNum === 4 && pinAddTrue) {
+        } else if(pageNum === 4 && pinAddTrue === 201) {
             return (
                 <div className="ModalAdd-Container" ref={modalAdd}>
                     <div className="Header-container">
@@ -479,8 +480,9 @@ function PinAdd(props) {
                 <div className="Header-container">
                     <img className="prev-img" src={prev} onClick={PrevHandler}/>
                 </div>
+                <img className="fail-logo" src={fail_logo}/>
                 <p className="header-title2">
-                    인사이트 핀 추가 실패 :(
+                    핀 추가 실패
                 </p>
             </div>
             );

@@ -600,12 +600,12 @@
     background-color: #F5F5F5;
 }
 
-.filebox .upload-file {
+.page3 .filebox .upload-file {
     display: inline-block;
     vertical-align: middle;
 }
 
-.filebox label {
+.page3  .filebox label {
     display: inline-block;
     vertical-align: middle;
     background-color: transparent; 
@@ -624,7 +624,7 @@
     cursor: pointer;
 }
 
-.filebox input[type="file"] {
+.page3 .filebox input[type="file"] {
     position: absolute;
     width: 0;
     height: 0;
@@ -633,7 +633,7 @@
     border: 0;
 }
 
-.upload-file {
+.page3 .upload-file {
     border: 1px solid #807A74;
     box-sizing: border-box;
     border-radius: 11.5px;

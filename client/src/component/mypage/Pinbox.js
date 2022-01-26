@@ -121,13 +121,12 @@ function Pinbox(props) {
     const allPinHandler = async () => {
         const token = cookies.get('token');
         if(searchTrue) {
-            try {
-                const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
-                setAllPin(response.data);
-            } catch(err) {
-                // setSearchTrue(false);
-                console.log(err);
-            }
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                });
+            setAllPin(response.data);
         } else {
             const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin?personaId=${activePersonaId}`,{
                 headers: {
@@ -154,7 +153,12 @@ function Pinbox(props) {
     }, [activePersonaId, viewOption, searchTrue]);
 
     const searchBtnClickHandler = async () => {
-        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+        const token = cookies.get('token');
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
         setAllPin(response.data);
         setViewOption(0);
         setSearchTrue(true);
@@ -233,13 +237,13 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            const token = cookies.get('token');
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            });
-            setAllPin(response.data);
+            // const token = cookies.get('token');
+            // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+            //     headers: {
+            //         Authorization: "Bearer " + token
+            //     }
+            // });
+            // setAllPin(response.data);
             setViewOption(0);
             setSearchTrue(true);
         }

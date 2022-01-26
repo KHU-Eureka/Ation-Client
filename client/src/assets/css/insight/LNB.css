@@ -1,5 +1,5 @@
 .LNB-container {
-    margin-left: 8.75%;
+    /* margin-left: 8.75%; */
     font-family: Pretendard;
     font-style: normal;
     font-weight: 500;
@@ -8,16 +8,49 @@
     color: #807A74;
     /* width: 160px; */
     /* width: 8.3%; */
-    width: 232px;
+    /* width: 232px; */
 }
 
 .category {
     list-style: none;
     margin-bottom: 24px;
-    width: 232px;
+    /* width: 232px; */
     cursor: pointer;
 }
 
 .clicked {
     color:  #1E140A;
+}
+
+@media screen and (min-width: 1800px) {
+    .LNB-container {
+        margin-left: 8.75%;
+        width: 232px;
+    }
+    
+    .category {
+        width: 232px;
+    }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1800px){
+    .LNB-container {
+        margin-left: 8.75%;
+        width: 160px;
+    }
+    
+    .category {
+        width: 160px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .LNB-container {
+        margin-left: 8.75%;
+        width: 350px;
+    }
+    
+    .category {
+        width: 350px;
+    }
 }

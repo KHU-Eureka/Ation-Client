@@ -239,6 +239,54 @@
     cursor: pointer;
 }
 
+.Pinup-container .filebox {
+
+}
+
+.Pinup-container .filebox label {
+    display: inline-block;
+    vertical-align: middle;
+    background-color: transparent; 
+    margin-left: 106px;
+    margin-top: 15px;
+    padding-bottom: 2.5px;
+    width: 90.5px;
+    height: 12px;
+    border-bottom: 1px solid #807A74;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 12px;
+    color: #807A74;
+    cursor: pointer;
+}
+
+.Pinup-container .filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+
+.Pinup-container .upload-file {
+    border: 1px solid #807A74;
+    box-sizing: border-box;
+    border-radius: 11.5px;
+    width: 152px;
+    height: 80px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 16px;
+    color: #E7E6E5;
+    margin-top: 41px;
+    margin-left: 81px;
+}
+
 .Pinup-container > .prev {
     height: 18px;
     margin-left: -253px;

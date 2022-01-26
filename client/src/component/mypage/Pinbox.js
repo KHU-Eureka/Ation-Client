@@ -18,11 +18,10 @@ import Delete from "./Delete";
 function Pinbox(props) {
     const cookies = new Cookies;
 
-    const {activePersonaId, EditModalClose} = props;
+    const {activePersonaId} = props;
 
     const [pinboard, setPinboard] = useState([]);
     const [allPin, setAllPin] = useState([]);
-    // const [pinboardId, setPinboardId] = useState(0);
     const [viewOption, setViewOption] = useState(0);
     const [pinSearch, setPinSearch] = useState("");
     const [clickedPin, setClickedPin] = useState();
@@ -122,8 +121,13 @@ function Pinbox(props) {
     const allPinHandler = async () => {
         const token = cookies.get('token');
         if(searchTrue) {
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
-            setAllPin(response.data);
+            try {
+                const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+                setAllPin(response.data);
+            } catch(err) {
+                // setSearchTrue(false);
+                console.log(err);
+            }
         } else {
             const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin?personaId=${activePersonaId}`,{
                 headers: {
@@ -133,7 +137,6 @@ function Pinbox(props) {
             setAllPin(response.data);
         }
         setViewOption(0);
-        // setSearchTrue(false);
     }
 
     useEffect(() => {
@@ -149,10 +152,6 @@ function Pinbox(props) {
         }
         PinBoardImport();
     }, [activePersonaId, viewOption, searchTrue]);
-
-    // useEffect(() => {
-    //     allPinHandler();
-    // }, [input])
 
     const searchBtnClickHandler = async () => {
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
@@ -261,12 +260,6 @@ function Pinbox(props) {
         openEditModal();
     }
 
-    // useEffect(() => {
-    //     if(EditModalClose) {
-    //         setPinEditModalOpen(false);
-    //     }
-    // }, [EditModalClose]);
-
     const pinAddClickHandler = async () => {
         if(viewOption === 0) {
             openAddModal();
@@ -329,7 +322,7 @@ function Pinbox(props) {
      <>
         <div className="PinTool-container" >
             <div className="LeftTool">
-                <span className="all-pin" onClick={allPinHandler}>모든 PIN</span>
+                <span className="all-pin" onClick={searchTrue?() => {window.location.reload();window.scrollTop = window.scrollTo(0,0);}:allPinHandler}>모든 PIN</span>
                 <span className="pin-board" onClick={pinBoardClickHandler}>PIN Board
                     <div className="pin-board-name"></div>
                 </span>

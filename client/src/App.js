@@ -21,6 +21,8 @@ import Persona_Create from "../src/component/persona/Create";
 import Persona_Edit from "../src/component/persona/Edit";
 import MyPersona from "../src/component/persona/MyPersona";
 
+import Rounge_White from "../src/component/rounge_white/Main";
+
 import "./App.css";
 import "./Fonts.css";
 import "./Input.css";
@@ -74,6 +76,8 @@ function App() {
           ? null
           : <Route path="*" element={<Navigate to="/login" />} />
           }
+
+          <Route exact path="/rounge-white" element={<Rounge_White/>} />
         </Routes>
       </Router>
     </div>

@@ -474,7 +474,7 @@ function PinAdd(props) {
                     </div>
                 </div>
             );
-        } else {
+        } else if(pinAddTrue === 400) {
             return(
             <div className="ModalAdd-Container" ref={modalAdd}>
                 <div className="Header-container">
@@ -486,6 +486,8 @@ function PinAdd(props) {
                 </p>
             </div>
             );
+        } else {
+            return(<></>);
         }
     } else {
         return(<></>);

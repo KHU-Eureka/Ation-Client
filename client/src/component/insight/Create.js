@@ -72,7 +72,7 @@ function Create(props) {
                             "url": url
                         });
                         setInsightId(response.data);
-                        await setInsightTrue(response.status);
+                        await setInsightTrue(response);
                     }
                 } else {
                     console.log("good");
@@ -84,7 +84,7 @@ function Create(props) {
                     });
                     setInsightId(response.data);
                     await setInsightTrue(response.status);
-                    await console.log(response.status);
+                    await console.log(response);
                 }
             } else if (pageNum === 1) {
                 if(!urlTrue) {
@@ -372,7 +372,7 @@ function Create(props) {
                 </div>
                 </>
                 ); 
-            } else {
+            } else if(insightTrue === 400) {
                 return(
                 <div className="page3" ref={modalCreate}>
                     <div>
@@ -384,6 +384,8 @@ function Create(props) {
                     </p>
                 </div>
             );
+            } else {
+                return(<></>);
             }
     } else {
         return(<></>);

@@ -23,6 +23,7 @@ function GNB() {
     let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState(null);
     let [activePersonaId, setActivePersonaId] = useState();
+    let [url, setUrl] = useState("");
 
     useEffect(() => {
         const target = localStorage.getItem('target');
@@ -37,7 +38,11 @@ function GNB() {
                 }
             }
         }
-    }, [])
+    }, [url])
+
+    useEffect(() => {
+        setUrl(window.location.href);
+    }, [url])
 
     useEffect(() => {
         const getEmail = async () => {

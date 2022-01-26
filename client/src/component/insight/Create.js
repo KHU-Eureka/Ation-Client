@@ -65,26 +65,32 @@ function Create(props) {
                     if(hashtag.length === 0) {
                         setPageNum(4);
                     } else {
+                        try {
+                            const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
+                                "insightMainCategoryId": mainCategory,
+                                "insightSubCategoryIdList": ClickedSubCategory,
+                                "tagList": hashtag,
+                                "url": url
+                            });
+                            setInsightId(response.data);
+                            setInsightTrue(response.status);
+                        } catch(err) {
+                            setInsightTrue(400);
+                        }
+                    }
+                } else {
+                    try {
                         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
                             "insightMainCategoryId": mainCategory,
                             "insightSubCategoryIdList": ClickedSubCategory,
-                            "tagList": hashtag,
+                            "tagList": [],
                             "url": url
                         });
                         setInsightId(response.data);
-                        await setInsightTrue(response.status);
+                        setInsightTrue(response.status);
+                    } catch(err) {
+                        setInsightTrue(400);
                     }
-                } else {
-                    console.log("good");
-                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                        "insightMainCategoryId": mainCategory,
-                        "insightSubCategoryIdList": ClickedSubCategory,
-                        "tagList": [],
-                        "url": url
-                    });
-                    setInsightId(response.data);
-                    await setInsightTrue(response.status);
-                    await console.log(response.status);
                 }
             } else if (pageNum === 1) {
                 if(!urlTrue) {
@@ -372,7 +378,7 @@ function Create(props) {
                 </div>
                 </>
                 ); 
-            } else {
+            } else if(insightTrue === 400) {
                 return(
                 <div className="page3" ref={modalCreate}>
                     <div>
@@ -384,6 +390,8 @@ function Create(props) {
                     </p>
                 </div>
             );
+            } else {
+                return(<></>);
             }
     } else {
         return(<></>);

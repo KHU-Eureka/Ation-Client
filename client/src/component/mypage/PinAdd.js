@@ -153,31 +153,39 @@ function PinAdd(props) {
                 if(e.target.classList.contains('next-btn') && tagList.length === 0) {
                     setPageNum(3);
                 } else if(e.target.classList.contains('next-btn') && tagList.length !== 0) {
-                    const token = cookies.get('token');
-                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
-                        "pinBoardId": pinBoardId,
-                        "tagList": tagList,
-                        "url": urlValue
-                    }, {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    });
-                    setNewPinId(response.data);
-                    setPinAddTrue(response.status);
+                    try {
+                        const token = cookies.get('token');
+                        const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
+                            "pinBoardId": pinBoardId,
+                            "tagList": tagList,
+                            "url": urlValue
+                        }, {
+                            headers: {
+                                Authorization: "Bearer " + token
+                            }
+                        });
+                        setNewPinId(response.data);
+                        setPinAddTrue(response.status);
+                    } catch(err) {
+                        setPinAddTrue(400);
+                    }
                 } else if(e.target.className === 'skip-btn') {
-                    const token = cookies.get('token');
-                    const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
-                        "pinBoardId": pinBoardId,
-                        "tagList": [],
-                        "url": urlValue
-                    }, {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    });
-                    setNewPinId(response.data);
-                    setPinAddTrue(response.status);
+                    try {
+                        const token = cookies.get('token');
+                        const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
+                            "pinBoardId": pinBoardId,
+                            "tagList": [],
+                            "url": urlValue
+                        }, {
+                            headers: {
+                                Authorization: "Bearer " + token
+                            }
+                        });
+                        setNewPinId(response.data);
+                        setPinAddTrue(response.status);
+                    } catch(err) {
+                        setPinAddTrue(400);
+                    }
                 }  
             } else if(pageNum === 1) {
                 if(urlValue === "") {
@@ -474,7 +482,7 @@ function PinAdd(props) {
                     </div>
                 </div>
             );
-        } else {
+        } else if(pinAddTrue === 400) {
             return(
             <div className="ModalAdd-Container" ref={modalAdd}>
                 <div className="Header-container">
@@ -486,6 +494,8 @@ function PinAdd(props) {
                 </p>
             </div>
             );
+        } else {
+            return(<></>);
         }
     } else {
         return(<></>);

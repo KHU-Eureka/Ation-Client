@@ -22,8 +22,6 @@ import isValidUser from "./component/isValidUser";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
-import Rounge_White from "../src/component/rounge_white/Main";
-
 
 import "./App.css";
 import "./Fonts.css";
@@ -74,8 +72,6 @@ function App() {
 
           {/* NotFound Pages */}
           <Route path="*" element={<NotFound/>}></Route>
-
-          <Route exact path="/rounge-white" element={<Rounge_White/>} />
 
         </Routes>
 

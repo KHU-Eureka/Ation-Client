@@ -51,7 +51,12 @@ function MyPage() {
         navigation('/persona-create'); // persona 생성 페이지로 이동
     }
 
-    useEffect(() => { // alert할 내용이 있으면 alert창 띄우기
+    useEffect(() => {
+        dispatch({type: 'MENU', data: 'mypage'});
+        document.body.scrollTop = window.scrollTo(0,0);
+    }, [])
+
+    useEffect(() => { // 띄울 alert가 있으면 띄움
         if (state) {
             if (state.alert) {
                 var alertInfo = state.alert;

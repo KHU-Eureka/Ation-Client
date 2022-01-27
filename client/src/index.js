@@ -1,18 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 
 import App from './App';
-/*
-function activePersonaReducer(state = null, action) {
-  return action.payload
-}
-*/
 
 let initialState = {
   auth: false,
   activePersonaId: null,
+  menu: null,
 }
 
 function reducer(state = initialState, action) {
@@ -24,7 +20,11 @@ function reducer(state = initialState, action) {
     case 'CHANGEPERSONA':
       tempState.activePersonaId = action.data;
       break;
+    case 'MENU':
+        tempState.menu = action.data;
+        break;
     default:
+      break;
   }
   return tempState;
 }

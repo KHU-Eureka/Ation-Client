@@ -33,6 +33,8 @@ function App() {
 
   return (
     <div className="App">
+      
+      {/* <NavigationBar /> */}
       <Router>
         <GNB />
         <Routes>        

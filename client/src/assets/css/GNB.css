@@ -77,8 +77,12 @@
     flex-grow: 1;
 }
 
+.lounge-btn {
+    color: #807A74;
+}
+
 .insight-btn {
-    color: #352C23;
+    color: #807A74;
 }
 
 .mypage-btn {
@@ -108,15 +112,6 @@
     margin-right: 25px;
 }
 
-/* .GNB-container .active-persona-image {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute;
-    top: calc(40px - 19px);
-    right: 30px;
-    cursor: pointer;
-    z-index: 99;
-    background-color: black;
-} */
+#selected-menu {
+    color: rgb(53, 44, 35);
+}

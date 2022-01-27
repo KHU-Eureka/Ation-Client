@@ -6,7 +6,7 @@ import "../../assets/css/mypage/PinBoardAdd.css";
 import logo2 from "../../assets/svg/logo2.svg";
 
 function PinBoardEdit(props) {
-    const cookies = new Cookies;
+    const cookies = new Cookies();
     const modalPinBoardEdit = useRef();
     const {pinBoardEditModalOpen, closePinBoardEditModal, BoardEditPosition, clickedPinBoardID, setAddTrue} = props;
 
@@ -108,7 +108,7 @@ function PinBoardEdit(props) {
             <img className="logo" src={logo2}/>
         </div>
         <div className="NameInput-container">
-            <input className="name-input" value={pinBoardName} onChange={nameInputChange} placeholder="새 핀보드명을 입력해주세요."/>
+            <input className="name-input" value={pinBoardName} onChange={nameInputChange} placeholder="핀보드명을 입력해주세요."/>
             <button className="close-btn" onClick={closeBtnClickHandler}>생성</button>
         </div>
     </div>

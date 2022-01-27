@@ -15,7 +15,7 @@ function InsightLNB(props) {
           setCateMain(null);
           setLoading(true);
           const response = await axios.get(
-            process.env.REACT_APP_SERVER_HOST + '/api/insight-category/main'
+            process.env.REACT_APP_SERVER_HOST + '/api/category/main'
           );
           setCateMain(response.data);
         } catch (e) {

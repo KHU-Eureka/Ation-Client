@@ -1,17 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { Cookies } from 'react-cookie';
+import React, { useState, useLayoutEffect, useEffect, useRef } from 'react';
+import { Cookies, useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import axios from 'axios';
 import './GNBPopup.css';
 
 function GNBPopup(props) {
     const cookies = new Cookies();
+    const [cookie, setCookie, removeCookie] = useCookies(['token'])
+    let auth = useSelector((state) => state.auth);
+    let dispatch = useDispatch();
+    const ref = useRef();
+    const navigation = useNavigate();
 
-    // persona 더보기 관련
-    let [seeMore, setSeeMore] = useState(true)
+    let [personaList, setPersonaList] = useState([]);
+    let [seeMore, setSeeMore] = useState(true); // persona 더보기 관련
+
+    const logOut = () => {
+        removeCookie('token');
+        dispatch({type: 'AUTH', data: false});
+        dispatch({type: 'MENU', data: ''});
+        navigation('/login');
+        localStorage.setItem('target', '');
+    }
+
+    useLayoutEffect(() => {
+        const getPersonaList = async () => {
+            const token = cookies.get('token')
+            try {
+                const res = await axios.get(
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona', {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    }
+                )
+                setPersonaList(res.data)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    getPersonaList();
+    }, [])
+
+
+    const handleCloseModal = (e) => {
+        if(props.showGNBPopup && (!ref.current || !ref.current.contains(e.target)))
+            props.setShowGNBPopup(false);
+    }
+
+    useEffect(()=> { // 다른 곳 누르면 창 닫히도록
+        window.addEventListener('click', handleCloseModal);
+        return () => {
+            window.removeEventListener('click', handleCloseModal);
+        }
+    }, [])
 
     return (
-        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}>
+        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}
+        ref={ref}>
             <div className="header">
                 <IoIosArrowDown 
                 id="close-popup"
@@ -24,14 +72,18 @@ function GNBPopup(props) {
                         <img className="persona-image" src={props.activePersona.profileImgPath} alt="persona profile"></img>
                         <div className="persona-name">{props.activePersona.nickname}</div>
                         <div id="close-popup">
-                            {seeMore ? 
+                        { /* active persona말고 다른 persona가 있다면,, */ 
+                        personaList.length > 1 && 
+                            (seeMore ? 
                             <IoIosArrowUp onClick={()=>{setSeeMore(false)}}/> 
-                            : <IoIosArrowDown onClick={()=>{setSeeMore(true)}}/> }</div>
+                            : <IoIosArrowDown onClick={()=>{setSeeMore(true)}}/> )
+                        }
+                        </div>
                     </div>
                     <div className="see-more"
                     style={seeMore ? null : {height: '0px'}}>
                     {
-                        props.personaList && props.personaList.map(function(persona, idx) {
+                        personaList && personaList.map(function(persona, idx) {
                             return (
                                 persona && persona.id !== props.activePersona.id && 
                                 <div 
@@ -50,6 +102,8 @@ function GNBPopup(props) {
                     <div className="content-title">로그인 계정</div>
                     <div className="email">{props.email}</div>
                 </div>
+                <div className="logout"
+                onClick={()=>logOut()}>로그아웃</div>
             </div>
         </div>
     )

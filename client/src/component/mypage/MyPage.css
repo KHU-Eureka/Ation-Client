@@ -37,8 +37,9 @@
     background-color: white;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    background-size: cover;
+    background-size: cover; 
     background-repeat: no-repeat;
+    background-position: center;
     transition: background-image 0.5s;
 }
 
@@ -154,4 +155,24 @@
 .add-persona-btn:hover {
     background-color: #FE6740;
     color: white;
+}
+
+.active-persona-change .card-wrapper:first-child {
+    animation: 1s leftPersonaMove;
+}
+
+.active-persona-change .card-wrapper:nth-child(2) {
+    z-index: 3;
+}
+
+.active-persona-change .card-wrapper:last-child {
+    animation: 1s rightPersonaMove;
+}
+
+@keyframes leftPersonaMove {
+    50% { transform: translateX(calc(100% + 35px)); }
+}
+
+@keyframes rightPersonaMove {
+    50% { transform: translateX(calc(-35px - 100%)); }
 }

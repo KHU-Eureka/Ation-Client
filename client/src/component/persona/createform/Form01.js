@@ -9,7 +9,7 @@ import { MdCloudUpload } from 'react-icons/md';
 
 function Form01(props) {
     const cookies = new Cookies();
-    const ageList = [...Array(100)].map((v,i) => i+1);
+    const ageList = [...Array(84)].map((v,i) => i+17);
     const genderList = [{id: 1, value: "여"}, {id: 2, value: "남"}]
 
     let [nickNameValidation, setNickNameValidation] = useState(false);

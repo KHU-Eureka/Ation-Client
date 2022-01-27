@@ -17,7 +17,7 @@ function PersonaCreateCompleteModal(props) {
                 </div>
 
                 <div className="modal-content">
-                    <div className="modal-title">Let's Sensation</div>
+                    <div className="modal-title">Let's Ideation!</div>
                     <div className="modal-sub-title">
                         페르소나 등록이 완료되었습니다!<br/> 사람들과 재미있게 아이디어를 나눠보세요!
                     </div>

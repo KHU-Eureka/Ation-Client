@@ -1,11 +1,9 @@
-.GNB-container .active-persona-image {
+.GNB-container .profile-persona {
     width: 38px;
     height: 38px;
     border-radius: 50%;
+    margin-top: 20px;
     object-fit: cover;
-    position: absolute;
-    top: calc(40px - 19px);
-    right: 30px;
     cursor: pointer;
 }
 
@@ -101,4 +99,14 @@
 
 .gnb-popup .email {
     color: #807A74;
+}
+
+.gnb-popup .logout {
+    color: #D7D2C8;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.gnb-popup .logout:hover{
+    color: #FE6740;
 }

@@ -3,6 +3,7 @@ import SelectBox from '../../views/input/SelectBox';
 import './SenseTag.css';
 
 function Form03(props) {
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
     const charmNameList = ["엉뚱함", "따뜻함", "칭찬봇", "분위기메이커", "능력자"];
     const MBTIList = ["ISTJ", "ISFJ", "INFJ",
                     "INTJ", "ISTP", "ISFP",
@@ -11,7 +12,11 @@ function Form03(props) {
                     "ESTJ", "ESFJ", "ENFJ",
                     "ENTJ"]
 
+    const numberAlert = "최대 3개까지 선택 가능합니다.";
+    const koreanAlert = "6자리 이하의 한글만 입력 가능합니다.";
+
     let [showCharmAlertMsg, setShowCharmAlertMsg] = useState(false);
+    let [alertMsg, setAlertMsg] = useState("");
     let [newCharm1, setNewCharm1] = useState("");
     let [newCharm2, setNewCharm2] = useState("");
     let [newCharm3, setNewCharm3] = useState("");
@@ -22,6 +27,7 @@ function Form03(props) {
     const changeHandler = (checked, charm, newCharmIdx=false) => {
         if (charm && checked) {
             if(props.charmList.length === 3) {
+                setAlertMsg(numberAlert)
                 setShowCharmAlertMsg(true)
             } else {
                 props.setCharmList([...props.charmList, charm])
@@ -40,6 +46,18 @@ function Form03(props) {
             }
             setShowCharmAlertMsg(false)
         }
+    }
+
+    const isKorean = (text) => { // 한국어인지 test하는 함수
+        setShowCharmAlertMsg(false)
+        for(var c = 0; c < text.length; c++) {
+            if (!korean.test(text[c])) {
+                setAlertMsg(koreanAlert);
+                setShowCharmAlertMsg(true);
+                return false;
+            }
+        }
+        return (text.length < 7)
     }
 
     useEffect(() => {
@@ -66,7 +84,7 @@ function Form03(props) {
                 style={showCharmAlertMsg ? {opacity: 1} : {opacity: 0}}>
                     {showCharmAlertMsg &&
                     <div className="alert-msg bounce">
-                        최대 3개까지 선택 가능합니다.
+                        { alertMsg }
                     </div>}
                 </div>
                     {
@@ -104,7 +122,11 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm1}
-                                onChange={ (e)=>{ setNewCharm1(e.target.value) } }
+                                onChange={ (e)=>{ 
+                                    // 값이 바뀌면 charmList에서 삭제
+                                    changeHandler(false, newCharm1, 1);
+                                    // 6자리 이하의 한국어일때에만 변경
+                                    isKorean(e.target.value) && setNewCharm1(e.target.value)}}
                             />
                         </label>
                     </div>
@@ -127,7 +149,11 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm2}
-                                onChange={ (e)=>{ setNewCharm2(e.target.value) } }
+                                onChange={ (e)=>{ 
+                                    // 값이 바뀌면 charmList에서 삭제
+                                    changeHandler(false, newCharm2, 2);
+                                    // 6자리 이하의 한국어일때에만 변경
+                                    isKorean(e.target.value) && setNewCharm2(e.target.value) } }
                             />
                         </label>
                     </div>
@@ -151,7 +177,9 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm3}
-                                onChange={ (e)=>{ setNewCharm3(e.target.value) } }
+                                onChange={ (e)=>{ 
+                                    changeHandler(false, newCharm3, 3);
+                                    isKorean(e.target.value) && setNewCharm3(e.target.value) } }
                             />
                         </label>
                     </div>

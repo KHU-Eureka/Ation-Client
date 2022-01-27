@@ -21,9 +21,38 @@ function SignUp() {
         e.preventDefault();
     }
 
+    const isEmail = (email) => {
+        const emailRegex =
+          /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    
+        return emailRegex.test(email);
+      };
+
+    const checkUserInfo = () => {
+        if (!isEmail(email)) {
+            setAlertTitle("아이디가 이메일 형식이 아닙니다.")
+            setAlertSubtitle("다시 시도해주세요")
+            setShowAlert(true)
+        } else if (name.length === 0 ) {
+            setAlertTitle("이름을 입력해주세요.")
+            setAlertSubtitle("이름은 필수 입력 항목입니다")
+            setShowAlert(true)
+        } else if (password !== passwordCheck) {
+            setAlertTitle("비밀번호가 일치하지 않습니다.")
+            setAlertSubtitle("비밀번호를 확인해주세요")
+            setShowAlert(true)
+        } else if (password.length < 3) {
+            setAlertTitle("비밀번호는 3자리 이상이어야 합니다.")
+            setAlertSubtitle("비밀번호를 다시 입력해주세요")
+            setShowAlert(true)
+        } else {
+            postUserInfo();
+        }
+    }
+
     const postUserInfo = async () => {
         try {
-            const res = await axios.post(
+            await axios.post(
                 process.env.REACT_APP_SERVER_HOST+'/api/auth/signup',
                 {
                     email: email,
@@ -43,7 +72,7 @@ function SignUp() {
 
 
     return (
-        <form className="form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
+        <form className="signup form-wrapper" style={{width:'297px'}} onSubmit={ handleSubmit }>
             <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div className="title">
                 회원가입
@@ -85,13 +114,14 @@ function SignUp() {
                     className="login-input"
                     id="password"
                     type="password"
+                    minLength="3"
                     placeholder="비밀번호를 입력해주세요.(3자리 이상)"
                     onChange={ (e)=>{ setPassword(e.target.value) } }
                     required
                 />
             </div>
 
-            <div className="input-wrapper">
+            <div className="input-wrapper password-check">
                 <label htmlFor="password-check" className="input-label">
                     비밀번호 확인
                 </label>
@@ -99,6 +129,7 @@ function SignUp() {
                     className="login-input"
                     id="password-check"
                     type="password"
+                    minLength="3"
                     placeholder="비밀번호를 확인해주세요."
                     onChange={ (e)=>{ setPasswordCheck(e.target.value) } }
                     required
@@ -115,7 +146,7 @@ function SignUp() {
 
             <button className="login-submit"
             type="submit"
-            onClick={ postUserInfo }
+            onClick={ checkUserInfo }
             >
                 센세이션 시작하기
             </button>

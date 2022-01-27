@@ -75,12 +75,6 @@ function App() {
           {/* NotFound Pages */}
           <Route path="*" element={<NotFound/>}></Route>
 
-
-          { isAuthorized !== null && isAuthorized
-          ? null
-          : <Route path="*" element={<Navigate to="/login" />} />
-          }
-
           <Route exact path="/rounge-white" element={<Rounge_White/>} />
 
         </Routes>

@@ -14,6 +14,7 @@ KHU 컴퓨터공학과X산업디자인학과 연합 웹 개발 프로젝트
 
 - package-lock.json: 버전 통일
 - 태그의 className으로 인한 css 충돌 문제: css파일에서 꼭 최상위요소 지정해주기, 최상위요소 클래스명은 맞추기
+
 - 파일 구조 통일
 
 **2버전 폴더**
@@ -27,3 +28,4 @@ assets > css
 1. lounge
 2. **lounge-white**(공통 폴더)
 3. lounge-wait
+

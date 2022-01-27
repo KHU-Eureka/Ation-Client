@@ -1,19 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import { Cookies } from 'react-cookie';
+import logo from '../../asset/images/logo.png';
 import './Login.css'
 
 function Login() {
     const cookies = new Cookies(); 
     const navigate = useNavigate();
+    let dispatch = useDispatch();
 
     let [email, setEmail] = useState("");
     let [password, setPasssword] = useState("");
 
+    let [showLoginAlertMsg, setShowLoginAlertMsg] = useState(false);
+    useEffect(() => {
+        localStorage.setItem('target', '');
+    }, [])
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+    useEffect(() => {
+        setShowLoginAlertMsg(false);
+    }, [email, password])
 
     const login = async () => {
         try {
@@ -28,7 +39,10 @@ function Login() {
             var name = res.data.name;
             cookies.set('token', token); // 받은 token을 cookie에 저장
             getPersona(token, name); // user의 active persona 정보를 얻음
+            dispatch({type: 'AUTH', data: true});
         } catch (err) {
+            dispatch({type: 'AUTH', data: false});
+            setShowLoginAlertMsg(true);
             console.log(err);
         }
     }
@@ -44,10 +58,10 @@ function Login() {
             // 아직 등록된 persona가 없는 경우
             if (res.data === '') {
                 navigate('/landing', { state: { welcome: true, name: name } })
-                window.location.reload()
             } else {
+                dispatch({type: 'CHANGEPERSONA', data: res.data.id})
                 navigate('/mypage')
-                window.location.reload()
+                localStorage.setItem('target', 'mypage-btn');
             }
         } catch (err) {
             console.log(err);
@@ -55,10 +69,8 @@ function Login() {
     }
 
     return (
-        <form className="form-wrapper" onSubmit={ handleSubmit }>
-            <div className="logo">
-                Senstation
-            </div>
+        <form className="login form-wrapper" onSubmit={ handleSubmit }>
+            <img className="logo-img" src={logo} alt="logo"></img>
             <div className="input-wrapper">
                 <label htmlFor="id" className="input-label">
                     아이디(이메일)
@@ -86,14 +98,18 @@ function Login() {
                     required
                 />
             </div>
-
             <button className="login-submit"
             type="submit"
             onClick={ login }
             >
+                { showLoginAlertMsg && 
+                    <div className="alert-msg bounce">
+                    아이디 또는 비밀번호가 잘못 입력 되었습니다.<br/> 아이디와 비밀번호를 정확히 입력해 주세요.
+                    </div>
+                }
                 로그인 하기
             </button>
-            <div onClick={()=>{navigate('/signup')}}>회원가입 하기</div>
+            <div style={{cursor: "pointer"}} onClick={()=>{navigate('/signup')}}>회원가입 하기</div>
         </form>
     );
 }

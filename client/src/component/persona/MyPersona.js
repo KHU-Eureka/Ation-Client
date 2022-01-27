@@ -2,10 +2,13 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import GNB from '../GNB';
+import { useDispatch } from 'react-redux';
 import SelectBox from '../views/input/SelectBox';
 import SelectBox2 from '../views/input/SelectBox2';
 import { MdEdit } from 'react-icons/md';
+import { IoClose } from 'react-icons/io5';
+
+import Alert from '../views/Alert';
 
 import eye_white from '../../asset/images/sense/눈_white.png';
 import eye_color from '../../asset/images/sense/눈_color.png';
@@ -25,7 +28,14 @@ function MyPersona ({match}) {
     const navigation = useNavigate();
     const { state } = useLocation();
     const { mode } = useParams();
+    let dispatch = useDispatch();
 
+    // alert 관련
+    let [showAlert, setShowAlert] = useState(false);
+    let [alertTitle, setAlertTitle] = useState("");
+    let [alertSubtitle, setAlertSubtitle] = useState("");
+
+    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;
     const ageList = [...Array(100)].map((v,i) => i+1);
     const genderList = [{id: 1, value: "여"}, {id: 2, value: "남"}]
     const MBTIList = ["ISTJ", "ISFJ", "INFJ",
@@ -41,6 +51,8 @@ function MyPersona ({match}) {
         { senseId: 4, name: "귀", width: '190px', whiteImg: ears_white, colorImg: ears_color, description: "타인의 이야기를 경청할 수 있는 능력을 의미합니다." },
         { senseId: 5, name: "손", width: '190px', whiteImg: hand_white, colorImg: hand_color, description: "이야기, 정보들을 정리하고 시각화하는 능력을 의미합니다." },
     ]
+    const charmNumberAlert = "최대 3개까지 선택 가능합니다.";
+    const chamKoreanAlert = "6자리 이하의 한글만 입력 가능합니다.";
 
     let [backgroundImgUrl, setBackgroundImgUrl] = useState("")
 
@@ -65,12 +77,13 @@ function MyPersona ({match}) {
     let [introduction, setIntroduction] = useState("");
 
     let [profileUrl, setProfileUrl] = useState("dd")
-    let [nickNameValidation, setNickNameValidation] = useState(false);
+    let [nickNameValidation, setNickNameValidation] = useState(true);
     let [nickNameMsg, setNickNameMsg] = useState("");
     let [tempNickName, setTempNickName] = useState("");
     let [currSense, setCurrSense] = useState(null);
     let [senseColorInfo, setSenseColorInfo] = useState([true, true, true, true, true]); // sense icon의 현재 색상 유무를 나타내는 lsit
 
+    let [charmAlertMsg, setCharmAlertMsg] = useState("");
     let [showInterestAlertMsg, setShowInterestAlertMsg] = useState(false);
     let [showCharmAlertMsg, setShowCharmAlertMsg] = useState(false);
     let [showSenseAlertMsg, setShowSenseAlertMsg] = useState(false);
@@ -116,14 +129,13 @@ function MyPersona ({match}) {
     }
 
     const NickNameChange = (e) => {
-        setNickName("")
         setTempNickName(e.target.value)
         setNickNameValidation(false)
         setNickNameMsg("닉네임 중복 검사를 해주세요")
     }
 
     // 닉네임의 중복성을 검사함
-    const validationCheck = async () => {
+    const nicknameValidationCheck = async () => {
         var token = cookies.get('token');
         const temp = tempNickName;
         try {
@@ -140,7 +152,6 @@ function MyPersona ({match}) {
                 setNickNameMsg("이미 사용중인 닉네임입니다.");
             } else {
                 setNickNameMsg("사용 가능한 닉네임입니다.");
-                setNickName(tempNickName);
             }       
         } catch (err) {
             console.log(err);
@@ -166,31 +177,41 @@ function MyPersona ({match}) {
     let [newCharm3, setNewCharm3] = useState("");
     let [newCharmList, setNewCharmList] = useState(["","","",""])
 
-    let [nextCharm1, makeNextCharm1] = useState(false);
-    let [nextCharm2, makeNextCharm2] = useState(false);
-
     const charmChangeHandler = (checked, charm, newCharmIdx=false) => {
+        var tempList = [...newCharmList];
         if (charm && checked) {
             if(charmList.length === 3) {
+                setCharmAlertMsg(charmNumberAlert)
                 setShowCharmAlertMsg(true)
             } else {
                 setCharmList([...charmList, charm])
                 if (newCharmIdx) {
-                    var tempList = [...newCharmList]
                     tempList[newCharmIdx] = charm
                     setNewCharmList(tempList)
                 }
             }
         } else {
             setCharmList(charmList.filter((el) => el !== charm))
+            setPastCharmList(pastCharmList.filter((el) => el !== charm))
             if (newCharmIdx) {
-                var tempList = [...newCharmList]
                 tempList[newCharmIdx] = ""
                 setNewCharmList(tempList)
             }
             setShowCharmAlertMsg(false)
         }
-        console.log(showCharmAlertMsg);
+        console.log(charmList);
+    }
+
+    const isKorean = (text) => { // 한국어인지 test하는 함수
+        setShowCharmAlertMsg(false)
+        for(var c = 0; c < text.length; c++) {
+            if (!korean.test(text[c])) {
+                setCharmAlertMsg(chamKoreanAlert);
+                setShowCharmAlertMsg(true);
+                return false;
+            }
+        }
+        return (text.length < 7)
     }
 
     const senseChangeHandler = (checked, senseId) => {
@@ -321,6 +342,41 @@ function MyPersona ({match}) {
             }
     
         }, [personaId])
+
+        const validationCheck = () => {
+            if (tempNickName!==nickname && !nickNameValidation) { // 닉네임이 변경되었고, 유효성 검사를 하지 않았다면,
+                setAlertTitle("닉네임 중복 검사를 해주세요.")
+                setAlertSubtitle("닉네임 중복 검사는 필수입니다.")
+                setShowAlert(true)
+                window.scrollTo(0, 500);
+                return;
+            } else if (!job.length) {
+                setAlertTitle("직업을 작성해주세요.")
+                setAlertSubtitle("직업 란이 누락되었어요")
+                setShowAlert(true)
+                window.scrollTo(0, 500);
+                return;
+            } else if(!interestIdList.length) {
+                setAlertTitle("분야 태그를 선택해주세요.")
+                setAlertSubtitle("분야 태그는 한개 이상 존재해야 합니다.")
+                setShowAlert(true)
+                window.scrollTo(0, 870);
+                return;
+            } else if (!charmList.length) {
+                setAlertTitle("매력 태그를 입력해주세요.")
+                setAlertSubtitle("매력 태그는 한개 이상 존재해야 합니다.")
+                setShowAlert(true)
+                window.scrollTo(0, 1220);
+                return;
+            } else if (!senseIdList.length) {
+                setAlertTitle("감각 태그를 선택해주세요.")
+                setAlertSubtitle("감각 태그는 한개 이상 존재해야 합니다.")
+                setShowAlert(true)
+                window.scrollTo(0, 1520);
+                return;
+            }
+            editPersona();
+        }
     
         const editPersona = async () => {
             const token = cookies.get('token');
@@ -328,7 +384,7 @@ function MyPersona ({match}) {
                 await axios.put(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
                     {
-                        nickname: nickname,
+                        nickname: tempNickName,
                         age: age,
                         gender: gender,
                         mbti: mbti,
@@ -383,6 +439,7 @@ function MyPersona ({match}) {
                         }
                     }
                 )
+                dispatch({type: 'CHANGEPERSONA', data: personaId});
             } catch (err) {
                 console.log(err)
             }
@@ -400,6 +457,7 @@ function MyPersona ({match}) {
                 )
                 // 마이페이지로 이동
                 navigation('/mypage', { state: {alert:{title: "페르소나를 삭제했습니다", subtitle: ""}}})  
+                window.scrollTo(0,0)
             } catch(err) {
                 console.log(err)
             }
@@ -417,12 +475,13 @@ function MyPersona ({match}) {
 
         const goToEditPersona = () => {
             window.scrollTo(0,320)
-            navigation('/mypersona/edit')
+            navigation('/mypersona/edit', { state: { personaId: personaId, personaIdList: personaIdList } })
         }
     
 
     return (
         <div className="mypersona">
+            <Alert alertTitle={alertTitle} alertSubtitle={alertSubtitle} showAlert={showAlert} setShowAlert={setShowAlert}/>
             <div 
             className="background-img"
             style={{backgroundImage: "url('"+backgroundImgUrl+"')"}}
@@ -453,7 +512,7 @@ function MyPersona ({match}) {
                 </div>
                 <div className="inputs flex-column">
 
-                    <div className="input-wrapper">
+                    <div className="input-wrapper nickname-wrapper">
                         <label>닉네임</label>
                         <input
                         id="nickname"
@@ -461,12 +520,23 @@ function MyPersona ({match}) {
                         placeholder="활동할 페르소나의 닉네임을 입력해주세요."
                         onChange={ NickNameChange }
                         value={ tempNickName }
-                        disabled={mode==="view"}
+                        disabled={ mode==="view" }
                         />
-                        <div
-                        style={{ color: (nickNameValidation ? '#0075FF' : '#F24822') }}
-                        className="alert-msg">{ nickNameMsg }
-                        </div>
+                        {
+                            /* 닉네임이 바뀐 경우 */
+                            (tempNickName !== nickname) &&
+                            <button className="check-validation-btn"
+                            onClick={ nicknameValidationCheck }>
+                                중복 확인
+                            </button>
+                        }
+                        {
+                            (tempNickName !== nickname) &&
+                            <div
+                                style={{ color: (nickNameValidation ? '#0075FF' : '#F24822') }}
+                                className="alert-msg">{ nickNameMsg }
+                            </div>
+                        }
                     </div>
 
                     <div className="input-wrapper">
@@ -532,44 +602,6 @@ function MyPersona ({match}) {
                                         } )
                                     }
                         </div>
-                            {/*
-                                mode === "view"
-                                ? (
-                                    [...interestList].map(function(interest, idx) {
-                                        return (
-                                            interestIdList.includes(interest.interestId) && <div className="checkbox-elem">{ interest.name }</div>
-                                        )
-                                    })
-                                )
-                                : <div className="checkbox-wrapper">
-                                <div
-                                className="alert-msg-wrapper"
-                                style={showInterestAlertMsg ? {opacity: 1} : {opacity: 0}}>
-                                    {showInterestAlertMsg &&
-                                    <div className="alert-msg bounce">
-                                        최대 3개까지 선택 가능합니다.
-                                    </div>}
-                                </div>
-                                    {
-                                        [...interestList].map( function(interest, idx) {
-                                            return(
-                                                <div className="checkbox-elem" key={idx}>
-                                                    <input
-                                                        id={ interest.interestId }
-                                                        value={ interest.interestId }
-                                                        name="interest"
-                                                        type="checkbox"
-                                                        checked={interestIdList.includes(interest.interestId) ? true : false}
-                                                        onChange={ (e)=>{ interestChangeHandler(e.currentTarget.checked, interest.interestId) } }
-                                                    />
-                                                    <label htmlFor={ interest.interestId }>{ interest.name }</label>
-                                                </div>
-                                                
-                                            )
-                                        } )
-                                    }
-                                </div>
-                            */}
                         </div>
                     </div>
 
@@ -582,38 +614,69 @@ function MyPersona ({match}) {
                         style={showCharmAlertMsg ? {opacity: 1} : {opacity: 0}}>
                             {showCharmAlertMsg &&
                             <div className="alert-msg bounce">
-                                최대 3개까지 선택 가능합니다.
+                                { charmAlertMsg }
                             </div>}
                         </div>
                             {
-                                pastCharmList && pastCharmList.map( function(charm, idx) {
-                                    return(
-                                        (mode==="edit" || charmList.includes(charm))
-                                        && <div className="checkbox-elem" key={ idx }>
-                                            <input
-                                                id={ charm }
-                                                value={ charm }
-                                                name="charm"
-                                                type="checkbox"
-                                                checked={charmList.includes(charm) ? true : false}
-                                                onChange={ (e)=>{ charmChangeHandler(e.currentTarget.checked, charm) } }
-                                                disabled={mode==="view"}
-                                            />
-                                            <label htmlFor={ charm }>{ charm }</label>
-                                        </div>
-                                        
+                                pastCharmList && pastCharmList.map(function(charm, idx) {
+                                    return (
+                                    charmList.includes(charm)
+                                    && <div className="checkbox-elem" key={ idx }>
+                                        <input
+                                            id={ charm }
+                                            value={ charm }
+                                            name="charm"
+                                            type="checkbox"
+                                            style={{pointerEvents: 'none'}}
+                                            checked={charmList.includes(charm) ? true : false}
+                                            onChange={ (e)=>{ charmChangeHandler(e.currentTarget.checked, charm) }}
+                                            disabled={mode==="view"}
+                                        />
+                                        { mode==="edit" &&
+                                        <label className="charm-label" htmlFor={ charm }>
+                                            <div className="delete-btn"><IoClose/></div>
+                                        </label>
+                                        }
+                                        {/* charm value를 보여줌 */}
+                                        <div className="charm-text">{ charm }</div>
+                                    </div>
                                     )
                                 } )
                             }
-                            
-                            { mode==="edit" && <div className="checkbox-elem">
+
+                            {/*
+                                newCharmList.map((charm, idx) => (
+                                    (idx < 3 - charmList.length) && 
+                                    <div className="checkbox-elem" key={idx}>
+                                        <input
+                                            id={ "newcharm" + idx }
+                                            value={charm}
+                                            name="charm"
+                                            type="checkbox"
+                                            checked={charmList.includes(charm)}
+                                            onChange={ (e)=>{ charmChangeHandler(false, charm) } }
+                                        />
+                                        <label htmlFor="new-charm1" className="center">
+                                            <textarea 
+                                                className="new-tag-input"
+                                                rows="1"
+                                                placeholder="직접 태그를 &#10;입력해보세요!"
+                                                value={newCharm1}
+                                                onChange={ (e)=>{ charmChangeHandler(false, e.target.value) } }
+                                            />
+                                        </label>
+                                    </div>
+                                ))
+                                */}
+
+                            { (mode==="edit" && pastCharmList.length < 3) &&
+                            <div className="checkbox-elem">
                                 <input
                                     id="new-charm1"
                                     name="charm"
                                     type="checkbox"
-                                    checked={charmList.includes(newCharm1) ? true : false}
-                                    onChange={ (e)=>{ makeNextCharm1(true);  
-                                                    charmChangeHandler(e.currentTarget.checked, newCharm1, 1) } }
+                                    checked={charmList.includes(newCharm1)}
+                                    onChange={ (e)=>{ charmChangeHandler(e.currentTarget.checked, newCharm1, 1) } }
                                     disabled={newCharm1===""}
                                 />
                                 <label htmlFor="new-charm1" className="center">
@@ -622,21 +685,23 @@ function MyPersona ({match}) {
                                         rows="1"
                                         placeholder="직접 태그를 &#10;입력해보세요!"
                                         value={newCharm1}
-                                        onChange={ (e)=>{ setNewCharm1(e.target.value) } }
+                                        onChange={ (e)=>{ 
+                                            charmChangeHandler(false, newCharm1, 1); // 기존 값을 charmList에서 삭제
+                                            isKorean(e.target.value) && setNewCharm1(e.target.value) // 한글일 때에만 변경 
+                                        }}
                                     />
                                 </label>
                             </div> }
 
                             
-                            { mode==="edit" && (nextCharm1 || newCharm1 !== "")
+                            { (mode==="edit" && pastCharmList.length < 2)
                             ? <div className="checkbox-elem">
                                     <input
                                         id="new-charm2"
                                         name="charm"
                                         type="checkbox"
                                         checked={charmList.includes(newCharm2) ? true : false}
-                                        onChange={ (e)=>{ makeNextCharm2(true);
-                                                        charmChangeHandler(e.currentTarget.checked, newCharm2, 2)} }
+                                        onChange={ (e)=>{ charmChangeHandler(e.currentTarget.checked, newCharm2, 2)} }
                                         disabled={newCharm2===""}
                                     />
                                     <label htmlFor="new-charm2" className="center">
@@ -645,7 +710,10 @@ function MyPersona ({match}) {
                                             rows="1"
                                             placeholder="직접 태그를 &#10;입력해보세요!"
                                             value={newCharm2}
-                                            onChange={ (e)=>{ setNewCharm2(e.target.value) } }
+                                            onChange={ (e)=>{ 
+                                                charmChangeHandler(false, newCharm2, 2);
+                                                isKorean(e.target.value) && setNewCharm2(e.target.value) 
+                                            }}
                                         />
                                     </label>
                                 </div>
@@ -653,7 +721,7 @@ function MyPersona ({match}) {
                             }
 
                             
-                            { mode==="edit" && (nextCharm2 || newCharm2 !== "")
+                            { (mode==="edit" && pastCharmList.length < 1)
                             ? <div className="checkbox-elem">
                                     <input
                                         id="new-charm3"
@@ -669,7 +737,9 @@ function MyPersona ({match}) {
                                             rows="1"
                                             placeholder="직접 태그를 &#10;입력해보세요!"
                                             value={newCharm3}
-                                            onChange={ (e)=>{ setNewCharm3(e.target.value) } }
+                                            onChange={ (e)=>{ 
+                                                charmChangeHandler(false, newCharm3, 3);
+                                                isKorean(e.target.value) && setNewCharm3(e.target.value) } }
                                         />
                                     </label>
                                 </div>
@@ -755,7 +825,7 @@ function MyPersona ({match}) {
                         </div>
 
                         <div className="input-wrapper">
-                            <label>한줄소개</label>
+                            <label>한줄소개 (선택)</label>
                             <textarea
                                 id="introduction"
                                 value={introduction}
@@ -788,7 +858,7 @@ function MyPersona ({match}) {
                     </button>
                     : <button
                     className="small-btn"
-                    onClick={editPersona}
+                    onClick={validationCheck}
                     >수정완료
                     </button>
                 }

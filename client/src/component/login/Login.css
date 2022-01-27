@@ -9,6 +9,12 @@
     margin-top: 50px;
 }
 
+.form-wrapper .logo-img {
+    margin-top: 100px;
+    margin-bottom: 75px;
+    width: 160px;
+}
+
 .form-wrapper .logo {
     font-family: Noto Serif;
     font-style: italic;
@@ -19,6 +25,15 @@
     color: #FE3400;
 }
 
+.login .alert-msg {
+    position: absolute;
+    top: -50px;
+    right: 100px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 11px;
+    pointer-events: none;
+}
 
 .input-wrapper {
     width: 100%;
@@ -47,7 +62,7 @@
     outline: 1px solid transparent;
 }
 
-.login-submit {
+.login .login-submit {
     width: 100%;
     height: 50px;
     color: white;
@@ -58,6 +73,7 @@
     background-color: #FE6740;
     transition: 0.2s;
     margin: 40px 0px;
+    position: relative;
 }
 
 .login-submit:hover {

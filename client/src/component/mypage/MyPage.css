@@ -156,3 +156,23 @@
     background-color: #FE6740;
     color: white;
 }
+
+.active-persona-change .card-wrapper:first-child {
+    animation: 1s leftPersonaMove;
+}
+
+.active-persona-change .card-wrapper:nth-child(2) {
+    z-index: 3;
+}
+
+.active-persona-change .card-wrapper:last-child {
+    animation: 1s rightPersonaMove;
+}
+
+@keyframes leftPersonaMove {
+    50% { transform: translateX(calc(100% + 35px)); }
+}
+
+@keyframes rightPersonaMove {
+    50% { transform: translateX(calc(-35px - 100%)); }
+}

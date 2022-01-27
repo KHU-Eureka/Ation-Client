@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, BrowserRouter as Router, Navigate, Route, Routes, Outlet } from "react-router-dom";
+import { BrowserRouter, BrowserRouter as Router, Navigate, Route, Routes, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAsync } from 'react-async';
 import GNB from "./component/GNB";
@@ -65,7 +65,11 @@ function App() {
           </Route>
         
           {/* Public Pages */}
-          <Route exact path="/landing" element={<Landing/>} />          
+          <Route exact path="/landing" element={<Landing/>} />    
+
+          {/* NotFound Pages */}
+          <Route path="*" element={<NotFound/>}></Route>
+
         </Routes>
 
       </Router>
@@ -81,6 +85,7 @@ function App() {
 function PrivateOutlet() {
   const dispatch = useDispatch();
   const cookies = new Cookies();
+  const navigation = useNavigate();
   var token = cookies.get('token');
 
   const { data: auth, error, isPending } = useAsync({
@@ -95,6 +100,7 @@ function PrivateOutlet() {
   if (error) {
     dispatch({type: 'AUTH', data: false});
     return <Navigate to="/login" />
+    //return <Navigate to="/login" />
   } 
   if (auth.message==="Unathorized") { // 로그인 되지 않거나 유효하지 않은 유저라면,
     dispatch({type: 'AUTH', data: false});
@@ -121,11 +127,38 @@ function PublicOutlet() {
   } 
   if (error) { // 에러 발생 시 login으로 이동
     dispatch({type: 'AUTH', data: false});
-    return <Navigate to="/login" />
+    return <Outlet />
   } 
   if (auth.message==="Unathorized") { // 유효하지 않은 유저라면
     dispatch({type: 'AUTH', data: false});
     return <Outlet />
+  } else { // 로그인 된 유저라면
+    dispatch({type: 'AUTH', data: true});
+    return <Navigate to="/mypage" /> ;
+  }  
+}
+
+function NotFound() {
+  const dispatch = useDispatch();
+  const cookies = new Cookies();
+  var token = cookies.get('token');
+
+  const { data: auth, error, isPending } = useAsync({
+    promiseFn: isValidUser,
+    token: token,
+    watch: token
+  });
+
+  if (isPending) {
+    return <div>로딩중</div>
+  } 
+  if (error) { // 에러 발생 시 login으로 이동
+    dispatch({type: 'AUTH', data: false});
+    return <Navigate to="/login" />
+  } 
+  if (auth.message==="Unathorized") { // 유효하지 않은 유저라면
+    dispatch({type: 'AUTH', data: false});
+    return <Navigate to="/login" />
   } else { // 로그인 된 유저라면
     dispatch({type: 'AUTH', data: true});
     return <Navigate to="/mypage" /> ;

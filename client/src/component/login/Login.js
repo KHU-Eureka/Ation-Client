@@ -38,6 +38,7 @@ function Login() {
             getPersona(token, name); // user의 active persona 정보를 얻음
             dispatch({type: 'AUTH', data: true});
         } catch (err) {
+            dispatch({type: 'AUTH', data: false});
             setShowLoginAlertMsg(true);
             console.log(err);
         }

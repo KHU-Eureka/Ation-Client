@@ -82,6 +82,10 @@
     left: -13px;
 }
 
+.mypersona .new-tag-input {
+    position: static;
+}
+
 .mypersona .input-wrapper2 .checkbox-wrapper .sense-wrapper {
     top: 0px;
 }

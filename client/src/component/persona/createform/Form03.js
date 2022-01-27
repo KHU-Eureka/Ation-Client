@@ -48,7 +48,7 @@ function Form03(props) {
         }
     }
 
-    const isKorean = (text) => {
+    const isKorean = (text) => { // 한국어인지 test하는 함수
         setShowCharmAlertMsg(false)
         for(var c = 0; c < text.length; c++) {
             if (!korean.test(text[c])) {
@@ -122,7 +122,11 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm1}
-                                onChange={ (e)=>{ isKorean(e.target.value) && setNewCharm1(e.target.value)}}
+                                onChange={ (e)=>{ 
+                                    // 값이 바뀌면 charmList에서 삭제
+                                    changeHandler(false, newCharm1, 1);
+                                    // 6자리 이하의 한국어일때에만 변경
+                                    isKorean(e.target.value) && setNewCharm1(e.target.value)}}
                             />
                         </label>
                     </div>
@@ -145,7 +149,11 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm2}
-                                onChange={ (e)=>{ isKorean(e.target.value) && setNewCharm2(e.target.value) } }
+                                onChange={ (e)=>{ 
+                                    // 값이 바뀌면 charmList에서 삭제
+                                    changeHandler(false, newCharm2, 2);
+                                    // 6자리 이하의 한국어일때에만 변경
+                                    isKorean(e.target.value) && setNewCharm2(e.target.value) } }
                             />
                         </label>
                     </div>
@@ -169,7 +177,9 @@ function Form03(props) {
                                 rows="1"
                                 placeholder="직접 태그를 &#10;입력해보세요!"
                                 value={newCharm3}
-                                onChange={ (e)=>{ isKorean(e.target.value) && setNewCharm3(e.target.value) } }
+                                onChange={ (e)=>{ 
+                                    changeHandler(false, newCharm3, 3);
+                                    isKorean(e.target.value) && setNewCharm3(e.target.value) } }
                             />
                         </label>
                     </div>

@@ -124,8 +124,9 @@ textarea:focus {
   cursor: no-drop;
 } 
 
+.small-btn:hover
 .form-wraper button:hover {
-  background-color: #ee5b35;
+  background-color: #ed5a35;
 }
 
 .checkbox-wrapper input[type=checkbox]+label .new-tag-input {
@@ -151,16 +152,18 @@ textarea:focus {
   font-size: 18px;
   text-align: center;
   transition: 0.2s;
-  top: 26px;
   font-weight: 500;
   min-height: 26px;
-    max-height: 80px;
-    padding: 0px 10px;
+  max-height: 80px;
+  padding: 0px 10px;
+  position: relative;
+  top: 2px;
+  overflow: hidden;
 }
 
 .new-tag-input:hover,
 .new-tag-input:focus {
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .new-tag-input::placeholder {

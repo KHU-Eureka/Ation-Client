@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import GNB from '../GNB';
 import SelectBox from '../views/input/SelectBox';
 import SelectBox2 from '../views/input/SelectBox2';
 import { MdEdit } from 'react-icons/md';
@@ -177,9 +176,6 @@ function MyPersona ({match}) {
     let [newCharm2, setNewCharm2] = useState("");
     let [newCharm3, setNewCharm3] = useState("");
     let [newCharmList, setNewCharmList] = useState(["","","",""])
-
-    let [nextCharm1, makeNextCharm1] = useState(false);
-    let [nextCharm2, makeNextCharm2] = useState(false);
 
     const charmChangeHandler = (checked, charm, newCharmIdx=false) => {
         var tempList = [...newCharmList];
@@ -367,7 +363,7 @@ function MyPersona ({match}) {
                 window.scrollTo(0, 870);
                 return;
             } else if (!charmList.length) {
-                setAlertTitle("매력 태그를 선택해주세요.")
+                setAlertTitle("매력 태그를 입력해주세요.")
                 setAlertSubtitle("매력 태그는 한개 이상 존재해야 합니다.")
                 setShowAlert(true)
                 window.scrollTo(0, 1220);
@@ -606,44 +602,6 @@ function MyPersona ({match}) {
                                         } )
                                     }
                         </div>
-                            {/*
-                                mode === "view"
-                                ? (
-                                    [...interestList].map(function(interest, idx) {
-                                        return (
-                                            interestIdList.includes(interest.interestId) && <div className="checkbox-elem">{ interest.name }</div>
-                                        )
-                                    })
-                                )
-                                : <div className="checkbox-wrapper">
-                                <div
-                                className="alert-msg-wrapper"
-                                style={showInterestAlertMsg ? {opacity: 1} : {opacity: 0}}>
-                                    {showInterestAlertMsg &&
-                                    <div className="alert-msg bounce">
-                                        최대 3개까지 선택 가능합니다.
-                                    </div>}
-                                </div>
-                                    {
-                                        [...interestList].map( function(interest, idx) {
-                                            return(
-                                                <div className="checkbox-elem" key={idx}>
-                                                    <input
-                                                        id={ interest.interestId }
-                                                        value={ interest.interestId }
-                                                        name="interest"
-                                                        type="checkbox"
-                                                        checked={interestIdList.includes(interest.interestId) ? true : false}
-                                                        onChange={ (e)=>{ interestChangeHandler(e.currentTarget.checked, interest.interestId) } }
-                                                    />
-                                                    <label htmlFor={ interest.interestId }>{ interest.name }</label>
-                                                </div>
-                                                
-                                            )
-                                        } )
-                                    }
-                                </div>
-                            */}
                         </div>
                     </div>
 

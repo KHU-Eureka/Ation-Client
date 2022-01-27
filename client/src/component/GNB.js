@@ -20,22 +20,10 @@ function GNB() {
     let [showGNBPopup, setShowGNBPopup] = useState(false);
 
     // persona 관련
-    let [personaList, setPersonaList] = useState([]);
     let [activePersona, setActivePersona] = useState(null);
 
     // user 관련
     let [email, setEmail] = useState(""); 
-
-    useEffect(() => { // active persona id 가 변결될 때 active persona를 찾기
-        if (auth) {
-            for (var persona of personaList) {
-                if (persona && persona.id === activePersonaId) {
-                    setActivePersona(persona);
-                    break;
-                }
-            } 
-        } 
-    }, [activePersonaId, auth])
 
     useEffect(() => {
         const getEmail = async () => {
@@ -53,25 +41,8 @@ function GNB() {
                 console.log(err);
             }
         }
-        const getPersonaList = async () => {
-            const token = cookies.get('token')
-            try {
-                const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/persona', {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    }
-                )
 
-                var tempPersonaList = res.data;
-                setPersonaList(tempPersonaList)
-            } catch (err) {
-                console.log(err);
-            }
-        }
         if (auth) {
-            getPersonaList();
             getEmail();
         }
     }, [auth])
@@ -89,13 +60,15 @@ function GNB() {
                 )
                 dispatch({type: 'CHANGEPERSONA', data: res.data.id});
                 dispatch({type: 'AUTH', data: true});
+                setActivePersona(res.data);
                 console.log(auth,res.data.id);
+                console.log("active Persona : ", activePersona)
             } catch (err) {
                 console.log(err);
             }
         } 
         getActivePersona();
-    }, [])
+    }, [auth, activePersonaId])
 
     const changeActivePersona = async (persona) => {
         const token = cookies.get('token')
@@ -143,7 +116,7 @@ function GNB() {
                 onClick={()=>{setShowGNBPopup(true)}}
                 />
                 { 
-                (auth && showGNBPopup && personaList.length > 1) &&
+                (auth && showGNBPopup) &&
                 <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona}></GNBPopup> 
                 }
             </div>

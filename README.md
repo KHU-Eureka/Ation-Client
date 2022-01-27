@@ -21,11 +21,11 @@ KHU 컴퓨터공학과X산업디자인학과 연합 웹 개발 프로젝트
 
 src > component
 1. lounge
-2. **lounge-white**(공통 폴더)
+2. **lounge-board**(공통 폴더)
 3. lounge-wait
 
 assets > css
 1. lounge
-2. **lounge-white**(공통 폴더)
+2. **lounge-board**(공통 폴더)
 3. lounge-wait
 

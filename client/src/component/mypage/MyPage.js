@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaExchangeAlt } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
-import { IoMdBody, IoMdSettings } from 'react-icons/io';
+import { HiOutlinePlus } from 'react-icons/hi';
+import { IoMdSettings } from 'react-icons/io';
 import Alert from '../views/Alert';
 import '../../assets/css/mypage/mypage.css';
 import Idaition from "./Idaition";
 import Pinbox from "./Pinbox";
-import GNB from "../GNB";
 import './MyPage.css';
 
 import eye from '../../asset/images/sense/눈_white.png';
@@ -24,6 +24,9 @@ function MyPage() {
     const navigation = useNavigate();
     var { state } = useLocation();
     
+    let activePersonaId = useSelector((state) => state.activePersonaId);
+    let dispatch = useDispatch();
+
     const senseIcons = [eye, nose, mouse, ears, hand];
     
     // alert 관련
@@ -39,40 +42,40 @@ function MyPage() {
     let [personaList, setPersonaList] = useState([]);
     let [personaIdList, setPersonaIdList] = useState([]);
     let [activePersona, setActivePersona] = useState([null]);
-    let [activePersonaId, setActivePersonaId] = useState();
     let [EditTrue, setEditTrue] = useState(false);
     let [EditClickTrue, setEditClickTrue] = useState(false);
     let [EditModalClose, setEditModalClose] = useState(false);
+    let [pastActivePersonaId, setPastActivePersonaId] = useState(null);
 
     const goToAddPersona = () => {
         navigation('/persona-create'); // persona 생성 페이지로 이동
     }
 
     useEffect(() => {
+        dispatch({type: 'MENU', data: 'mypage'});
         document.body.scrollTop = window.scrollTo(0,0);
     }, [])
 
-    useEffect(() => {
+    useEffect(() => { // 띄울 alert가 있으면 띄움
         if (state) {
-            if (state.alert && state.alert.show) {
+            if (state.alert) {
                 var alertInfo = state.alert;
                 setAlertTitle(alertInfo.title);
                 setAlertSubtitle(alertInfo.subtitle);
                 setShowAlert(true);
-                state.alert.show = false;
             }
         }
     }, [])
 
-    useEffect(() => {   
+    useLayoutEffect(() => {   
         for (var i = 0; i < 3; i++) {
             if (personaList[i] && personaList[i].id === activePersonaId) {
                 swapActivePersona(i);
             }
         }
-    })
+    }, [activePersonaId, personaList])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // 초기값 설정
         const getPersonaList = async () => {
             const token = cookies.get('token')
@@ -97,28 +100,10 @@ function MyPage() {
                     tempIdList = [...tempIdList, persona.id]
                 }
                 setPersonaIdList(tempIdList)
-
             } catch (err) {
                 console.log(err);
             }
         }
-
-        const getActivePersona = async () => {
-            const token = cookies.get('token')
-            try {
-                const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    }
-                )
-                setActivePersona(res.data)
-                setActivePersonaId(res.data.id)
-            } catch (err) {
-                console.log(err);
-            }
-        }  
 
         const getBackgroundImg = async () => {
             const token = cookies.get('token')
@@ -135,15 +120,16 @@ function MyPage() {
                 console.log(err);
             }
         }
+        setPastActivePersonaId(activePersonaId);
         getBackgroundImg();
-        getActivePersona();
+        //getActivePersona();
         getPersonaList();  
     }, [])
 
     const changeActivePersona = async (personaId) => {
         const token = cookies.get('token')
         try {
-            const res = await axios.put(
+            await axios.put(
                 process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
                 {
                     headers: {
@@ -151,16 +137,7 @@ function MyPage() {
                     }
                 }
             )
-            /*
-            // personaList의 가운데에 위치하도록 swap
-            for (var i=0; i<3; i++) {
-                if (personaList[i] && personaList[i].id === personaId) {
-                    swapActivePersona(i);
-                }
-            }
-            */
-            //navigation('/mypage')
-            window.location.reload();
+            dispatch({type: 'CHANGEPERSONA', data: personaId}); // redux의 personaId도 바꿔줌
         } catch (err) {
             console.log(err)
         }
@@ -175,11 +152,6 @@ function MyPage() {
             setPersonaList(tempList);
         }
     }
-
-    const editPersona = (personaId) => {
-        navigation('/persona-edit', { state: { personaId: personaId, personaIdList: personaIdList } })
-    }
-
 
     const goToMyPersona = (personaId) => {
         navigation('/mypersona/view', { state: { personaId: personaId, personaIdList: personaIdList } })
@@ -206,7 +178,7 @@ function MyPage() {
         }
     }
 
-    useEffect(() => {
+    useEffect(() => { // background image 변경 시
         const postBackgroundImg = async () => {
             const token = cookies.get('token')
             try {
@@ -237,6 +209,7 @@ function MyPage() {
             <div 
             className="background-img"
             style={{backgroundImage: "url('"+backgroundImgUrl+"')"}}>
+                {/* 배경 이미지 바꾸는 code */}
                 <input 
                 type="file"
                 id="background-img"
@@ -244,15 +217,18 @@ function MyPage() {
                 onChange={ (e)=>{ readImage(e.target); onChangeImg(e); } }
                 ></input>
                 <label
+                title="배경이미지 변경"
                 id="background-image-label"
                 htmlFor="background-img"
                 ><IoMdSettings/>
                 </label>
-                <div className="profile-wrapper">
+
+                {/* persona card 관련 */}
+                <div className={(activePersonaId !== pastActivePersonaId) ? "profile-wrapper" : "profile-wrapper active-persona-change"} >
                     {
                         personaList && personaList.map(function(persona, idx) {
                             return (
-                                <div key={idx}>
+                                <div className="card-wrapper" key={idx}>
                                 {
                                     (!persona)
                                     /* 1) persona가 없을 때 */
@@ -297,23 +273,13 @@ function MyPage() {
                                         </div>
                                         <div 
                                         className="card-hover"
+                                        onClick={(e)=>{e.preventDefault(); goToMyPersona(persona.id)}}
                                         style={{position: "relative", top: "-100%"}}>
                                             <div className="content-wrapper">
-                                                <div
-                                                className="content-button"
-                                                onClick={(e)=>{e.preventDefault(); goToMyPersona(persona.id)}}
-                                                >
-                                                    <div className="button-icon"><AiOutlinePlus /></div>
+                                                <div className="content-button">
+                                                    <div className="button-icon"><HiOutlinePlus /></div>
                                                     <div className="button-text">더보기</div>
                                                 </div>
-                                                {/*
-                                                <div
-                                                className="content-button"
-                                                onClick={(e)=>{e.preventDefault(); editPersona(persona.id)}}>
-                                                    <div className="button-icon"><MdEdit /></div>
-                                                    <div className="button-text">수정하기</div>
-                                                </div>
-                                                */}
                                             </div>
                                         </div>
                                     </div>
@@ -321,7 +287,7 @@ function MyPage() {
                                     : <div
                                     className="persona-profile"
                                     style={{backgroundImage: "url('"+ persona.profileImgPath +"')"}}
-                                    onClick={(e)=>{e.preventDefault(); changeActivePersona(persona.id)}}
+                                    onClick={(e)=>{e.preventDefault(); changeActivePersona(persona.id); setPastActivePersonaId(persona.id);}}
                                     >
                                         <div className="card-hover">
                                             <FaExchangeAlt/>

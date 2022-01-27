@@ -6,7 +6,7 @@ function Form05(props) {
 
         <div className="input-wrapper">
             <label htmlFor="introduction" style={{marginBottom: '8px'}}>
-                한 줄 소개
+                한 줄 소개 (선택)
             </label>
             <div style={{width:'240px'}}>
                 <div className="label-description">
@@ -27,7 +27,6 @@ function Form05(props) {
 
         <button className="small-btn" type="submit"
         onClick={props.postPersona}
-        disabled={ props.introduction.length===0 }
         >
                 등록 완료
             </button>

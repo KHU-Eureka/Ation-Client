@@ -36,6 +36,27 @@
     width: calc(100% - 40px);
 }
 
+.mypersona .nickname-wrapper {position: relative;}
+
+.mypersona .input-wrapper .check-validation-btn {
+    width: 90px;
+    height: 38px;
+    line-height: 38px;
+    background: #FFFFFF;
+    color: #FE6740;
+    border: 1px solid #FE6740;
+    position: absolute;
+    right: 10px;
+    top: -30px;
+    font-size: 15px;
+}
+
+.mypersona .nickname-wrapper > .alert-msg {
+    top: 80px;
+    right: auto;
+    left: 0px;
+}
+
 .mypersona .profile label,
 .mypersona .input-wrapper label,
 .mypersona .input-wrapper2 label {
@@ -44,8 +65,10 @@
     font-size: 18px;
     font-weight: 500;
     text-align: left;
-    margin-bottom: 15px;
 }
+
+.mypersona .profile label,
+.mypersona .input-wrapper label { margin-bottom: 15px; }
 
 .mypersona .checkbox-wrapper .checkbox-elem {
     position: relative;
@@ -57,6 +80,10 @@
     position: absolute;
     top: 30px;
     left: -13px;
+}
+
+.mypersona .new-tag-input {
+    position: static;
 }
 
 .mypersona .input-wrapper2 .checkbox-wrapper .sense-wrapper {
@@ -87,8 +114,49 @@
     color: white;
 }
 
-.mypersona input[type=checkbox]:disabled+label {
+.mypersona .checkbox-wrapper input,
+.mypersona .checkbox-wrapper label {
+    cursor: pointer !important;
+}
+
+.mypersona .checkbox-wrapper input[type=checkbox]:disabled+label {
+    cursor: default !important;
+}
+
+.mypersona .checkbox-elem .charm-text {
+    width: 120px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
     cursor: default;
+}
+
+.mypersona .charm-label {
+    position: relative;
+}
+
+.mypersona .charm-label .delete-btn {
+    position: absolute;
+    top: -38px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    line-height: 30px;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: #FFA48C;
+    border: 2px solid #FFFFFF;
+    cursor: pointer;
+}
+
+.mypersona .charm-label > .text {
+    height: 100%;
+    pointer-events: none;
 }
 
 .mypersona #new-charm1:disabled,

@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { useDispatch } from "react-redux";
 
-import GNB from "../GNB";
 import Reco from "./Reco";
 import InsightLNB from "./InsightLNB"
 import Modal from "../modal/Modal";
@@ -17,6 +17,7 @@ import "../../assets/css/insight/Read.css";
 
 function Read() {
     const cookies = new Cookies();
+    let dispatch = useDispatch();
     const [pageNum, setPageNum] = useState(1);
     const [pageNum2, setPageNum2] = useState(1);
     const [insight, setInsight] = useState(null);
@@ -51,6 +52,11 @@ function Read() {
         setModal2Open(false);
     }
     //...modal2
+
+    // menu setting
+    useEffect(()=> {
+        dispatch({type: 'MENU', data: 'insight'})
+    }, [])
 
     const PersonaSetting = async () => {
         const token = cookies.get('token');

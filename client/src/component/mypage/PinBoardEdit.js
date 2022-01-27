@@ -6,7 +6,7 @@ import "../../assets/css/mypage/PinBoardAdd.css";
 import logo2 from "../../assets/svg/logo2.svg";
 
 function PinBoardEdit(props) {
-    const cookies = new Cookies;
+    const cookies = new Cookies();
     const modalPinBoardEdit = useRef();
     const {pinBoardEditModalOpen, closePinBoardEditModal, BoardEditPosition, clickedPinBoardID, setAddTrue} = props;
 

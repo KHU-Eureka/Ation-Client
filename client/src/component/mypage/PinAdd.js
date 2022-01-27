@@ -188,7 +188,7 @@ function PinAdd(props) {
                     }
                 }  
             } else if(pageNum === 1) {
-                if(urlValue === "") {
+                if(!urlTrue) {
                     setPageNum(1);
                 }
             } else if(pageNum === 2) {

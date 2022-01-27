@@ -20,10 +20,10 @@ jobs:
         working-directory: ${{ env.working-directory }}
 
       - name: Build
-        run:  unset CI && npm run build
+        run: npm run build
         working-directory: ${{ env.working-directory }}
         env:
-          CI: ''
+          CI: false
 
       - name: Deploy
         env:

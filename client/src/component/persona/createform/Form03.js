@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SelectBox from '../../views/input/SelectBox';
-import './SenseTag.css';
+import '../../../assets/css/persona/SenseTag.css';
 
 function Form03(props) {
     const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/;

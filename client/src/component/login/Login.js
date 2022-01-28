@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import { Cookies } from 'react-cookie';
-import logo from '../../asset/images/logo.png';
-import './Login.css'
+import logo from '../../assets/image/logo.png';
+import '../../assets/css/Login.css';
 
 function Login() {
     const cookies = new Cookies(); 

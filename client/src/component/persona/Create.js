@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import Form01 from './createform/Form01';
@@ -12,6 +13,7 @@ import Alert from '../views/Alert';
 function Create() {
     const cookies = new Cookies();
     const navigation = new useNavigate();
+    const dispatch = useDispatch();
     const pageList = [ 1, 2, 3, 4, 5 ]
 
     let [showAlert, setShowAlert] = useState(false);
@@ -67,22 +69,8 @@ function Create() {
             )
             const personaId = res.data
 
-            // 이미지가 있으면 이미지도 등록함
-            if (formData != null) {
-                postProfileImg(personaId)
-            }
-
-            // 신규 유저라면
-            if (isFirstPersona) {
-                firstPersonaAction(personaId);                
-            } 
-            // 신규 유저가 아니라면
-            else {
-                navigation('/mypage', { 
-                    state: { alert: {title: "페르소나 생성을 완료했습니다", subtitle: "활동을 시작해보세요!"}}
-                })              
-            }
-            
+            // 프로필 이미지 등록
+            postProfileImg(personaId)
 
         } catch (err) {
             setShowAlert(true);
@@ -92,22 +80,35 @@ function Create() {
         }
     }
 
-    const postProfileImg = async (personaId) => {
-        var token = cookies.get('token');
-        try {
-            await axios.post(
-                process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
-                {
-                    headers: {
-                        Authorization: "Bearer " + token
+    const postProfileImg = async (personaId) => { // 프로필 이미지 등록
+        if (formData) { // 이미지가 존재한다면
+            var token = cookies.get('token');
+            try {
+                await axios.post(
+                    process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
+                    {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
                     }
-                }
-            )
-        } catch (err) {
-            setShowAlert(true);
-            setAlertTitle("이미지 등록에 실패했습니다.")
-            setAlertSubtitle("다시 시도해주세요")
-            console.log(err);
+                )
+            } catch (err) {
+                setShowAlert(true);
+                setAlertTitle("이미지 등록에 실패했습니다.")
+                setAlertSubtitle("다시 시도해주세요")
+                console.log(err);
+            }
+        }
+        
+        // 신규 유저라면
+        if (isFirstPersona) {
+            firstPersonaAction(personaId);                
+        } 
+        // 신규 유저가 아니라면
+        else {
+            navigation('/mypage', { 
+                state: { alert: {title: "페르소나 생성을 완료했습니다", subtitle: "활동을 시작해보세요!"}}
+            })              
         }
     }
 
@@ -123,9 +124,8 @@ function Create() {
                     }
                 }
             )
-            // landing 페이지로 이동함
-            navigation('/landing', { state: {personaCreate: true}, replace: true })
-            window.location.reload()
+            navigation('/landing', { state: {personaCreate: true}, replace: true }) // landing 페이지로 이동
+            dispatch({type: 'CHANGEPERSONA', data: personaId}) // persona 변경을 알림
         } catch (err) {
             console.log(err)
         }

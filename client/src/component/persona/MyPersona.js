@@ -379,6 +379,9 @@ function MyPersona ({match}) {
         }
     
         const editPersona = async () => {
+            if (formData) { // 프로필 이미지를 변경했다면,
+                postProfileImg();
+            }
             const token = cookies.get('token');
             try {
                 await axios.put(
@@ -399,12 +402,8 @@ function MyPersona ({match}) {
                         }
                     }
                 )
-                if (formData) {
-                    postProfileImg();
-                }
-    
                 window.scrollTo(0,0)
-    
+
                 // 마이페이지로 이동
                 navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: "", show: true}}})
             } catch (err) {
@@ -414,6 +413,7 @@ function MyPersona ({match}) {
     
         const postProfileImg = async () => {
             var token = cookies.get('token');
+            dispatch({type: 'CHANGEPERSONA', data: null});
             try {
                 await axios.post(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -423,6 +423,7 @@ function MyPersona ({match}) {
                         }
                     }
                 )
+                dispatch({type: 'CHANGEPERSONA', data: personaId});
             } catch (err) {
                 console.log(err);
             }

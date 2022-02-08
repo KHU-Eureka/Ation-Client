@@ -40,7 +40,7 @@ textarea:focus {
 
 .input-wrapper input:focus-visible {
   outline: 1px solid transparent;
-  font-size: 0.9rem;
+  font-size: 0.93rem;
 }
 
 .input-wrapper input[type=radio]+label {

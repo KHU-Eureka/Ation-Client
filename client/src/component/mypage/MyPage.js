@@ -235,7 +235,10 @@ function MyPage() {
                                     ? <div className="persona-profile">
                                         <div className="add-persona-btn"
                                             onClick={ goToAddPersona }
-                                        ><AiOutlinePlus/></div>
+                                        >
+                                            <HiOutlinePlus />
+                                            <div className="text">페르소나 추가</div>
+                                        </div>
                                     </div>
                                     /* persona가 있을 때 */
                                     : (activePersonaId === persona.id)

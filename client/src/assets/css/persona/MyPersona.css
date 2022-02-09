@@ -112,6 +112,7 @@
 .mypersona input[type=checkbox]:disabled {
     background-color: #FE6740;
     color: white;
+    cursor: default !important;
 }
 
 .mypersona .checkbox-wrapper input,

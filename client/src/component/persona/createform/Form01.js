@@ -133,22 +133,6 @@ function Form01(props) {
                 />
             </div>
 
-            {/* Age input form - text version
-            <div className="input-wrapper">
-                <label htmlFor="age">
-                    나이
-                </label>
-                <input
-                    style={{width: '300px'}}
-                    id="age"
-                    type="number"
-                    placeholder="나이를 입력해주세요."
-                    onChange={ (e)=>{ props.setAge(e.target.value) } }
-                    value={ props.age }
-                />
-            </div>
-            */}
-
             <div className="input-wrapper">
                 <label htmlFor="age">
                     나이
@@ -161,46 +145,6 @@ function Form01(props) {
                     성별
                 </label>
                 <SelectBox2 selectedValue={props.gender} setValue={props.setGender} optionList={genderList} defaultValue={"성별을 선택하세요."}></SelectBox2>
-                {/*  gender input radio version
-                <div className="radio-wrapper">
-                    <div className="radio-elem">
-                        <input
-                            id="female"
-                            type="radio"
-                            value="1"
-                            checked={props.gender===1}
-                            name="gender"
-                            onChange={ (e)=>{props.setGender((e.target.value)*1)} }
-                        />
-                        <BsCheck2
-                        id="check-icon"
-                        onClick={ (e)=>{props.setGender(1)} }
-                        />
-                        <label htmlFor="female" className="gender-label">
-                            여
-                        </label>
-                    </div>
-
-                    <div className="radio-elem">
-                        <input
-                            id="male"
-                            type="radio"
-                            value="2"
-                            checked={props.gender===2}
-                            name="gender"
-                            className="gender-radio"
-                            onChange={ (e)=>{props.setGender((e.target.value)*1)} }
-                        />
-                        <BsCheck2
-                        id="check-icon"
-                        onClick={ (e)=>{props.setGender(2)} }
-                        />
-                        <label htmlFor="male" className="gender-label">
-                            남
-                        </label>
-                    </div>
-                </div>
-                */}
             </div>
 
             <button

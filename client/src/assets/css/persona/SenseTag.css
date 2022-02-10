@@ -29,6 +29,7 @@
 .sense-description .description {
     font-size: 18px;
     text-align: left;
+    word-break: keep-all;
 }
 
 .checkbox-elem .sense-wrapper {

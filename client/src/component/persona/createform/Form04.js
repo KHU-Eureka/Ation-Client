@@ -90,13 +90,14 @@ function Form04(props) {
                     {
                         senseInfoList.map( function(sense, idx) {
                             return(
-                                <div className="checkbox-elem" key={ idx }>
+                                <div className="checkbox-elem"
+                                style={{ width: sense.width }}
+                                key={ idx }>
                                     <input
                                         id={ sense.senseId }
                                         value={ sense.senseId }
                                         name="sense"
                                         type="checkbox"
-                                        style={{ width: sense.width }}
                                         checked={props.senseIdList.includes(sense.senseId) ? true : false}
                                         onClick={ (e)=>{changeHandler(e.currentTarget.checked, sense.senseId) }}
                                     />

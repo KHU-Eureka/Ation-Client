@@ -645,31 +645,6 @@ function MyPersona ({match}) {
                                 } )
                             }
 
-                            {/*
-                                newCharmList.map((charm, idx) => (
-                                    (idx < 3 - charmList.length) && 
-                                    <div className="checkbox-elem" key={idx}>
-                                        <input
-                                            id={ "newcharm" + idx }
-                                            value={charm}
-                                            name="charm"
-                                            type="checkbox"
-                                            checked={charmList.includes(charm)}
-                                            onChange={ (e)=>{ charmChangeHandler(false, charm) } }
-                                        />
-                                        <label htmlFor="new-charm1" className="center">
-                                            <textarea 
-                                                className="new-tag-input"
-                                                rows="1"
-                                                placeholder="직접 태그를 &#10;입력해보세요!"
-                                                value={newCharm1}
-                                                onChange={ (e)=>{ charmChangeHandler(false, e.target.value) } }
-                                            />
-                                        </label>
-                                    </div>
-                                ))
-                                */}
-
                             { (mode==="edit" && pastCharmList.length < 3) &&
                             <div className="checkbox-elem">
                                 <input
@@ -779,13 +754,13 @@ function MyPersona ({match}) {
                                     senseInfoList.map( function(sense, idx) {
                                         return(
                                             (mode==="edit" || senseIdList.includes(sense.senseId))
-                                            && <div className="checkbox-elem" key={ idx }>
+                                            && <div className="checkbox-elem" key={ idx }
+                                            style={mode==="view" ? null :{ width: sense.width }}>
                                                 <input
                                                     id={ "sense"+sense.senseId }
                                                     value={ sense.senseId }
                                                     name="sense"
                                                     type="checkbox"
-                                                    style={mode==="view" ? null :{ width: sense.width }}
                                                     checked={senseIdList.includes(sense.senseId) ? true : false}
                                                     onClick={ (e)=>{senseChangeHandler(e.currentTarget.checked, sense.senseId) }}
                                                     disabled={mode==="view"}

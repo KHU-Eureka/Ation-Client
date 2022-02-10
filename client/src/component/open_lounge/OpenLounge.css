@@ -1,6 +1,11 @@
 .open-lounge .modal-background {
     background: rgba(34, 34, 34, 0.63);
     backdrop-filter: none;
+    animation: showModalBackground 0.3s;
+}
+
+@keyframes showModalBackground {
+    0%{opacity:0;}
 }
 
 .open-lounge .modal-wrapper {
@@ -11,6 +16,11 @@
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
     padding: 30px 50px;
+    animation: showModal 0.3s;
+}
+
+@keyframes showModal {
+    0%{opacity: 0; transform: translateY(-10px);}
 }
 
 .open-lounge .modal-wrapper > .modal-header {
@@ -68,6 +78,7 @@
 .open-lounge .input-wrapper > label {
     color: #807A74;
     margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .open-lounge .input-wrapper > label + .label-description {
@@ -130,7 +141,7 @@
 .open-lounge .checkbox-wrapper .checkbox-elem > input[type="checkbox"]:hover,
 .open-lounge .checkbox-wrapper .checkbox-elem > input[type="checkbox"]:checked { background: #FE3400; }
 
-.open-lounge .form03 .row1 {
+.open-lounge .row1 {
     width: calc(100% + 20px);
     display: flex;
     margin-top: 30px;
@@ -278,3 +289,66 @@
     flex-shrink: 0;
     margin-left: 10px;
 }
+
+/* form 4 */
+.open-lounge .form04 .row1 .input-wrapper > label {
+    margin-bottom: 20px;
+}
+
+.open-lounge .form04 .cover-preview {
+    width: 344px;
+    height: 206px;
+    margin-top: 10px;
+    margin-right: 40px;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: 0.2s;
+}
+
+.open-lounge .form04 .image-wrapper {
+    width: 225px;
+    min-height: 206px;
+    padding: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.open-lounge .form04 .image-wrapper > .checkbox-wrapper {
+    width: 245px;
+    min-height: 206px;
+}
+
+.image-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.image-wrapper::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #C4C4C4;
+    border-radius: 10px;
+}
+
+.open-lounge .form04 .image-wrapper .image-elem {
+    width: 100px;
+    height: 60px;
+    margin-bottom: 13px;
+}
+
+.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"] {
+    border: 1px solid #BEBBB9;
+}
+
+.open-lounge .form04 .image-wrapper .image-elem > label,
+.open-lounge .form04 .image-wrapper .image-elem > label > img {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: 0.2s;
+}
+
+.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"]:hover + label > img,
+.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"]:checked + label > img {transform: scale(1.07);}
+
+.open-lounge #complete-btn { width: 102px; }

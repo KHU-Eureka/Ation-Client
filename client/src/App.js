@@ -28,6 +28,7 @@ import Landing from "../src/component/landing/Landing";
 import "./assets/css/App.css";
 import "./assets/css/input/Input.css";
 import "./assets/css/modal/ModalBig.css";
+import Whiteboard from "./component/whiteboard/Whiteboard";
 
 function App() {
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
@@ -57,6 +58,10 @@ function App() {
 
           <Route path="/mypage" element={<PrivateOutlet/>}>
             <Route exact path="" element={<MyPage/>} />
+          </Route>
+
+          <Route path="/whiteboard" element={<PrivateOutlet/>}>
+            <Route exact path="" element={<Whiteboard/>} />
           </Route>
 
           {/* Rounge Pages */}

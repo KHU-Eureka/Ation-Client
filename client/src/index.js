@@ -9,6 +9,8 @@ let initialState = {
   auth: false,
   activePersonaId: null,
   menu: null,
+  mode: "",
+  detail_mode: "",
 }
 
 function reducer(state = initialState, action) {
@@ -21,8 +23,14 @@ function reducer(state = initialState, action) {
       tempState.activePersonaId = action.data;
       break;
     case 'MENU':
-        tempState.menu = action.data;
-        break;
+      tempState.menu = action.data;
+      break;
+    case 'MODE':
+      tempState.mode = action.data;
+      break;
+    case 'DETAIL_MODE':
+      tempState.detail_mode = action.data;
+      break;
     default:
       break;
   }

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import axios from 'axios';
-import './GNBPopup.css';
+import '../../assets/css/GNBPopup.css';
 
 function GNBPopup(props) {
     const cookies = new Cookies();

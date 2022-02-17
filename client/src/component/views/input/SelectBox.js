@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
-import './SelectBox.css';
+import '../../../assets/css/input/SelectBox.css';
 
 function SelectBox(props) {
     // props 종류

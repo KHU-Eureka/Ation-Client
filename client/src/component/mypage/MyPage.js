@@ -11,13 +11,13 @@ import Alert from '../views/Alert';
 import '../../assets/css/mypage/mypage.css';
 import Idaition from "./Idaition";
 import Pinbox from "./Pinbox";
-import './MyPage.css';
+import '../../assets/css/mypage/PersonaCard.css';
 
-import eye from '../../asset/images/sense/눈_white.png';
-import nose from '../../asset/images/sense/코_white.png';
-import mouse from '../../asset/images/sense/입_white.png';
-import ears from '../../asset/images/sense/귀_white.png';
-import hand from '../../asset/images/sense/손_white.png';
+import eye from '../../assets/image/sense/눈_white.png';
+import nose from '../../assets/image/sense/코_white.png';
+import mouse from '../../assets/image/sense/입_white.png';
+import ears from '../../assets/image/sense/귀_white.png';
+import hand from '../../assets/image/sense/손_white.png';
 
 function MyPage() {
     const cookies = new Cookies();

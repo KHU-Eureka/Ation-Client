@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { VscClose } from 'react-icons/vsc';
-import character from '../../asset/images/character.png';
+import character from '../../assets/image/character.png';
 
 function WelcomeModal(props) {
     console.log(props);

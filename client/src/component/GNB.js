@@ -28,10 +28,6 @@ function GNB() {
     let [email, setEmail] = useState(""); 
 
     useEffect(() => {
-        console.log("menu",menu)
-    })
-
-    useEffect(() => {
         const getEmail = async () => {
             const token = cookies.get('token')
             try {

@@ -8,6 +8,7 @@ import App from './App';
 let initialState = {
   auth: false,
   activePersonaId: null,
+  clickedPersonId: 0,
   menu: null,
   mode: "",
   detail_mode: "",
@@ -21,6 +22,9 @@ function reducer(state = initialState, action) {
       break;
     case 'CHANGEPERSONA':
       tempState.activePersonaId = action.data;
+      break;
+    case 'CLICKED_PERSONA':
+      tempState.clickedPersonId = action.data;
       break;
     case 'MENU':
       tempState.menu = action.data;

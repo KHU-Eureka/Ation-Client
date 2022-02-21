@@ -64,7 +64,7 @@ function App() {
             <Route exact path="" element={<Lounge/>} />
           </Route>
 
-          <Route path="/lounge-room/:mode" element={<PrivateOutlet/>}>
+          <Route path="/lounge-room/:id" element={<PrivateOutlet/>}>
             <Route path="" element={<LoungeRoom/>}/>
           </Route>
           

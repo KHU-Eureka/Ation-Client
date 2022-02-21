@@ -31,6 +31,7 @@ function OpenLounge(props) {
     let [showStatus, setShowStatus] = useState(false);
     let [waiting, setWaiting] = useState(false); // 라운지 생성을 기다리고 있는가?
     let [success, setSuccess] = useState(false);
+    let [loungeId, setLoungeId] = useState(null);
 
 
     const clickOutside = (e) => {
@@ -56,7 +57,7 @@ function OpenLounge(props) {
         setWaiting(true) // 라운지 생성을 기다리는 중
         const token = cookies.get('token');
         try {
-            await axios.post(
+            const res = await axios.post(
                 process.env.REACT_APP_SERVER_HOST + '/api/lounge' , {
                     introduction: introduction,
                     limitMember: limitMember,
@@ -72,6 +73,7 @@ function OpenLounge(props) {
                     }
                 }
             )
+            setLoungeId(res.data)
             setWaiting(false)
             setSuccess(true) // 라운지 생성 성공
         } catch(err) {
@@ -86,7 +88,7 @@ function OpenLounge(props) {
                 !showStatus
                 ? <div className="modal-wrapper" ref={modalInside}>
                 <div className="modal-header">
-                    <IoChevronBack className="icon" onClick={()=>{setPage(page-1)}}/>
+                    <IoChevronBack className="icon" onClick={()=>{page!==1 && setPage(page-1)}}/>
                     <span className="text">Lounge Open</span>
                     <IoClose className="icon" onClick={()=>{props.setShowOpenLounge(false)}} />
                 </div>
@@ -118,7 +120,7 @@ function OpenLounge(props) {
                 </div>
                 : /* lounge 생성을 기다리는 중이라면,, */
                 <div className="modal-wrapper" ref={modalInside}>
-                    <LoungeCreateStatus waiting={waiting} success={success}/>
+                    <LoungeCreateStatus waiting={waiting} success={success} loungeId={loungeId} />
                 </div>
                 }
             </div>

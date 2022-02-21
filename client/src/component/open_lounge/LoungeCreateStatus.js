@@ -1,8 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import character from '../../assets/image/character.png';
 import './LoungeCreateStatus.css';
 
 function LoungeCreateStatus(props) {
-    const { waiting, success } = props;
+    const navigation = useNavigate();
+    const { waiting, success, loungeId } = props;
+
+    const goToLounge = () => {
+        navigation(`/lounge-room/${loungeId}`);
+    }
+
     return(
         <div className="lounge-status">
             <img src={character} alt="character"></img>
@@ -22,7 +29,9 @@ function LoungeCreateStatus(props) {
                     <>
                     <div className="title">라운지 생성에 성공했습니다</div>
                     <div className="subtitle">라운지로 가서 멤버들이 오기를 기다리세요!</div> 
-                    <button className="modal-btn">라운지로 바로가기</button>
+                    <button className="modal-btn"
+                        onClick={()=>{goToLounge()}}
+                    >라운지로 바로가기</button>
                     </>
                     : 
                     <>

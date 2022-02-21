@@ -19,7 +19,7 @@ function Form03(props) {
     const cookies = new Cookies();
     const activePersonaId = useSelector((state) => state.activePersonaId)
     const { limitMember, setLimitMember, senseId, setSenseId, introduction, setIntroduction, setFormValidation } = props;
-    const memberList = [...Array(10)].map((v, i)=>i+1);
+    const memberList = [...Array(30)].map((v, i)=>i+1);
 
     const senseInfoList = [
         { id: 1, name: "눈", svg: eye },

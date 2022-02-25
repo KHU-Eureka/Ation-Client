@@ -29,6 +29,9 @@ import "./assets/css/App.css";
 import "./assets/css/input/Input.css";
 import "./assets/css/modal/ModalBig.css";
 
+// font
+import "./assets/font/trap/Trap.css";
+
 function App() {
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
   // login이 되어있다면 -> public과 private가 모두 보임 / public이고 restricted인 페이지는 안보임

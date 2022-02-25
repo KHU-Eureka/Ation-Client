@@ -1,8 +1,11 @@
 import { useEffect, useLayoutEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
+import exclamation from '../../assets/image/exclamation.png';
 import { BiChevronDown } from 'react-icons/bi';
 import { BsCheck2 } from 'react-icons/bs';
+import { AiOutlineExclamation } from 'react-icons/ai';
 import "../../assets/css/lounge/LoungeWaitSideBar.css";
 
 import { ReactComponent as Crown } from '../../assets/svg/crown.svg';
@@ -14,6 +17,7 @@ import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
     const { roomInfo } = props;
+    const activePersonaId = useSelector(state=>state.activePersonaId);
     let [ admin, setAdmin ] = useState({}); // 방장
 
     let [ tempMemberList, setTempMemberList ] = useState([
@@ -227,8 +231,20 @@ function LoungeWaitSideBar(props) {
                     <BiChevronDown className="down-icon"/>
                 </div>
             </div>
-
-            <button className="action-btn">START</button>
+            {
+              admin.id === activePersonaId
+              ? <button className="action-btn" disabled="true">
+                  START
+                  {
+                    true &&
+                    <div className="alert-block">
+                      <img className="icon" src={exclamation} alt="!"/>
+                      <span className="text">대기 멤버의 1/3이상이 레디해야 시작할 수 있습니다.</span>
+                    </div>
+                  }
+                </button>
+              : <button className="action-btn" disabled="true">READY</button>
+            }
 
             <div className="title">참여중인 멤버</div>
             {

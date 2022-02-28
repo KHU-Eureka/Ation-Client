@@ -204,8 +204,12 @@
     color: #FFFFFF;
 }
 
-.lounge-room #admin {
+.lounge-room .lounge-sidebar #admin {
     margin-top: 25px;
     padding-bottom: 12px;
     border-bottom: 1px solid #FFFFFF;
+}
+
+.lounge-room .lounge-sidebar #admin .crown {
+    margin-left: 6px;
 }

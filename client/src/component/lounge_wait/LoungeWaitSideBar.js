@@ -1,5 +1,8 @@
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
+import { Cookies } from "react-cookie";
+import axios from 'axios';
+
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
 import exclamation from '../../assets/image/exclamation.png';
@@ -16,8 +19,8 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
-    const alertBlock = useRef();
-    const { roomInfo } = props;
+    const cookies = new Cookies();
+    const { roomInfo, setRoomInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
 
     const senseInfoList = [
@@ -30,6 +33,7 @@ function LoungeWaitSideBar(props) {
 
     let [ admin, setAdmin ] = useState({}); // 방장
     let [showAlertBlock, setShowAlertBlock] = useState(true);
+    let [canStart, setCanStart] = useState(false);
 
     let [ tempMemberList, setTempMemberList ] = useState([
         {
@@ -73,7 +77,7 @@ function LoungeWaitSideBar(props) {
             }
           },
           {
-            "ready": true,
+            "ready": false,
             "admin": false,
             "persona": {
               "id": 5,
@@ -113,7 +117,7 @@ function LoungeWaitSideBar(props) {
             }
           },
           {
-            "ready": true,
+            "ready": false,
             "admin": false,
             "persona": {
               "id": 5,
@@ -174,6 +178,72 @@ function LoungeWaitSideBar(props) {
           }
     ])
 
+    const startHandler = async () => {
+      if (canStart) { // 시작이 가능할 때
+        try {
+          const token = cookies.get('token')
+          await axios.put(
+            `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/start`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+          let tempRoomInfo = {...roomInfo}
+          tempRoomInfo.status = 'START'
+          setRoomInfo(tempRoomInfo)
+        } catch(err) {
+          console.log(err)
+        }
+      } else { // 시작이 불가능할 때
+        setShowAlertBlock(true)
+      }
+    }
+
+    const readyHandler = async (isReady) => {
+      try {
+        const token = cookies.get('token')
+        let tempRoomInfo = {...roomInfo}
+
+        if (isReady) { // ready인 상태였으면 => unready 시킴
+          await axios.put(
+            `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/ready/${activePersonaId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+          // 자신을 unready 시키는 코드
+          tempRoomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready = false
+        } else { // unready인 상태였으면 => ready 시킴
+          await axios.put(
+            `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/start/${activePersonaId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+          // 자신을 ready 시키는 코드
+          tempRoomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready = true
+        }
+        setRoomInfo(tempRoomInfo)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+    useEffect(()=> { // 방장이 방을 시작 할 수 있는지 구하기
+      if (roomInfo.limitMember) {
+        const readyMember = roomInfo.memberList.filter((elem)=>elem.ready).length
+
+        if (readyMember * 3 >= roomInfo.limitMember) setCanStart(true)
+        else setCanStart(false)
+
+      } else {
+        setCanStart(true)
+      }
+    }, [roomInfo.memberList])
+
 
     useLayoutEffect(()=> {
         // 방장을 따로 저장
@@ -182,16 +252,11 @@ function LoungeWaitSideBar(props) {
         }
     }, [roomInfo])
 
-    const clickOutsideAlert = (e) => {
-      if (!alertBlock.current.contains(e.target))
-        setShowAlertBlock(false)
-    }
-
     useEffect(()=> {
-      document.addEventListener('click', clickOutsideAlert)
+      document.addEventListener('click', setShowAlertBlock(false))
 
       return (()=> {
-        document.removeEventListener('click', clickOutsideAlert)
+        document.removeEventListener('click', setShowAlertBlock(false))
       })
     }, [])
 
@@ -229,26 +294,30 @@ function LoungeWaitSideBar(props) {
             </div>
             {
               admin.id === activePersonaId
-              ? <button className="action-btn" disabled="true">
+              /* 방장일 때 => START 버튼 */
+              ? <button className="action-btn" disabled={!canStart} onClick={startHandler}>
                   START
                   {
                     showAlertBlock &&
-                    <div className="alert-block" ref={alertBlock}>
+                    <div className="alert-block">
                       <img className="icon" src={exclamation} alt="!"/>
                       <span className="text">대기 멤버의 1/3이상이 레디해야 시작할 수 있습니다.</span>
                     </div>
                   }
                 </button>
-              : <button className="action-btn" disabled="true">READY</button>
+              /* 멤버일 때 => READY 버튼 */
+              : <button className="action-btn" disabled="true"
+                onClick={()=>{readyHandler(roomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready)}}>READY</button>
             }
 
             <div className="title">참여중인 멤버</div>
             {
-                    admin &&
+              /* 방장 */
+                admin &&
                 <div className="member-persona row" id="admin">
                     <img src={admin.profileImgPath} alt="profile"/>
                     <div className="column grow">
-                        <div className="nickname">{ admin.nickname }</div>
+                        <div className="nickname">{ admin.nickname }<Crown className="crown"/></div>
                         <div className="sense-wrapper">
                             { admin.senseList && admin.senseList.map((sense, idx) => (
                                 <img 

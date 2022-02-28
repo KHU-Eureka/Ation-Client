@@ -42,7 +42,7 @@ function LoungeRoom () {
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo.status === "OPEN"
-                    ? <LoungeWaitSideBar roomInfo={roomInfo}/>
+                    ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
                     : <LoungeActiveSideBar />
                 }
             </div>

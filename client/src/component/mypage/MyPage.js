@@ -109,7 +109,7 @@ function MyPage() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }

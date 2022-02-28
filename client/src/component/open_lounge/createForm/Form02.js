@@ -51,7 +51,7 @@ function Form02(props) {
     }, [])
 
     return (
-        <div className="form02">
+        <div className="form02 show-modal-content">
             <div className="input-wrapper">
                 <input 
                     type="text"

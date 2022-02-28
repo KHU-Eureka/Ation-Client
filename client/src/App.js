@@ -20,6 +20,7 @@ import Lounge from "../src/component/lounge/Lounge";
 import LoungeRoom from "./component/lounge_room/LoungeRoom";
 
 import Login from "../src/component/login/Login";
+import LoginLoading from "./component/login/LoginLoading";
 import SignUp from "../src/component/signup/SignUp";
 import MyPage from "../src/component/mypage/MyPage";
 import Landing from "../src/component/landing/Landing";
@@ -32,7 +33,16 @@ import "./assets/css/modal/ModalBig.css";
 // font
 import "./assets/font/trap/Trap.css";
 
+import { useEffect } from 'react';
+import { Cookies } from 'react-cookie';
+
 function App() {
+  const cookie = new Cookies();
+  useEffect(()=> {
+    cookie.set('token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk3NDYxNzkxMjE5OTQzNzM2MDdfZ29vZ2xlIiwiaWF0IjoxNjQ2MDMxOTQxLCJleHAiOjE2NDYxMTgzNDF9.gdLyoSk2PToVy6nxh0wRvFX-SXBErRjY0jlZ1dMdNKc')
+  }, [])
+
+
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
   // login이 되어있다면 -> public과 private가 모두 보임 / public이고 restricted인 페이지는 안보임
 
@@ -74,6 +84,9 @@ function App() {
           {/* Public & restricted Pages */}
           <Route path="/login" element={<PublicOutlet/>} >
             <Route exact path="" element={<Login/>} />
+          </Route>
+          <Route path="/oauth2/redirect" element={<PublicOutlet/>} >
+            <Route exact path="" element={<LoginLoading/>} />
           </Route>
 
           <Route path="/signup" element={<PublicOutlet/>} >

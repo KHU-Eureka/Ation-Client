@@ -18,7 +18,7 @@ import { ReactComponent as hand } from '../../../assets/svg/sense/hand.svg';
 function Form03(props) {
     const cookies = new Cookies();
     const activePersonaId = useSelector((state) => state.activePersonaId)
-    const { limitMember, setLimitMember, senseId, setSenseId, introduction, setIntroduction, setFormValidation } = props;
+    const { limitMember, setLimitMember, isLimit, setIsLimit, senseId, setSenseId, introduction, setIntroduction, setFormValidation } = props;
     const memberList = [...Array(30)].map((v, i)=>i+1);
 
     const senseInfoList = [
@@ -28,8 +28,7 @@ function Form03(props) {
         { id: 4, name: "귀", svg: ear },
         { id: 5, name: "손", svg: hand },
     ]
-
-    let [limit, setLimit] = useState(true);
+    
     let [activePersona, setActivePersona] = useState({});
 
     useLayoutEffect(()=> {
@@ -58,28 +57,28 @@ function Form03(props) {
     }, [senseId, introduction])
 
     return (
-        <div className="form03">
+        <div className="form03 show-modal-content">
             <div className="row1">
                 <div className="input-wrapper">
                     <label>최대 인원</label>
                     <div style={{display: 'flex'}}>
                         <div 
                         className="limit-member"
-                        id={!limit && "disabled"}
+                        id={!isLimit && "disabled"}
                         >
                             <IoChevronDownOutline className="down-icon"/>
                             <SelectBox selectedValue={limitMember} setValue={setLimitMember} optionList={memberList}></SelectBox>
                         </div>
 
                         <div className="is-limit"
-                        id={!limit && "checked"}
-                        onClick={()=>{setLimit(!limit)}}>
+                        id={!isLimit && "checked"}
+                        onClick={()=>{setIsLimit(!isLimit)}}>
                             <div className="check">
-                                {!limit && <IoMdCheckmark/>}
+                                {!isLimit && <IoMdCheckmark/>}
                             </div>
                             <div className="text">
                             {
-                                limit
+                                isLimit
                                 ? '인원 수 제한 없음'
                                 : '상시 모집'
                             }

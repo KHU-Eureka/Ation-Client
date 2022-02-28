@@ -19,29 +19,50 @@ import image14 from '../../../assets/image/lounge/image 201.png';
 
 function Form04(props) {
     const cookies = new Cookies();
-    let [imageId, setImageId] = useState(1);
-    const { formData, setFormValidation } = props;
+    const { imageId, setImageId, setFormValidation } = props;
+
+    let [loungeImgList, setLoungeImgList] = useState([]);
     const imageList = [ {id: 1, img: image1}, {id: 2, img: image2}, {id: 3, img: image3}, {id: 4, img: image4}, {id: 5, img: image5}, {id: 6, img: image6}, {id: 7, img: image7}, 
                         {id: 8, img: image8}, {id: 9, img: image9}, {id: 10, img: image10}, {id: 11, img: image11}, {id: 12, img: image12}, {id: 13, img: image13}, {id: 14, img: image14} ]
 
     useEffect(()=> {
         setFormValidation(true);
     }, [])
+
+    useLayoutEffect(()=> {
+        const getLoungImgList = async () => {
+            const token = cookies.get('token')
+            try {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_SERVER_HOST}/api/lounge/image`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    }
+                )
+                console.log(res.data);
+                setLoungeImgList(res.data)
+            } catch(err) {
+                console.log(err)
+            }
+        }
+        getLoungImgList();
+    }, [])
     
 
     return (
-        <div className="form04">
+        <div className="form04 show-modal-content">
             <div className="row1">
                 <div className="input-wrapper">
                     <label>커버이미지</label>
-                    <img className="cover-preview" src={imageList.filter((elem)=>elem.id===imageId)[0].img} alt="selected background"></img>
+                    <img className="cover-preview" src={loungeImgList && loungeImgList.find((elem)=>elem.id===imageId)?.imgPath} alt="selected background"></img>
                 </div>
                 <div className="input-wrapper">
                     <label>기본 이미지 선택</label>
                     <div className="image-wrapper">
                         <div className="checkbox-wrapper">
                             {
-                                imageList.map((image, idx)=>(
+                                loungeImgList && loungeImgList.map((image, idx)=>(
                                     <div className="checkbox-elem image-elem" key={idx}>
                                         <input 
                                             type="checkbox"
@@ -51,7 +72,7 @@ function Form04(props) {
                                             onChange={(e)=>{setImageId(image.id)}}
                                         />
                                         <label htmlFor={image.id}>
-                                            <img src={image.img} alt="background"></img>
+                                            <img src={image.imgPath} alt="background"></img>
                                         </label>
                                     </div>
                                 ))

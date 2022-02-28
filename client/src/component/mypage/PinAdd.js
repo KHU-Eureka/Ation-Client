@@ -102,7 +102,7 @@ function PinAdd(props) {
 
     useEffect(() => {
         pinboardImport();
-        console.log(clickedPersonaId, "asdf")
+        //console.log(clickedPersonaId, "asdf")
     }, [pinBoardName, clickedPersonaId])
 
     useEffect(() => {

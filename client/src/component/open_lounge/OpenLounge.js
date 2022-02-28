@@ -24,8 +24,10 @@ function OpenLounge(props) {
     let [mainCategoryId, setMainCategoryId] = useState(null);
     let [subCategoryIdList, setSubCategoryIdList] = useState([]);
     let [limitMember, setLimitMember] = useState(1);
+    let [isLimit, setIsLimit] = useState(true);
     let [senseId, setSenseId] = useState(null);
     let [introduction, setIntroduction] = useState('');
+    let [imageId, setImageId] = useState(1);
     
     // lounge status 정보
     let [showStatus, setShowStatus] = useState(false);
@@ -41,8 +43,16 @@ function OpenLounge(props) {
     }
 
     const nextPage = () => {
-        setPage(page + 1);
+        if (page === 1 && (mainCategoryId === 7 || mainCategoryId === 8)) // category가 YourView나, 기타일 땐 세부 카테고리 선택하지 않도록
+            setPage(3);
+        else setPage(page + 1);
         setFormValidation(false);
+    }
+
+    const backPage = () => {
+        if (page === 3 && (mainCategoryId === 7 || mainCategoryId === 8)) // category가 YourView나, 기타일 땐 세부 카테고리 선택하지 않도록
+            setPage(1);
+        else if (page !== 1) setPage(page - 1);
     }
 
     useEffect(()=>{
@@ -60,7 +70,7 @@ function OpenLounge(props) {
             const res = await axios.post(
                 process.env.REACT_APP_SERVER_HOST + '/api/lounge' , {
                     introduction: introduction,
-                    limitMember: limitMember,
+                    limitMember: isLimit ? limitMember : 0,
                     mainCategoryId: mainCategoryId,
                     personaId: activePersonaId,
                     senseId: senseId,
@@ -88,15 +98,15 @@ function OpenLounge(props) {
                 !showStatus
                 ? <div className="modal-wrapper" ref={modalInside}>
                 <div className="modal-header">
-                    <IoChevronBack className="icon" onClick={()=>{page!==1 && setPage(page-1)}}/>
+                    <IoChevronBack className="icon" onClick={()=>{backPage()}}/>
                     <span className="text">Lounge Open</span>
                     <IoClose className="icon" onClick={()=>{props.setShowOpenLounge(false)}} />
                 </div>
                 <div className="modal-content">
                     { page===1 && <Form01 title={title} setTitle={setTitle} mainCategoryId={mainCategoryId} setMainCategoryId={setMainCategoryId} setSubCategoryIdList={setSubCategoryIdList} setFormValidation={setFormValidation}/> }
                     { page===2 && <Form02 title={title} mainCategoryId={mainCategoryId} setFormValidation={setFormValidation} subCategoryIdList={subCategoryIdList} nextPage={nextPage} setSubCategoryIdList={setSubCategoryIdList}/> }
-                    { page===3 && <Form03 limitMember={limitMember} setLimitMember={setLimitMember} senseId={senseId} setSenseId={setSenseId} introduction={introduction} setIntroduction={setIntroduction} setPage={setPage} setFormValidation={setFormValidation}/> }
-                    { page===4 && <Form04 setFormValidation={setFormValidation} /> }
+                    { page===3 && <Form03 limitMember={limitMember} setLimitMember={setLimitMember} isLimit={isLimit} setIsLimit={setIsLimit} senseId={senseId} setSenseId={setSenseId} introduction={introduction} setIntroduction={setIntroduction} setPage={setPage} setFormValidation={setFormValidation}/> }
+                    { page===4 && <Form04 setFormValidation={setFormValidation} imageId={imageId} setImageId={setImageId} /> }
                 </div>
                 {
                     page !== 4

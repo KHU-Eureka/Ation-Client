@@ -52,6 +52,14 @@
     display: block;
 }
 
+.show-modal-content {
+    animation: showModalContent 0.7s;
+}
+
+@keyframes showModalContent {
+    0%{ opacity: 0; transform: translateY(-10px); }
+}
+
 /* room title 관련 */
 .open-lounge .modal-content .room-title {
     width: 390px;

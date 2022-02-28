@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
@@ -16,9 +16,20 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
+    const alertBlock = useRef();
     const { roomInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
+
+    const senseInfoList = [
+      { id: 1, name: "눈", svg: eye },
+      { id: 2, name: "코", svg: nose },
+      { id: 3, name: "입", svg: mouth },
+      { id: 4, name: "귀", svg: ear },
+      { id: 5, name: "손", svg: hand },
+    ]
+
     let [ admin, setAdmin ] = useState({}); // 방장
+    let [showAlertBlock, setShowAlertBlock] = useState(true);
 
     let [ tempMemberList, setTempMemberList ] = useState([
         {
@@ -160,26 +171,6 @@ function LoungeWaitSideBar(props) {
               ],
               "job": "프론트엔드 개발자"
             }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
           }
     ])
 
@@ -189,16 +180,21 @@ function LoungeWaitSideBar(props) {
         if (roomInfo) {
             setAdmin(roomInfo.memberList.find((elem)=>elem.admin).persona)
         }
-        
     }, [roomInfo])
 
-    const senseInfoList = [
-        { id: 1, name: "눈", svg: eye },
-        { id: 2, name: "코", svg: nose },
-        { id: 3, name: "입", svg: mouth },
-        { id: 4, name: "귀", svg: ear },
-        { id: 5, name: "손", svg: hand },
-    ]
+    const clickOutsideAlert = (e) => {
+      if (!alertBlock.current.contains(e.target))
+        setShowAlertBlock(false)
+    }
+
+    useEffect(()=> {
+      document.addEventListener('click', clickOutsideAlert)
+
+      return (()=> {
+        document.removeEventListener('click', clickOutsideAlert)
+      })
+    }, [])
+
 
     return (
         <div className="lounge-sidebar">
@@ -236,8 +232,8 @@ function LoungeWaitSideBar(props) {
               ? <button className="action-btn" disabled="true">
                   START
                   {
-                    true &&
-                    <div className="alert-block">
+                    showAlertBlock &&
+                    <div className="alert-block" ref={alertBlock}>
                       <img className="icon" src={exclamation} alt="!"/>
                       <span className="text">대기 멤버의 1/3이상이 레디해야 시작할 수 있습니다.</span>
                     </div>

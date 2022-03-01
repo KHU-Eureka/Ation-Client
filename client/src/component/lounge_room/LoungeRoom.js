@@ -49,7 +49,7 @@ function LoungeRoom () {
             <div className="right-content">
                 {
                     roomInfo.status === "OPEN"
-                    ? <LoungeWaitChatting/>
+                    ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
                     : <LoungeBoard />
                 }
             </div>

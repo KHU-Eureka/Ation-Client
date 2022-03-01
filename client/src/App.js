@@ -39,7 +39,7 @@ import { Cookies } from 'react-cookie';
 function App() {
   const cookie = new Cookies();
   useEffect(()=> {
-    cookie.set('token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk3NDYxNzkxMjE5OTQzNzM2MDdfZ29vZ2xlIiwiaWF0IjoxNjQ2MDMxOTQxLCJleHAiOjE2NDYxMTgzNDF9.gdLyoSk2PToVy6nxh0wRvFX-SXBErRjY0jlZ1dMdNKc')
+    cookie.set('token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk3NDYxNzkxMjE5OTQzNzM2MDdfZ29vZ2xlIiwiaWF0IjoxNjQ2MTI0MTU5LCJleHAiOjE2NDYyMTA1NTl9.CgsVLtFOyhPn-NTCXBb6Virf_lBITnK0XOjehGC6Uhk')
   }, [])
 
 

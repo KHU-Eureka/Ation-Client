@@ -351,7 +351,7 @@ function LoungeWaitSideBar(props) {
                         )
                     ))
                 }
-                {
+                {/*
                     tempMemberList.map((member, idx) => (
                         !member.admin && (
                         <div className="member-persona row">
@@ -371,7 +371,7 @@ function LoungeWaitSideBar(props) {
                         </div>
                         )
                     ))
-                }
+                */}
             </div>
             <div>
 

@@ -45,7 +45,44 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    overflow: auto;
+    position: relative;
 }
+
+.lw-chatting > .chatting-wrapper > .show-new-msg {
+    position: sticky;
+    bottom: 10px;
+    left: 50%;
+    font-size: 15px;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    background:   #807A7495;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    animation: showNewMsg 1s;
+    transition: 0.2s;
+}
+
+.lw-chatting > .chatting-wrapper > .show-new-msg:hover {
+    transform: translate(-50%, 5px);
+}
+
+@keyframes showNewMsg {
+    0% {opacity: 0;}
+}
+
+.lw-chatting > .chatting-wrapper > .show-new-msg > svg { position: relative; top: 3px; }
+
+.lw-chatting > .chatting-wrapper  > #chatting-bottom {
+    position: relative;
+    bottom: 15px;
+}
+
+.lw-chatting > .chatting-wrapper::-webkit-scrollbar { width: 6px; }
+.lw-chatting > .chatting-wrapper::-webkit-scrollbar-thumb { width: 6px; background: #E7E6E5; }
 
 .lw-chatting > .chatting-wrapper > .chatting-elem {
     display: flex;
@@ -80,6 +117,9 @@
 }
 
 .lw-chatting  > .chatting-wrapper  > .chatting-elem .content {
+    max-width: 700px;
+    word-break: keep-all;
+    overflow: hidden;
     font-weight: 500;
     font-size: 18px;
     color: #352C23;
@@ -87,8 +127,12 @@
 
 .lw-chatting > .notice-wrapper {
     width: 100%;
-    margin-top: 70px;
-    margin-bottom: 20px;
+    height: 100px;
+    flex-shrink: 0;
+    margin-top: 10px;
+    margin-bottom: 17px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .lw-chatting > .notice-wrapper > .notice {
@@ -115,6 +159,7 @@
 .lw-chatting > .sample-wrapper {
     width: 100%;
     overflow-x: auto;
+    flex-shrink: 0;
 }
 
 .lw-chatting > .sample-wrapper::-webkit-scrollbar { height: 8px; }
@@ -127,6 +172,7 @@
 
 .lw-chatting > .sample-wrapper > .sample-text-wrapper {
     display: flex;
+    padding-top: 3px;
     padding-bottom: 10px;
 }
 
@@ -143,6 +189,12 @@
     font-size: 18px;
     flex-shrink: 0;
     cursor: pointer;
+    transition: 0.2s;
+}
+
+.lw-chatting > .sample-wrapper .sample-text:hover {
+    /*background: #F5F5F5;*/
+    transform: translateY(-3px);
 }
 
 .lw-chatting .tack {
@@ -161,15 +213,18 @@
     align-items: center;
     margin-top: 15px;
     margin-bottom: 50px;
+    flex-shrink: 0;
 }
 
 .lw-chatting > .text-wrapper > .tack {
     flex-shrink: 0;
     margin-right: 20px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
-.lw-chatting > .text-wrapper > input[type="text"] {
+.lw-chatting > .text-wrapper > input[type="text"],
+.lw-chatting > .text-wrapper > textarea {
     border: none;
     color: #352C23;
     font-size: 18px;
@@ -177,7 +232,8 @@
     flex-grow: 1;
     transition: 0.2s;
 }
-.lw-chatting > .text-wrapper > input[type="text"]:focus { font-size: 17px; }
+.lw-chatting > .text-wrapper > input[type="text"]:focus,
+.lw-chatting > .text-wrapper > textarea:focus { font-size: 17px; }
 
 .lw-chatting > .text-wrapper > .send-btn {
     font-family: Pretendard;
@@ -188,6 +244,11 @@
     color: #FE6740;
     flex-shrink: 0;
     cursor: pointer;
+    margin-left: 20px;
     transition: 0.2s;
 }
 
+.lw-chatting > .text-wrapper > .tack:hover,
+.lw-chatting > .text-wrapper > .send-btn:hover {
+    transform: translateY(3px);
+}

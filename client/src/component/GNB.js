@@ -39,7 +39,7 @@ function GNB() {
             const token = cookies.get('token')
             try {
                 const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -66,8 +66,9 @@ function GNB() {
                         }
                     }
                 )
-                dispatch({type: 'CHANGEPERSONA', data: res.data.id});
+                console.log(res);
                 dispatch({type: 'AUTH', data: true});
+                dispatch({type: 'CHANGEPERSONA', data: res.data.id});
                 setActivePersona(res.data);
             } catch (err) {
                 console.log(err);

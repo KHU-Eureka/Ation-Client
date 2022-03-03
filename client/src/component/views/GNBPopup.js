@@ -21,7 +21,6 @@ function GNBPopup(props) {
         dispatch({type: 'AUTH', data: false});
         dispatch({type: 'MENU', data: ''});
         navigation('/login');
-        localStorage.setItem('target', '');
     }
 
     useLayoutEffect(() => {

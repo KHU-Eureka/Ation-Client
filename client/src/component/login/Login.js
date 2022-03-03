@@ -109,7 +109,12 @@ function Login() {
                 }
                 로그인 하기
             </button>
-            <button><a href="http://ation-server.seohyuni.com/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth2/redirect">구글 로그인</a></button>
+            <button>
+                <a href={`${process.env.REACT_APP_SERVER_HOST}/oauth2/authorization/google`}>구글 로그인</a>
+            </button>
+            <button>
+                <a href={`${process.env.REACT_APP_SERVER_HOST}/oauth2/authorization/kakao`}>kakao 로그인</a>
+            </button>
             <div style={{cursor: "pointer"}} onClick={()=>{navigate('/signup')}}>회원가입 하기</div>
         </form>
     );

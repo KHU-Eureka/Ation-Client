@@ -419,3 +419,12 @@ textarea:focus {
   text-align: right;
   margin-top: 10px;
 }
+
+.persona-create-page {
+  width: 100%;
+  animation: 0.7s showSmoothly;
+}
+
+@keyframes showSmoothly {
+  0% { transform: translateY(-20px); opacity: 0.5; }
+}

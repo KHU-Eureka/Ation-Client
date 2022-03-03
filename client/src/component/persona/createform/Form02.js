@@ -43,7 +43,7 @@ function Form02(props) {
     }, [])
 
     return (
-        <div style={{width:'100%'}}>
+        <div className="persona-create-page">
             <div className="input-wrapper" style={{marginBottom: '0px'}}>
                 <label htmlFor="v" style={{marginBottom: '8px'}}>
                     분야태그(최대 3개)

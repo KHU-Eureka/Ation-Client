@@ -8,6 +8,11 @@
     backdrop-filter: blur(17px);
     display: flex;
     justify-content: center;
+    animation: showModalBackground 0.3s;
+}
+
+@keyframes showModalBackground {
+    0%{opacity:0;}
 }
 
 .modal-wrapper {
@@ -23,6 +28,11 @@
     position: fixed;
     top: calc(50% - 300px);
     flex-direction: column;
+    animation: showModal 0.3s;
+}
+
+@keyframes showModal {
+    0%{opacity: 0; transform: translateY(-10px);}
 }
 
 .modal-wrapper .modal-header {

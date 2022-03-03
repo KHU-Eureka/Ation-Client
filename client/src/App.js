@@ -33,16 +33,7 @@ import "./assets/css/modal/ModalBig.css";
 // font
 import "./assets/font/trap/Trap.css";
 
-import { useEffect } from 'react';
-import { Cookies } from 'react-cookie';
-
 function App() {
-  const cookie = new Cookies();
-  useEffect(()=> {
-    cookie.set('token', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk3NDYxNzkxMjE5OTQzNzM2MDdfZ29vZ2xlIiwiaWF0IjoxNjQ2MTI0MTU5LCJleHAiOjE2NDYyMTA1NTl9.CgsVLtFOyhPn-NTCXBb6Virf_lBITnK0XOjehGC6Uhk')
-  }, [])
-
-
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
   // login이 되어있다면 -> public과 private가 모두 보임 / public이고 restricted인 페이지는 안보임
 

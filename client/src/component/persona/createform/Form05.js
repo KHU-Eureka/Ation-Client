@@ -2,7 +2,7 @@ import React from "react";
 
 function Form05(props) {
     return (
-        <div style={{width: '100%'}}>
+        <div className="persona-create-page">
 
         <div className="input-wrapper">
             <label htmlFor="introduction" style={{marginBottom: '8px'}}>

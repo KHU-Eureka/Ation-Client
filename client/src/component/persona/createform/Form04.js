@@ -68,7 +68,7 @@ function Form04(props) {
     }
 
     return (
-        <div style={{width:'100%'}}>
+        <div className="persona-create-page">
 
             <div className="input-wrapper" style={{marginBottom: '0px'}}>
                 <label htmlFor="job" style={{marginBottom: '8px'}}>

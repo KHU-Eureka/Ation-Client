@@ -71,7 +71,7 @@ function Form01(props) {
 
 
     return (
-        <div style={{width:'100%'}}>
+        <div className="persona-create-page">
             <div className="input-wrapper">
                 <label htmlFor="profile">
                     프로필 사진

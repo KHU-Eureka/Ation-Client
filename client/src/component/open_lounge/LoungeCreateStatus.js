@@ -4,10 +4,11 @@ import './LoungeCreateStatus.css';
 
 function LoungeCreateStatus(props) {
     const navigation = useNavigate();
-    const { waiting, success, loungeId } = props;
+    const { waiting, success, loungeId, setShowModal } = props;
 
     const goToLounge = () => {
-        navigation(`/lounge-room/${loungeId}`);
+        navigation(`/lounge-room/${loungeId}`); // 라운지 방으로 이동
+        setShowModal(false); // 모달창 닫기
     }
 
     return(

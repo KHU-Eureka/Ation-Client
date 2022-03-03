@@ -130,7 +130,7 @@ function OpenLounge(props) {
                 </div>
                 : /* lounge 생성을 기다리는 중이라면,, */
                 <div className="modal-wrapper" ref={modalInside}>
-                    <LoungeCreateStatus waiting={waiting} success={success} loungeId={loungeId} />
+                    <LoungeCreateStatus waiting={waiting} success={success} loungeId={loungeId} setShowModal={props.setShowOpenLounge}/>
                 </div>
                 }
             </div>

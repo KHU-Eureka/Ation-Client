@@ -31,12 +31,8 @@ function GNB() {
     let [showOpenLounge, setShowOpenLounge] = useState(false);
 
     useEffect(() => {
-        console.log("menu",menu)
-    })
-
-    useEffect(() => {
         const getEmail = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
@@ -57,7 +53,7 @@ function GNB() {
 
     useEffect(() => {
         const getActivePersona = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
@@ -74,11 +70,13 @@ function GNB() {
                 console.log(err);
             }
         } 
-        getActivePersona();
+        if (auth) {
+            getActivePersona();
+        }
     }, [auth, activePersonaId])
 
     const changeActivePersona = async (persona) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + persona.id, {},

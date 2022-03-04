@@ -15,9 +15,6 @@ function Login() {
     let [password, setPasssword] = useState("");
 
     let [showLoginAlertMsg, setShowLoginAlertMsg] = useState(false);
-    useEffect(() => {
-        localStorage.setItem('target', '');
-    }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -61,7 +58,6 @@ function Login() {
             } else {
                 dispatch({type: 'CHANGEPERSONA', data: res.data.id})
                 navigate('/mypage')
-                localStorage.setItem('target', 'mypage-btn');
             }
         } catch (err) {
             console.log(err);

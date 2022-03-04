@@ -33,7 +33,7 @@ function Form02(props) {
     useLayoutEffect(()=> {
         // 중분류 카테고리 정보 가져오기
         const getSubCategory = async () => {
-            var token = cookies.get('token');
+            var token = localStorage.getItem('token');
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST + '/api/category/sub?mainCategoryId='+mainCategoryId, {

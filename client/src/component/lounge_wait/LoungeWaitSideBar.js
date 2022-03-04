@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
+import SockJsClient from 'react-stomp';
 import { useSelector } from "react-redux";
-import { Cookies } from "react-cookie";
 import axios from 'axios';
 
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
@@ -19,7 +19,7 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
-    const cookies = new Cookies();
+    const $websocket = useRef(null);
     const { roomInfo, setRoomInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
 
@@ -35,153 +35,10 @@ function LoungeWaitSideBar(props) {
     let [showAlertBlock, setShowAlertBlock] = useState(true);
     let [canStart, setCanStart] = useState(false);
 
-    let [ tempMemberList, setTempMemberList ] = useState([
-        {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "안녕하세용가리용가리용가리용가리",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": false,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "hello world",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": false,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 5,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://52.78.105.195:8081/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-5.png",
-              "senseList": [
-                {
-                  "senseId": 2,
-                  "name": "코"
-                },
-                {
-                  "senseId": 4,
-                  "name": "손"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          }
-    ])
-
     const startHandler = async () => {
       if (canStart) { // 시작이 가능할 때
         try {
-          const token = cookies.get('token')
+          const token = localStorage.getItem('token')
           await axios.put(
             `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/start`, {
               headers: {
@@ -202,10 +59,16 @@ function LoungeWaitSideBar(props) {
 
     const readyHandler = async (isReady) => {
       try {
-        const token = cookies.get('token')
-        let tempRoomInfo = {...roomInfo}
-
+        const token = localStorage.getItem('token')
         if (isReady) { // ready인 상태였으면 => unready 시킴
+          await axios.put(
+            `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/unready/${activePersonaId}`, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          )
+        } else { // unready인 상태였으면 => ready 시킴
           await axios.put(
             `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/ready/${activePersonaId}`, {
               headers: {
@@ -213,37 +76,53 @@ function LoungeWaitSideBar(props) {
               }
             }
           )
-          // 자신을 unready 시키는 코드
-          tempRoomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready = false
-        } else { // unready인 상태였으면 => ready 시킴
-          await axios.put(
-            `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/start/${activePersonaId}`, {
-              headers: {
-                Authorization: `Bearer ${token}`
-              }
-            }
-          )
-          // 자신을 ready 시키는 코드
-          tempRoomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready = true
         }
-        setRoomInfo(tempRoomInfo)
       } catch(err) {
         console.log(err)
       }
     }
 
+    const  receiveMessage = (msg) => {
+      console.log(msg)
+      if (msg.persona && msg.status) { // 만약 member 정보에 관한 거라면
+        let temp = {...roomInfo};
+        switch(msg.status) {
+          case 'ENTER':
+            let addMember = { admin: false, ready: false, persona: msg.persona };
+            temp.memberList = [...temp.memberList, addMember];
+            console.log(temp.memberList);
+            break;
+          case 'EXIT':
+            temp.memberList = temp.memberList.filter(elem=>elem.persona.id !== msg.persona.id);
+            console.log(temp.memberList);
+            break;
+          case 'READY':
+            temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
+            console.log(temp.memberList);
+            break;
+          case 'UNREADY':
+            temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
+            console.log(temp.memberList);
+            break;
+          default:
+        }
+        setRoomInfo(temp);
+
+      } else if (msg.status) { // 만약 방 status에 관한 거라면
+
+      }
+    }
+    
     useEffect(()=> { // 방장이 방을 시작 할 수 있는지 구하기
       if (roomInfo.limitMember) {
         const readyMember = roomInfo.memberList.filter((elem)=>elem.ready).length
-
         if (readyMember * 3 >= roomInfo.limitMember) setCanStart(true)
         else setCanStart(false)
-
       } else {
         setCanStart(true)
       }
     }, [roomInfo.memberList])
-
+    
 
     useLayoutEffect(()=> {
         // 방장을 따로 저장
@@ -263,6 +142,12 @@ function LoungeWaitSideBar(props) {
 
     return (
         <div className="lounge-sidebar">
+          <SockJsClient
+              url="http://ation-server.seohyuni.com/ws"
+              topics={[`/lounge/${roomInfo.id}/member/send`, `/lounge/${roomInfo.id}/status/send`]}
+              onMessage={msg => { receiveMessage(msg) }} 
+              ref={$websocket}
+            />
             <div className="title-wrapper">
                 <div className="title row">
                     <BracketLeft />
@@ -306,7 +191,7 @@ function LoungeWaitSideBar(props) {
                   }
                 </button>
               /* 멤버일 때 => READY 버튼 */
-              : <button className="action-btn" disabled="true"
+              : <button className="action-btn" id={roomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready && "ready"}
                 onClick={()=>{readyHandler(roomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready)}}>READY</button>
             }
 

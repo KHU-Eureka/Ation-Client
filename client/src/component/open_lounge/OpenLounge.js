@@ -65,7 +65,7 @@ function OpenLounge(props) {
     const createLounge = async () => {
         setShowStatus(true) // 라운지 상태 모달 띄우기
         setWaiting(true) // 라운지 생성을 기다리는 중
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         try {
             const res = await axios.post(
                 process.env.REACT_APP_SERVER_HOST + '/api/lounge' , {

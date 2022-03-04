@@ -133,7 +133,8 @@
 
 .lounge-room .lounge-sidebar .action-btn:disabled { background: #BEBBB9; cursor: default; }
 .lounge-room .lounge-sidebar .action-btn:disabled:hover { color: white; }
-.lounge-room .lounge-sidebar .action-btn:hover { color: #FFA48C; }
+.lounge-room .lounge-sidebar .action-btn:hover, 
+.lounge-room .lounge-sidebar #ready { color: #FFA48C; }
 
 .lounge-room .member-wrapper {
     overflow-y: auto;
@@ -199,6 +200,7 @@
     transition: 0.2s;
     color: #807A74;
     margin-right: 18px;
+    transition: 0.2s;
 }
 
 .lounge-room .member-persona #ready {

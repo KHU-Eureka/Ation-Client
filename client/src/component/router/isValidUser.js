@@ -6,7 +6,7 @@ const isValidUser = async ({token}) => {
         headers: {
           Authorization: "Bearer " + token
             }
-          }
+        }
     )
     return result;
 }

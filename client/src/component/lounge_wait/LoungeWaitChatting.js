@@ -36,7 +36,7 @@ function LoungeWaitChatting(props) {
 
     useLayoutEffect(()=> { // lounge 채팅 불러오기
         const getLoungeChat = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/chat`, {
@@ -56,16 +56,40 @@ function LoungeWaitChatting(props) {
 
     const sendChatting = (e) => { // form 보내기
         e.preventDefault();
-        sendMessage(text);
+        if (text.length) { // text가 존재한다면
+            if (isNotice) { // 공지라면
+                sendNotice();
+            } else // 일반 메시지라면
+                sendMessage(text);
+            
+            setText(''); // 보낸 후 사용자 입력창 초기화
+        }
     }
 
     const sendMessage = () => { // 메세지 보내기
         try {
-            $websocket.current.sendMessage('/lounge/1/chat/receive', `{"personaId": ${activePersonaId}, "content": "${text}"}`);
-            setText(''); // 보낸 후 사용자 입력창 초기화
+            $websocket.current.sendMessage(`/lounge/${roomInfo.id}/chat/receive`, `{"personaId": ${activePersonaId}, "content": "${text}"}`);
         } catch(err) {
             console.log(err);
         }
+    }
+
+    const sendNotice = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.put(
+                `${process.env.REACT_APP_SERVER_HOST}/api/lounge/notice/${roomInfo.id}`, {
+                    notice: text
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+        } catch(err) {
+            console.log(err)
+        }
+        
     }
 
     const scrollToChattingBottom = () => {
@@ -73,7 +97,8 @@ function LoungeWaitChatting(props) {
     }
 
     const receiveMessage = (msg) => { // 메세지 받기
-        if (msg.persona) {
+        console.log(msg)
+        if (msg.persona) { // 일반 메세지라면
             if (isChattingBottom || msg.persona.id === activePersonaId) { // 마지막을 보고 있었거나, 내가 보낸 메세지라면,
                 setChattingList([...chattingList, msg]); // 채팅이 왔을 때 계속 스크롤 위치를 유지하도록 함
                 scrollToChattingBottom();
@@ -82,6 +107,11 @@ function LoungeWaitChatting(props) {
                 setNewMsgCount(newMsgCount + 1); // 새로운 메세지가 쌓임
                 setShowNewMsg(true); // 새로운 메세지가 쌓였다고 알려줌
             }
+        }
+        if (msg.value) { // notice 공지라면
+            let temp = {...roomInfo};
+            temp.notice = JSON.parse(msg.value).notice;
+            setRoomInfo(temp);
         }
     }
     
@@ -96,7 +126,10 @@ function LoungeWaitChatting(props) {
         <div className="lw-chatting">
             <SockJsClient
                 url="http://ation-server.seohyuni.com/ws"
-                topics={['/lounge/1/chat/send', '/lounge/1/chat/receive']}
+                topics={[`/lounge/${roomInfo.id}/chat/send`, 
+                        `/lounge/${roomInfo.id}/chat/receive`, 
+                        `/lounge/${roomInfo.id}/notice/receive`,
+                        `/lounge/${roomInfo.id}/notice/send`]}
                 onMessage={msg => { receiveMessage(msg) }} 
                 ref={$websocket}
             />
@@ -113,7 +146,13 @@ function LoungeWaitChatting(props) {
                             <div className="column">
                                 <div className="nickname-time-wrapper">
                                     <div className="nickname">{ chat.persona.nickname }</div>
-                                    <div className="time">오후 어쩌고</div>
+                                    <div className="time">
+                                        {   
+                                            new Date(chat.createdAt).getHours() < 12
+                                            ? "오전 " + new Date(chat.createdAt).getHours() + ":" + new Date(chat.createdAt).getMinutes()
+                                            : "오후 " +  (new Date(chat.createdAt).getHours()*1 - 12) + ":" + new Date(chat.createdAt).getMinutes()
+                                        }
+                                    </div>
                                 </div>
                                 <div className="content">{ chat.content }</div>
                             </div>
@@ -124,10 +163,13 @@ function LoungeWaitChatting(props) {
                 <div id="chatting-bottom" ref={chattingBottom}></div>
             </div>
             <div className="notice-wrapper">
-                <div className="notice">
-                    <img className="tack" src={tack_fill} alt="tack"/>
-                    <div className="text">text</div>
-                </div>
+                {
+                    roomInfo.notice &&
+                    <div className="notice">
+                        <img className="tack" src={tack_fill} alt="tack"/>
+                        <div className="text">{ roomInfo.notice }</div>
+                    </div>
+                }
             </div>
             <div className="sample-wrapper">
                 <div className="sample-text-wrapper">
@@ -151,13 +193,6 @@ function LoungeWaitChatting(props) {
                     value={text}
                     onChange={(e)=>(setText(e.target.value))}
                 />
-                {/*
-                <textarea 
-                    rows="2"
-                    value={text}
-                    onChange={(e)=>{setText(e.target.value)}}
-                />
-                */}
                 <button className="send-btn" type="submit">전송</button>
             </form>
         </div>

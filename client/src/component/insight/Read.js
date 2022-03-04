@@ -59,7 +59,7 @@ function Read() {
     }, [])
 
     const PersonaSetting = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(
             process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
@@ -89,7 +89,7 @@ function Read() {
     }
 
     const fetchUserName = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         if(!token || token === '') {
             setAuth(false);
         } else {
@@ -132,7 +132,7 @@ function Read() {
       }, [cate]);
 
     const imgClickHandler = async(e) => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         if(e.target.className !== 'pin') {
             let temp = e.target.getAttribute('id');
             const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {

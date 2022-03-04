@@ -13,7 +13,7 @@ function Reco(props) {
     const imgSet = async () => {
         setRecoList([]);
         const getRandom = (min, max) => Math.random() * (max - min) + min;
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const reco = [];
         const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/recommend/view-matrix`,{
             headers: {

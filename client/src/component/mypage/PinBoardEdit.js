@@ -38,7 +38,7 @@ function PinBoardEdit(props) {
     }
 
     // const PersonaSetting = async () => {
-    //     const token = cookies.get('token');
+    //     const token = localStorage.getItem('token');
     //     const response = await axios.get(
     //         'http://163.180.117.22:7218/api/persona',
     //         {
@@ -76,7 +76,7 @@ function PinBoardEdit(props) {
     // }
 
     const closeBtnClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.put(process.env.REACT_APP_SERVER_HOST + `/api/pin-board/${clickedPinBoardID}`, {
                 "name": pinBoardName,
                 "personaId": 2

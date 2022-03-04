@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
+import { Cookies, useCookies } from 'react-cookie';
 import axios from 'axios';
 import QueryString from 'qs';
 
@@ -12,10 +12,9 @@ function LoginLoading() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    let [name, setName] = useState('');
-
     useEffect(()=> {
-        const getPersona = async (token, name) => {
+        const getPersona = async (name) => {
+            const token = localStorage.getItem('token');
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/user', {
@@ -35,7 +34,8 @@ function LoginLoading() {
             }
         }
 
-        const getName = async (token) => {
+        const getName = async () => {
+            const token = localStorage.getItem('token');
             try {
                 const res = await axios.get(
                     `${process.env.REACT_APP_SERVER_HOST}/api/auth/user`, {
@@ -44,16 +44,17 @@ function LoginLoading() {
                         }
                     }
                 )
-                getPersona(token, res.data.name); // persona를 받음
+                getPersona(res.data.name); // persona를 받음
             } catch(err) {
                 console.log(err);
             }
 
         }
         console.log(QueryString.parse(location.search, { ignoreQueryPrefix: true }).JSESSIONID)
-        const token = QueryString.parse(location.search, { ignoreQueryPrefix: true }).token;
-        cookies.set('token', token); // 받은 token을 cookie에 저장
-        // localStorage.setItem('token', token);
+        const token = QueryString.parse(location.search, { ignoreQueryPrefix: true }).token
+        // cookies.set('token', token) // 받은 token을 cookie에 저장
+        localStorage.setItem('token', token)
+        console.log('token: ',token)
         getName(token); // 이름을 받고
         dispatch({type: 'AUTH', data: true}); // AUTH를 true로 변경
     },[])

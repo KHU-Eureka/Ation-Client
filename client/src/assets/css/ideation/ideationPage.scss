@@ -1,0 +1,15 @@
+.ideation-page-Container {
+    display: flex;
+    overflow: hidden;
+    
+    .lnb-container {
+        background: #E7E6E5;
+        width: 15vw;
+    }
+
+    .whiteboard-container {
+        background: #ffffff;
+        float: right;
+        width: calc( 1920px - 15vw );
+    }
+}

@@ -1,13 +1,63 @@
-import React from 'react';
-import { Line } from 'react-konva';
+import React, { useEffect, useRef } from 'react';
+import { Line, Transformer } from 'react-konva';
+import { useSelector } from 'react-redux';
 
 
 function Pen(props) {
-    const { penObj } = props;
+    const { penObj, isSelected, onSelect, onChange, setIsEditing, mode } = props;
+    // const mode = useSelector((state)=> state.mode);
+    const penRef = useRef();
+    const transRef = useRef();
+
+    useEffect(() => {
+        if (isSelected) {
+            transRef.current.nodes([penRef.current]);
+            transRef.current.getLayer().batchDraw();
+        }
+      }, [isSelected]);
+
+    const positionEditHandler = (e) => {
+        const node = penRef.current
+        let newPoints = penObj.property.points.map( (p, i) => i%2===0 ? p + node.x() : p + node.y() );
+        onChange(
+            {
+                ...penObj.property,
+                points: newPoints
+            }
+        );
+        console.log("qwer")
+    }
+
+    const transformHandler = (e) => {
+        const node = penRef.current;
+        const scaleX = node.scaleX();
+        console.log(node.width()* scaleX)
+        const scaleY = node.scaleY();
+        // let newPoints = penObj.property.points.map( (p, i) => i%2===0 ? p + node.x() : p + node.y() );
+        node.scaleX(1);
+        node.scaleY(1);
+        // onChange(
+        //     {
+        //         ...penObj.property,
+        //         // points: newPoints,
+        //         width: Math.max(5, node.width() * scaleX),
+        //         height: Math.max(node.height() * scaleY),
+        //     }
+        // );
+    }
+
+    const boundBoxFunc = (oldBox, newBox) => {
+        if (newBox.width < 5 || newBox.height < 5) {
+            return oldBox;
+        }
+        return newBox;
+    }
 
     return (
+        <>
         <Line
-            points={penObj.points}
+            ref={penRef}
+            points={penObj.property.points}
             stroke="#df4b26"
             strokeWidth={5}
             tension={0.5}
@@ -15,7 +65,20 @@ function Pen(props) {
             globalCompositeOperation={
                 penObj.detailType === 'eraser' ? 'destination-out' : 'source-over'
             }
+            onClick={() => {
+                onSelect();
+                setIsEditing(true);
+            }}
+            draggable={ mode === 'choice'? true : false}
+            onDragEnd={positionEditHandler}
+            width={penObj.property.width}
+            height={penObj.property.height}
+            onTransformEnd={transformHandler}
         />
+        {isSelected &&
+        <Transformer ref={transRef} boundBoxFunc={boundBoxFunc} />
+        }
+        </>
     );
 }
 

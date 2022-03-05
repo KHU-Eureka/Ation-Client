@@ -251,7 +251,7 @@ function PinUP(props) {
             );
         } else if (pageNum === 2) {
             return (
-            <div className="Pinup-container" ref={PinUp} style={style} ref={PinUp}>
+            <div className="Pinup-container" ref={PinUp} style={style}>
                 <img className="prev" src={prev} onClick={onPrevHandler}/>
                 <div className="complete-title">인사이트 추가 완료!</div>
                     <div className="complete-description">당신의 인사이트가 누군가에겐 큰 영감이 될 거에요:)</div>

@@ -53,7 +53,9 @@ function Create(props) {
                 window.removeEventListener('click', CreateInsightCloseHandler);
             }
         } else {
-            console.log("goodd")
+            return () => {
+                console.log("cleanUp 함수");
+              };
         }
     }, [modalOpen]);
 
@@ -67,8 +69,8 @@ function Create(props) {
                     } else {
                         try {
                             const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                                "insightMainCategoryId": mainCategory,
-                                "insightSubCategoryIdList": ClickedSubCategory,
+                                "mainCategoryId": mainCategory,
+                                "subCategoryIdList": ClickedSubCategory,
                                 "tagList": hashtag,
                                 "url": url
                             });
@@ -81,8 +83,8 @@ function Create(props) {
                 } else {
                     try {
                         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                            "insightMainCategoryId": mainCategory,
-                            "insightSubCategoryIdList": ClickedSubCategory,
+                            "mainCategoryId": mainCategory,
+                            "subCategoryIdList": ClickedSubCategory,
                             "tagList": [],
                             "url": url
                         });
@@ -132,6 +134,9 @@ function Create(props) {
         }
         );
         setPrevImgUrl(response.data.imgPath);
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [InsightId]);
 
     const onPrevHandler=() => {
@@ -247,6 +252,9 @@ function Create(props) {
                 document.querySelector('.create-btn2').classList.remove('noPlayBtn');
             }
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [modalOpen, url, pageNum, mainCategory, hashtag])
 
     async function readImage (e) {
@@ -264,6 +272,9 @@ function Create(props) {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
         console.log(prevImgUrl.substring(5))
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [prevImgUrl])
 
     const tagInputSubmitHandler = (e) => {
@@ -286,6 +297,9 @@ function Create(props) {
         if(hashtag.length < 5 && document.querySelector('.tag-length')) {
             document.querySelector('.tag-length').style.display="none";
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [hashtag])
     
 

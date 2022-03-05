@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const isValidUser = async ({token}) => {
     const { data: result } = await axios.get(
-      process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+      process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
         headers: {
           Authorization: "Bearer " + token
             }

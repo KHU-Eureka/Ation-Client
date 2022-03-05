@@ -193,6 +193,9 @@
 }
 
 .site-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
     position: absolute;
     top: 320px;
     left: 725px;

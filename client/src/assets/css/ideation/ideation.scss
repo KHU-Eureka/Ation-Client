@@ -1,0 +1,29 @@
+.Ideataion-Container {
+    
+    .title-container {
+        margin-left: 160px;
+        font-family: Pretendard;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 26px;
+        color: #FE3400;
+    }
+
+    .ideataion-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 42px;
+
+        .ideation {
+            width: 106.07px;
+            height: 106px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .plus {
+            cursor: pointer;
+        }
+    }
+}

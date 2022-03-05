@@ -30,6 +30,8 @@ import "./assets/css/input/Input.css";
 import "./assets/css/modal/ModalBig.css";
 import Whiteboard from "./component/whiteboard/Whiteboard";
 
+import Ideation from "./component/ideation/Ideation";
+
 function App() {
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
   // login이 되어있다면 -> public과 private가 모두 보임 / public이고 restricted인 페이지는 안보임
@@ -61,7 +63,7 @@ function App() {
           </Route>
 
           <Route path="/whiteboard" element={<PrivateOutlet/>}>
-            <Route exact path="" element={<Whiteboard/>} />
+            <Route exact path="" element={<Ideation/>} />
           </Route>
 
           {/* Rounge Pages */}

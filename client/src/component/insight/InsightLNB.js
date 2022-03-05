@@ -50,6 +50,9 @@ function InsightLNB(props) {
                 li[i].classList.add("clicked");
             }
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [cate1])
 
     if (loading) return <div>로딩중..</div>;

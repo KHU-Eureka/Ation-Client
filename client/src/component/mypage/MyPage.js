@@ -9,7 +9,7 @@ import { HiOutlinePlus } from 'react-icons/hi';
 import { IoMdSettings } from 'react-icons/io';
 import Alert from '../views/Alert';
 import '../../assets/css/mypage/mypage.css';
-import Idaition from "./Idaition";
+import Ideaition from "./Ideaition";
 import Pinbox from "./Pinbox";
 import '../../assets/css/mypage/PersonaCard.css';
 
@@ -301,8 +301,8 @@ function MyPage() {
                 </div>
 
             </div>
-            <div className="Idaition-container">
-                <Idaition />
+            <div className="Ideaition-container">
+                <Ideaition />
             </div>  
             <div className="Pinbox-container">
                 <Pinbox activePersonaId={activePersonaId} EditModalClose={EditModalClose}/>

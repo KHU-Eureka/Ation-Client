@@ -6,17 +6,17 @@ function UrlImage(props) {
     const { pinObj } = props;
 
     const goPinClickHandler = () => {
-        window.open(pinObj.content.insight.url);
+        window.open(pinObj.property.content.insight.url);
     }
 
     return (<>
     <Group draggable x={pinObj.points[0]} y={pinObj.points[1]} draggable>
         <Html>
-            <img src={pinObj.content.pinImgPath} width='195px' height='110px'/>
-            <p style={{fontSize: '11px'}}>{pinObj.content.insight.title}</p>
+            <img src={pinObj.property.content.pinImgPath} width='195px' height='110px'/>
+            <p style={{fontSize: '11px'}}>{pinObj.property.content.insight.title}</p>
             <div>
-                <img src={pinObj.content.insight.icon}/>
-                <span>{pinObj.content.insight.siteName}</span>
+                <img src={pinObj.property.content.insight.icon}/>
+                <span>{pinObj.property.content.insight.siteName}</span>
                 <button onClick={goPinClickHandler}>바로가기</button>
             </div>
         </Html>

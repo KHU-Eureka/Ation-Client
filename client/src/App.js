@@ -16,7 +16,7 @@ import InsightRead from "../src/component/insight/Read";
 import InsightCreate from "../src/component/insight/Create";
 
 /* Lounge 관련 */
-import Lounge from "../src/component/lounge/Lounge";
+import Lounge from "../src/component/lounge/Main";
 import LoungeRoom from "./component/lounge_room/LoungeRoom";
 
 import Login from "../src/component/login/Login";

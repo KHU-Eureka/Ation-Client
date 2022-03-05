@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import "../../assets/css/lounge/Lounge.css";
 
-function Lounge() {
+function PersonaActive() {
     const dispatch = useDispatch();
 
     useEffect(()=> {
@@ -16,4 +15,4 @@ function Lounge() {
     )
 }
 
-export default Lounge;
+export default PersonaActive;

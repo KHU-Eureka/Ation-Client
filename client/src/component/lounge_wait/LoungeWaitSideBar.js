@@ -31,13 +31,14 @@ function LoungeWaitSideBar(props) {
       { id: 5, name: "손", svg: hand },
     ]
 
-    let [ admin, setAdmin ] = useState({}); // 방장
+    let [ admin, setAdmin ] = useState(null); // 방장
+    let [ myInfo, setMyInfo ] = useState(null); // 내 정보
     let [showAlertBlock, setShowAlertBlock] = useState(true);
     let [canStart, setCanStart] = useState(false);
 
     const startHandler = async () => {
       if (canStart) { // 시작이 가능할 때
-        try {
+        try { // 시작 socket을 보냄
           const token = localStorage.getItem('token')
           await axios.put(
             `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/start`, {
@@ -46,9 +47,11 @@ function LoungeWaitSideBar(props) {
               }
             }
           )
+          /*
           let tempRoomInfo = {...roomInfo}
           tempRoomInfo.status = 'START'
           setRoomInfo(tempRoomInfo)
+          */
         } catch(err) {
           console.log(err)
         }
@@ -114,22 +117,24 @@ function LoungeWaitSideBar(props) {
     }
     
     useEffect(()=> { // 방장이 방을 시작 할 수 있는지 구하기
-      if (roomInfo.limitMember) {
+      if (roomInfo && roomInfo.limitMember) {
         const readyMember = roomInfo.memberList.filter((elem)=>elem.ready).length
         if (readyMember * 3 >= roomInfo.limitMember) setCanStart(true)
         else setCanStart(false)
       } else {
         setCanStart(true)
       }
-    }, [roomInfo.memberList])
+    }, [roomInfo.memberList, roomInfo.limitMember])
     
 
     useLayoutEffect(()=> {
-        // 방장을 따로 저장
+        // 방장과 내 정보를 따로 저장
         if (roomInfo) {
             setAdmin(roomInfo.memberList.find((elem)=>elem.admin).persona)
+            setMyInfo(roomInfo.memberList.find((elem)=>elem.persona.id===activePersonaId))
+            console.log(roomInfo)
         }
-    }, [roomInfo])
+    }, [roomInfo.memberList])
 
     useEffect(()=> {
       document.addEventListener('click', setShowAlertBlock(false))
@@ -142,9 +147,10 @@ function LoungeWaitSideBar(props) {
 
     return (
         <div className="lounge-sidebar">
+          {/* member status 관련 socket */}
           <SockJsClient
               url="http://ation-server.seohyuni.com/ws"
-              topics={[`/lounge/${roomInfo.id}/member/send`, `/lounge/${roomInfo.id}/status/send`]}
+              topics={[`/lounge/${roomInfo.id}/member/send`]}
               onMessage={msg => { receiveMessage(msg) }} 
               ref={$websocket}
             />
@@ -161,12 +167,14 @@ function LoungeWaitSideBar(props) {
 
             <div className="title">활동 중인 페르소나</div>
             <div className="content-wrapper">
+              {
+                myInfo &&
                 <div className="active-persona row">
-                    <img src={roomInfo.persona.profileImgPath} alt="profile"></img>
+                    <img src={myInfo.persona.profileImgPath} alt="profile"></img>
                     <div className="column grow">
-                        <div className="nickname">{ roomInfo.persona.nickname }</div>
+                        <div className="nickname">{ myInfo.persona.nickname }</div>
                         <div className="sense-wrapper">
-                            { roomInfo.persona.senseList && roomInfo.persona.senseList.map((sense, idx) => (
+                            { myInfo.persona.senseList && myInfo.persona.senseList.map((sense, idx) => (
                                 <img 
                                 className="sense-elem"    
                                 src={senseInfoList.find(elem=>elem.id===sense.senseId).svg}
@@ -176,9 +184,10 @@ function LoungeWaitSideBar(props) {
                     </div>
                     <BiChevronDown className="down-icon"/>
                 </div>
+              }
             </div>
             {
-              admin.id === activePersonaId
+              admin && (admin.id === activePersonaId)
               /* 방장일 때 => START 버튼 */
               ? <button className="action-btn" disabled={!canStart} onClick={startHandler}>
                   START
@@ -191,8 +200,8 @@ function LoungeWaitSideBar(props) {
                   }
                 </button>
               /* 멤버일 때 => READY 버튼 */
-              : <button className="action-btn" id={roomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready && "ready"}
-                onClick={()=>{readyHandler(roomInfo.memberList.find(elem=>elem.persona.id===activePersonaId).ready)}}>READY</button>
+              : <button className="action-btn" id={myInfo && "ready"}
+                onClick={()=>{readyHandler(myInfo && myInfo.ready)}}>READY</button>
             }
 
             <div className="title">참여중인 멤버</div>
@@ -236,27 +245,6 @@ function LoungeWaitSideBar(props) {
                         )
                     ))
                 }
-                {/*
-                    tempMemberList.map((member, idx) => (
-                        !member.admin && (
-                        <div className="member-persona row">
-                            <img src={member.persona.profileImgPath} alt="profile"/>
-                            <div className="column grow">
-                                <div className="nickname">{ member.persona.nickname }</div>
-                                <div className="sense-wrapper">
-                                    { member.persona.senseList && member.persona.senseList.map((sense, idx) => (
-                                        <img 
-                                        className="sense-elem"    
-                                        src={senseInfoList.find(elem=>elem.id===sense.senseId).svg}
-                                        alt="sense" />
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="status" id={member.ready && "ready"}><BsCheck2/></div>
-                        </div>
-                        )
-                    ))
-                */}
             </div>
             <div>
 

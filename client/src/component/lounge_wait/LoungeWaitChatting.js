@@ -75,20 +75,22 @@ function LoungeWaitChatting(props) {
     }
 
     const sendNotice = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            await axios.put(
-                `${process.env.REACT_APP_SERVER_HOST}/api/lounge/notice/${roomInfo.id}`, {
-                    notice: text
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-        } catch(err) {
-            console.log(err)
-        }
+        const token = localStorage.getItem('token');
+        let noticeData = {
+            method: 'PUT',
+            body: text,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        fetch(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/notice/${roomInfo.id}`, noticeData)
+            .then(response => response.json())
+            .then(response => {                    
+            })
+            .catch(err => {
+                console.log(err);
+            });
         
     }
 
@@ -110,7 +112,8 @@ function LoungeWaitChatting(props) {
         }
         if (msg.value) { // notice 공지라면
             let temp = {...roomInfo};
-            temp.notice = JSON.parse(msg.value).notice;
+            // temp.notice = JSON.parse(msg.value).notice;
+            temp.notice = msg.value;
             setRoomInfo(temp);
         }
     }

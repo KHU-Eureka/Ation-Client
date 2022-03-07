@@ -19,9 +19,10 @@ function LoungeRoom () {
     const navigate = useNavigate();
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const { id } = useParams(); // room id
-    const cookies = new Cookies();
 
-    let [roomInfo, setRoomInfo] = useState({});
+    let [roomInfo, setRoomInfo] = useState({}); // 방 정보
+    let [ admin, setAdmin ] = useState(null); // 방장
+    let [ myInfo, setMyInfo ] = useState(null); // 내 정보
     let [showLoungeStartModal, setShowLoungeStartModal] = useState(false);
 
     const startRoom = async () => {
@@ -60,6 +61,14 @@ function LoungeRoom () {
         }
     }
 
+    useEffect(()=> {
+        // 방장과 내 정보를 따로 저장
+        if (roomInfo && roomInfo.memberList) {
+            setAdmin(roomInfo.memberList.find((elem)=>elem.admin).persona)
+            setMyInfo(roomInfo.memberList.find((elem)=>elem.persona.id===activePersonaId))
+        }
+    }, [roomInfo])
+
     useLayoutEffect(()=> {
         const getRoomInfo = async () => {
             const token = localStorage.getItem('token');
@@ -91,12 +100,12 @@ function LoungeRoom () {
               onMessage={msg => { receiveRoomStatusMsg(msg) }} 
               ref={$websocket}
             />
-            <div className="left-content">
+            <div className="left-content lounge-sidebar">
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo.status === "OPEN"
                     ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo} setShowLoungeStartModal={setShowLoungeStartModal}/>
-                    : <LoungeActiveSideBar />
+                    : <LoungeActiveSideBar roomInfo={roomInfo} admin={admin} myInfo={myInfo}/>
                 }
             </div>
             <div className="right-content">

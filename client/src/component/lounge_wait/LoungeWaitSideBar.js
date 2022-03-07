@@ -33,7 +33,7 @@ function LoungeWaitSideBar(props) {
 
     let [ admin, setAdmin ] = useState(null); // 방장
     let [ myInfo, setMyInfo ] = useState(null); // 내 정보
-    let [showAlertBlock, setShowAlertBlock] = useState(true);
+    let [ showAlertBlock, setShowAlertBlock ] = useState(true);
     let [canStart, setCanStart] = useState(false);
 
     const startHandler = async () => {

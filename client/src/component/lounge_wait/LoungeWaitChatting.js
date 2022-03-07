@@ -22,7 +22,7 @@ function LoungeWaitChatting(props) {
         '각자 맡은 역할 말해주세요 !', '매너 있는 대화 해요 :)', '주제에 대해 더 설명해주세요'
     ]
 
-    let [today, setToday] = useState(new Date());
+    const today = new Date(); // 오늘 날짜
     let [chattingList, setChattingList] = useState([]);
     let [minReady, setMinReady] = useState(0);
     let [text, setText] = useState(''); // user가 채팅에 입력하는 text

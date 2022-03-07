@@ -11,7 +11,7 @@
 .grow { flex-grow: 1; }
 
 .lounge-room .lounge-sidebar {
-    width: calc(100% - 48px);
+    width: calc(290px - 48px);
     height: calc(100% - 48px);
     padding: 24px;
 
@@ -214,6 +214,6 @@
     border-bottom: 1px solid #FFFFFF;
 }
 
-.lounge-room .lounge-sidebar #admin .crown {
+.lounge-room .lounge-sidebar .crown {
     margin-left: 6px;
 }

@@ -14,21 +14,66 @@ const SIZE6 = '11px';
 const FONTFAMILY = 'Pretendard';
 const FONTSTYLE = 'normal';
 
-export const HEADER_STYLE = {
+const BASIC_FONTSTYLE = {
     fontFamily: FONTFAMILY,
     fontStyle: FONTSTYLE,
+    cursor: 'default'
+}
+
+export const HEADER_STYLE = {
+    ...BASIC_FONTSTYLE,
     fontWeight: 'bold',
     fontSize: SIZE1,
     color: COLOR1,
     marginRight: '11px',
-    cursor: 'default'
 }
 
 export const MAINTITLE_STYLE = {
-    fontFamily: FONTFAMILY,
-    fontStyle: FONTSTYLE,
+    ...BASIC_FONTSTYLE,
     fontWeight: 'bold',
     fontSize: SIZE3,
     color: COLOR4,
-    cursor: 'default'
+}
+
+export const IMGBOX_STYLE = {
+
+}
+
+export const MEMBERNUM_STYLE = {
+    ...BASIC_FONTSTYLE,
+    fontWeight: 500,
+    fontSize: SIZE3,
+    color: COLOR3,
+    marginTop: '19px',
+}
+
+export const LEADERNAME_STYLE = {
+    ...BASIC_FONTSTYLE,
+    fontWeight: 500,
+    fontSize: SIZE5,
+    color: COLOR3,
+}
+
+export const LEADERIMG_STYLE = {
+    width: '36px',
+    height: '36px',
+    borderRadius: '50%',
+    marginLeft: '12px'
+}
+
+const BASIC_BTNSTYLE_ENTER = {
+    ...BASIC_FONTSTYLE,
+    fontWeight: 'bold',
+    fontSize: SIZE6,
+    width: '52.23px',
+    height: '26px',
+    boxSizing: 'border-box',
+    borderRadius: '50px',
+}
+
+export const VALIDBTN_STYLE_ENTER = {
+    ...BASIC_BTNSTYLE_ENTER,
+    border: `1px solid ${COLOR1}`,
+    color: COLOR1,
+    background: COLOR3,
 }

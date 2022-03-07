@@ -1,14 +1,23 @@
 import React from "react";
 
 import { useFetch } from '../state';
+import { imgBox } from './atoms';
 
 function OrganismsList() {
     const loungeList = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/lounge`);
 
     return (
-        <div className="OrganismsList-Container" style={{background: 'pink', width: '879px', height: '466px'}}>
-            
+        <>
+        {loungeList !== undefined?
+        <div className="OrganismsList-Container" style={{background: 'salmon', width: '1400px', height: '100%', marginTop: '36px'}}>
+        {loungeList.map( lounge => 
+        <>
+            {imgBox(lounge, true)}
+        </>
+        )}
         </div>
+        :null}
+        </>
     )
 }
 

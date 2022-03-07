@@ -14,25 +14,113 @@ $SIZE6: 11px;
 $FONTFAMILY: 'Pretendard';
 $FONTSTYLE: 'normal';
 
+@mixin module-lounge($w: 367.23px, $h: 80px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: $w;
+    height: $h;
+}
+
+@mixin module-lounge-wrap($w: 327.23px, $h: 32px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: $w;
+    height: $h;
+}
+
 .Lounge-Container {
     padding-top: 82px;
-    padding-right: 153px;
     display: flex;
 
     .MainLNB-Container {
+        position: fixed;
         width: 297.01px;
-        height: 998px;
+        height: 100%;
         box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.1);
     }
 
     .loungeSection-container {
         display: flex;
         flex-wrap: wrap;
-        margin-left: 126.99px;
+        margin-left: calc( 126.99px + 297.01px );
         margin-top: 95px;
 
         .LoungeLive-Container {
             margin-left: 54px;
+
+            .LoungeRoom-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .LoungeRoom-wrap-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width: 367.23px;
+                    height: 358px;
+
+                    .modulebox-container {
+                        @include module-lounge();
+                        background: #FFFFFF;
+                        margin-bottom: 18px;
+    
+                        .modulebox-wrap-container {
+                            @include  module-lounge-wrap();
+
+                            .left-container {
+                                display: flex;
+                                justify-content: center;
+                                width: 48px;
+                                height: 32px;
+
+                                .senseImg {
+                                    width: 100px;
+                                height: 100px;
+                                }
+                                // .sense {
+                                //     // width: 48px; 
+                                //     // height: 25px; 
+                                //     fill: $COLOR1;
+                                // }
+                                // .senseSvg {
+                                //     // width: 48px; 
+                                //     // height: 25px; 
+                                    
+                                    
+                                // }
+                            }
+
+                            .title {
+                                width: 179px;
+                                text-overflow: ellipsis;
+                                font-family: Pretendard;
+                                font-style: normal;
+                                font-weight: 500;
+                                font-size: 15px;
+                                color: #352C23;
+                            }
+
+                            .tag {
+                                width: 109.59px;
+                                text-overflow: ellipsis;
+                                font-family: Pretendard;
+                                font-style: normal;
+                                font-weight: 500;
+                                font-size: 11px;
+                                color: #BEBBB9;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+
+            }
         }
 
         .LoungeRecent-Container {
@@ -53,6 +141,88 @@ $FONTSTYLE: 'normal';
 
             .OrganismsList-Container {
                 margin-top: 36px;
+                display: flex;
+                flex-wrap: wrap;
+
+                .imgbox-container {
+                    position: relative;
+                    width: 611.61px;
+                    height: 345.97px;
+                    margin-right: 88px;
+                    border-radius: 10px;
+                    background: #8995BD;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+
+                    .imgbox-wrap-container {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 547.44px;
+                        height: 271px;
+                        margin-top: 49px;
+                        margin-left: 40px;
+
+                        .header-container {
+                            width: 73.94px;
+                            height: 58.26px;
+                            
+                            .senseSvg {
+                                .sense {
+                                    fill: $COLOR3;
+                                }
+                            }
+                        }
+
+                        .main-container {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            .title {
+                                font-family: Pretendard;
+                                font-style: normal;
+                                font-weight: bold;
+                                font-size: 24px;
+                                color: white;
+                            }
+                        }
+
+                        .footer-container {
+                            display: flex;
+                            justify-content: space-between;
+                            width: 100%;
+
+                            .tag-container {
+                                font-family: Pretendard;
+                                font-style: normal;
+                                font-weight: 500;
+                                font-size: 15px;
+                                display: flex;
+                                align-items: center;
+                                color: #FFFFFF;
+
+                                .tag {
+                                    margin-right: 23.96px;
+                                }
+                            }
+                            
+                            .leader-container {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            }
+                        }
+                    }
+                }
+
+                .pin {
+                    position: absolute;
+                    top: 32px;
+                    left: 560px;   
+                    cursor: pointer; 
+                } 
             }
         }
 

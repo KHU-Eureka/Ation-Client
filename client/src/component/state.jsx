@@ -13,12 +13,30 @@ export function useFetch(url) {
                 headers: {
                     Authorization: "Bearer " + token
                 }
-            })
+            });
             setData(response.data);
         } catch(err) {
             console.log(err);
         }
+        return () => {
+            console.log('useEffect clean up')
+        }
     }, [url]);
 
     return data; 
+}
+
+export async function loungePinup(loungeId) {
+    const cookies = new Cookies();
+    const token = cookies.get('token');
+
+    try {
+        await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/pin/${loungeId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+    } catch(err) {
+        console.log(err);
+    }
 }

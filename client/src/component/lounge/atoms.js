@@ -1,16 +1,18 @@
 import { loungePinup } from '../state';
 
 import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER } from './atomStyleSheet';
+
 import w_eye from '../../assets/svg/sense_eye.svg';
 import w_nose from '../../assets/svg/sense_nose.svg';
 import w_ear from '../../assets/svg/sense_ear.svg';
 import w_mouth from '../../assets/svg/sense_mouth.svg';
 import w_hand from '../../assets/svg/sense_hand.svg';
-import o_eye from '../../assets/image/sense/눈_color.png';
-import o_nose from '../../assets/image/sense/코_color.png';
-import o_ear from '../../assets/image/sense/귀_color.png';
-import o_mouth from '../../assets/image/sense/입_color.png';
-import o_hand from '../../assets/image/sense/손_color.png';
+import o_eye from '../../assets/svg/sense_eye_o.svg';
+import o_nose from '../../assets/svg/sense_nose_o.svg';
+import o_ear from '../../assets/svg/sense_ear_o.svg';
+import o_mouth from '../../assets/svg/sense_mouth_o.svg';
+import o_hand from '../../assets/svg/sense_hand_o.svg';
+
 import pin from '../../assets/svg/pin.svg';
 
 const senseImg = (sense, mode) => {

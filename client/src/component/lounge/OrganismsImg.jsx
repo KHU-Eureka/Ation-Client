@@ -1,18 +1,30 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
+
+import SlideBtn from '../views/SlideBtn';
+import { useFetch } from '../state';
+import { imgBox } from './atoms';
 
 function OrganismsImg() {
-    const dispatch = useDispatch();
-
-    useEffect(()=> {
-        dispatch({type: 'MENU', data: 'lounge'});
-    }, [])
+    const loungeList = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/wait`);
+    const waitImgRef = useRef();
 
     return (
-        <div className="lounge" style={{background: 'pink', width: '879px', height: '466px'}}>
-            
+        <>
+        {loungeList !== undefined?
+        <SlideBtn>
+        <div ref={waitImgRef} className="OrganismsImg-Container" style={{background: 'pink', width: '813px', height: '400px', paddingLeft: '18px', paddingRight: '18px', paddingBottom: '12px'}}>
+            <div className="slidebox-container">
+                {loungeList.map( lounge => 
+                <>
+                    {imgBox(lounge.lounge)}
+                </>    
+                )}
+            </div>
         </div>
-    )
+        </SlideBtn>
+        :<></>}
+        </>
+    );
 }
 
 export default OrganismsImg;

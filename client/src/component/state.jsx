@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+import 'url-search-params-polyfill';
 
-export function useFetch(url) { 
+export function useFetch(url, deps) { 
     const cookies = new Cookies();
     const [data, setData] = useState(); 
 
@@ -21,7 +22,7 @@ export function useFetch(url) {
         return () => {
             console.log('useEffect clean up')
         }
-    }, [url]);
+    }, [url, deps]);
 
     return data; 
 }

@@ -32,6 +32,149 @@ function LoungeActiveSideBar(props) {
         { id: 5, name: "손", svg: hand },
     ]
 
+    const tempMemberList = [
+        {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 3,
+              "nickname": "방울방울",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 8,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 1,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 3,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 3,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 3,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          },
+          {
+            "ready": true,
+            "admin": false,
+            "persona": {
+              "id": 3,
+              "nickname": "방울토망토",
+              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
+              "senseList": [
+                {
+                  "senseId": 1,
+                  "name": "눈"
+                },
+                {
+                  "senseId": 2,
+                  "name": "코"
+                }
+              ],
+              "job": "프론트엔드 개발자"
+            }
+          }
+    ]
+
     //const today = new Date();
     let [currMenu, setCurrMenu] = useState(1); // sidebar menu의 id => 1 : member 목록 / 2 : chatting
     let [text, setText] = useState(''); // user text 입력
@@ -94,6 +237,10 @@ function LoungeActiveSideBar(props) {
         }
     }, [isChattingBottom])
 
+    useEffect(()=> {
+        if (currMenu===2) document.getElementById("chatting-bottom").scrollIntoView();
+    }, [currMenu])
+
     useLayoutEffect(()=> { // lounge 채팅 불러오기
         const getLoungeChat = async () => {
             const token = localStorage.getItem('token')
@@ -107,7 +254,7 @@ function LoungeActiveSideBar(props) {
                 )
                 console.log("chatting: ", res.data);
                 setChattingList(res.data);
-                document.getElementById("chatting-bottom").scrollIntoView();
+                if (currMenu===2) document.getElementById("chatting-bottom").scrollIntoView();
             } catch(err) {
                 console.log(err)
             }
@@ -148,10 +295,9 @@ function LoungeActiveSideBar(props) {
                 currMenu === 1 &&
                 <div className="menu-content">
                     <div className="title">나의 활동 페르소나</div>
-                    <div className="content-wrapper">
                     {
                         myInfo &&
-                        <div className="member-persona row">
+                        <div className="member-persona row" id="my-info">
                             <img src={myInfo.persona.profileImgPath} alt="profile"/>
                             <div className="column grow">
                                 <div className="nickname">{ myInfo.persona.nickname }</div>
@@ -166,11 +312,31 @@ function LoungeActiveSideBar(props) {
                             </div>
                         </div>
                     }
-                    </div>
                     <div className="title">참여 중인 멤버</div>
                     <div className="member-wrapper column">
                         {
                             roomInfo.memberList && roomInfo.memberList.map((member, idx) => (
+                                <div className="member-persona row">
+                                    <img src={member.persona.profileImgPath} alt="profile"/>
+                                    <div className="column grow">
+                                        <div className="nickname">
+                                            { member.persona.nickname }
+                                            { admin && admin.id === member.persona.id && <Crown className="crown"/> }
+                                        </div>
+                                        <div className="sense-wrapper">
+                                            { member.persona.senseList && member.persona.senseList.map((sense, idx) => (
+                                                <img 
+                                                className="sense-elem"    
+                                                src={senseInfoList.find(elem=>elem.id===sense.senseId).svg}
+                                                alt="sense" />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        {
+                            tempMemberList.map((member, idx) => (
                                 <div className="member-persona row">
                                     <img src={member.persona.profileImgPath} alt="profile"/>
                                     <div className="column grow">
@@ -202,17 +368,23 @@ function LoungeActiveSideBar(props) {
                         {
                             chattingList && chattingList.map((chat, idx)=>(
                                 /* idx가 0이거나, 이전에 채팅한 사람의 이름이 똑같지 않을 때 */
-                                idx === 0 || (chattingList[idx-1].persona.id !== chat.persona.id) 
+                                (idx === 0 || (chattingList[idx-1].persona.id !== chat.persona.id) 
                                 || Math.floor(new Date(chat.createdAt).getTime()/(1000*60)) !== Math.floor(new Date(chattingList[idx-1].createdAt).getTime() / (1000*60)))
                                 ? (
                                     <>
+                                    {
+                                        (idx === 0 || (Math.floor(new Date(chat.createdAt).getTime()/(1000*60*60*24)) !== Math.floor(new Date(chattingList[idx-1].createdAt).getTime() / (1000*60*60*24)))) &&
+                                        <div className="date">
+                                            {new Date(chat.createdAt).getMonth()}월 {new Date(chat.createdAt).getDate()}일
+                                        </div>
+                                    }
                                     <div className="nickname-time-wrapper">
                                         <div className="nickname">{ chat.persona.nickname }</div>
                                         <div className="time">
                                             {   
                                                 new Date(chat.createdAt).getHours() < 12
-                                                ? "오전 " + new Date(chat.createdAt).getHours() + ":" + new Date(chat.createdAt).getMinutes()
-                                                : "오후 " +  (new Date(chat.createdAt).getHours()*1 - 12) + ":" + (new Date(chat.createdAt).getMinutes().length === 1 && "0") + new Date(chat.createdAt).getMinutes()
+                                                ? "오전 " + (new Date(chat.createdAt).getHours().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getHours() + ":" + (new Date(chat.createdAt).getMinutes().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getMinutes()
+                                                : "오후 " + ((new Date(chat.createdAt).getHours()*1 - 12).toString().length === 1 ? "0" : "") + (new Date(chat.createdAt).getHours()*1 - 12) + ":" + (new Date(chat.createdAt).getMinutes().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getMinutes()
                                             }
                                         </div>
                                         </div>
@@ -220,10 +392,10 @@ function LoungeActiveSideBar(props) {
                                     </>
                                 )
                                 /* 계속 같은 사람이 채팅을 보냈을 경우 */
-                                : (<div className="content">
+                                : <div className="content">
                                     { chat.content }
-                                </div>
-                            ))
+                                </div>)
+                            )
                         }
                         { showNewMsg && <div className="show-new-msg" onClick={()=>{scrollToChattingBottom()}}>읽지 않은 메세지 {newMsgCount}개 <FiArrowDown /></div> }
                         <div id="chatting-bottom" ref={chattingBottom}></div>

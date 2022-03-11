@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import './LoungeStartModal.css';
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
+import loungeStart from '../../assets/image/lounge_start.png';
 
 function LoungeStartModal(props) {
 
@@ -50,6 +51,7 @@ function LoungeStartModal(props) {
                             퇴장하기
                         </button>
                     </div>
+                    <img className="modal-img" src={loungeStart} alt="lounge start"/>
                 </div>
             </div>
         </div>

@@ -2,7 +2,6 @@ import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Cookies } from "react-cookie";
 import SockJsClient from 'react-stomp';
 import axios from 'axios';
 
@@ -66,6 +65,8 @@ function LoungeRoom () {
         if (roomInfo && roomInfo.memberList) {
             setAdmin(roomInfo.memberList.find((elem)=>elem.admin).persona)
             setMyInfo(roomInfo.memberList.find((elem)=>elem.persona.id===activePersonaId))
+            console.log("member: ",roomInfo.memberList);
+            console.log("myInfo: ", myInfo)
         }
     }, [roomInfo])
 
@@ -83,7 +84,6 @@ function LoungeRoom () {
                     }
                 )
                 setRoomInfo(res.data);
-                console.log(res.data);
             } catch(err) {
                 console.log(err);
             }
@@ -109,10 +109,10 @@ function LoungeRoom () {
                 }
             </div>
             <div className="right-content">
-            {   /* lounge room 시작 count down 모달창*/
-                showLoungeStartModal && 
-                <LoungeStartModal roomTitle={roomInfo.title} exitRoom={exitRoom} setShowModal={setShowLoungeStartModal} startRoom={startRoom}/> 
-            }
+                {   /* lounge room 시작 count down 모달창*/
+                    showLoungeStartModal && 
+                    <LoungeStartModal roomTitle={roomInfo.title} exitRoom={exitRoom} setShowModal={setShowLoungeStartModal} startRoom={startRoom}/> 
+                }
                 {
                     roomInfo.status === "OPEN"
                     ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>

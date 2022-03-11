@@ -61,3 +61,10 @@
     */
     transform: translateY(5px);
 }
+
+.lounge-start .modal-img {
+    height: calc(100% - 24px);
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}

@@ -65,6 +65,21 @@
     animation: 0.7s showModalContent;
 }
 
+.lounge-start .menu-content > .title {
+    font-weight: 500;
+    color: #352C23;
+    margin-bottom: 16px;
+}
+.lounge-start .member-persona#my-info { margin-bottom: 30px; }
+.lounge-start .member-persona#my-info svg > path {
+    fill: #FE3400;
+}
+
+.lounge-start .member-wrapper {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
 .lounge-start .menu-content > .chatting-wrapper {
     width: calc(100% - 10px);
     flex-grow: 1;
@@ -78,6 +93,13 @@
 .lounge-start .menu-content > .chatting-wrapper::-webkit-scrollbar-thumb {
     background: #C4C4C4;
     border-radius: 1.5px;
+}
+
+.lounge-start .chatting-wrapper .date {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 30px;
 }
 
 .lounge-start .chatting-wrapper > .show-new-msg {

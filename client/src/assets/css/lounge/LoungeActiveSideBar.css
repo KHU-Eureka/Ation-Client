@@ -19,6 +19,7 @@
     left: -15px;
     background-color: white;
     margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .lounge-start .menu-selector {
@@ -30,6 +31,7 @@
     border-radius: 10px;
     position: relative;
     margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .lounge-start .menu-selector > svg {
@@ -54,11 +56,65 @@
 }
 
 .lounge-start .menu-content {
+    width: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
     animation: 0.7s showModalContent;
 }
+
+.lounge-start .menu-content > .chatting-wrapper {
+    width: calc(100% - 10px);
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.lounge-start .menu-content > .chatting-wrapper::-webkit-scrollbar { width: 3px; }
+.lounge-start .menu-content > .chatting-wrapper::-webkit-scrollbar-thumb {
+    background: #C4C4C4;
+    border-radius: 1.5px;
+}
+
+.lounge-start .chatting-wrapper > .show-new-msg {
+    position: sticky;
+}
+
+.lounge-start .chatting-wrapper .content {
+    width: calc(100% - 20px);
+    background: #F5F5F5;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 6px;
+    word-break: break-word;
+}
+
+.lounge-start .chatting-wrapper > .nickname-time-wrapper {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 6px;
+    margin-top: 20px;
+}
+
+.lounge-start .chatting-wrapper > .nickname-time-wrapper > .nickname {
+    color: #352C23;
+    font-weight: bold;
+    font-size: 15px;
+    margin-right: 9px;
+}
+
+.lounge-start .chatting-wrapper > .nickname-time-wrapper > .time {
+    font-weight: 500;
+    font-size: 11px;
+    color: #BEBBB9;
+}
+
 
 .lounge-start .text-wrapper {
     width: calc(100% - 34px);
@@ -67,12 +123,15 @@
     background: #FFFFFF;
     box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.07);
     border-radius: 10px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
+    margin-bottom: 25px;
+    margin-top: 20px;
 }
 
 .lounge-start .text-wrapper > input[type=text] {
-    width: 190px;
+    width: 155px;
     flex-grow: 1;
     border: none;
     font-weight: 500;

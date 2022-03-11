@@ -7,8 +7,6 @@ import axios from 'axios';
 import '../../assets/css/GNBPopup.css';
 
 function GNBPopup(props) {
-    const cookies = new Cookies();
-    const [cookie, setCookie, removeCookie] = useCookies(['token'])
     let auth = useSelector((state) => state.auth);
     let dispatch = useDispatch();
     const ref = useRef();
@@ -17,7 +15,7 @@ function GNBPopup(props) {
     let [personaList, setPersonaList] = useState([]);
 
     const logOut = () => {
-        removeCookie('token');
+        localStorage.removeItem('token');
         dispatch({type: 'AUTH', data: false});
         dispatch({type: 'MENU', data: ''});
         navigation('/login');

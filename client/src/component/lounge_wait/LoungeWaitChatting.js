@@ -99,7 +99,6 @@ function LoungeWaitChatting(props) {
     }
 
     const receiveMessage = (msg) => { // 메세지 받기
-        console.log(msg)
         if (msg.persona) { // 일반 메세지라면
             if (isChattingBottom || msg.persona.id === activePersonaId) { // 마지막을 보고 있었거나, 내가 보낸 메세지라면,
                 setChattingList([...chattingList, msg]); // 채팅이 왔을 때 계속 스크롤 위치를 유지하도록 함

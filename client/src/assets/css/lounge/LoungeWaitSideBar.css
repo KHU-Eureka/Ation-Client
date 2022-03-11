@@ -11,8 +11,8 @@
 .grow { flex-grow: 1; }
 
 .lounge-room .lounge-sidebar {
-    width: calc(290px - 48px);
-    height: calc(100% - 48px);
+    width: calc(290px - 48px) !important;
+    height: calc(100% - 48px) !important;
     padding: 24px;
 
     display: flex;

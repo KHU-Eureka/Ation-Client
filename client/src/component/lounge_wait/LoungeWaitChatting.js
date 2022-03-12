@@ -54,6 +54,41 @@ function LoungeWaitChatting(props) {
         getLoungeChat();
     }, [])
 
+    const getTime = (dateString) => {
+        const date = new Date(dateString);
+        let timeFormat;
+        let ampm = (date.getHours() < 12 ? '오전' : '오후');
+        let hours = (date.getHours() < 12 ? date.getHours() : date.getHours()-12).toString();
+        let minutes = date.getMinutes().toString();
+        
+        hours = (hours.length===2 ? hours : '0'+hours);
+        minutes = (minutes.length===2 ? minutes : '0'+minutes);
+
+        timeFormat = `${ampm} ${hours}:${minutes}`;
+
+        return timeFormat;
+    }
+
+    const dateChanged = (curr, last) => {
+        const currDate = new Date(curr);
+        const lastDate = new Date(last);
+        
+        if (currDate.getDate() !== lastDate.getDate() || currDate.getMonth() !== lastDate.getMonth() || currDate.getFullYear() !== lastDate.getFullYear())
+            return true;
+        return false;
+    }
+
+    const getDate = (dateString) => {
+        const currDate = new Date(dateString);
+        let dateFormat;
+        const year = currDate.getFullYear();
+        const month = currDate.getMonth() + 1;
+        const date = currDate.getDate();
+        dateFormat = `${year}년 ${month}월 ${date}일`;
+
+        return dateFormat
+    }
+
     const sendChatting = (e) => { // form 보내기
         e.preventDefault();
         if (text.length) { // text가 존재한다면
@@ -139,26 +174,28 @@ function LoungeWaitChatting(props) {
                 Welcome ! to [{roomInfo.title}]
             </div>
             <div className="description">이곳은 라운지의 대기실입니다. {minReady}명 이상의 크리에이터들이 준비되면 보드가 생성됩니다.</div>
-            <div className="today">{today.getFullYear()}년 {today.getMonth()+1}월 {today.getDate()}일</div>
+            { /*<div className="today">{today.getFullYear()}년 {today.getMonth()+1}월 {today.getDate()}일</div>*/}
             <div className="chatting-wrapper">
                 {
                     chattingList && chattingList.map((chat, idx)=>(
+                        <>
+                        {
+                            (idx === 0 || dateChanged(chat.createdAt, chattingList[idx-1].createdAt) )&&
+                            <div className="today">{getDate(chat.createdAt)}</div>
+                        }
                         <div className="chatting-elem" key={idx}>
                             <img className="profile" src={chat.persona.profileImgPath} alt="profile" />
                             <div className="column">
                                 <div className="nickname-time-wrapper">
                                     <div className="nickname">{ chat.persona.nickname }</div>
                                     <div className="time">
-                                        {   
-                                            new Date(chat.createdAt).getHours() < 12
-                                            ? "오전 " + new Date(chat.createdAt).getHours() + ":" + new Date(chat.createdAt).getMinutes()
-                                            : "오후 " +  (new Date(chat.createdAt).getHours()*1 - 12) + ":" + new Date(chat.createdAt).getMinutes()
-                                        }
+                                        {getTime(chat.createdAt)}
                                     </div>
                                 </div>
                                 <div className="content">{ chat.content }</div>
                             </div>
                         </div>
+                        </>
                     ))
                 }
                 { showNewMsg && <div className="show-new-msg" onClick={()=>{scrollToChattingBottom()}}>읽지 않은 메세지 {newMsgCount}개 <FiArrowDown /></div> }

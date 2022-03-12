@@ -24,13 +24,16 @@
     font-size: 18px;
     text-align: center;
     color: #BEBBB9;
+    margin-bottom: 20px;
 }
 
-.lw-chatting > .today {
+.lw-chatting .today {
     width: fit-content;
     height: 25px;
+    /*
     margin-top: 50px;
     margin-bottom: 32px;
+    */
     line-height: 25px;
     padding: 0px 10px;
     border: 1px solid #BEBBB9;
@@ -38,6 +41,7 @@
     font-weight: 500;
     font-size: 15px;
     border-radius: 20px;
+    margin: 20px auto;
 }
 
 .lw-chatting > .chatting-wrapper {
@@ -49,7 +53,7 @@
     position: relative;
 }
 
-.lounge-sidebar .chatting-wrapper > .show-new-msg {
+.lw-chatting .chatting-wrapper .show-new-msg {
     position: sticky;
     bottom: 10px;
     left: 50%;
@@ -66,7 +70,7 @@
     transition: 0.2s;
 }
 
-.lounge-sidebar .chatting-wrapper > .show-new-msg:hover {
+.lw-chatting .chatting-wrapper > .show-new-msg:hover {
     transform: translate(-50%, 5px);
 }
 

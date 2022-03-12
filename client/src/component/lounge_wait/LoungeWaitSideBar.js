@@ -20,7 +20,7 @@ import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
     const $websocket = useRef(null);
-    const { roomInfo, setRoomInfo } = props;
+    const { roomInfo, setRoomInfo, admin, myInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
 
     const senseInfoList = [
@@ -31,8 +31,6 @@ function LoungeWaitSideBar(props) {
       { id: 5, name: "손", svg: hand },
     ]
 
-    let [ admin, setAdmin ] = useState(null); // 방장
-    let [ myInfo, setMyInfo ] = useState(null); // 내 정보
     let [ showAlertBlock, setShowAlertBlock ] = useState(true);
     let [canStart, setCanStart] = useState(false);
 
@@ -127,15 +125,6 @@ function LoungeWaitSideBar(props) {
     }, [roomInfo.memberList, roomInfo.limitMember])
     
 
-    useLayoutEffect(()=> {
-        // 방장과 내 정보를 따로 저장
-        if (roomInfo) {
-            setAdmin(roomInfo.memberList.find((elem)=>elem.admin).persona)
-            setMyInfo(roomInfo.memberList.find((elem)=>elem.persona.id===activePersonaId))
-            console.log(roomInfo)
-        }
-    }, [roomInfo.memberList])
-
     useEffect(()=> {
       document.addEventListener('click', setShowAlertBlock(false))
 
@@ -146,7 +135,7 @@ function LoungeWaitSideBar(props) {
 
 
     return (
-        <div className="lounge-sidebar">
+        <div >
           {/* member status 관련 socket */}
           <SockJsClient
               url="http://ation-server.seohyuni.com/ws"

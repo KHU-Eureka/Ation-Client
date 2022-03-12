@@ -197,6 +197,50 @@ function LoungeActiveSideBar(props) {
         }
     }
 
+    const getTime = (dateString) => {
+        const date = new Date(dateString);
+        let timeFormat;
+        let ampm = (date.getHours() < 12 ? '오전' : '오후');
+        let hours = (date.getHours() < 12 ? date.getHours() : date.getHours()-12).toString();
+        let minutes = date.getMinutes().toString();
+        
+        hours = (hours.length===2 ? hours : '0'+hours);
+        minutes = (minutes.length===2 ? minutes : '0'+minutes);
+
+        timeFormat = `${ampm} ${hours}:${minutes}`;
+
+        return timeFormat;
+    }
+
+    const dateChanged = (curr, last) => {
+        const currDate = new Date(curr);
+        const lastDate = new Date(last);
+        
+        if (currDate.getDate() !== lastDate.getDate() || currDate.getMonth() !== lastDate.getMonth() || currDate.getFullYear() !== lastDate.getFullYear())
+            return true;
+        return false;
+    }
+
+    const timeChanged = (curr, last) => {
+        const currDate = new Date(curr);
+        const lastDate = new Date(last);
+        
+        if (currDate.getMinutes() !== lastDate.getMinutes() || currDate.getHours() !== lastDate.getHours() || currDate.getDate() !== lastDate.getDate() || currDate.getMonth() !== lastDate.getMonth() || currDate.getFullYear() !== lastDate.getFullYear())
+            return true;
+        return false;
+    }
+
+    const getDate = (dateString) => {
+        const currDate = new Date(dateString);
+        let dateFormat;
+        const year = currDate.getFullYear();
+        const month = currDate.getMonth() + 1;
+        const date = currDate.getDate();
+        dateFormat = `${year}년 ${month}월 ${date}일`;
+
+        return dateFormat
+    }
+
     const scrollToChattingBottom = () => {
         document.getElementById("chatting-bottom").scrollIntoView({ behavior: 'smooth' });
     }
@@ -335,27 +379,6 @@ function LoungeActiveSideBar(props) {
                                 </div>
                             ))
                         }
-                        {
-                            tempMemberList.map((member, idx) => (
-                                <div className="member-persona row">
-                                    <img src={member.persona.profileImgPath} alt="profile"/>
-                                    <div className="column grow">
-                                        <div className="nickname">
-                                            { member.persona.nickname }
-                                            { admin && admin.id === member.persona.id && <Crown className="crown"/> }
-                                        </div>
-                                        <div className="sense-wrapper">
-                                            { member.persona.senseList && member.persona.senseList.map((sense, idx) => (
-                                                <img 
-                                                className="sense-elem"    
-                                                src={senseInfoList.find(elem=>elem.id===sense.senseId).svg}
-                                                alt="sense" />
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        }
                     </div>
                 </div>
             }
@@ -367,26 +390,20 @@ function LoungeActiveSideBar(props) {
                     <div className="chatting-wrapper">
                         {
                             chattingList && chattingList.map((chat, idx)=>(
-                                /* idx가 0이거나, 이전에 채팅한 사람의 이름이 똑같지 않을 때 */
+                                /* idx가 0이거나, 이전에 채팅한 사람의 이름이 똑같지 않을 때, 시간이 바뀌었을 때 */
                                 (idx === 0 || (chattingList[idx-1].persona.id !== chat.persona.id) 
-                                || Math.floor(new Date(chat.createdAt).getTime()/(1000*60)) !== Math.floor(new Date(chattingList[idx-1].createdAt).getTime() / (1000*60)))
+                                || timeChanged(chat.createdAt, chattingList[idx-1].createdAt))
                                 ? (
                                     <>
                                     {
-                                        (idx === 0 || (Math.floor(new Date(chat.createdAt).getTime()/(1000*60*60*24)) !== Math.floor(new Date(chattingList[idx-1].createdAt).getTime() / (1000*60*60*24)))) &&
+                                        (idx === 0 || dateChanged(chat.createdAt, chattingList[idx-1].createdAt)) &&
                                         <div className="date">
-                                            {new Date(chat.createdAt).getMonth()}월 {new Date(chat.createdAt).getDate()}일
+                                            {getDate(chat.createdAt)}
                                         </div>
                                     }
                                     <div className="nickname-time-wrapper">
                                         <div className="nickname">{ chat.persona.nickname }</div>
-                                        <div className="time">
-                                            {   
-                                                new Date(chat.createdAt).getHours() < 12
-                                                ? "오전 " + (new Date(chat.createdAt).getHours().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getHours() + ":" + (new Date(chat.createdAt).getMinutes().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getMinutes()
-                                                : "오후 " + ((new Date(chat.createdAt).getHours()*1 - 12).toString().length === 1 ? "0" : "") + (new Date(chat.createdAt).getHours()*1 - 12) + ":" + (new Date(chat.createdAt).getMinutes().toString().length === 1 ? "0" : "") + new Date(chat.createdAt).getMinutes()
-                                            }
-                                        </div>
+                                        <div className="time">{ getTime(chat.createdAt) }</div>
                                         </div>
                                     <div className="content">{ chat.content }</div>
                                     </>

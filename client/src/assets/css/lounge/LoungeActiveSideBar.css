@@ -70,10 +70,14 @@
     color: #352C23;
     margin-bottom: 16px;
 }
-.lounge-start .member-persona#my-info { margin-bottom: 30px; }
+.lounge-start .member-persona#my-info { margin-top: 0px; margin-bottom: 30px; }
 .lounge-start .member-persona#my-info svg > path {
     fill: #FE3400;
 }
+.lounge-start .member-persona#my-info .sense-elem {
+    filter: invert(0.65) sepia(1) saturate(50) hue-rotate(355deg);
+}
+
 
 .lounge-start .member-wrapper {
     margin-bottom: 20px;

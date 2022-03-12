@@ -19,7 +19,7 @@
     flex-direction: column;
 }
 
-.lounge-room .lounge-sidebar > .title { font-weight: 500; }
+.lounge-room .lounge-sidebar .title { font-weight: 500; }
 
 .lounge-room .lounge-sidebar .title-wrapper {
     width: 100%;

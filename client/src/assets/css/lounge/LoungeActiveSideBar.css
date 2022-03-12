@@ -205,10 +205,27 @@
 .lounge-start .text-wrapper > input[type=text]:focus { font-size: 14px; }
 .lounge-start .text-wrapper > input[type=text]::placeholder { color: #BEBBB9; }
 
-.lounge-start .text-wrapper > svg { cursor: pointer; flex-shrink: 0; }
-.lounge-start .text-wrapper > svg > path { transition: 0.2s; }
-.lounge-start .text-wrapper > svg:hover > path,
-.lounge-start .text-wrapper > #active > path { fill: #FE3400; }
+.lounge-start .text-wrapper .icon { cursor: pointer; flex-shrink: 0; height: fit-content; }
+.lounge-start .text-wrapper svg:hover > path,
+.lounge-start .text-wrapper #active > path { fill: #FE3400; }
+
+.lounge-start .text-wrapper .emoji-icon.emoji-icon { transition: 0.2s; position: relative; top: 2px; }
+.lounge-start .text-wrapper .emoji-icon.emoji-icon:hover,
+.lounge-start .text-wrapper .emoji-icon#active {
+    transform: rotate(30deg);
+}
+
+.lounge-start .text-wrapper .emoji-picker {
+    position: absolute;
+    left: 210px;
+    bottom: 135px;
+    animation: showEmojiPicker 0.5s;
+}
+
+@keyframes showEmojiPicker {
+    0% {opacity: 0; transform: translateY(5px);}
+    100% {opacity: 1;}
+}
 
 .lounge-start .finish-btn {
     width: 100%;

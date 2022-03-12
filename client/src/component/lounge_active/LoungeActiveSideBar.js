@@ -2,6 +2,7 @@ import { useState, useLayoutEffect, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
 import SockJsClient from 'react-stomp';
+import Picker from 'emoji-picker-react';
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
 import { ReactComponent as MenuMember } from '../../assets/svg/menu_member.svg';
@@ -21,6 +22,7 @@ import axios from 'axios';
 
 function LoungeActiveSideBar(props) {
     const $websocket = useRef(null); // socket
+    const emojiPickerRef = useRef();
     const { roomInfo, admin, myInfo } = props;
     const [chattingBottom, isChattingBottom] = useInView();
     const activePersonaId = useSelector(state=>state.activePersonaId);
@@ -31,149 +33,17 @@ function LoungeActiveSideBar(props) {
         { id: 4, name: "귀", svg: ear },
         { id: 5, name: "손", svg: hand },
     ]
-
-    const tempMemberList = [
-        {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 3,
-              "nickname": "방울방울",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 8,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 1,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 3,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 3,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 3,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          },
-          {
-            "ready": true,
-            "admin": false,
-            "persona": {
-              "id": 3,
-              "nickname": "방울토망토",
-              "profileImgPath": "http://ation-server.seohyuni.com:80/api/image?path=/home/ec2-user/Ation-Server/src/main/resources/image/persona-3.png",
-              "senseList": [
-                {
-                  "senseId": 1,
-                  "name": "눈"
-                },
-                {
-                  "senseId": 2,
-                  "name": "코"
-                }
-              ],
-              "job": "프론트엔드 개발자"
-            }
-          }
-    ]
+    const emojiGroupNames = {
+        smileys_people: '웃는 얼굴 및 사람',
+        animals_nature: '동물 및 자연',
+        food_drink: '식음료',
+        travel_places: '여행 및 장소',
+        activities: '활동',
+        objects: '객체',
+        symbols: '기호',
+        flags: '플래그',
+        recently_used: '최근 사용',
+      }
 
     //const today = new Date();
     let [currMenu, setCurrMenu] = useState(1); // sidebar menu의 id => 1 : member 목록 / 2 : chatting
@@ -181,6 +51,7 @@ function LoungeActiveSideBar(props) {
     let [chattingList, setChattingList] = useState([]); // 채팅방의 chatting List
     let [newMsgCount, setNewMsgCount] = useState(0); // 안읽은 메세지 개수
     let [showNewMsg, setShowNewMsg] = useState(false);
+    let [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
     const finishRoom = async () => { // 방을 종료시킴
         const token = localStorage.getItem('token');
@@ -245,6 +116,12 @@ function LoungeActiveSideBar(props) {
         document.getElementById("chatting-bottom").scrollIntoView({ behavior: 'smooth' });
     }
 
+    const onEmojiClick = (event, emojiObject) => { // emoji picker 동작
+        setText(text+emojiObject.emoji);
+        document.getElementById('chatting-user-input').focus();
+        setShowEmojiPicker(false);
+    };
+
     const receiveMessage = (msg) => {
         if (msg.persona) { // 일반 메세지라면
             if (isChattingBottom || msg.persona.id === activePersonaId) { // 마지막을 보고 있었거나, 내가 보낸 메세지라면,
@@ -306,7 +183,20 @@ function LoungeActiveSideBar(props) {
         roomInfo && getLoungeChat();
 
     }, [roomInfo])
+
+    const closeEmojiPicker = (e) => {
+        if (!emojiPickerRef.current.contains(e.target)) {
+            setShowEmojiPicker(false);
+        }
+    }
     
+    useEffect(()=> {
+        document.addEventListener('click', closeEmojiPicker)
+
+        return (()=> {
+            document.removeEventListener('click', closeEmojiPicker)
+        }, [])
+    }, [])
 
     return (
         <div className="lounge-start">
@@ -329,12 +219,16 @@ function LoungeActiveSideBar(props) {
             </div>
             <div className="white-line" />
 
+            {/* menu toggle bar */}
             <div className="menu-selector">
                 <div className="menu-toggle" style={{left: (50*(currMenu-1))+"%"}}/>
                 <MenuMember className="menu-elem" id={currMenu===1 && "selected"} onClick={()=>{setCurrMenu(1)}}/>
                 <div className="menu-elem" onClick={()=>{setCurrMenu(2)}}>
                     <MenuChatting id={currMenu===2 && "selected"} />
-                    { showNewMsg && <div className="new-msg-count">{newMsgCount}</div> }
+                    { /* 멤버 메뉴를 보고 있고, 새로운 메세지가 왔다면.. */
+                    showNewMsg && (currMenu === 1) && 
+                    <div className="new-msg-count">{newMsgCount}</div> 
+                    }
                 </div>
             </div>
 
@@ -427,12 +321,25 @@ function LoungeActiveSideBar(props) {
                     </div>
                     <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}}>
                         <input 
+                            id="chatting-user-input"
                             type="text"
                             value={text}
                             onChange={(e)=>(setText(e.target.value))}
                         />
-                        <EmojiBtn/>
-                        <SendBtn id={text.length && "active"} type="submit" onClick={(e)=>{sendChatting(e)}}/>
+                        <div className="icon" ref={emojiPickerRef}>
+                            {
+                                showEmojiPicker &&
+                                <div className="emoji-picker">
+                                    <Picker 
+                                        onEmojiClick={onEmojiClick} 
+                                        native={true}
+                                        groupNames={emojiGroupNames}
+                                    />
+                                </div>
+                            }
+                            <EmojiBtn className="emoji-icon" id={showEmojiPicker && "active"} onClick={()=>{setShowEmojiPicker(true)}}/>
+                        </div>
+                        <SendBtn className="icon" id={text.length && "active"} type="submit" onClick={(e)=>{sendChatting(e)}}/>
                     </form>
                 </div>
             }

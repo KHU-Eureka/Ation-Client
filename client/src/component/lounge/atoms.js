@@ -1,6 +1,6 @@
-import { loungePinup } from '../state';
+import { LoungePinup, enterLounge } from '../state';
 
-import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER } from './atomStyleSheet';
+import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER } from './atomStyleSheet';
 
 import w_eye from '../../assets/svg/sense_eye.svg';
 import w_nose from '../../assets/svg/sense_nose.svg';
@@ -12,8 +12,6 @@ import o_nose from '../../assets/svg/sense_nose_o.svg';
 import o_ear from '../../assets/svg/sense_ear_o.svg';
 import o_mouth from '../../assets/svg/sense_mouth_o.svg';
 import o_hand from '../../assets/svg/sense_hand_o.svg';
-
-import pin from '../../assets/svg/pin.svg';
 
 const senseImg = (sense, mode) => {
     switch(sense) {
@@ -41,7 +39,7 @@ const senseImg = (sense, mode) => {
     return(null);
 }
 
-const title = (title) => {
+export const title = (title) => {
     return(
         <span className='title'>
             {title}
@@ -88,16 +86,15 @@ export const mainTitle = (title, header) => {
     );
 }
 
-const enterBtn = (isValid) => {
-    console.log(isValid)
+const enterBtn = (isValid, loungeId, personaId) => {
     return(
-        <button style={ isValid? VALIDBTN_STYLE_ENTER:null }>입장</button>
+        <button onClick={ isValid? () => {enterLounge(loungeId, personaId);}:null } style={ isValid? VALIDBTN_STYLE_ENTER:INVALIDBTN_STYLE_ENTER }>입장</button>
     );
 }
 
 export const imgBox = (obj, isPin) => {
     return(
-        <div className='imgbox-container' style={{backgroundImage: `url(${obj.imgPath})`}}>
+        <div className='imgbox-container' style={{backgroundImage: `url(${obj.imgPath})`, cursor: 'pointer'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
             <div className='imgbox-wrap-container'>
                 <div className='header-container'>
                     {senseImg(obj.sense.name, 1)}
@@ -112,25 +109,27 @@ export const imgBox = (obj, isPin) => {
                 </div>
             </div>
             {isPin?
-                <img className='pin' src={pin} onClick={ () => loungePinup(obj.id) }/>
-            :<></>}
+                <LoungePinup loungeId={obj.id} />
+            :null}
         </div>
     );
 }
 
-export const moduleBox = (obj) => {
+export const moduleBox = (obj, isSense) => {
     return(
         <div className='modulebox-container'>
             <div className='modulebox-wrap-container'>
+                {isSense?
                 <div className='left-container'>
                     {senseImg(obj.sense.name, 2)}
                 </div>
+                :null}
                 <div className='middle-container'>
                     {title(obj.title)}
                     {tag(obj.mainCategory.name, obj.subCategoryList)}
                 </div>
                 <div className='right-container'>
-                    {enterBtn( obj.status==='START'? true:false )}
+                    {enterBtn( obj.status !=='END'? true:false, obj.id, obj.persona.id )}
                 </div>
             </div>
         </div>

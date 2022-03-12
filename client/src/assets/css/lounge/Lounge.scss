@@ -100,37 +100,170 @@ $FONTSTYLE: 'normal';
     }
 }
 
+@mixin lnb-title-lounge() {
+
+    .main-title-container {
+        font-family: Pretendard;
+        font-style: normal;
+        font-weight: 500;
+        font-size: $SIZE4;
+        color: $COLOR2;
+        margin-bottom: 23px
+    }
+}
+
+@mixin lnb-modulebox-lounge() {
+    .modulebox-container {
+        @include flex-center-lounge();
+        display: flex;
+        width: 248.88px;
+        height: 62px;
+        margin-bottom: 10px;
+        background: #F5F5F5;
+        border-radius: 10px;
+
+        .modulebox-wrap-container {
+            display: flex;
+            justify-content: space-between;
+            width: 209.23px;
+            height: 32px;
+
+            .middle-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .title {
+                    width: 140px;
+                    text-overflow: ellipsis;
+                    font-family: Pretendard;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 15px;
+                    color: #352C23;
+                }
+    
+                .tag-container {
+                    width: 140px;
+                    text-overflow: ellipsis;
+                    font-family: Pretendard;
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 11px;
+                    color: #BEBBB9;
+    
+                    .tag {
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .right-container {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
+
+@mixin scrollbar-lounge($h: 270px) {
+    width: 6px;
+    // height: $h;
+    // border-radius: 100px;
+    // cursor: pointer;
+    
+}
+
+@mixin scrollbar-point-lounge($h: 270px) {
+    background: #8B8B8B;
+    border-radius: 100px;
+    height: $h;
+    width: 6px;
+    cursor: pointer;
+}
+
+@mixin scrollbar-track-lounge() {
+    background-color: transparent; 
+    width: 6px;
+}
+
+/* 스크롤바 설정*/
+// .Lounge-Container .Pinboard-container::-webkit-scrollbar{
+//     width: 4px;
+//     height: 140px;
+//     border-radius: 7px;
+//     cursor: pointer;
+// }
+
+// .section::-webkit-scrollbar-track { 
+//     background-color: transparent; 
+//     width: 4px;
+// }
+
+
+/* 스크롤바 막대 설정*/
+// .Lounge-Container .Pinboard-container::-webkit-scrollbar-thumb{
+//     background: #C4C4C4;
+//     border-radius: 7px;
+//     width: 4px;
+// }
+
+
+
 .Lounge-Container {
     padding-top: 82px;
     display: flex;
-
-
 
     .MainLNB-Container {
         position: fixed;
         width: 297.01px;
         height: 100%;
         box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.1);
+
+        .MainLNB-wrap-Container {
+            margin-left: 23.56px;
+
+            .LoungeRoom-container {
+                background: #8995BD;
+                width: 259.44px;
+                height: 206px;
+                overflow-y: auto;
+
+                .LoungeRoom-wrap-container {
+                    width: 248.88px;
+                    height: 206px;
+                }
+            }
+    
+            .LoungePin-Container {
+                margin-top: 65px;
+                @include lnb-title-lounge();
+                @include lnb-modulebox-lounge();
+            }
+            .LoungePast-Container {
+                margin-top: 50px;
+                @include lnb-title-lounge();
+                @include lnb-modulebox-lounge();
+            }
+        }
     }
-
-
-
     .loungeSection-container {
         display: flex;
         flex-wrap: wrap;
         margin-left: calc( 126.99px + 297.01px );
         margin-top: 95px;
 
-
-
         .LoungeLive-Container {
             margin-left: 54px;
 
             .LoungeRoom-container {
-                display: flex;
+                @include flex-center-lounge();
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
+                background: #F5F5F5;
+                width: 411px;
+                height: 446px;
+                border-radius: 10px;
+                overflow-y: scroll;
 
                 .LoungeRoom-wrap-container {
                     display: flex;
@@ -192,8 +325,6 @@ $FONTSTYLE: 'normal';
             }
         }
 
-
-
         .LoungeWait-Container {
 
             .OrganismsImg-Container {
@@ -217,15 +348,13 @@ $FONTSTYLE: 'normal';
                     @include imgbox-lounge(813px, 400px);
                     .imgbox-wrap-container {
                         @include imgbox-wrap-lounge(708.12px, 325px);
-                        margin-top: 62px;
-                        margin-left: 40px;
+                        margin-top: 51px;
+                        margin-left: 53px;
                         @include imgbox-content-lounge();
                     }
                 }
             }
         }
-
-
 
         .LoungeRecent-Container {
             margin-top: 103px;
@@ -237,8 +366,10 @@ $FONTSTYLE: 'normal';
                 font-weight: 500;
                 font-size: $SIZE4;
                 color: $COLOR4;
+                background-color: #FFFFFF;
 
                 .category {
+                    padding-bottom: 7px;
                     margin-right: 46px;
                 }
             }
@@ -246,7 +377,7 @@ $FONTSTYLE: 'normal';
 
 
             .OrganismsList-Container {
-                margin-top: 36px;
+                margin-top: 29px;
                 display: flex;
                 flex-wrap: wrap;
 
@@ -276,3 +407,28 @@ $FONTSTYLE: 'normal';
     }
 }
 
+.Lounge-Container .MainLNB-Container .LoungeRoom-container::-webkit-scrollbar {
+    @include scrollbar-lounge($h: 133px);
+}
+
+.Lounge-Container .MainLNB-Container .LoungeRoom-container::-webkit-scrollbar-thumb {
+    @include scrollbar-point-lounge($h: 133px);
+}
+
+.Lounge-Container .MainLNB-Container .LoungeRoom-container::-webkit-scrollbar-track {
+    @include scrollbar-track-lounge();
+}
+
+
+
+.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar {
+    @include scrollbar-lounge();
+}
+
+.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar-thumb {
+    @include scrollbar-point-lounge();
+}
+
+.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar-track {
+    @include scrollbar-track-lounge();
+}

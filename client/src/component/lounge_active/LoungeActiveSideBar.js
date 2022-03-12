@@ -328,10 +328,14 @@ function LoungeActiveSideBar(props) {
                 <BiChevronDown className="down-icon"/>
             </div>
             <div className="white-line" />
+
             <div className="menu-selector">
                 <div className="menu-toggle" style={{left: (50*(currMenu-1))+"%"}}/>
-                <MenuMember id={currMenu===1 && "selected"} onClick={()=>{setCurrMenu(1)}}/>
-                <MenuChatting id={currMenu===2 && "selected"} onClick={()=>{setCurrMenu(2)}}/>
+                <MenuMember className="menu-elem" id={currMenu===1 && "selected"} onClick={()=>{setCurrMenu(1)}}/>
+                <div className="menu-elem" onClick={()=>{setCurrMenu(2)}}>
+                    <MenuChatting id={currMenu===2 && "selected"} />
+                    { showNewMsg && <div className="new-msg-count">{newMsgCount}</div> }
+                </div>
             </div>
 
             {
@@ -414,7 +418,11 @@ function LoungeActiveSideBar(props) {
                                 </div>)
                             )
                         }
-                        { showNewMsg && <div className="show-new-msg" onClick={()=>{scrollToChattingBottom()}}>읽지 않은 메세지 {newMsgCount}개 <FiArrowDown /></div> }
+                        { showNewMsg && 
+                            <div className="show-new-msg" onClick={()=>{scrollToChattingBottom()}}>
+                                읽지 않은 메세지 {newMsgCount}개 <FiArrowDown />
+                            </div> 
+                        }
                         <div id="chatting-bottom" ref={chattingBottom}></div>
                     </div>
                     <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}}>

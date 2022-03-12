@@ -76,4 +76,12 @@ export const VALIDBTN_STYLE_ENTER = {
     border: `1px solid ${COLOR1}`,
     color: COLOR1,
     background: COLOR3,
+    cursor: 'pointer',
+}
+
+export const INVALIDBTN_STYLE_ENTER = {
+    ...BASIC_BTNSTYLE_ENTER,
+    border: `1px solid #E7E6E5`,
+    color: COLOR3,
+    background: '#E7E6E5',
 }

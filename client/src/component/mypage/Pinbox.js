@@ -378,9 +378,9 @@ function Pinbox(props) {
                 <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'핀 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
             </div>:
-            <ul className="allPin-content">
+            <div className="allPin-content">
                 <NoPin option={'핀이'}/>
-            </ul>:
+            </div>:
             pinboard.length!==0?
             <>
             <ul className="pinBoard-content">

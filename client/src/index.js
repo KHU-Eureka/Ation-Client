@@ -12,6 +12,11 @@ let initialState = {
   menu: null,
   mode: "",
   detail_mode: "",
+  loungeCreate: "",
+  loungePinup: "",
+  loungeLive: "",
+  loungeHistory: "",
+  loungeWait: "",
 }
 
 function reducer(state = initialState, action) {
@@ -34,6 +39,21 @@ function reducer(state = initialState, action) {
       break;
     case 'DETAIL_MODE':
       tempState.detail_mode = action.data;
+      break;
+    case 'LOUNGE_CREATE':
+      tempState.loungeCreate = action.data;
+      break;
+    case 'LOUNGE_PINUP':
+      tempState.loungePinup = action.data;
+      break;
+    case 'LOUNGE_LIVE':
+      tempState.loungeLive = action.data;
+      break;
+    case 'LOUNGE_HISTORY':
+      tempState.loungeHistory = action.data;
+      break;
+    case 'LOUNGE_WAIT':
+      tempState.loungeWait = action.data;
       break;
     default:
       break;

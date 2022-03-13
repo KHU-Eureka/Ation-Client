@@ -17,13 +17,14 @@ import nose from '../../assets/svg/sense/nose.svg';
 import mouth from '../../assets/svg/sense/mouth.svg';
 import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
+import RoomSetting from './RoomSetting.js';
 import "../../assets/css/lounge/LoungeActiveSideBar.css";
 import axios from 'axios';
 
 function LoungeActiveSideBar(props) {
     const $websocket = useRef(null); // socket
     const emojiPickerRef = useRef();
-    const { roomInfo, admin, myInfo } = props;
+    const { roomInfo, admin, myInfo, setShowRoomInfoModal } = props;
     const [chattingBottom, isChattingBottom] = useInView();
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const senseInfoList = [
@@ -52,6 +53,7 @@ function LoungeActiveSideBar(props) {
     let [newMsgCount, setNewMsgCount] = useState(0); // 안읽은 메세지 개수
     let [showNewMsg, setShowNewMsg] = useState(false);
     let [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    let [showToggle, setShowToggle] = useState(false); // title 옆 toogle
 
     const finishRoom = async () => { // 방을 종료시킴
         const token = localStorage.getItem('token');
@@ -185,7 +187,7 @@ function LoungeActiveSideBar(props) {
     }, [roomInfo])
 
     const closeEmojiPicker = (e) => {
-        if (!emojiPickerRef.current.contains(e.target)) {
+        if (showEmojiPicker && !emojiPickerRef.current.contains(e.target)) {
             setShowEmojiPicker(false);
         }
     }
@@ -193,9 +195,9 @@ function LoungeActiveSideBar(props) {
     useEffect(()=> {
         document.addEventListener('click', closeEmojiPicker)
 
-        return (()=> {
+        return ()=> {
             document.removeEventListener('click', closeEmojiPicker)
-        }, [])
+        }
     }, [])
 
     return (
@@ -215,7 +217,10 @@ function LoungeActiveSideBar(props) {
                         </span>
                     <BracketRight />
                 </div>
-                <BiChevronDown className="down-icon"/>
+                <div className="room-info" onClick={()=>{setShowToggle(true)}}>
+                    <BiChevronDown className="down-icon"/>
+                    { showToggle && <RoomSetting roomId={roomInfo.id} showToggle={showToggle} setShowToggle={setShowToggle} setShowRoomInfoModal={setShowRoomInfoModal}/> }
+                </div>
             </div>
             <div className="white-line" />
 
@@ -319,7 +324,7 @@ function LoungeActiveSideBar(props) {
                         }
                         <div id="chatting-bottom" ref={chattingBottom}></div>
                     </div>
-                    <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}}>
+                    <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}} autocomplete="off">
                         <input 
                             id="chatting-user-input"
                             type="text"

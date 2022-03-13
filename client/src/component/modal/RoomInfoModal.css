@@ -1,0 +1,132 @@
+.room-info .modal-background {
+    background: rgba(34, 34, 34, 0.63);
+    backdrop-filter: none;
+    z-index: 10;
+}
+
+.room-info .modal-wrapper {
+    width: 674px;
+    height: 687px;
+    padding: 0;
+}
+
+.room-info .room-img {
+    width: 100%;
+    height: 122px;
+    object-fit: cover;
+    border: 20px 20px 0 0;
+    border-radius: 10px 10px 0 0;
+}
+
+.room-info .close-btn {
+    color: #BEBBB9;
+    position: absolute;
+    right: 26px;
+    top: 24px;
+}
+
+.room-info .modal-content {
+    width: calc(100% - 92px) !important;
+    height: 100%;
+    padding: 25px 46px;
+    font-size: 15px;
+    position: relative;
+}
+
+.room-info .edit-btn {
+    position: absolute;
+    right: 34px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.room-info .edit-btn:hover { transform: translateY(5px); }
+
+.room-info .content-wrapper {
+    width: 100%;
+    text-align: left;
+    color: #352C23;
+    margin-bottom: 20px;
+}
+
+.room-info .content-wrapper > .title {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.room-info .content-wrapper .category-wrapper {
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.room-info .content-wrapper .category-wrapper > .category-elem {
+    width: fit-content;
+    padding: 4px 17px;
+    font-weight: 500;
+    font-size: 12px;
+    border: 1px solid #FE3400;
+    border-radius: 50px;
+    margin-right: 12px;
+}
+
+.room-info .content-wrapper .content > .limit-num {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.room-info .content-wrapper .content > .is-limit {
+    font-size: 12px;
+    margin-left: 13px;
+    color: #BEBBB9;
+}
+
+.room-info .room-title {
+    display: flex;
+    font-weight: 700;
+    font-size: 21px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.room-info .room-title > svg:first-child { margin-right: 14px; flex-shrink: 0; }
+.room-info .room-title > svg:last-child { margin-left: 14px; flex-shrink: 0; }
+
+.room-info .content-wrapper .content > svg { width: 25px; height: 25px; }
+.room-info .content-wrapper .content > svg > path { fill: #FF3900; }
+
+.room-info .admin {
+    width: fit-content;
+    position: absolute;
+    right: 34px;
+    bottom: 15px;
+}
+
+.room-info .admin .title {
+    color: #807A74;
+}
+
+.room-info .admin > .admin-info {
+    width: fit-content;
+    padding: 10px;
+    background: #F5F5F5;
+    border: 1px solid #E7E6E5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    color: #352C23;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.room-info .admin > .admin-info > img {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 0.5px solid #E7E6E5;
+    margin-right: 10px;
+}
+
+.room-info .admin > .admin-info .crown {
+    margin: 0px 10px;
+}

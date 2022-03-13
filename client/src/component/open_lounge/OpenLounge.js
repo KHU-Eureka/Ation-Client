@@ -76,7 +76,8 @@ function OpenLounge(props) {
                     senseId: senseId,
                     subCategoryIdList: subCategoryIdList,
                     tagList: [],
-                    title: title
+                    title: title,
+                    imageId: imageId
                 }, {
                     headers: {
                         Authorization: 'Bearer ' + token

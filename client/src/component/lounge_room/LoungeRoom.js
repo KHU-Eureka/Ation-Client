@@ -10,6 +10,7 @@ import LoungeWaitSideBar from "../lounge_wait/LoungeWaitSideBar";
 import LoungeWaitChatting from "../lounge_wait/LoungeWaitChatting";
 import LoungeActiveSideBar from "../lounge_active/LoungeActiveSideBar";
 import LoungeStartModal from "../modal/LoungeStartModal";
+import RoomInfoModal from "../modal/RoomInfoModal";
 
 import "../../assets/css/lounge/LoungeRoom.css";
 
@@ -20,9 +21,11 @@ function LoungeRoom () {
     const { id } = useParams(); // room id
 
     let [roomInfo, setRoomInfo] = useState(null); // 방 정보
+    let [memberList, setMemberList] = useState(null);
     let [ admin, setAdmin ] = useState(null); // 방장
     let [ myInfo, setMyInfo ] = useState(null); // 내 정보
     let [showLoungeStartModal, setShowLoungeStartModal] = useState(false);
+    let [showRoomInfoModal, setShowRoomInfoModal] = useState(false);
 
     const startRoom = async () => {
         let temp = {...roomInfo};
@@ -46,7 +49,32 @@ function LoungeRoom () {
     }
 
     const receiveRoomStatusMsg = (msg) => {
-        if (msg.status) {
+        if (msg.persona && msg.status) { // 만약 member 정보에 관한 거라면
+            //let temp = {...roomInfo};
+            let tempMemberList = [...memberList];
+            switch(msg.status) {
+              case 'ENTER':
+                let addMember = { admin: false, ready: false, persona: msg.persona };
+                //temp.memberList = [...temp.memberList, addMember];
+                tempMemberList = [...memberList, addMember];
+                break;
+              case 'EXIT':
+                //temp.memberList = temp.memberList.filter(elem=>elem.persona.id !== msg.persona.id);
+                tempMemberList = tempMemberList.filter(elem=>elem.persona.id !== msg.persona.id);
+                break;
+              case 'READY':
+                //temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
+                tempMemberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
+                break;
+              case 'UNREADY':
+                //temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
+                tempMemberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
+                break;
+              default:
+            }
+            setMemberList(tempMemberList);
+            //setRoomInfo(temp);
+        } else if (msg.status) { // 만약 방 정보에 관한 거라면
             switch(msg.status) {
             case 'START':
                 setShowLoungeStartModal(true) // start modal을 띄움
@@ -61,7 +89,8 @@ function LoungeRoom () {
     }
 
     const getMyInfo = () => {
-        const findMyInfo = roomInfo.memberList.find((elem)=>elem.persona.id===activePersonaId);
+        console.log('myinfo');
+        const findMyInfo = memberList.find((elem)=>elem.persona.id===activePersonaId);
         if (findMyInfo) { // 멤버 목록 중에 내가 있다면 -> 내 정보를 저장
             setMyInfo(findMyInfo);
         } else {
@@ -72,10 +101,10 @@ function LoungeRoom () {
 
     useEffect(()=> {
         // 방장과 내 정보를 따로 저장
-        if (roomInfo && activePersonaId) {
+        if (memberList && activePersonaId) {
             getMyInfo();
         }
-    }, [roomInfo, activePersonaId])
+    }, [activePersonaId, memberList])
 
     useEffect(()=> {
         const getRoomInfo = async () => {
@@ -91,6 +120,7 @@ function LoungeRoom () {
                     }
                 )
                 setRoomInfo(res.data);
+                setMemberList(res.data.memberList);
                 setAdmin(res.data.memberList.find((elem)=>elem.admin).persona);
 
             } catch(err) {
@@ -103,11 +133,12 @@ function LoungeRoom () {
 
     return (
         <div className="lounge-room">
+            { showRoomInfoModal && <RoomInfoModal roomInfo={roomInfo} setShowRoomInfoModal={setShowRoomInfoModal} isAdmin={admin.id===activePersonaId} admin={admin} setShowModal={setShowRoomInfoModal}/> }
             {/* rounge room status 관련 socket */}
             { roomInfo &&
                 <SockJsClient
                 url="http://ation-server.seohyuni.com/ws"
-                topics={[`/lounge/${roomInfo.id}/status/send`]}
+                topics={[`/lounge/${roomInfo.id}/status/send`, `/lounge/${roomInfo.id}/member/send`]}
                 onMessage={msg => { receiveRoomStatusMsg(msg) }} 
                 ref={$websocket}
                 />
@@ -116,8 +147,8 @@ function LoungeRoom () {
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo && ( roomInfo.status === "OPEN"
-                    ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal}/>
-                    : <LoungeActiveSideBar roomInfo={roomInfo} admin={admin} myInfo={myInfo}/>)
+                    ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
+                    : <LoungeActiveSideBar roomInfo={roomInfo} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
                 }
             </div>
             <div className="right-content">

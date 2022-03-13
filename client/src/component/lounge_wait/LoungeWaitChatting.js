@@ -222,7 +222,7 @@ function LoungeWaitChatting(props) {
                 }
                 </div>
             </div>
-            <form className="text-wrapper" onSubmit={(e)=>{sendChatting(e)}}>
+            <form className="text-wrapper" onSubmit={(e)=>{sendChatting(e)}} autocomplete="off">
                 <img className="tack" 
                 src={isNotice ? tack_fill : tack_empty} alt="tack"
                 onClick={()=>{setIsNotice(!isNotice)}}/>

@@ -69,7 +69,7 @@ function Form04(props) {
                                             id={image.id}
                                             value={image.id}
                                             checked={imageId===image.id}
-                                            onChange={(e)=>{setImageId(image.id)}}
+                                            onChange={(e)=>{setImageId(image.id);}}
                                         />
                                         <label htmlFor={image.id}>
                                             <img src={image.imgPath} alt="background"></img>

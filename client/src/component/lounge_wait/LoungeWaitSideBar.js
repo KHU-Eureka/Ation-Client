@@ -19,7 +19,6 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
-    const $websocket = useRef(null);
     const { roomInfo, setRoomInfo, admin, myInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
 
@@ -45,11 +44,6 @@ function LoungeWaitSideBar(props) {
               }
             }
           )
-          /*
-          let tempRoomInfo = {...roomInfo}
-          tempRoomInfo.status = 'START'
-          setRoomInfo(tempRoomInfo)
-          */
         } catch(err) {
           console.log(err)
         }
@@ -82,37 +76,6 @@ function LoungeWaitSideBar(props) {
         console.log(err)
       }
     }
-
-    const  receiveMessage = (msg) => {
-      console.log(msg)
-      if (msg.persona && msg.status) { // 만약 member 정보에 관한 거라면
-        let temp = {...roomInfo};
-        switch(msg.status) {
-          case 'ENTER':
-            let addMember = { admin: false, ready: false, persona: msg.persona };
-            temp.memberList = [...temp.memberList, addMember];
-            console.log(temp.memberList);
-            break;
-          case 'EXIT':
-            temp.memberList = temp.memberList.filter(elem=>elem.persona.id !== msg.persona.id);
-            console.log(temp.memberList);
-            break;
-          case 'READY':
-            temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
-            console.log(temp.memberList);
-            break;
-          case 'UNREADY':
-            temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
-            console.log(temp.memberList);
-            break;
-          default:
-        }
-        setRoomInfo(temp);
-
-      } else if (msg.status) { // 만약 방 status에 관한 거라면
-
-      }
-    }
     
     useEffect(()=> { // 방장이 방을 시작 할 수 있는지 구하기
       if (roomInfo && roomInfo.limitMember) {
@@ -137,12 +100,6 @@ function LoungeWaitSideBar(props) {
     return (
         <div >
           {/* member status 관련 socket */}
-          <SockJsClient
-              url="http://ation-server.seohyuni.com/ws"
-              topics={[`/lounge/${roomInfo.id}/member/send`]}
-              onMessage={msg => { receiveMessage(msg) }} 
-              ref={$websocket}
-            />
             <div className="title-wrapper">
                 <div className="title row">
                     <BracketLeft />
@@ -189,7 +146,7 @@ function LoungeWaitSideBar(props) {
                   }
                 </button>
               /* 멤버일 때 => READY 버튼 */
-              : <button className="action-btn" id={myInfo && "ready"}
+              : <button className="action-btn" id={myInfo.ready && "ready"}
                 onClick={()=>{readyHandler(myInfo && myInfo.ready)}}>READY</button>
             }
 

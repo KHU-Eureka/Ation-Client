@@ -210,21 +210,40 @@ function Stageboard(props) {
         const token = cookies.get('token');
         const stringObjectList = JSON.stringify(boardObjectList);
         // const whiteboard = stringObjectList.replace('"', "'");
-        try {
-            await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/whiteboard/${state.ideationId}`,
-                {
-                    whiteboard : stringObjectList
-                },
-                {
-                    headers: {
-                        Authorization: 'Bearer ' + token
+        console.log(stringObjectList)
+        if(stringObjectList !== "[]") {
+            try {
+                await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/whiteboard/${state.ideationId}`,
+                    {
+                        whiteboard : stringObjectList
+                    },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
                     }
-                }
-            );
-        } catch(err) {
-            console.log(err);
+                );
+            } catch(err) {
+                console.log(err);
+            }
         }
-        localStorage.setItem('whiteboard', JSON.stringify(boardObjectList));
+        // } else {
+        //     try {
+        //         await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/whiteboard/${state.ideationId}`,
+        //             {
+        //                 whiteboard : []
+        //             },
+        //             {
+        //                 headers: {
+        //                     Authorization: 'Bearer ' + token
+        //                 }
+        //             }
+        //         );
+        //     } catch(err) {
+        //         console.log(err);
+        //     }
+        // }
+        // localStorage.setItem('whiteboard', JSON.stringify(boardObjectList));
     }, [boardObjectList])
 
     useEffect(() => {
@@ -255,8 +274,8 @@ function Stageboard(props) {
 
     return (
         <>
-        <div onDrop={dropHandler} onDragOver={dragOverHandler}>
-            <Stage ref={stageRef} width={window.innerWidth - 297.01} height={window.innerHeight} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
+        <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler}>
+            <Stage ref={stageRef} width={1607} height={982} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
                 <Layer>
                     {boardObjectList.map( (obj, i) => obj.type === 'pen'?
                         <Pen 

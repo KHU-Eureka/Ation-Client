@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import LNB from './LNB';
 import Whiteboard from '../whiteboard/Whiteboard';
@@ -8,9 +8,7 @@ function Ideation() {
 
     return (
         <div className='ideation-page-Container'>
-            <aside className='lnb-container'>
-                <LNB/>
-            </aside>
+            <LNB />
             <main className='whiteboard-container'>
                 <Whiteboard/>
             </main>

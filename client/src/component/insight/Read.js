@@ -20,7 +20,7 @@ function Read() {
     let dispatch = useDispatch();
     const [pageNum, setPageNum] = useState(1);
     const [pageNum2, setPageNum2] = useState(1);
-    const [insight, setInsight] = useState(null);
+    const [insight, setInsight] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState("");
@@ -56,6 +56,9 @@ function Read() {
     // menu setting
     useEffect(()=> {
         dispatch({type: 'MENU', data: 'insight'})
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [])
 
     const PersonaSetting = async () => {
@@ -93,7 +96,7 @@ function Read() {
         if(!token || token === '') {
             setAuth(false);
         } else {
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth', {
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth/user', {
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -106,9 +109,13 @@ function Read() {
     useEffect(() => {
         PersonaSetting();
         fetchUserName();
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [])
 
     useEffect( async () => {
+        
         console.log(cate);
         if(cate !== "전체") {
             let cateList = [];
@@ -117,7 +124,7 @@ function Read() {
               );
             console.log(cate);
             for (var i of response.data) { 
-               if(cate === i.insightMainCategory.name) {
+               if(cate === i.mainCategory.name) {
                 cateList.push(i);
                }
               }
@@ -127,8 +134,12 @@ function Read() {
             const response = await axios.get(
                 process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
-            setInsight(response.data);
+            console.log( response.data);
+            await setInsight(response.data);
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
       }, [cate]);
 
     const imgClickHandler = async(e) => {
@@ -186,28 +197,6 @@ function Read() {
 
     const searchSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
-            // let searchInsight = []
-            // if(cate === '전체') {
-            //     const response = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
-            //       );
-            //     setInsight(response.data);
-            // } else {
-            //     const response = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/main-category/${cateId}`
-            //     );
-            //     const response2 = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
-            //     );
-            //     for(var i of response.data) {
-            //         for(var j of response2.data) {
-            //             if(i.id === j.id) {
-            //                 searchInsight.push(j);
-            //             }
-            //         }
-            //     }
-            //     setInsight(searchInsight);
-            // }
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
               );
@@ -225,6 +214,9 @@ function Read() {
             setCate("전체");
             setAddTrue(false);
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [addTrue])
   
     if (loading) return <div>로딩중..</div>;
@@ -257,8 +249,8 @@ function Read() {
                             </div>:<></>}
                             <p className="title" id={i.id}>{i.title}</p>
                             <div className="tag-container">
-                            <span className="tag" id={i.id}> #{i.insightMainCategory.name}</span>
-                            {i.insightSubCategoryList.map(tag => (
+                            <span className="tag" id={i.id}> #{i.mainCategory.name}</span>
+                            {i.subCategoryList.map(tag => (
                                 <span className="tag" id={i.id}> #{tag.name}</span>
                             ))}
                             </div>

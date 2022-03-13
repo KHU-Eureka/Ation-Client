@@ -67,8 +67,8 @@ function Create(props) {
                     } else {
                         try {
                             const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                                "insightMainCategoryId": mainCategory,
-                                "insightSubCategoryIdList": ClickedSubCategory,
+                                "mainCategoryId": mainCategory,
+                                "subCategoryIdList": ClickedSubCategory,
                                 "tagList": hashtag,
                                 "url": url
                             });
@@ -81,8 +81,8 @@ function Create(props) {
                 } else {
                     try {
                         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/insight', {
-                            "insightMainCategoryId": mainCategory,
-                            "insightSubCategoryIdList": ClickedSubCategory,
+                            "mainCategoryId": mainCategory,
+                            "subCategoryIdList": ClickedSubCategory,
                             "tagList": [],
                             "url": url
                         });

@@ -12,6 +12,7 @@ import o_nose from '../../assets/svg/sense_nose_o.svg';
 import o_ear from '../../assets/svg/sense_ear_o.svg';
 import o_mouth from '../../assets/svg/sense_mouth_o.svg';
 import o_hand from '../../assets/svg/sense_hand_o.svg';
+import lounge_delete from '../../assets/svg/lounge_delete.svg';
 
 const senseImg = (sense, mode) => {
     switch(sense) {
@@ -92,6 +93,12 @@ const enterBtn = (isValid, loungeId, personaId) => {
     );
 }
 
+const deleteBtn = (loungeId) => {
+    return(
+        <img className="delete-btn" id={loungeId} src={lounge_delete} />
+    );
+}
+
 export const imgBox = (obj, isPin) => {
     return(
         <div className='imgbox-container' style={{backgroundImage: `url(${obj.imgPath})`, cursor: 'pointer'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
@@ -132,6 +139,7 @@ export const moduleBox = (obj, isSense) => {
                     {enterBtn( obj.status !=='END'? true:false, obj.id, obj.persona.id )}
                 </div>
             </div>
+            {!isSense?deleteBtn(obj.id):null}
         </div>
     );
 }

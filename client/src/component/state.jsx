@@ -100,3 +100,7 @@ export function clickUIPrevHandler(prevStyle, prevElems) {
 export function clickUIChangeHandler(changeStyle, currentTarget) {
     for(let key in changeStyle) currentTarget.style[key] = changeStyle[key];
 }
+
+export async function loungeDeleteHandler(loungeId, personaId) {
+    
+}

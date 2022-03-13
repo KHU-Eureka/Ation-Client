@@ -1,15 +1,21 @@
 .ideation-page-Container {
+    padding-top: 82px;
     display: flex;
-    overflow: hidden;
-    
-    .lnb-container {
-        background: #E7E6E5;
-        width: 15vw;
-    }
 
     .whiteboard-container {
-        background: #ffffff;
-        float: right;
-        width: calc( 1920px - 15vw );
+        background: #F3F3F3;
+        width: 100%;
+        height: 100%;
+        margin-left: 297.01px;
+        margin-top: 0px;
+
+        .stageboard-container {
+            background: #ffffff;
+            border-radius: 10px;
+            margin-left: 7.99px;
+            margin-top: 8px;
+            margin-right: 7.99px;
+            margin-bottom: 8px;
+        }
     }
 }

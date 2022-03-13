@@ -108,7 +108,7 @@ $FONTSTYLE: 'normal';
         font-weight: 500;
         font-size: $SIZE4;
         color: $COLOR2;
-        margin-bottom: 23px
+        margin-bottom: 15px
     }
 }
 
@@ -116,6 +116,7 @@ $FONTSTYLE: 'normal';
     .modulebox-container {
         @include flex-center-lounge();
         display: flex;
+        position: relative;
         width: 248.88px;
         height: 62px;
         margin-bottom: 10px;
@@ -163,15 +164,16 @@ $FONTSTYLE: 'normal';
                 align-items: center;
             }
         }
+        .delete-btn {
+            position: absolute;
+            top: -8px;
+            left: 225px;
+        }
     }
 }
 
 @mixin scrollbar-lounge($h: 270px) {
     width: 6px;
-    // height: $h;
-    // border-radius: 100px;
-    // cursor: pointer;
-    
 }
 
 @mixin scrollbar-point-lounge($h: 270px) {
@@ -186,29 +188,6 @@ $FONTSTYLE: 'normal';
     background-color: transparent; 
     width: 6px;
 }
-
-/* 스크롤바 설정*/
-// .Lounge-Container .Pinboard-container::-webkit-scrollbar{
-//     width: 4px;
-//     height: 140px;
-//     border-radius: 7px;
-//     cursor: pointer;
-// }
-
-// .section::-webkit-scrollbar-track { 
-//     background-color: transparent; 
-//     width: 4px;
-// }
-
-
-/* 스크롤바 막대 설정*/
-// .Lounge-Container .Pinboard-container::-webkit-scrollbar-thumb{
-//     background: #C4C4C4;
-//     border-radius: 7px;
-//     width: 4px;
-// }
-
-
 
 .Lounge-Container {
     padding-top: 82px;
@@ -226,12 +205,14 @@ $FONTSTYLE: 'normal';
             .LoungeRoom-container {
                 background: #8995BD;
                 width: 259.44px;
-                height: 206px;
+                height: 214px;
                 overflow-y: auto;
+                overflow-x: hidden;
 
                 .LoungeRoom-wrap-container {
+                    margin-top: 8.5px;
                     width: 248.88px;
-                    height: 206px;
+                    height: 214px;
                 }
             }
     

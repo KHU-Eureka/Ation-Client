@@ -49,7 +49,7 @@ export default function PersonaProfile(props) {
   
 
     return (
-        <div className='PersonaProfile-Container' style={{width: '250px', height: '149px', background: 'salmon'}}>
+        <div className='PersonaProfile-Container' style={{width: '250px', height: isLoungeHome?'149px':'88.38px'}}>
             <div className="title" style={{...titleStyle}}>활동 중인 페르소나</div>
                 {/* <div className="content-wrapper" width='181.83px' height='51.38px' style={{}}> */}
                 {
@@ -76,6 +76,6 @@ export default function PersonaProfile(props) {
                     <button className='btn'>Open Lounge</button>
                 </div>
                 :null}
-            </div>
+        </div>
     );
 }

@@ -91,7 +91,6 @@ function LoungeRoom () {
     }
 
     const getMyInfo = () => {
-        console.log('myinfo');
         const findMyInfo = memberList.find((elem)=>elem.persona.id===activePersonaId);
         if (findMyInfo) { // 멤버 목록 중에 내가 있다면 -> 내 정보를 저장
             setMyInfo(findMyInfo);
@@ -136,7 +135,7 @@ function LoungeRoom () {
     return (
         <div className="lounge-room">
             { showRoomInfoModal && <RoomInfoModal roomInfo={roomInfo} setShowRoomInfoModal={setShowRoomInfoModal} isAdmin={admin.id===activePersonaId} admin={admin} setShowModal={setShowRoomInfoModal} setShowRoomEditModal={setShowRoomEditModal}/> }
-            { showRoomEditModal && <RoomEditModal roomInfo={roomInfo} setShowModal={setShowRoomEditModal}/> }
+            { showRoomEditModal && <RoomEditModal roomInfo={roomInfo} setRoomInfo={setRoomInfo} setShowModal={setShowRoomEditModal}/> }
             {/* rounge room status 관련 socket */}
             { roomInfo &&
                 <SockJsClient

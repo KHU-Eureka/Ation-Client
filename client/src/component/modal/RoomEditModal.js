@@ -9,7 +9,7 @@ import SelectBox from '../views/input/SelectBox';
 import './RoomEditModal.css';
 
 function RoomEditModal(props) {
-    const { roomInfo, setShowModal } = props;
+    const { roomInfo, setShowModal, setRoomInfo } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const senseInfoList = useSelector(state=>state.senseInfoList);
     const memberList = [...Array(30)].map((v, i)=>i+1);
@@ -18,8 +18,8 @@ function RoomEditModal(props) {
     let [title, setTitle] = useState(roomInfo.title);
     let [mainCategoryId, setMainCategoryId] = useState(roomInfo.mainCategory.id);
     let [subCategoryIdList, setSubCategoryIdList] = useState([]);
-    let [limitMember, setLimitMember] = useState(roomInfo.limitMember);
-    let [isLimit, setIsLimit] = useState(roomInfo.limitMember!==null);
+    let [limitMember, setLimitMember] = useState(roomInfo.limitMember?roomInfo.limitMember:1);
+    let [isLimit, setIsLimit] = useState(roomInfo.limitMember);
     let [senseId, setSenseId] = useState(roomInfo.sense.senseId);
     let [introduction, setIntroduction] = useState(roomInfo.introduction);
     let [imageId, setImageId] = useState(1);
@@ -33,6 +33,24 @@ function RoomEditModal(props) {
 
     // subCategory 선택 개수 제한 메세지
     let [showAlertMsg, setShowAlertMsg] = useState(false);
+
+    const updateRoomInfo = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const res = await axios.get(
+                `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}`, {
+                    headers: {
+                        Authorization: {
+                            Bearer: 'Bearer ' + token
+                        }
+                    }
+                }
+            )
+            setRoomInfo(res.data);
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     const editLoungeInfo = async () => {
         const token = localStorage.getItem('token');
@@ -55,6 +73,7 @@ function RoomEditModal(props) {
                 }
             )
             setShowModal(false);
+            updateRoomInfo();
         } catch(err) {
             console.log(err);
         }

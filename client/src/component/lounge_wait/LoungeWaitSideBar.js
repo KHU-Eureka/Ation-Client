@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import SockJsClient from 'react-stomp';
 import { useSelector } from "react-redux";
 import axios from 'axios';
-
+import RoomSetting from "../lounge_active/RoomSetting";
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
 import exclamation from '../../assets/image/exclamation.png';
@@ -19,8 +19,9 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
-    const { roomInfo, setRoomInfo, admin, myInfo } = props;
+    const { roomInfo, setRoomInfo, admin, myInfo, setShowRoomInfoModal } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
+    let alertRef = useRef();
 
     const senseInfoList = [
       { id: 1, name: "눈", svg: eye },
@@ -30,8 +31,9 @@ function LoungeWaitSideBar(props) {
       { id: 5, name: "손", svg: hand },
     ]
 
-    let [ showAlertBlock, setShowAlertBlock ] = useState(true);
-    let [canStart, setCanStart] = useState(false);
+    let [ showAlertBlock, setShowAlertBlock ] = useState(false); // can't start alert block
+    let [canStart, setCanStart] = useState(false); // 방장이 방을 시작할 수 있는지..
+    let [showToggle, setShowToggle] = useState(false); // title 옆 toogle
 
     const startHandler = async () => {
       if (canStart) { // 시작이 가능할 때
@@ -87,12 +89,17 @@ function LoungeWaitSideBar(props) {
       }
     }, [roomInfo.memberList, roomInfo.limitMember])
     
+    const clickAlertBlockOutside = (e) => {
+      if (!alertRef.current.contains(e.target)) {
+        setShowAlertBlock(false);
+      }
+    }
 
     useEffect(()=> {
-      document.addEventListener('click', setShowAlertBlock(false))
+      document.addEventListener('click', clickAlertBlockOutside)
 
       return (()=> {
-        document.removeEventListener('click', setShowAlertBlock(false))
+        document.removeEventListener('click', clickAlertBlockOutside)
       })
     }, [])
 
@@ -108,7 +115,10 @@ function LoungeWaitSideBar(props) {
                         </span>
                     <BracketRight />
                 </div>
-                <BiChevronDown className="down-icon"/>
+                <div className="room-info" onClick={()=>{setShowToggle(true)}}>
+                    <BiChevronDown className="down-icon"/>
+                    { showToggle && <RoomSetting roomId={roomInfo.id} showToggle={showToggle} setShowToggle={setShowToggle} setShowRoomInfoModal={setShowRoomInfoModal}/> }
+                </div>
             </div>
 
             <div className="title">활동 중인 페르소나</div>
@@ -128,14 +138,13 @@ function LoungeWaitSideBar(props) {
                             ))}
                         </div>
                     </div>
-                    <BiChevronDown className="down-icon"/>
                 </div>
               }
             </div>
             {
               admin && (admin.id === activePersonaId)
               /* 방장일 때 => START 버튼 */
-              ? <button className="action-btn" disabled={!canStart} onClick={startHandler}>
+              ? <button className="action-btn" id={!canStart && "disabled"} onClick={()=>{startHandler()}} ref={alertRef}>
                   START
                   {
                     showAlertBlock &&
@@ -146,7 +155,7 @@ function LoungeWaitSideBar(props) {
                   }
                 </button>
               /* 멤버일 때 => READY 버튼 */
-              : <button className="action-btn" id={myInfo.ready && "ready"}
+              : <button className="action-btn" id={myInfo && myInfo.ready && "ready"}
                 onClick={()=>{readyHandler(myInfo && myInfo.ready)}}>READY</button>
             }
 

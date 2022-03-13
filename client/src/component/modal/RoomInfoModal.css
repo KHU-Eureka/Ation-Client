@@ -8,7 +8,7 @@
 .room-info .modal-wrapper,
 .room-edit .modal-wrapper {
     width: 674px;
-    height: 687px;
+    height: 620px;
     padding: 0;
 }
 
@@ -39,6 +39,7 @@
 .room-info .edit-btn {
     position: absolute;
     right: 34px;
+    top: 28px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -60,10 +61,12 @@
 .room-info .content-wrapper .category-wrapper {
     height: 30px;
     margin-bottom: 10px;
+    display: flex;
 }
 
 .room-info .content-wrapper .category-wrapper > .category-elem {
     width: fit-content;
+    height: fit-content;
     padding: 4px 17px;
     font-weight: 500;
     font-size: 12px;

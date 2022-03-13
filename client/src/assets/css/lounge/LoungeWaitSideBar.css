@@ -131,8 +131,8 @@
     font-weight: 500;
 }
 
-.lounge-room .lounge-sidebar .action-btn:disabled { background: #BEBBB9; cursor: default; }
-.lounge-room .lounge-sidebar .action-btn:disabled:hover { color: white; }
+.lounge-room .lounge-sidebar .action-btn#disabled { background: #BEBBB9; cursor: default; }
+.lounge-room .lounge-sidebar .action-btn#disabled:hover { color: white; }
 .lounge-room .lounge-sidebar .action-btn:hover, 
 .lounge-room .lounge-sidebar #ready { color: #FFA48C; }
 

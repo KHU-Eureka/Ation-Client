@@ -79,3 +79,40 @@
 .login-submit:hover {
     background-color: #d85a3b;
 }
+
+/* login modal */
+.login .logo {
+    margin-top: 50px;
+}
+
+.login .modal-sub-title {
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.login .sl-btn {
+    width: 400px; height: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #352C23;
+    border-radius: 100px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.login .sl-btn:hover { transform: translateY(3px); }
+.login .sl-btn > svg { margin-right: 10px; }
+
+.login .sl-btn#google {
+    border: 1px solid #E7E6E5;
+    margin-bottom: 10px;
+}
+
+.login .sl-btn#kakao {
+    background: #FEE500;
+    margin-bottom: 40px;
+}

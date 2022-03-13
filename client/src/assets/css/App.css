@@ -65,3 +65,7 @@ body {
   margin: 0px;
   font-family: Pretendard;
 }
+
+::selection {
+	background-color: #FE340030;
+}

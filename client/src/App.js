@@ -20,6 +20,7 @@ import Lounge from "../src/component/lounge/Lounge";
 import LoungeRoom from "./component/lounge_room/LoungeRoom";
 
 import Login from "../src/component/login/Login";
+import LoginLoading from "./component/login/LoginLoading";
 import SignUp from "../src/component/signup/SignUp";
 import MyPage from "../src/component/mypage/MyPage";
 import Landing from "../src/component/landing/Landing";
@@ -28,6 +29,9 @@ import Landing from "../src/component/landing/Landing";
 import "./assets/css/App.css";
 import "./assets/css/input/Input.css";
 import "./assets/css/modal/ModalBig.css";
+
+// font
+import "./assets/font/trap/Trap.css";
 
 function App() {
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
@@ -64,13 +68,16 @@ function App() {
             <Route exact path="" element={<Lounge/>} />
           </Route>
 
-          <Route path="/lounge-room/:mode" element={<PrivateOutlet/>}>
+          <Route path="/lounge-room/:id" element={<PrivateOutlet/>}>
             <Route path="" element={<LoungeRoom/>}/>
           </Route>
           
           {/* Public & restricted Pages */}
           <Route path="/login" element={<PublicOutlet/>} >
             <Route exact path="" element={<Login/>} />
+          </Route>
+          <Route path="/oauth2/redirect" element={<PublicOutlet/>} >
+            <Route exact path="" element={<LoginLoading/>} />
           </Route>
 
           <Route path="/signup" element={<PublicOutlet/>} >

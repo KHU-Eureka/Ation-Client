@@ -29,7 +29,7 @@ function Delete(props) {
 
     const deleteClickHandler = async () => {
         if(description === "카드") {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/pin/${deletePinId}`, {
                 headers: {
                     Authorization: "Bearer " + token
@@ -38,7 +38,7 @@ function Delete(props) {
             closeDeleteModal();
             window.location.reload();
         } else {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/pin-board/${deletePinId}`, {
                 headers: {
                     Authorization: "Bearer " + token

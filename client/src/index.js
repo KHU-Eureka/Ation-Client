@@ -3,12 +3,25 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
+import { ReactComponent as Eye } from './assets/svg/sense/eye.svg';
+import { ReactComponent as Nose } from './assets/svg/sense/nose.svg';
+import { ReactComponent as Mouth } from './assets/svg/sense/mouth.svg';
+import { ReactComponent as Hand } from './assets/svg/sense/hand.svg';
+import { ReactComponent as Ear } from './assets/svg/sense/ear.svg';
+
 import App from './App';
 
 let initialState = {
   auth: false,
   activePersonaId: null,
   menu: null,
+  senseInfoList: [
+    { id: 1, svg: <Eye/> },
+    { id: 2, svg: <Nose/> },
+    { id: 3, svg: <Mouth/> },
+    { id: 4, svg: <Hand/> },
+    { id: 5, svg: <Ear/> },
+  ]
 }
 
 function reducer(state = initialState, action) {

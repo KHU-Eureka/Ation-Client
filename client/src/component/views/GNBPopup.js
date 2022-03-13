@@ -7,27 +7,23 @@ import axios from 'axios';
 import '../../assets/css/GNBPopup.css';
 
 function GNBPopup(props) {
-    const cookies = new Cookies();
-    const [cookie, setCookie, removeCookie] = useCookies(['token'])
     let auth = useSelector((state) => state.auth);
     let dispatch = useDispatch();
     const ref = useRef();
     const navigation = useNavigate();
 
     let [personaList, setPersonaList] = useState([]);
-    let [seeMore, setSeeMore] = useState(true); // persona 더보기 관련
 
     const logOut = () => {
-        removeCookie('token');
+        localStorage.removeItem('token');
         dispatch({type: 'AUTH', data: false});
         dispatch({type: 'MENU', data: ''});
         navigation('/login');
-        localStorage.setItem('target', '');
     }
 
     useLayoutEffect(() => {
         const getPersonaList = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona', {
@@ -58,7 +54,7 @@ function GNBPopup(props) {
     }, [])
 
     return (
-        <div className={props.showGNBPopup ? "gnb-popup show-gnbpopup" : "gnb-popup hide-gnbpopup"}
+        <div className="gnb-popup"
         ref={ref}>
             <div className="header">
                 <IoIosArrowDown 
@@ -71,17 +67,8 @@ function GNBPopup(props) {
                     <div className="persona-preview active-persona">
                         <img className="persona-image" src={props.activePersona.profileImgPath} alt="persona profile"></img>
                         <div className="persona-name">{props.activePersona.nickname}</div>
-                        <div id="close-popup">
-                        { /* active persona말고 다른 persona가 있다면,, */ 
-                        personaList.length > 1 && 
-                            (seeMore ? 
-                            <IoIosArrowUp onClick={()=>{setSeeMore(false)}}/> 
-                            : <IoIosArrowDown onClick={()=>{setSeeMore(true)}}/> )
-                        }
-                        </div>
                     </div>
-                    <div className="see-more"
-                    style={seeMore ? null : {height: '0px'}}>
+                    <div className="see-more">
                     {
                         personaList && personaList.map(function(persona, idx) {
                             return (
@@ -89,7 +76,7 @@ function GNBPopup(props) {
                                 <div 
                                 className="persona-preview"
                                 key={idx}
-                                onClick={()=>{props.changeActivePersona(persona)}}>
+                                onClick={()=>{props.changeActivePersona(persona); props.setShowGNBPopup(false)}}>
                                     <img className="persona-image" src={persona.profileImgPath} alt="persona profile"></img>
                                     <div className="persona-name">{persona.nickname}</div>
                                 </div>

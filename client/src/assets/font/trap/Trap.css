@@ -1,0 +1,64 @@
+@font-face {
+	font-family: 'Trap';
+	font-weight: 900;
+	font-display: swap;
+	src: local('Trap Black'), url('./Trap-Black.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 800;
+	font-display: swap;
+	src: local('Trap ExtraBold'), url('./Trap-ExtraBold.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 700;
+	font-display: swap;
+	src: local('Trap Bold'), url('./Trap-Bold.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 600;
+	font-display: swap;
+	src: local('Trap SemiBold'), url('./Trap-SemiBold.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 500;
+	font-display: swap;
+	src: local('Trap Medium'), url('./Trap-Medium.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 400;
+	font-display: swap;
+	src: local('Trap Regular'), url('./Trap-Regular.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 300;
+	font-display: swap;
+	src: local('Trap Light'), url('./Trap-Light.otf') format('woff');
+}
+
+/*
+@font-face {
+	font-family: 'Trap';
+	font-weight: 200;
+	font-display: swap;
+	src: local('Trap ExtraLight'), url('./Trap-ExtraLight.otf') format('otf'), url('./woff/Trap-ExtraLight.otf') format('woff');
+}
+
+@font-face {
+	font-family: 'Trap';
+	font-weight: 100;
+	font-display: swap;
+	src: local('Trap Thin'), url('./Trap-Thin.otf') format('otf'), url('./Trap-Thin.otf') format('woff');
+}
+*/

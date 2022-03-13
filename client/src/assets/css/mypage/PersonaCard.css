@@ -2,8 +2,7 @@
     width: 100%;
     height: 460px;
     padding-top: 80px;
-    background-color: #FFA48C;
-    /*position: absolute;*/
+    background-color: #E7E6E5;
     top: 0px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -34,7 +33,7 @@
 .persona-profile {
     width: 280px;
     height: 300px;
-    background-color: white;
+    background-color: #E7E6E5;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
     background-size: cover; 
@@ -136,25 +135,24 @@
 }
 
 .add-persona-btn {
-    width: 80px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 20px;
-    color: #FE6740;
-    border: 1px solid #FE6740;
-    font-size: 19px;
-    transition: 0.2s;
+    width: 100%; height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
     cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    top: calc(50% - 20px);
+    transition: 0.2s;
 }
 
+.add-persona-btn > .text { opacity: 0; font-size: 15px; margin-top: 5px; transition: 0.2s; }
+
+.add-persona-btn:hover > .text { opacity: 1; }
+
 .add-persona-btn:hover {
-    background-color: #FE6740;
-    color: white;
+    background-color: #807A7450;
 }
 
 .active-persona-change .card-wrapper:first-child {

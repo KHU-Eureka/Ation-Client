@@ -1,0 +1,52 @@
+.open-lounge .lounge-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    color: #FE6740;
+}
+
+.open-lounge .lounge-status img {
+    width: 112px;
+    height: 112px;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+
+.open-lounge .lounge-status > .title {
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
+
+.open-lounge .lounge-status > .subtitle { font-size: 15px; }
+
+.open-lounge .lounge-status > .waiting-circle {
+    width: 60px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.open-lounge .lounge-status > .waiting-circle > div {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #D7D2C8;
+}
+
+.open-lounge .lounge-status > .waiting-circle > div:first-child {
+    animation: waiting 0.9s infinite;
+}
+
+.open-lounge .lounge-status > .waiting-circle > div:nth-child(2) {
+    animation: waiting 0.9s infinite 0.2s;
+}
+
+.open-lounge .lounge-status > .waiting-circle > div:last-child {
+    animation: waiting 0.9s infinite 0.4s;
+}
+
+@keyframes waiting {
+    80% {background: #FFA48C; transform: translateY(-5px);}
+}

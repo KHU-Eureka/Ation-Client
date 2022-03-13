@@ -90,10 +90,10 @@ function MyPersona ({match}) {
 
     useLayoutEffect(() => {
         const getBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -136,7 +136,7 @@ function MyPersona ({match}) {
 
     // 닉네임의 중복성을 검사함
     const nicknameValidationCheck = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         const temp = tempNickName;
         try {
             const res = await axios.get(
@@ -307,7 +307,7 @@ function MyPersona ({match}) {
             if (personaId != null) {
                 // persona  정보를 받아옴
                 const getPersona = async () => {
-                    const token = cookies.get('token');
+                    const token = localStorage.getItem('token');
                     try {
                         const res = await axios.get(
                             process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
@@ -379,7 +379,10 @@ function MyPersona ({match}) {
         }
     
         const editPersona = async () => {
-            const token = cookies.get('token');
+            if (formData) { // 프로필 이미지를 변경했다면,
+                postProfileImg();
+            }
+            const token = localStorage.getItem('token');
             try {
                 await axios.put(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
@@ -399,12 +402,8 @@ function MyPersona ({match}) {
                         }
                     }
                 )
-                if (formData) {
-                    postProfileImg();
-                }
-    
                 window.scrollTo(0,0)
-    
+
                 // 마이페이지로 이동
                 navigation('/mypage', { state: {alert:{title: "페르소나 수정을 완료했습니다", subtitle: "", show: true}}})
             } catch (err) {
@@ -413,7 +412,8 @@ function MyPersona ({match}) {
         }
     
         const postProfileImg = async () => {
-            var token = cookies.get('token');
+            var token = localStorage.getItem('token');
+            dispatch({type: 'CHANGEPERSONA', data: null});
             try {
                 await axios.post(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -423,13 +423,14 @@ function MyPersona ({match}) {
                         }
                     }
                 )
+                dispatch({type: 'CHANGEPERSONA', data: personaId});
             } catch (err) {
                 console.log(err);
             }
         }
     
         const changeActivePersona = async (personaId) => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.put(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
@@ -446,7 +447,7 @@ function MyPersona ({match}) {
         }
     
         const deletePersona = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.delete(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {
@@ -644,31 +645,6 @@ function MyPersona ({match}) {
                                 } )
                             }
 
-                            {/*
-                                newCharmList.map((charm, idx) => (
-                                    (idx < 3 - charmList.length) && 
-                                    <div className="checkbox-elem" key={idx}>
-                                        <input
-                                            id={ "newcharm" + idx }
-                                            value={charm}
-                                            name="charm"
-                                            type="checkbox"
-                                            checked={charmList.includes(charm)}
-                                            onChange={ (e)=>{ charmChangeHandler(false, charm) } }
-                                        />
-                                        <label htmlFor="new-charm1" className="center">
-                                            <textarea 
-                                                className="new-tag-input"
-                                                rows="1"
-                                                placeholder="직접 태그를 &#10;입력해보세요!"
-                                                value={newCharm1}
-                                                onChange={ (e)=>{ charmChangeHandler(false, e.target.value) } }
-                                            />
-                                        </label>
-                                    </div>
-                                ))
-                                */}
-
                             { (mode==="edit" && pastCharmList.length < 3) &&
                             <div className="checkbox-elem">
                                 <input
@@ -778,13 +754,13 @@ function MyPersona ({match}) {
                                     senseInfoList.map( function(sense, idx) {
                                         return(
                                             (mode==="edit" || senseIdList.includes(sense.senseId))
-                                            && <div className="checkbox-elem" key={ idx }>
+                                            && <div className="checkbox-elem" key={ idx }
+                                            style={mode==="view" ? null :{ width: sense.width }}>
                                                 <input
                                                     id={ "sense"+sense.senseId }
                                                     value={ sense.senseId }
                                                     name="sense"
                                                     type="checkbox"
-                                                    style={mode==="view" ? null :{ width: sense.width }}
                                                     checked={senseIdList.includes(sense.senseId) ? true : false}
                                                     onClick={ (e)=>{senseChangeHandler(e.currentTarget.checked, sense.senseId) }}
                                                     disabled={mode==="view"}

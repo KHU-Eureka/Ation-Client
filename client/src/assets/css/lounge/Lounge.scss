@@ -108,7 +108,7 @@ $FONTSTYLE: 'normal';
         font-weight: 500;
         font-size: $SIZE4;
         color: $COLOR2;
-        margin-bottom: 23px
+        margin-bottom: 15px
     }
 }
 
@@ -116,6 +116,7 @@ $FONTSTYLE: 'normal';
     .modulebox-container {
         @include flex-center-lounge();
         display: flex;
+        position: relative;
         width: 248.88px;
         height: 62px;
         margin-bottom: 10px;
@@ -162,6 +163,11 @@ $FONTSTYLE: 'normal';
                 display: flex;
                 align-items: center;
             }
+        }
+        .delete-btn {
+            position: absolute;
+            top: -8px;
+            left: 225px;
         }
     }
 }
@@ -226,12 +232,14 @@ $FONTSTYLE: 'normal';
             .LoungeRoom-container {
                 background: #8995BD;
                 width: 259.44px;
-                height: 206px;
+                height: 214px;
                 overflow-y: auto;
+                overflow-x: hidden;
 
                 .LoungeRoom-wrap-container {
+                    margin-top: 8.5px;
                     width: 248.88px;
-                    height: 206px;
+                    height: 214px;
                 }
             }
     

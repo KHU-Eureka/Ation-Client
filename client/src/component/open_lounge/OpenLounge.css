@@ -51,7 +51,8 @@
 }
 
 /* room title 관련 */
-.open-lounge .modal-content .room-title {
+.open-lounge .modal-content .room-title,
+.room-edit .modal-content .room-title {
     width: 390px;
     font-size: 38px;
     border-bottom: 1px solid #C4C4C4;
@@ -85,7 +86,7 @@
     margin-bottom: 20px;
 }
 
-.open-lounge .modal-wrapper .next-page {
+.open-lounge .next-page {
     width: 76px;
     height: 37px;
     position: absolute;
@@ -102,11 +103,11 @@
     transition: 0.2s;
 }
 
-.open-lounge .modal-wrapper .next-page:hover {
+.open-lounge .next-page:hover {
     background-color: #F5F5F5;
 }
 
-.open-lounge .modal-wrapper .next-page:disabled {
+.open-lounge .next-page:disabled {
     cursor:not-allowed;
     border: 1px solid #FFA48C;
     color: #FFA48C;
@@ -150,21 +151,21 @@
 .open-lounge .form03 .input-wrapper > label { margin-bottom: 10px; }
 
 /* limit member select box 부분 */
-.open-lounge .form03 .limit-member { width: 71px; position: relative; margin-right: 20px; }
-.open-lounge .form03 .limit-member .select-box .down-icon { display: none; }
-.open-lounge .form03 .limit-member .select-box .select-value {
+.open-lounge .limit-member { width: 71px; position: relative; margin-right: 20px; }
+.open-lounge .limit-member .select-box .down-icon { display: none; }
+.open-lounge .limit-member .select-box .select-value {
     width: 100%;
     height: 40px; 
     line-height: 40px;     
     padding: 0;
     text-align: center; 
 }
-.open-lounge .form03 .limit-member .select-box .active { height: 60px; line-height: 60px; }
-.open-lounge .form03 .limit-member .select-box .option-wrapper {    
+.open-lounge .limit-member .select-box .active { height: 60px; line-height: 60px; }
+.open-lounge .limit-member .select-box .option-wrapper {    
     padding-right: 5px;
     width: calc(100% - 15px);
 }
-.open-lounge .form03 .limit-member > .down-icon {
+.open-lounge .limit-member > .down-icon {
     position: absolute;
     top: calc(50% - 7px);
     right: 8px;
@@ -175,8 +176,8 @@
     pointer-events: none;
 }
 
-.open-lounge .form03 .row1 #disabled > .down-icon { color: #BEBBB9; }
-.open-lounge .form03 .row1 #disabled > .select-box .select-value {
+.open-lounge #disabled > .down-icon { color: #BEBBB9; }
+.open-lounge #disabled > .select-box .select-value {
     background-color: #F5F5F5;
     border: 1px solid #E7E6E5;
     pointer-events: none;
@@ -184,13 +185,13 @@
 }
 
 /* limit check 부분 */
-.open-lounge .form03 .is-limit {
+.open-lounge .is-limit {
     margin-top: 10px;
     display: flex;
     cursor: pointer;
 }
 
-.open-lounge .form03 .is-limit > .check {
+.open-lounge .is-limit > .check {
     width: 15px; height: 15px;
     border: 2px solid #8B8B8B;
     border-radius: 3px;
@@ -199,7 +200,7 @@
     position: relative;
 }
 
-.open-lounge .form03 .is-limit > .check > svg {
+.open-lounge .is-limit > .check > svg {
     position: absolute;
     bottom: -1px; left: -3px;
     font-size: 0px;
@@ -208,15 +209,15 @@
     font-size: 25px;
     animation: check 0.2s;
 }
-.open-lounge .form03 .is-limit > .text { font-size: 15px; font-weight: 500; transition: 0.2s; }
+.open-lounge .is-limit > .text { font-size: 15px; font-weight: 500; transition: 0.2s; }
 
 @keyframes check {
     0% { transform: translateY(-10px); opacity: 0;}
     80% { transform: translateY(3px); }
 }
 
-.open-lounge .form03 #checked { color: #FE3400; }
-.open-lounge .form03 #checked .check { border-color: #FE3400 !important; }
+.open-lounge #checked { color: #FE3400; }
+.open-lounge #checked .check { border-color: #FE3400 !important; }
 
 
 .open-lounge .sense-wrapper { width: 405px !important; } 
@@ -293,7 +294,7 @@
     margin-bottom: 20px;
 }
 
-.open-lounge .form04 .cover-preview {
+.open-lounge .cover-preview {
     width: 344px;
     height: 206px;
     margin-top: 10px;
@@ -303,7 +304,7 @@
     transition: 0.2s;
 }
 
-.open-lounge .form04 .image-wrapper {
+.open-lounge .image-wrapper {
     width: 225px;
     min-height: 206px;
     padding: 10px;
@@ -311,7 +312,7 @@
     overflow-y: scroll;
 }
 
-.open-lounge .form04 .image-wrapper > .checkbox-wrapper {
+.open-lounge .image-wrapper > .checkbox-wrapper {
     width: 245px;
     min-height: 206px;
 }
@@ -326,18 +327,18 @@
     border-radius: 10px;
 }
 
-.open-lounge .form04 .image-wrapper .image-elem {
+.open-lounge .image-wrapper .image-elem {
     width: 100px;
     height: 60px;
     margin-bottom: 13px;
 }
 
-.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"] {
+.open-lounge .image-wrapper .image-elem > input[type="checkbox"] {
     border: 1px solid #BEBBB9;
 }
 
-.open-lounge .form04 .image-wrapper .image-elem > label,
-.open-lounge .form04 .image-wrapper .image-elem > label > img {
+.open-lounge .image-wrapper .image-elem > label,
+.open-lounge .image-wrapper .image-elem > label > img {
     width: 100% !important;
     height: 100% !important;
     padding: 0 !important;
@@ -346,7 +347,7 @@
     transition: 0.2s;
 }
 
-.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"]:hover + label > img,
-.open-lounge .form04 .image-wrapper .image-elem > input[type="checkbox"]:checked + label > img {transform: scale(1.07);}
+.open-lounge .image-wrapper .image-elem > input[type="checkbox"]:hover + label > img,
+.open-lounge .image-wrapper .image-elem > input[type="checkbox"]:checked + label > img {transform: scale(1.07);}
 
 .open-lounge #complete-btn { width: 102px; }

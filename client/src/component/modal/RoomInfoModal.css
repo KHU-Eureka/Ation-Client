@@ -1,10 +1,12 @@
-.room-info .modal-background {
+.room-info .modal-background,
+.room-edit .modal-background {
     background: rgba(34, 34, 34, 0.63);
     backdrop-filter: none;
     z-index: 10;
 }
 
-.room-info .modal-wrapper {
+.room-info .modal-wrapper,
+.room-edit .modal-wrapper {
     width: 674px;
     height: 687px;
     padding: 0;
@@ -18,7 +20,8 @@
     border-radius: 10px 10px 0 0;
 }
 
-.room-info .close-btn {
+.room-info .close-btn,
+.room-edit .close-btn {
     color: #BEBBB9;
     position: absolute;
     right: 26px;

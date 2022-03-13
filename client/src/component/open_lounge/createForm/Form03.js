@@ -16,7 +16,6 @@ import { ReactComponent as hand } from '../../../assets/svg/sense/hand.svg';
 
 
 function Form03(props) {
-    const cookies = new Cookies();
     const activePersonaId = useSelector((state) => state.activePersonaId)
     const { limitMember, setLimitMember, isLimit, setIsLimit, senseId, setSenseId, introduction, setIntroduction, setFormValidation } = props;
     const memberList = [...Array(30)].map((v, i)=>i+1);

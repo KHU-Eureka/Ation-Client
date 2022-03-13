@@ -13,6 +13,7 @@ import LoungeStartModal from "../modal/LoungeStartModal";
 import RoomInfoModal from "../modal/RoomInfoModal";
 
 import "../../assets/css/lounge/LoungeRoom.css";
+import RoomEditModal from "../modal/RoomEditModal";
 
 function LoungeRoom () {
     const $websocket = useRef(null);
@@ -26,6 +27,7 @@ function LoungeRoom () {
     let [ myInfo, setMyInfo ] = useState(null); // 내 정보
     let [showLoungeStartModal, setShowLoungeStartModal] = useState(false);
     let [showRoomInfoModal, setShowRoomInfoModal] = useState(false);
+    let [showRoomEditModal, setShowRoomEditModal] = useState(false);
 
     const startRoom = async () => {
         let temp = {...roomInfo};
@@ -133,7 +135,8 @@ function LoungeRoom () {
 
     return (
         <div className="lounge-room">
-            { showRoomInfoModal && <RoomInfoModal roomInfo={roomInfo} setShowRoomInfoModal={setShowRoomInfoModal} isAdmin={admin.id===activePersonaId} admin={admin} setShowModal={setShowRoomInfoModal}/> }
+            { showRoomInfoModal && <RoomInfoModal roomInfo={roomInfo} setShowRoomInfoModal={setShowRoomInfoModal} isAdmin={admin.id===activePersonaId} admin={admin} setShowModal={setShowRoomInfoModal} setShowRoomEditModal={setShowRoomEditModal}/> }
+            { showRoomEditModal && <RoomEditModal roomInfo={roomInfo} setShowModal={setShowRoomEditModal}/> }
             {/* rounge room status 관련 socket */}
             { roomInfo &&
                 <SockJsClient

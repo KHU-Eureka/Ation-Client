@@ -7,60 +7,35 @@ import { useSelector } from 'react-redux';
 import './RoomInfoModal.css';
 
 function RoomInfoModal (props) {
-    const { roomInfo, isAdmin, admin, setShowModal } = props;
+    const { roomInfo, isAdmin, admin, setShowModal, setShowRoomEditModal } = props;
     const senseInfoList = useSelector(state=>state.senseInfoList);
-
-    /*
-    useEffect(()=> {
-        // 중분류 카테고리 정보 가져오기
-        const getSubCategory = async () => {
-            var token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST + '/api/category/sub?mainCategoryId='+mainCategoryId, {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    }
-                )
-                setSubCategoryList(res.data);
-            } catch(err) {
-                console.log(err);
-            }
-        }
-        getSubCategory();
-    }, [mainCategoryId])
-
-    useLayoutEffect(()=> { 
-        // 메인 카테고리 정보 가져오기
-        const getMainCategory = async () => {
-            var token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST + '/api/category/main', {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    }
-                )
-                setMainCategoryList(res.data);
-            } catch(err) {
-                console.log(err);
-            }
-        }
-        getMainCategory();
-    }, [])
-   */
+    
+  const goToEdit = () => {
+      setShowModal(false);
+      setShowRoomEditModal(true);
+  }
 
     return (
         <div className="room-info">
             <div className="modal-background">
                 <div className="modal-wrapper">
                     <img className="room-img" src={roomInfo.imgPath} />
-                    <VscChromeClose className="close-btn"
-                    onClick={()=>{setShowModal(false)}}/>
+
+                    <VscChromeClose 
+                        className="close-btn"
+                        onClick={()=>{setShowModal(false)}}
+                    />
+
                     <div className="modal-content">
-                        <Pencil className="edit-btn"/>
+
+                        {
+                            isAdmin &&
+                            <Pencil 
+                                className="edit-btn"
+                                onClick={()=>{goToEdit()}}
+                            />
+                        }
+
                         <div className="content-wrapper room-title">
                             <BracketLeft/>
                             <div>{roomInfo.title}</div>

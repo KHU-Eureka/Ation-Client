@@ -3,7 +3,6 @@ import { Cookies } from "react-cookie";
 import axios from "axios";
 
 function Form02(props) {
-    const cookies = new Cookies();
     const { title, mainCategoryId, subCategoryIdList, setSubCategoryIdList, setFormValidation } = props;
 
     // 중분류

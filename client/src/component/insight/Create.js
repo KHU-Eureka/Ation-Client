@@ -126,7 +126,7 @@ function Create(props) {
     }
 
     useEffect( async () => {
-        const token = cookies.get('token');
+        const token = localStorage.get('token');
         const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${InsightId}`, {
             headers: {
                 Authorization: "Bearer " + token

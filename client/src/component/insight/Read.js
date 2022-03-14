@@ -62,7 +62,7 @@ function Read() {
     }, [])
 
     const PersonaSetting = async () => {
-        const token = localStorage.getItem('token');
+        const token = cookies.get('token');
         const response = await axios.get(
             process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
@@ -92,7 +92,7 @@ function Read() {
     }
 
     const fetchUserName = async () => {
-        const token = localStorage.getItem('token');
+        const token = cookies.get('token');
         if(!token || token === '') {
             setAuth(false);
         } else {
@@ -142,8 +142,17 @@ function Read() {
           };
       }, [cate]);
 
+    //   useEffect( async () => {
+    //     const response = await axios.get(
+    //         process.env.REACT_APP_SERVER_HOST + '/api/insight'
+    //       );
+    //     console.log(response.data);
+    //     await setInsight(response.data);
+    //       console.log(insight)
+    //   }, [insight])
+
     const imgClickHandler = async(e) => {
-        const token = localStorage.getItem('token');
+        const token = cookies.get('token');
         if(e.target.className !== 'pin') {
             let temp = e.target.getAttribute('id');
             const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {
@@ -197,6 +206,28 @@ function Read() {
 
     const searchSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
+            // let searchInsight = []
+            // if(cate === '전체') {
+            //     const response = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+            //       );
+            //     setInsight(response.data);
+            // } else {
+            //     const response = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/main-category/${cateId}`
+            //     );
+            //     const response2 = await axios.get(
+            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
+            //     );
+            //     for(var i of response.data) {
+            //         for(var j of response2.data) {
+            //             if(i.id === j.id) {
+            //                 searchInsight.push(j);
+            //             }
+            //         }
+            //     }
+            //     setInsight(searchInsight);
+            // }
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
               );

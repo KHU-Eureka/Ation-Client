@@ -149,8 +149,8 @@ function LoungeRoom () {
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo && ( roomInfo.status === "OPEN"
-                    ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
-                    : <LoungeActiveSideBar roomInfo={roomInfo} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
+                    ? <LoungeWaitSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
+                    : <LoungeActiveSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
                 }
             </div>
             <div className="right-content">

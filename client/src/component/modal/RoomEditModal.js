@@ -22,7 +22,7 @@ function RoomEditModal(props) {
     let [isLimit, setIsLimit] = useState(roomInfo.limitMember);
     let [senseId, setSenseId] = useState(roomInfo.sense.senseId);
     let [introduction, setIntroduction] = useState(roomInfo.introduction);
-    let [imageId, setImageId] = useState(1);
+    let [imageId, setImageId] = useState(roomInfo.imgPath.split('/').slice(-1)[0].split('-')[1].split('.')[0]*1);
 
     // category 정보
     let [mainCategoryList, setMainCategoryList] = useState([]);
@@ -33,6 +33,16 @@ function RoomEditModal(props) {
 
     // subCategory 선택 개수 제한 메세지
     let [showAlertMsg, setShowAlertMsg] = useState(false);
+
+    useEffect(()=> {
+        console.log(roomInfo.imgPath.split('/').slice(-1)[0].split('-')[1].split('.')[0]);
+        //[roomInfo.imgPath.split('/').lastIndexOf()].split('-')[1].split('.')[0]
+        console.log("imageId: ",imageId)
+        console.log("imgPath : ",loungeImgList.find((elem)=>elem.id===imageId*1))
+        for(let i of loungeImgList) {
+            console.log(i.id);
+        }
+    }, [loungeImgList, imageId])
 
     const updateRoomInfo = async () => {
         const token = localStorage.getItem('token');

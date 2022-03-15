@@ -39,6 +39,7 @@
     margin-bottom: 0;
     margin-top: 20px;
     border-top: 1px solid #BEBBB9;
+    border-radius: 0;
 }
 
 .room-setting > li:last-child:hover {

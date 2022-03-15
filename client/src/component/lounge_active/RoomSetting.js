@@ -27,10 +27,10 @@ function RoomSetting(props) {
 
     const exitTheRoom = async () => {
         try {
+            navigate('/lounge', { state: {alert:{title: "방에서 퇴장했습니다.", subtitle: "다른 방들도 둘러보세요!"}}})
             await axios.put(
-                `/api/lounge/${roomId}/exit/${activePersonaId}`
+                `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomId}/exit/${activePersonaId}`
             )
-            navigate('/lounge', { state: {alert:{title: "방에서 퇴장했습니다.", subtitle: "즐거운 시간이었나요? :)"}}})
         } catch(err) {
             console.log(err);
         }
@@ -42,8 +42,6 @@ function RoomSetting(props) {
             <li onClick={()=>{setShowRoomInfoModal(true)}}>
                 방 정보 <BiChevronRight/>
             </li>
-            <li>저장</li>
-            <li>프레임을 이미지로 저장</li>
             <li onClick={()=>{exitTheRoom()}}>
                 방 나가기
             </li>

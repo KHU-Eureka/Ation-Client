@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WelcomeModal from './WelcomeModal';
 import PersonaCompleteModal from './PersonaCreateCompleteModal';
+import LandingCover from './LandingCover';
 
 function Landing() {
     const { state } = useLocation();
@@ -31,10 +32,10 @@ function Landing() {
     }, [])
 
     return (
-        <div>
-            <h1 style={{ position:'fixed', top: '100px', left: '200px' }}> Landing Page </h1>
+        <div className="landing">
             { welcomeModal && <WelcomeModal closeWelcome={closeWelcome} name={name}></WelcomeModal> }
             { personaCreateModal && <PersonaCompleteModal showPersonaCreateModal={showPersonaCreateModal}></PersonaCompleteModal> }
+            <LandingCover />
         </div>
     );
 }

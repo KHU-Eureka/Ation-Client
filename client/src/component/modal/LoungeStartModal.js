@@ -14,7 +14,6 @@ function LoungeStartModal(props) {
 
     useEffect(()=> {
         timerId.current = setInterval(()=>{
-            console.log("hello")
             setSec(time.current);
             time.current -= 1; // 1초씩 count down
         }, 1000)
@@ -23,7 +22,6 @@ function LoungeStartModal(props) {
 
     useEffect(()=> {
         if (time.current < 0) { // 10초가 모두 지난다면
-            console.log('time out')
             clearInterval(timerId.current)
             startRoom() // 방을 시작시키고,
             setShowModal(false) // modal창 닫음

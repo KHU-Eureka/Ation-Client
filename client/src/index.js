@@ -16,11 +16,11 @@ let initialState = {
   activePersonaId: null,
   menu: null,
   senseInfoList: [
-    { id: 1, svg: <Eye/> },
-    { id: 2, svg: <Nose/> },
-    { id: 3, svg: <Mouth/> },
-    { id: 4, svg: <Hand/> },
-    { id: 5, svg: <Ear/> },
+    { id: 1, svg: <Eye/>, name: 'eye' },
+    { id: 2, svg: <Nose/>, name: 'nose' },
+    { id: 3, svg: <Mouth/>, name: 'mouth' },
+    { id: 4, svg: <Hand/>, name: 'hand' },
+    { id: 5, svg: <Ear/>, name: 'ear' },
   ]
 }
 

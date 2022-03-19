@@ -44,7 +44,7 @@
 
 .landing-cover .options-wrapper { 
     display: flex; flex-direction: column; 
-    animation: 2s rollRullet infinite;
+    animation: 3s rollRullet infinite;
     position: absolute;
     top: 0;
 }
@@ -60,26 +60,25 @@
     display: flex;
     flex-direction: column;
     margin-left: 55px;
+    position: relative;
 }
 .landing-cover .slot-wrapper > .slot {
     cursor: pointer;
-    animation: 2s pullSlot infinite;
+    animation: 3s pullSlot infinite;
     transform-origin: bottom;
 }
-/*
-.landing-cover .slot-wrapper > .slot > .handle {
-    position: relative;
-    left: -15px;
-    animation: 2s pullSlot infinite;
-    transform-origin: bottom;
-}
-*/
-.landing-cover .slot-wrapper > span {
+
+.landing-cover .slot-wrapper > .text {
+    width: 120px;
     font-weight: 700;
     font-size: 18px;
     color: white;
     font-family: 'Pretendard';
     margin-top: 10px;
+    position: absolute;
+    left: calc(100% + 10px);
+    bottom: 0;
+    opacity: 0.5;
 }
 
 .landing .-ation { width: 100% !important; height: auto !important; }
@@ -92,5 +91,5 @@
 
 @keyframes rollRullet {
     0% {top: 0; }
-    100% {top: calc(-100px * 5);} /* 5 - 1바퀴 돎 / 10 - 2바퀴 돎 */
+    100% {top: calc(-100px * 10);} /* 5 - 1바퀴 돎 / 10 - 2바퀴 돎 */
 }

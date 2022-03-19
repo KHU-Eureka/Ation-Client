@@ -1,9 +1,9 @@
-import { ReactComponent as Ation } from '../../assets/svg/-ation.svg';
-import { ReactComponent as Slot } from '../../assets/svg/slot.svg';
+import { ReactComponent as Ation } from '../../../assets/svg/-ation.svg';
+import { ReactComponent as Slot } from '../../../assets/svg/slot.svg';
 import './LandingCover.css';
 
 function LandingCover() {
-    const wordList = [ 'sense', 'inspir', 'convers', 'innov', 'cre', 'sense', 'inspir', 'convers', 'innov', 'cre', 'sense', 'inspir', 'convers', 'innov', 'cre' ];
+    const wordList = [ 'sens', 'inspir', 'convers', 'innov', 'cre', 'sens', 'inspir', 'convers', 'innov', 'cre', 'sens', 'inspir', 'convers', 'innov', 'cre' ];
 
     return(
         <div className="landing-cover">
@@ -22,8 +22,8 @@ function LandingCover() {
                 </div>
                 <span>ation</span>
                 <div className="slot-wrapper">
-                <Slot className="slot"/>
-                    <span>Pull this slot</span>
+                    <Slot className="slot"/>
+                    <div className="text">Pull this slot</div>
                 </div>
             </div>
             <Ation className="-ation"/>

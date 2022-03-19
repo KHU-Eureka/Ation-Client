@@ -26,8 +26,8 @@ function Search(props) {
     }
 
     return (
-        <div className='search-container'>
-            <input value={searchInput} onChange={searchInputChangeHandler} onKeyPress={pinSearchHandler} placeholder="검색" />
+        <div className='Search-Container'>
+            <input className='search' value={searchInput} onChange={searchInputChangeHandler} onKeyPress={pinSearchHandler} placeholder="검색" />
         </div>
     );
 }

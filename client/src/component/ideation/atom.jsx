@@ -26,7 +26,7 @@ const titleIcon = (elem) => {
 }
 
 export const ModuleBox = (props) => {
-    const {obj, ideationId} = props;
+    const { obj } = props;
     const navigate = new useNavigate();
     const { state } = useLocation();
 
@@ -41,25 +41,23 @@ export const ModuleBox = (props) => {
     };
 
     useEffect(() => {
-        console.log(state.ideationId)
         if(document.querySelector('.moduleBox-container')) {
             const modulebox = document.querySelectorAll('.moduleBox-container');
             clickUIPrevHandler(prev_style, modulebox);
             for(let mod of modulebox) {
                 if(parseInt(mod.getAttribute('id')) === state.ideationId) clickUIChangeHandler(click_style, mod);
+                else continue;
             }
         }
-    }, [state.ideationId])
+    }, [])
 
-    const ideationClickHandler = ({ target }) => {
+    const ideationClickHandler = ({ currentTarget }) => {
         if(document.querySelector('.moduleBox-container')) {
             const modulebox = document.querySelectorAll('.moduleBox-container');
             clickUIPrevHandler(prev_style, modulebox);
-            for(let mod of modulebox) {
-                if(mod.getAttribute('id') === target.getAttribute('id')) clickUIChangeHandler(click_style, mod);
-            }
+            clickUIChangeHandler(click_style, currentTarget);
         }
-        navigate('/whiteboard', {state: {ideationId: target.getAttribute('id')}})
+        navigate('/whiteboard', {state: {ideationId: currentTarget.getAttribute('id')}})
     }
 
     return(
@@ -85,23 +83,25 @@ export const ideationTitle = (title) => {
     );
 }
 
-export const InputTitle = (props) => {
-    const [title, setTitle] = useState("");
+// export const InputTitle = (props) => {
+//     const { state } = useLocation();
+//     const [title, setTitle] = useState("");
     
 
-    const titleChangeHandler = ({ target }) => {
-        setTitle(target.value);
-    }
+//     const titleChangeHandler = ({ target }) => {
+//         setTitle(target.value);
+//     }
 
-    useEffect(() => {
-        if(props.complete) {
-            //수정 api 호출 !
-        }
-    }, [props.complete])
+//     useEffect(() => {
+//         if(props.ChangeTitle) {
+//             console.log(props)
+//             ideationTitlePost(state.ideationId, title).then((data) => {props.setChangeTitle(data.data);props.setChangeTitle(false);props.setOpenOptionTitle(false);});
+//         }
+//     }, [props.ChangeTitle, title])
 
-    return(
-        <div>
-            <input className="inputTitle" ref={props.ref} value={title} onChange={titleChangeHandler} placeholder='제목을 입력해 주세요.'/>
-        </div>
-    );
-}
+//     return(
+//         <div>
+//             <input className="inputTitle" value={title} onChange={titleChangeHandler} placeholder='제목을 입력해 주세요.'/>
+//         </div>
+//     );
+//}

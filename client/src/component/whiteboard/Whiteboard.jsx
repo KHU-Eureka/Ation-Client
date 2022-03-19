@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+
+import AttrContext from './store/AttrContext';
 import Stageboard from './Stageboard';
 import Tool from './Tool';
 import '../../assets/css/whiteboard/Whiteboard.scss';
@@ -20,11 +22,13 @@ function Whiteboard() {
     }
 
     return (
-        <div className='Whiteboard-Container'>
-            <Stageboard setText={setText} text={text} imgSrc={imgSrc} pinObject={pinObject} isEditing={isEditing} setIsEditing={setIsEditing}/>
-            <Tool onClick={() => setIsEditing(false)} setText={setText} setImgSrc={setImgSrc} setPinObject={setPinObject} />
-            <textarea ref={focusTextarea} value={text} onChange={textChangeHandler} style={{display: 'none', border: 'none', backgroundColor: 'transparent'}} onBlur={textareaFocusHandler} />
-        </div>
+        <AttrContext>
+            <div className='Whiteboard-Container'>
+                <Stageboard setText={setText} text={text} imgSrc={imgSrc} pinObject={pinObject} isEditing={isEditing} setIsEditing={setIsEditing}/>
+                <Tool onClick={() => setIsEditing(false)} setText={setText} setImgSrc={setImgSrc} setPinObject={setPinObject} />
+                <textarea ref={focusTextarea} value={text} onChange={textChangeHandler} style={{display: 'none', border: 'none', backgroundColor: 'transparent'}} onBlur={textareaFocusHandler} />
+            </div>
+        </AttrContext>
     );
 }
 

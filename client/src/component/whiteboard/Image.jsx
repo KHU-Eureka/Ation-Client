@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import useImage from 'use-image';
 
 function Img(props) {
-    const { imgObj, isSelected, onSelect, onChange, setIsEditing } = props;
+    const { imgObj, isSelected, onSelect, onChange, setIsEditing, mode } = props;
     // const mode = useSelector((state)=> state.mode);
     const imgRef = useRef();
     const transRef = useRef();
@@ -12,7 +12,8 @@ function Img(props) {
     const [image] = useImage(imgObj.image);
 
     useEffect(() => {
-        if (isSelected) {
+        console.log(image)
+        if (mode === 'choice' && isSelected) {
             transRef.current.nodes([imgRef.current]);
             transRef.current.getLayer().batchDraw();
         }
@@ -60,14 +61,16 @@ function Img(props) {
             {...imgObj.property}
             image={image}
             onClick={() => {
-                onSelect();
-                setIsEditing(true);
+                if(mode === 'choice') {
+                    onSelect();
+                    setIsEditing(true);
+                }
             }}
-            draggable
+            draggable={mode === 'choice'?true:false}
             onDragEnd={positionEditHandler}
             onTransformEnd={transformHandler}
         />
-        {isSelected && 
+        {mode === 'choice' && isSelected && 
         <Transformer 
             ref={transRef}
             boundBoxFunc={boundBoxFunc}

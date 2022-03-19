@@ -275,9 +275,9 @@ function Read() {
                     <li key={i.id} className="img-li">
                         <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
-                            {auth?<div className="pin-box">
+                            <div className="pin-box">
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
-                            </div>:<></>}
+                            </div>
                             <p className="title" id={i.id}>{i.title}</p>
                             <div className="tag-container">
                             <span className="tag" id={i.id}> #{i.mainCategory.name}</span>

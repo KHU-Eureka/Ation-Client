@@ -3,12 +3,12 @@ import { Rect, Circle, Line, Transformer } from 'react-konva';
 
 
 function Shape(props) {
-    const { shapeObj, isSelected, onSelect, onChange, setIsEditing } = props;
+    const { shapeObj, isSelected, onSelect, onChange, setIsEditing, mode } = props;
     const shapeRef = useRef();
     const transRef = useRef();
 
     useEffect(() => {
-        if (isSelected) {
+        if (mode === 'choice' && isSelected) {
             transRef.current.nodes([shapeRef.current]);
             transRef.current.getLayer().batchDraw();
         }
@@ -39,6 +39,20 @@ function Shape(props) {
         });
     }
 
+    const transformCircleHandler = (e) => {
+        const node = shapeRef.current;
+        const scaleX = node.scaleX();
+        const scaleY = node.scaleY();
+        node.scaleX(1);
+        node.scaleY(1);
+        onChange({
+          ...shapeObj.property,
+          x: node.x(),
+          y: node.y(),
+          radius: Math.max(2.5, node.radius() * scaleX),
+        });
+    }
+
     const boundBoxFunc = (oldBox, newBox) => {
         if (newBox.width < 5 || newBox.height < 5) {
             return oldBox;
@@ -52,12 +66,12 @@ function Shape(props) {
             <Rect
                 ref={shapeRef}
                 {...shapeObj.property}
-                fill="pink"
                 onClick={() => {
+                    mode === 'choice' &&
                     onSelect();
                     setIsEditing(true);
                 }}
-                draggable
+                draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
                 onTransformEnd={transformHandler}
             />
@@ -65,16 +79,17 @@ function Shape(props) {
             <Circle 
                 ref={shapeRef}
                 {...shapeObj.property}
-                fill="skyblue"
                 onClick={() => {
+                    mode === 'choice' &&
                     onSelect();
                     setIsEditing(true);
                 }}
-                draggable
+                draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
+                onTransformEnd={transformCircleHandler}
             />
         :<></>}
-        {isSelected && 
+        {mode === 'choice' && isSelected && 
         <Transformer 
             ref={transRef}
             boundBoxFunc={boundBoxFunc}

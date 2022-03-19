@@ -11,13 +11,14 @@ const IDEATION_LIST = {
     marginTop: '106.62px',
 }
 
-function IdeationList() {
+function IdeationList(props) {
+    const ChangeTitle = props.ChangeTitle;
     const activePersonaId = useSelector((state) => state.activePersonaId);
     const [ideationList, setIdeationList] = useState([]);
 
     useEffect(() => {
         getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation?personaId=${activePersonaId}`).then((data) => setIdeationList(data.data));
-    }, [activePersonaId])
+    }, [activePersonaId, ChangeTitle])
 
     return(
         <div className='IdeationList-container' style={IDEATION_LIST}>

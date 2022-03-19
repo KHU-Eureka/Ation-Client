@@ -17,7 +17,7 @@ function LandingPage5() {
                     senseInfoList && senseInfoList.map((sense, idx)=> (
                         (sense.id !== 3 && 
                         <div className="sense-card-background">
-                            <div className="sense-card" id={sense.name}>
+                            <div className="sense-card sa" id={sense.name} data-sa-margin={(idx+1)*150}>
                                 { sense.svg }
                             </div>
                         </div>

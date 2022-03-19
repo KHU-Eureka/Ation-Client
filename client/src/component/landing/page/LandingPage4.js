@@ -16,12 +16,14 @@ function LandingPage4 () {
             <div className="persona-wrapper">
                 {
                     senseInfoList.map((sense, idx) => (
-                        <div className="sense-elem" id={sense.name}>{sense.svg}</div>
+                        <div className="sense-elem sa" data-sa-margin="400" id={sense.name}>
+                            {sense.svg}
+                        </div>
                     ))
                 }
-                <img src={persona1} alt="persona"/>
-                <img src={persona2} alt="persona"/>
-                <img src={persona3} alt="persona"/>
+                <img src={persona1} className="sa sa-up" alt="persona" data-sa-margin="200"/>
+                <img src={persona2} className="sa sa-up" alt="persona" data-sa-margin="100"/>
+                <img src={persona3} className="sa sa-up" alt="persona" data-sa-margin="200"/>
             </div>
         </div>
     )

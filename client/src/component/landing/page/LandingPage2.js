@@ -15,7 +15,7 @@ function LandingPage2 () {
             <div className="who-wrapper">
                 {
                     whoList.map((who, idx)=> (
-                        <div className="who-card" key={idx}>
+                        <div className="who-card sa sa-up" data-sa-margin={(idx+1)*180} key={idx}>
                             <img src={who.image} alt="persona"/>
                             <div className="description">{ who.description }</div>
                         </div>

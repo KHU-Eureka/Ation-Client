@@ -5,6 +5,8 @@ import { Cookies } from 'react-cookie';
 
 import Search from './Search';
 
+import '../../assets/css/pin/pinbox.scss';
+
 function Pin(props) {
     const { setPinObject } = props;
 

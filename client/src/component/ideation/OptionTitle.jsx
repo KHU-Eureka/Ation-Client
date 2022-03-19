@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 
-import { InputTitle } from './atom';
+import { ideationTitlePost } from './state';
 
 export default function OptionTitle(props) {
-    const { openOptionTitle, setOpenOptionTitle } = props;
-    const inputRef = useRef();
-    const [complete, setComplete] = useState(false);
+    const { state } = useLocation();
+    const { openOptionTitle, setOpenOptionTitle, setChangeTitle, ChangeTitle } = props;
+    const [title, setTitle] = useState("");
 
     const optionTitleStyle = {
         position: 'absolute',
@@ -18,8 +19,12 @@ export default function OptionTitle(props) {
     }
 
     const completeClickHandler = () => {
-        setComplete(true);
+        ideationTitlePost(state.ideationId, title).then((data) => setChangeTitle(data.data));
         setOpenOptionTitle(false);
+    }
+
+    const titleChangeHandler = ({ target }) => {
+        setTitle(target.value);
     }
 
     return(
@@ -27,7 +32,9 @@ export default function OptionTitle(props) {
         {openOptionTitle?
             <div className='OptionTitle-container' style={optionTitleStyle}>
                 <div className='OptionTitle-wrap-container'>
-                    <InputTitle ref={inputRef} complete={complete} />
+                    <div>
+                        <input className="inputTitle" value={title} onChange={titleChangeHandler} placeholder='제목을 입력해 주세요.'/>
+                    </div>
                     <div>
                         <button onClick={cancleClickHandler}>취소</button>
                         <button className="completeBtn" onClick={completeClickHandler}>완료</button>

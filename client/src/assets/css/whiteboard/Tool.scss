@@ -1,45 +1,133 @@
-.Tool-Container {
+@mixin tool-box-basic($w: 62px, $h: 500px) {
+    width: $w;
+    height: $h;
     position: absolute;
+    background: #FFFFFF;
+    box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+    z-index: 30;
+}
+
+@mixin flex-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-space-around {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    z-index: 30;
-    width: 62px;
-    height: 444px;
+}
+
+.Tool-Container {
+    @include tool-box-basic();
+    @include flex-space-around;
+    position: fixed;
     left: 97%;
     top: 30%;
 
-    background: #FFFFFF;
-    box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.07);
-    border-radius: 8px;
+    .mode {
+        @include flex-center();
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+    }
+    .mode:hover {
+        background: #F5F5F5 !important;
+        border: 1px solid #F24822;
+        box-sizing: border-box;
+    }
+
+    img {
+        cursor: pointer;
+    }
+
+    .tool-container {
+        position: relative;
+    }
+
+    .attr {
+        position: relative;
+    }
+
+    .color-container {
+        @include tool-box-basic(160px, 77px);
+        @include flex-center;
+
+        .Color-container {
+            @include flex-space-around;
+            width: 132px;
+            height: 48px;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .color {
+                @include flex-center;
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                box-sizing: border-box;
+            }
+        }
+    }
+    #pen {
+        left: -265%;
+        top: 60%;
+    }
+    #shape {
+        left: -35%;
+        top: 103%;
+    }
+    #postit {
+        left: -270%;
+        top: 45%
+    }
+
+    // 세부 도구 디자인 ***
+    .detail-container {
+        @include tool-box-basic(62px, 309px);
+        @include flex-center;
+        left: -110%;
+    }
 
     .pen-container {
-        position: absolute;
-        left: -100%;
         top: 15%;
+
+        .pen-wrap-container {
+            @include flex-space-around;
+            width: 62px;
+            height: 295.03px;
+        }
     }
 
-    .Choice {
-        cursor: pointer;
+    .shape-container {
+        @include tool-box-basic(118px, 245px);
+        top: 30%;
+        left: -200%;
+
+        .shape-wrap-container {
+            @include flex-space-around;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 104px;
+            height: 231px;
+        }
     }
-    .Pen {
-        position: relative;
-        cursor: pointer;
+
+    .pin-container {
+        justify-content: flex-end;
+        width: 195px;
+        height: 639px;
+        top: 0px;
+        left: -200px;
+
+        .pin-wrap-container {
+            width: 154px;
+            height: 611px;
+        }
     }
-    .Shape {
-        cursor: pointer;
-    }
-    .Text {
-        cursor: pointer;
-    }
-    .Postit {
-        cursor: pointer;
-    }
-    .Image {
-        cursor: pointer;
-    }
-    .Pin {
-        cursor: pointer;
-    }
+    // *** 세부 도구 디자인
 }

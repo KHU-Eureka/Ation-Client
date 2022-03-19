@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { Layer, Stage } from 'react-konva';
-import useImage from 'use-image';
-import { nanoid } from 'nanoid';
 import { useLocation } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+import { Layer, Stage } from 'react-konva';
+import { nanoid } from 'nanoid';
 
+import { AttrContextStore } from './store/AttrContext';
 import { useFetch } from '../state';
+import { isTrue, afterTransformer, createObj } from './state';
 
 import Pen from './Pen';
 import Shape from './Shape';
@@ -15,9 +16,12 @@ import Letter from './Letter';
 import Postit from './Postit';
 import Image from './Image';
 import Pin from './Pin';
+import Elements from './Elements';
 
 function Stageboard(props) {
     const { setText, text, imgSrc, pinObject, setIsEditing, isEditing } = props;
+
+    const attrStore = useContext(AttrContextStore);
 
     const { state } = useLocation();
 
@@ -27,123 +31,111 @@ function Stageboard(props) {
     const textRef = useRef();
 
     const mode = useSelector((state)=> state.mode);
-    const detailMode = useSelector((state)=> state.detail_mode);
+    // const attrStore.detailMode = useSelector((state)=> state.detail_mode);
 
     const [boardObjectList, setBoardObjectList] = useState([]);
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentObject, setCurrentObject] = useState();
     const [selectedObject, setSelectedObject] = useState(null);
 
-    const [image] = useImage(imgSrc);
-
-    const whiteboard = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/{ideationId}?ideationId=${state.ideationId}`);
+    const whiteboard = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
 
     useEffect(() => {
-        // if(localStorage.getItem('whiteboard')) {
         if(whiteboard !== undefined){
-            // const boardItem = JSON.parse(localStorage.getItem('whiteboard'));
             const boardItem = JSON.parse(whiteboard.whiteboard);
             setBoardObjectList(boardItem);
         }
     }, [whiteboard])
 
-    const mouseDownHandler = (e) => {
+    const mouseDownHandler = ({ target }) => {
         setIsDrawing(true);
-        console.log(isEditing)
-        if(e.target === stageRef.current) {
-            const pos = e.target.getStage().getPointerPosition();
-            if(mode === 'pen') {
-                if(detailMode === 'pen') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pen', detailType: 'pen', property: { points: [pos.x, pos.y], width: 0, height: 0, content: null } }]);
-                } else if(detailMode === 'highlighter') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pen', detailType: 'highlighter', points: [pos.x, pos.y], property: { content: null } }]);
-                } else if(detailMode === 'eraser') {
-                    setCurrentObject(e.target);
-                    //setBoardObjectList([...boardObjectList, { type: 'pen', detailType: 'eraser', points: [pos.x, pos.y], property: { content: null } }]);
-                  
-                }
-            } else if(mode === 'shape') {
-                if(detailMode === 'rect') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'rect', property: { x: pos.x, y: pos.y, width: 0, height: 0 } }]);
-                } else if(detailMode === 'tri') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'tri', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
-                } else if(detailMode === 'circle') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'circle', property: { x: pos.x, y: pos.y, radius: 0 } }]);
-                } else if(detailMode === 'line') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'line', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
-                }
-            } else if(mode === 'text') {
-                //textarea 관련 ...
-                if(document.querySelector('textarea')) {
-                    const textareaStyle = document.querySelector('textarea').style;
-                    if(text === '') {
-                        setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'text', detailType: null, property: { x: pos.x, y: pos.y, text: text, fontSize: 20 } }]);
-                        textareaStyle.display = 'inline';
-                        textareaStyle.position = 'absolute';
-                        textareaStyle.top = pos.y + 'px';
-                        textareaStyle.left = pos.x + 'px';
-                    } else {
-                        console.log(selectedObject)
-                        console.log(text)
-                        // let lastObj = boardObjectList[boardObjectList.length - 1];
-                        // lastObj.property.text = text;
-                        boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
-                        textareaStyle.display = 'none';
+        if(target === stageRef.current) {
+            const pos = target.getStage().getPointerPosition();
+            switch(attrStore.mode) {
+                case 'pen':
+                    if(attrStore.detailMode === 'pen') {
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                    } else if(attrStore.detailMode === 'highlight') {
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                    } else if(attrStore.detailMode === 'eraser') {
+                        setCurrentObject(target);
                     }
-                }
-                //...textarea 관련
-            } else if(mode === 'postit') {
-                const textareaStyle = document.querySelector('textarea').style;
-                if(text === '') {
-                    setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'postit', detailType: null, property: { x: pos.x, y: pos.y, text: text } }]);
-                    textareaStyle.display = 'inline';
-                    textareaStyle.position = 'absolute';
-                    textareaStyle.top = pos.y + 'px';
-                    textareaStyle.left = pos.x + 'px';
-                } else {
-                    let lastObj = boardObjectList[boardObjectList.length - 1];
-                    lastObj.property.text = text;
-                    textareaStyle.display = 'none';
-                }
-            } else if(mode === 'choice') {
-                for(var obj of boardObjectList) {
-                    if(obj.id === selectedObject && obj.type === 'text') {
+                    break;
+                case 'shape':
+                    if(attrStore.detailMode === 'rect') {
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                    } else if(attrStore.detailMode === 'tri') {
+                        setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'tri', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
+                    } else if(attrStore.detailMode === 'circle') {
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                    } 
+                    // else if(attrStore.detailMode === 'line') {
+                    //     setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'line', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
+                    // }
+                    break;
+                case 'text':
+                    if(document.querySelector('textarea')) {
                         const textareaStyle = document.querySelector('textarea').style;
-                        obj.property.text = text;
-                        textareaStyle.display = 'none';
-                        console.log(selectedObject)
-                        console.log(text)
-                        setIsEditing(true);
+                        if(text === '') {
+                            setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y)]);
+                            textareaStyle.display = 'inline';
+                            textareaStyle.position = 'absolute';
+                            textareaStyle.top = pos.y + 'px';
+                            textareaStyle.left = pos.x + 'px';
+                        } else {
+                            boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
+                            textareaStyle.display = 'none';
+                        }
                     }
-                }
+                    break;
+                case 'postit':
+                    if(document.querySelector('textarea')) {
+                        const textareaStyle = document.querySelector('textarea').style;
+                        if(text === '') {
+                            setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                            textareaStyle.display = 'inline';
+                            textareaStyle.position = 'absolute';
+                            textareaStyle.top = pos.y + 'px';
+                            textareaStyle.left = pos.x + 'px';
+                        } else {
+                            let lastObj = boardObjectList[boardObjectList.length - 1];
+                            lastObj.property.text = text;
+                            textareaStyle.display = 'none';
+                        }
+                    }
+                    break;
+                case 'choice':
+                    for(var obj of boardObjectList) {
+                        if(obj.id === selectedObject && obj.type === 'text') {
+                            const textareaStyle = document.querySelector('textarea').style;
+                            obj.property.text = text;
+                            textareaStyle.display = 'none';
+                            setIsEditing(true);
+                        }
+                    }
+                    break;
             }
         }
     }
 
-    const mouseMoveHandler = (e) => {
-        if(isDrawing && e.target === stageRef.current) {
-            const pos = e.target.getStage().getPointerPosition();
+    const mouseMoveHandler = ({ target }) => {
+        if(isDrawing && target === stageRef.current) {
+            const pos = target.getStage().getPointerPosition();
             let lastObj = boardObjectList[boardObjectList.length - 1];
-            if(mode === 'pen') {
-                if(detailMode === 'eraser') {
-                    setCurrentObject(e.target);
+            if(attrStore.mode === 'pen') {
+                if(attrStore.detailMode === 'eraser') {
+                    setCurrentObject(target);
                     if(currentObject.constructor.name === 'Line') {
-                        //const points = currentObject.attrs.points.find( p => p !== pos.x && p !== pos.y)
-                        console.log(currentObject._id, [pos.x, pos.y])
-
                         currentObject.destroy();
                     }
-                    // if(e.target.constructor.name === 'Line' && e.target.attrs.tension) {
-                    //     lastObj.points = lastObj.points.concat([pos.x, pos.y]);
-                    // }
                 } else {
                     lastObj.property.points = lastObj.property.points.concat([pos.x, pos.y]);
                 }
-            } else if(mode === 'shape') {
-                if(detailMode === 'rect') {
+            } else if(attrStore.mode === 'shape') {
+                if(attrStore.detailMode === 'rect') {
                     lastObj.property.width = pos.x - lastObj.property.x;
                     lastObj.property.height = pos.y - lastObj.property.y;
-                } else if(detailMode === 'circle') {
+                } else if(attrStore.detailMode === 'circle') {
                     if((pos.x - lastObj.property.x) > 0) {
                         lastObj.property.radius = (pos.x - lastObj.property.x)/2;
                     } else {
@@ -157,9 +149,10 @@ function Stageboard(props) {
     }
 
     const mouseUpHandler = () => {
+        if(attrStore.mode === 'shape' || attrStore.mode === 'image') {
+            attrStore.setMode('choice');
+        }
         setIsDrawing(false);
-        console.log(boardObjectList);
-        localStorage.setItem('whiteboard', JSON.stringify(boardObjectList));
     }
 
     const dropHandler = (e) => {
@@ -172,9 +165,8 @@ function Stageboard(props) {
     }
 
     useEffect(() => {
-        console.log(imgSrc)
-        if(mode === 'image') {
-            setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'image', detailType: null, property: { x: 100, y: 100, width: 300, height: 300 }, image: imgSrc }]);
+        if(attrStore.mode === 'image') {
+            setBoardObjectList([...boardObjectList, { ...createObj(attrStore.mode, attrStore.detailMode), image: imgSrc }]);
         }
     }, [imgSrc])
 
@@ -209,7 +201,6 @@ function Stageboard(props) {
     useEffect( async () => {
         const token = cookies.get('token');
         const stringObjectList = JSON.stringify(boardObjectList);
-        // const whiteboard = stringObjectList.replace('"', "'");
         console.log(stringObjectList)
         if(stringObjectList !== "[]") {
             try {
@@ -227,23 +218,6 @@ function Stageboard(props) {
                 console.log(err);
             }
         }
-        // } else {
-        //     try {
-        //         await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/whiteboard/${state.ideationId}`,
-        //             {
-        //                 whiteboard : []
-        //             },
-        //             {
-        //                 headers: {
-        //                     Authorization: 'Bearer ' + token
-        //                 }
-        //             }
-        //         );
-        //     } catch(err) {
-        //         console.log(err);
-        //     }
-        // }
-        // localStorage.setItem('whiteboard', JSON.stringify(boardObjectList));
     }, [boardObjectList])
 
     useEffect(() => {
@@ -254,108 +228,25 @@ function Stageboard(props) {
         }
     }, [boardObjectList.length])
 
-    // const dbClickHandler = (e) => {
-    //     console.log(selectedObject)
-    //     const textareaStyle = document.querySelector('textarea').style;
-    //     if(mode === 'text') {
-    //         if(e.target !== document.querySelector('textarea')) {
-    //             for(var obj of boardObjectList) {
-    //                 if(selectedObject === obj.id) {
-    //                     obj.property.text = text;
-                        
-    //                 }
-    //             }
-    //             // textRef.current.show();
-    //             // textNode.text(textarea.value);
-    //             textareaStyle.display = 'none';
-    //         }
-    //     }
-    // }
-
     return (
         <>
         <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler}>
-            <Stage ref={stageRef} width={1607} height={982} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
+            <Stage ref={stageRef} width={1607} height={window.innerHeight-20} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
                 <Layer>
-                    {boardObjectList.map( (obj, i) => obj.type === 'pen'?
-                        <Pen 
-                            key={i} 
-                            penObj={obj}
-                            isSelected={obj.id === selectedObject}
+                    {boardObjectList && boardObjectList.map( (obj, i) => <Elements key={i} type={obj.type} obj={obj}
+                    isSelected={isTrue(obj.id, selectedObject)}
                             onSelect={ () => setSelectedObject(obj.id) }
                             onChange={ (newAttrs) => {
                                 const objs = boardObjectList.slice();
                                 objs[i].property = newAttrs;
                                 setBoardObjectList(objs);
-                                console.log(newAttrs)
                             }}
                             setIsEditing={setIsEditing}
-                            mode={mode}
-                        />
-                    :obj.type === 'shape'?
-                        <Shape 
-                            key={i} 
-                            shapeObj={obj} 
-                            isSelected={obj.id === selectedObject}
-                            onSelect={ () => setSelectedObject(obj.id) }
-                            onChange={ (newAttrs) => {
-                                const objs = boardObjectList.slice();
-                                objs[i].property = newAttrs;
-                                setBoardObjectList(objs);
-                                console.log(newAttrs)
-                            }}
-                            setIsEditing={setIsEditing}
-                        />
-                    :obj.type === 'text'?
-                        <Letter 
-                            ref={textRef}
-                            key={i} 
-                            textObj={obj} 
+                            mode={attrStore.mode}
                             setText={setText} 
-                            text={text} 
-                            isSelected={obj.id === selectedObject}
-                            onSelect={ () => setSelectedObject(obj.id) }
-                            onChange={ (newAttrs) => {
-                                const objs = boardObjectList.slice();
-                                objs[i].property = newAttrs;
-                                setBoardObjectList(objs);
-                                console.log(newAttrs)
-                            }}
-                            isEditing={isEditing}
-                            setIsEditing={setIsEditing}
-                            mode={mode}
-                        />
-                    :obj.type === 'postit'?
-                        <Postit 
-                            key={i} 
-                            postObj={obj} 
-                            setText={setText} 
-                            text={text}
-                            isSelected={obj.id === selectedObject}
-                            onSelect={ () => setSelectedObject(obj.id) }
-                            onChange={ (newAttrs) => {
-                                const objs = boardObjectList.slice();
-                                objs[i].property = newAttrs;
-                                setBoardObjectList(objs);
-                                console.log(newAttrs)
-                            }} 
-                        />
-                    :obj.type === 'image'?
-                        <Image 
-                            key={i} 
-                            imgObj={obj}
-                            isSelected={obj.id === selectedObject}
-                            onSelect={ () => setSelectedObject(obj.id) }
-                            onChange={ (newAttrs) => {
-                                const objs = boardObjectList.slice();
-                                objs[i].property = newAttrs;
-                                setBoardObjectList(objs);
-                                console.log(newAttrs)
-                            }}  
-                        />
-                    :obj.type === 'pin'?
-                        <Pin key={i} pinObj={obj} />
-                    :<></>)}
+                             text={text} 
+                            /> )}
+                    
                 </Layer>
             </Stage>
         </div>
@@ -367,3 +258,157 @@ function Stageboard(props) {
 }
 
 export default Stageboard;
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+// if(mode === 'pen') {
+            //     if(attrStore.detailMode === 'pen') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pen', detailType: 'pen', property: { points: [pos.x, pos.y], width: 0, height: 0, content: null } }]);
+            //     } else if(attrStore.detailMode === 'highlighter') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pen', detailType: 'highlighter', points: [pos.x, pos.y], property: { content: null } }]);
+            //     } else if(attrStore.detailMode === 'eraser') {
+            //         setCurrentObject(target);
+            //     }
+            // } else if(mode === 'shape') {
+            //     if(attrStore.detailMode === 'rect') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'rect', property: { x: pos.x, y: pos.y, width: 0, height: 0 } }]);
+            //     } else if(attrStore.detailMode === 'tri') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'tri', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
+            //     } else if(attrStore.detailMode === 'circle') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'circle', property: { x: pos.x, y: pos.y, radius: 0 } }]);
+            //     } else if(attrStore.detailMode === 'line') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'line', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
+            //     }
+            // } else if(mode === 'text') {
+            //     //textarea 관련 ...
+            //     if(document.querySelector('textarea')) {
+            //         const textareaStyle = document.querySelector('textarea').style;
+            //         if(text === '') {
+            //             setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'text', detailType: null, property: { x: pos.x, y: pos.y, text: text, fontSize: 20 } }]);
+            //             textareaStyle.display = 'inline';
+            //             textareaStyle.position = 'absolute';
+            //             textareaStyle.top = pos.y + 'px';
+            //             textareaStyle.left = pos.x + 'px';
+            //         } else {
+            //             console.log(selectedObject)
+            //             console.log(text)
+            //             // let lastObj = boardObjectList[boardObjectList.length - 1];
+            //             // lastObj.property.text = text;
+            //             boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
+            //             textareaStyle.display = 'none';
+            //         }
+            //     }
+            //     //...textarea 관련
+            // } else if(mode === 'postit') {
+            //     const textareaStyle = document.querySelector('textarea').style;
+            //     if(text === '') {
+            //         setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'postit', detailType: null, property: { x: pos.x, y: pos.y, text: text } }]);
+            //         textareaStyle.display = 'inline';
+            //         textareaStyle.position = 'absolute';
+            //         textareaStyle.top = pos.y + 'px';
+            //         textareaStyle.left = pos.x + 'px';
+            //     } else {
+            //         let lastObj = boardObjectList[boardObjectList.length - 1];
+            //         lastObj.property.text = text;
+            //         textareaStyle.display = 'none';
+            //     }
+            // } else if(mode === 'choice') {
+            //     for(var obj of boardObjectList) {
+            //         if(obj.id === selectedObject && obj.type === 'text') {
+            //             const textareaStyle = document.querySelector('textarea').style;
+            //             obj.property.text = text;
+            //             textareaStyle.display = 'none';
+            //             console.log(selectedObject)
+            //             console.log(text)
+            //             setIsEditing(true);
+            //         }
+            //     }
+
+
+
+
+
+//return
+
+{/* //     <Pen 
+                    //         key={i} 
+                    //         penObj={obj}
+                    //         isSelected={obj.id === selectedObject}
+                    //         onSelect={ () => setSelectedObject(obj.id) }
+                    //         onChange={ (newAttrs) => {
+                    //             const objs = boardObjectList.slice();
+                    //             objs[i].property = newAttrs;
+                    //             setBoardObjectList(objs);
+                    //             console.log(newAttrs)
+                    //         }}
+                    //         setIsEditing={setIsEditing}
+                    //         mode={mode}
+                    //     />
+                    // :obj.type === 'shape'?
+                    //     <Shape 
+                    //         key={i} 
+                    //         shapeObj={obj} 
+                    //         isSelected={obj.id === selectedObject}
+                    //         onSelect={ () => setSelectedObject(obj.id) }
+                    //         onChange={ (newAttrs) => {
+                    //             const objs = boardObjectList.slice();
+                    //             objs[i].property = newAttrs;
+                    //             setBoardObjectList(objs);
+                    //             console.log(newAttrs)
+                    //         }}
+                    //         setIsEditing={setIsEditing}
+                    //     />
+                    // :obj.type === 'text'?
+                    //     <Letter 
+                    //         ref={textRef}
+                    //         key={i} 
+                    //         textObj={obj} 
+                    //         setText={setText} 
+                    //         text={text} 
+                    //         isSelected={obj.id === selectedObject}
+                    //         onSelect={ () => setSelectedObject(obj.id) }
+                    //         onChange={ (newAttrs) => {
+                    //             const objs = boardObjectList.slice();
+                    //             objs[i].property = newAttrs;
+                    //             setBoardObjectList(objs);
+                    //             console.log(newAttrs)
+                    //         }}
+                    //         isEditing={isEditing}
+                    //         setIsEditing={setIsEditing}
+                    //         mode={mode}
+                    //     />
+                    // :obj.type === 'postit'?
+                    //     <Postit 
+                    //         key={i} 
+                    //         postObj={obj} 
+                    //         setText={setText} 
+                    //         text={text}
+                    //         isSelected={obj.id === selectedObject}
+                    //         onSelect={ () => setSelectedObject(obj.id) }
+                    //         onChange={ (newAttrs) => {
+                    //             const objs = boardObjectList.slice();
+                    //             objs[i].property = newAttrs;
+                    //             setBoardObjectList(objs);
+                    //             console.log(newAttrs)
+                    //         }} 
+                    //     />
+                    // :obj.type === 'image'?
+                    //     <Image 
+                    //         key={i} 
+                    //         imgObj={obj}
+                    //         isSelected={obj.id === selectedObject}
+                    //         onSelect={ () => setSelectedObject(obj.id) }
+                    //         onChange={ (newAttrs) => {
+                    //             const objs = boardObjectList.slice();
+                    //             objs[i].property = newAttrs;
+                    //             setBoardObjectList(objs);
+                    //             console.log(newAttrs)
+                    //         }}  
+                    //     />
+                    // :obj.type === 'pin'?
+                    //     <Pin key={i} pinObj={obj} /> */}

@@ -1,0 +1,28 @@
+.Persona-Container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Search-Container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 22px;
+
+    .search {
+        padding: 10px;
+        width: 174px;
+        height: 34px;
+        border: 1.5px solid #FE3400;
+        box-sizing: border-box;
+        border-radius: 10px;
+    }
+    .search::placeholder {
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        color: #BEBBB9;
+    }
+}

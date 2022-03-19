@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
+import '../../assets/css/pin/pinbox.scss';
+
 function Persona() {
     const cookies = new Cookies();
     const dispatch = useDispatch();
@@ -64,7 +66,7 @@ function Persona() {
     //...persona click 관련
 
     return (
-        <div className='persona-container'>
+        <div className='Persona-Container'>
             {personas.map( (persona, i) => <img className='persona-img' key={i} id={persona.id} src={persona.profileImgPath} width='33px' height='33px' onClick={personaClickHandler} />)}
         </div>
     );

@@ -45,7 +45,7 @@ function Postit(props) {
             draggable
             onDragEnd={positionEditHandler}
         >
-            <Rect id={postObj.id} width={100} height={100} fill={'aquamarine'} />
+            <Rect id={postObj.id} width={100} height={100} fill={postObj.property.color} />
             <Text text={postObj.property.text} onClick={postClickHandler} />
         </Group>
     );

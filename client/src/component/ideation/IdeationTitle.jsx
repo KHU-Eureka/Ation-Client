@@ -17,14 +17,15 @@ const IdeationStyle = {
     cursor: 'pointer',
 }
 
-export default function IdeationTitle() {
+export default function IdeationTitle(props) {
+    const { ChangeTitle, setChangeTitle } = props;
     const { state } = useLocation();
     const [title, setTitle] = useState();
     const [openOptionTitle, setOpenOptionTitle] = useState(false);
 
     useEffect(() => {
-        getApi(`http://ation-server.seohyuni.com/api/ideation/{ideationId}?ideationId=${state.ideationId}`).then((data) => setTitle(data.data.title));
-    }, [state])
+        getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`).then((data) => setTitle(data.data.title));
+    }, [state, ChangeTitle])
 
 
     const selectBtnClickHandler = () => {
@@ -35,7 +36,7 @@ export default function IdeationTitle() {
         <div className='IdeationTitle-container' style={IdeationStyle}>
             {ideationTitle(title)}
             <img onClick={selectBtnClickHandler} src={selectBtn} />
-            <OptionTitle openOptionTitle={openOptionTitle} setOpenOptionTitle={setOpenOptionTitle}/>
+            <OptionTitle openOptionTitle={openOptionTitle} setOpenOptionTitle={setOpenOptionTitle} setChangeTitle={setChangeTitle} ChangeTitle={ChangeTitle}/>
         </div>
     );
 }

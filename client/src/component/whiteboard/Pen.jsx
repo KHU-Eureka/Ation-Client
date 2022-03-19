@@ -10,7 +10,7 @@ function Pen(props) {
     const transRef = useRef();
 
     useEffect(() => {
-        if (isSelected) {
+        if (mode === 'choice' && isSelected) {
             transRef.current.nodes([penRef.current]);
             transRef.current.getLayer().batchDraw();
         }
@@ -57,25 +57,21 @@ function Pen(props) {
         <>
         <Line
             ref={penRef}
-            points={penObj.property.points}
-            stroke="#df4b26"
-            strokeWidth={5}
-            tension={0.5}
-            lineCap="round"
+            {...penObj.property}
             globalCompositeOperation={
                 penObj.detailType === 'eraser' ? 'destination-out' : 'source-over'
             }
             onClick={() => {
-                onSelect();
-                setIsEditing(true);
+                if( mode === 'choice') {
+                    onSelect();
+                    setIsEditing(true);
+                }
             }}
             draggable={ mode === 'choice'? true : false}
-            onDragEnd={positionEditHandler}
-            width={penObj.property.width}
-            height={penObj.property.height}
+            onDragEnd={positionEditHandler}  
             onTransformEnd={transformHandler}
         />
-        {isSelected &&
+        { mode === 'choice' && isSelected &&
         <Transformer ref={transRef} boundBoxFunc={boundBoxFunc} />
         }
         </>
@@ -83,3 +79,11 @@ function Pen(props) {
 }
 
 export default Pen;
+
+// points={penObj.property.points}
+//             stroke="#df4b26"
+//             strokeWidth={5}
+//             tension={0.5}
+//             lineCap="round"
+//             width={penObj.property.width}
+//             height={penObj.property.height}

@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { AttrContextStore } from './store/AttrContext';
 import { mainTitle, ModuleBox } from './atom';
 import { getApi } from '../state';
 
@@ -12,22 +13,28 @@ const IDEATION_LIST = {
 }
 
 function IdeationList(props) {
+    const attrStore = useContext(AttrContextStore);
     const ChangeTitle = props.ChangeTitle;
     const activePersonaId = useSelector((state) => state.activePersonaId);
     const [ideationList, setIdeationList] = useState([]);
+    const [deleteIdeation, setDeleteIdeation] = useState('');
 
     useEffect(() => {
-        getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation?personaId=${activePersonaId}`).then((data) => setIdeationList(data.data));
-    }, [activePersonaId, ChangeTitle])
+        getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation?personaId=${activePersonaId}`).then((data) => {console.log(data.data);setIdeationList(data.data);});
+    }, [activePersonaId, ChangeTitle, attrStore.thumbnail, deleteIdeation])
 
     return(
         <div className='IdeationList-container' style={IDEATION_LIST}>
             {mainTitle('아이데이션 목록')}
-            {ideationList !== undefined && ideationList.map( ideation => 
-                <>
-                    <ModuleBox obj={ideation} />
-                </>    
-            )}
+            <div className='ideation-list'>
+                <div className='ideation-list-wrap'>
+                {ideationList !== undefined && ideationList.map( ideation => 
+                    <>
+                        <ModuleBox obj={ideation} setDeleteIdeation={setDeleteIdeation} />
+                    </>    
+                )}
+                </div>
+            </div>
         </div>
     );
 }

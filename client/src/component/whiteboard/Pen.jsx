@@ -1,11 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Line, Transformer } from 'react-konva';
-import { useSelector } from 'react-redux';
-
 
 function Pen(props) {
-    const { penObj, isSelected, onSelect, onChange, setIsEditing, mode } = props;
-    // const mode = useSelector((state)=> state.mode);
+    const { penObj, isSelected, onSelect, onChange, setIsEditing, mode, detailMode } = props;
     const penRef = useRef();
     const transRef = useRef();
 
@@ -18,32 +15,36 @@ function Pen(props) {
 
     const positionEditHandler = (e) => {
         const node = penRef.current
-        let newPoints = penObj.property.points.map( (p, i) => i%2===0 ? p + node.x() : p + node.y() );
+        const scaleX = node.scaleX();
+        const scaleY = node.scaleY();
+        node.scaleX(1);
+        node.scaleY(1);
+        let newPoints = penObj.property.points.map( (p, i) => i%2===0 ? p + scaleX : p + scaleY );
         onChange(
             {
                 ...penObj.property,
-                points: newPoints
+                points: newPoints,
+                x: e.target.x(),
+                y: e.target.y(), 
             }
         );
-        console.log("qwer")
     }
 
     const transformHandler = (e) => {
         const node = penRef.current;
         const scaleX = node.scaleX();
-        console.log(node.width()* scaleX)
         const scaleY = node.scaleY();
-        // let newPoints = penObj.property.points.map( (p, i) => i%2===0 ? p + node.x() : p + node.y() );
         node.scaleX(1);
         node.scaleY(1);
-        // onChange(
-        //     {
-        //         ...penObj.property,
-        //         // points: newPoints,
-        //         width: Math.max(5, node.width() * scaleX),
-        //         height: Math.max(node.height() * scaleY),
-        //     }
-        // );
+        let newPoints = penObj.property.points.map( (p, i) => i%2===0 ?  p * scaleX : p * scaleY );
+        onChange(
+            {
+                ...penObj.property,
+                points: newPoints,
+                x: node.x(),
+                y: node.y(),
+            }
+        );
     }
 
     const boundBoxFunc = (oldBox, newBox) => {
@@ -56,6 +57,7 @@ function Pen(props) {
     return (
         <>
         <Line
+            id={penObj.id}
             ref={penRef}
             {...penObj.property}
             globalCompositeOperation={

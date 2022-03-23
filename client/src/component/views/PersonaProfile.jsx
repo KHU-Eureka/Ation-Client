@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { useFetch } from '../state';
+import { useFetch, clickUIChangeHandler, clickUIPrevHandler } from '../state';
+import { BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE } from '../lounge/atomStyleSheet';
 
 import '../../assets/css/PersonaProfile.css';
 
@@ -46,6 +47,12 @@ export default function PersonaProfile(props) {
         width: '119.83px',
         height: '51.38px',
     }
+
+    const loungeOpenClickHandler = ({ target }) => {
+        const btnDoc = document.querySelectorAll('.btn');
+        clickUIChangeHandler(BTN_CLICKSTYLE, target);
+        clickUIChangeHandler(BTN_CLICKOUTSTYLE, btnDoc);
+    }
   
 
     return (
@@ -64,6 +71,7 @@ export default function PersonaProfile(props) {
                                     className="sense-elem"    
                                     src={senseInfoList.find(elem=>elem.id===sense).svg}
                                     alt="sense" 
+                                    style={sense===4?{width: '10px', height: '20px',}:sense===5?{width: '20px', height: '15px'}:null}
                                     />
                                 ))}
                             </div>
@@ -73,7 +81,7 @@ export default function PersonaProfile(props) {
                 {/* </div> */}
                 {isLoungeHome?
                 <div className='btn-container'>
-                    <button className='btn'>Open Lounge</button>
+                    <button className='btn' onClick={loungeOpenClickHandler}>Open Lounge</button>
                 </div>
                 :null}
         </div>

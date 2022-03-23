@@ -11,20 +11,23 @@ function Pin(props) {
     const { setPinObject } = props;
 
     const cookies = new Cookies();
+    const activePersonaId = useSelector((state) => state.activePersonaId);
     const clickedPersonId = useSelector((state) => state.clickedPersonId);
 
     const [pins, setPins] = useState([]);
+    const [pId, setPId] = useState(0);
 
-    const pinSettingHandler = async () => {
+    const pinSettingHandler = async (target) => {
         try {
             const token = cookies.get('token');
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/pin?personaId=${clickedPersonId}`,
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/pin?personaId=${target}`,
                 {
                     headers: {
                         Authorization: "Bearer " + token
                     }
                 });
             setPins(response.data);
+            setPId(target);
         } 
         catch(error) {
             console.log(error);
@@ -32,8 +35,10 @@ function Pin(props) {
     }
 
     useEffect(() => {
-        if(clickedPersonId !== 0) {
-            pinSettingHandler();
+        if(clickedPersonId !== 0 && clickedPersonId !== null) {
+            pinSettingHandler(clickedPersonId);
+        } else {
+            pinSettingHandler(activePersonaId);
         }
     }, [clickedPersonId])
 
@@ -47,10 +52,10 @@ function Pin(props) {
 
     return (
         <>
-        <Search setPins={setPins} />
+        <Search setPins={setPins} pId={pId} />
         <div className='pin-container'>
             {pins.map( (pin, i) => 
-            <>
+            <div className='pin-content'>
                 <div className='pin-image'>
                     <img draggable="true" onDragStart={pinDragHandler} key={i} id={pin.id} src={pin.pinImgPath} width='154px' height='87px' />
                 </div>
@@ -61,7 +66,7 @@ function Pin(props) {
                     <img src={pin.insight.icon} />
                     <span>{pin.insight.siteName}</span>
                 </div>
-            </>
+            </div>
             )}
         </div>
         </>

@@ -1,28 +1,98 @@
-.Persona-Container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.Tool-Container {
 
-.Search-Container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 22px;
+    .Persona-Container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-    .search {
-        padding: 10px;
-        width: 174px;
-        height: 34px;
-        border: 1.5px solid #FE3400;
-        box-sizing: border-box;
-        border-radius: 10px;
+        .persona-img {
+            margin-right: 14px;
+        }
     }
-    .search::placeholder {
-        font-family: 'Pretendard';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 18px;
-        color: #BEBBB9;
+    
+    .Search-Container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 22px;
+        position: relative;
+    
+        .search {
+            padding: 10px;
+            width: 174px;
+            height: 34px;
+            border: 1.5px solid #FE3400;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+        .search::placeholder {
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 18px;
+            color: #BEBBB9;
+        }
+
+        img {
+            position: absolute;
+            top: 7px;
+            left: 130px;
+            width: 20px;
+            height: 20px;
+        }
+    }
+    
+    .pin-container {
+        margin-top: 18px;
+
+        .pin-content {
+            margin-bottom: 12px;
+        }
+
+        .pin-image {
+            img {
+                width: 154px;
+                height: 87px;
+                border-radius: 10px;
+            }
+        }
+        .pin-image:-moz-drag-over {
+            width: 154px;
+                height: 87px;
+                border-radius: 10px;
+        }
+
+        .pin-title {
+            width: 143px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 11px;
+            color: #352C23;
+            margin-top: 0px;
+        }
+
+        .pin-site {
+            height: 12.84px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-left: 0px;
+            font-family: 'Pretendard';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 11px;
+            color: #352C23;
+            margin-top: 0px;
+
+            img {
+                width: 12.86px;
+                height: 12.84px;
+                margin-right: 9.35px;
+            }
+        }
     }
 }

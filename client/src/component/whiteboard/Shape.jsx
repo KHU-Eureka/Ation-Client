@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Rect, Circle, Line, Transformer } from 'react-konva';
+import { Rect, Circle, Line, Arrow, Transformer } from 'react-konva';
 
 
 function Shape(props) {
@@ -53,6 +53,36 @@ function Shape(props) {
         });
     }
 
+    const transformTriHandler = (e) => {
+        const point = shapeObj.property.points;
+        const node = shapeRef.current;
+        const scaleX = node.scaleX();
+        const scaleY = node.scaleY();
+        node.scaleX(1);
+        node.scaleY(1);
+        onChange({
+          ...shapeObj.property,
+          x: node.x(),
+          y: node.y(),
+          points: [point[0]*scaleX, point[1]*scaleY, point[2]*scaleX, point[3]*scaleY, point[4]*scaleX, point[5]*scaleX]
+        });
+    }
+
+    const transformArrowHandler = (e) => {
+        const point = shapeObj.property.points;
+        const node = shapeRef.current;
+        const scaleX = node.scaleX();
+        const scaleY = node.scaleY();
+        node.scaleX(1);
+        node.scaleY(1);
+        onChange({
+          ...shapeObj.property,
+          x: node.x(),
+          y: node.y(),
+          points: [point[0]*scaleX, point[1]*scaleY, point[2]*scaleX, point[3]*scaleY]
+        });
+    }
+
     const boundBoxFunc = (oldBox, newBox) => {
         if (newBox.width < 5 || newBox.height < 5) {
             return oldBox;
@@ -73,8 +103,7 @@ function Shape(props) {
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
-                onTransformEnd={transformHandler}
-            />
+                onTransformEnd={transformHandler}/>
         :shapeObj.detailType === 'circle'?
             <Circle 
                 ref={shapeRef}
@@ -86,13 +115,37 @@ function Shape(props) {
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
-                onTransformEnd={transformCircleHandler}
-            />
+                onTransformEnd={transformCircleHandler}/>
+        :shapeObj.detailType === 'tri'?
+            <Line
+                ref={shapeRef}
+                {...shapeObj.property}
+                onClick={() => {
+                    mode === 'choice' &&
+                    onSelect();
+                    setIsEditing(true);
+                }}
+                draggable={mode === 'choice' ? true:false}
+                onDragEnd={positionEditHandler}
+                onTransformEnd={transformTriHandler}/>
+        :shapeObj.detailType === 'arrow'?
+            <Arrow 
+                ref={shapeRef}
+                {...shapeObj.property}
+                onClick={() => {
+                    mode === 'choice' &&
+                    onSelect();
+                    setIsEditing(true);
+                }}
+                draggable={mode === 'choice' ? true:false}
+                onDragEnd={positionEditHandler}
+                onTransformEnd={transformArrowHandler}/>
         :<></>}
         {mode === 'choice' && isSelected && 
         <Transformer 
             ref={transRef}
             boundBoxFunc={boundBoxFunc}
+            enabledAnchors={['top-left', 'top-right', 'bottom-left', 'bottom-right']}
         />}
         </>
     );

@@ -1,18 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { Image, Transformer } from 'react-konva';
-import { useSelector } from 'react-redux';
 import useImage from 'use-image';
 
 function Img(props) {
     const { imgObj, isSelected, onSelect, onChange, setIsEditing, mode } = props;
-    // const mode = useSelector((state)=> state.mode);
     const imgRef = useRef();
     const transRef = useRef();
 
-    const [image] = useImage(imgObj.image);
+    const [image] = useImage(imgObj.image, 'Anonymous');
 
     useEffect(() => {
-        console.log(image)
         if (mode === 'choice' && isSelected) {
             transRef.current.nodes([imgRef.current]);
             transRef.current.getLayer().batchDraw();

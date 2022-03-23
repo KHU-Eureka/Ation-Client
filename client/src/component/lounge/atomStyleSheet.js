@@ -35,10 +35,6 @@ export const MAINTITLE_STYLE = {
     color: COLOR4,
 }
 
-export const IMGBOX_STYLE = {
-
-}
-
 export const MEMBERNUM_STYLE = {
     ...BASIC_FONTSTYLE,
     fontWeight: 500,
@@ -84,4 +80,38 @@ export const INVALIDBTN_STYLE_ENTER = {
     border: `1px solid #E7E6E5`,
     color: COLOR3,
     background: '#E7E6E5',
+}
+
+export const DEFAULT_BG_STYLE = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#F5F5F5',
+    borderRadius: '10px',
+}
+
+export const BTN_HOVERSTYLE = {
+    background: '#F5F5F5',
+}
+
+export const BTN_HOVEROUTSTYLE = {
+    background: `${COLOR3}`,
+}
+
+export const BTN_CLICKSTYLE = {
+    background: `${COLOR1}`,
+    color: `${COLOR3}`,
+}
+
+export const BTN_CLICKOUTSTYLE = {
+    background: `${COLOR3}`,
+    color: `${COLOR1}`,
+}
+
+export const MODULE_HOVERSTYLE = {
+    border: `1px solid ${COLOR5}`,
+}
+
+export const MODULE_HOVEROUTSTYLE = {
+    border: 'none',
 }

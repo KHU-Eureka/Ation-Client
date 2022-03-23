@@ -1,6 +1,6 @@
-import { LoungePinup, enterLounge } from '../state';
+import { LoungePinup, enterLounge, clickUIPrevHandler, clickUIChangeHandler, deleteHandler } from '../state';
 
-import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER } from './atomStyleSheet';
+import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER, BTN_HOVERSTYLE, BTN_HOVEROUTSTYLE, BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE, MODULE_HOVEROUTSTYLE, MODULE_HOVERSTYLE } from './atomStyleSheet';
 
 import w_eye from '../../assets/svg/sense_eye.svg';
 import w_nose from '../../assets/svg/sense_nose.svg';
@@ -88,20 +88,39 @@ export const mainTitle = (title, header) => {
 }
 
 const enterBtn = (isValid, loungeId, personaId) => {
+    const btnDoc = document.querySelectorAll('.btn');
+
+    const hoverStyleHandler = ({ target }) => {
+        isValid && clickUIChangeHandler(BTN_HOVERSTYLE, target);
+    }
+
+    const hoverOutStyleHandler = ({ target }) => {
+        isValid && clickUIChangeHandler(BTN_HOVEROUTSTYLE, target);
+    }
+
+    const clickStyleHandler = ({ target }) => {
+        if(isValid) {
+            clickUIPrevHandler(BTN_CLICKOUTSTYLE, btnDoc);
+            clickUIChangeHandler(BTN_CLICKSTYLE, target);
+            enterLounge(loungeId, personaId);
+        }
+    }
+
     return(
-        <button onClick={ isValid? () => {enterLounge(loungeId, personaId);}:null } style={ isValid? VALIDBTN_STYLE_ENTER:INVALIDBTN_STYLE_ENTER }>입장</button>
+        <button className={isValid?'valid btn':'invalid'} onClick={ isValid?clickStyleHandler:null } style={ isValid? VALIDBTN_STYLE_ENTER:INVALIDBTN_STYLE_ENTER } onMouseOver={hoverStyleHandler} onMouseOut={hoverOutStyleHandler}>입장</button>
     );
 }
 
-const deleteBtn = (loungeId) => {
+export const deleteBtn = (url, id, setDeleteLounge) => {
     return(
-        <img className="delete-btn" id={loungeId} src={lounge_delete} />
+        <img className="delete-btn" id={id} src={lounge_delete} style={{display: 'none', cursor: 'pointer'}} onClick={() => deleteHandler(url,id).then((data) => setDeleteLounge(data.data))}/>
     );
 }
 
 export const imgBox = (obj, isPin) => {
     return(
-        <div className='imgbox-container' style={{backgroundImage: `url(${obj.imgPath})`, cursor: 'pointer'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
+        <div className='imgbox-container' style={{position: 'relative', cursor: 'pointer', background: 'transparent'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
+            <img className='imgbox-container' src={obj.imgPath} style={{position: 'absolute', zIndex: '-1', top: '0px'}} loading='lazy' alt="..."/>
             <div className='imgbox-wrap-container'>
                 <div className='header-container'>
                     {senseImg(obj.sense.name, 1)}
@@ -121,10 +140,21 @@ export const imgBox = (obj, isPin) => {
         </div>
     );
 }
+//backgroundImage: `url(${obj.imgPath})`, 
+export const Modulebox = ({ obj, isSense, link, setDeleteLounge }) => {
+    
+    const hoverStyleHandler = ({ currentTarget }) => {
+        currentTarget.querySelector('.delete-btn').style.display = 'inline';
+        clickUIChangeHandler(MODULE_HOVERSTYLE, currentTarget);
+    }
 
-export const moduleBox = (obj, isSense) => {
+    const hoverOutStyleHandler = ({ currentTarget }) => {
+        currentTarget.querySelector('.delete-btn').style.display = 'none';
+        clickUIPrevHandler(MODULE_HOVEROUTSTYLE, [currentTarget]);
+    }
+
     return(
-        <div className='modulebox-container'>
+        <div className='modulebox-container' onMouseOver={!isSense?hoverStyleHandler:null} onMouseOut={!isSense?hoverOutStyleHandler:null}>
             <div className='modulebox-wrap-container'>
                 {isSense?
                 <div className='left-container'>
@@ -139,7 +169,9 @@ export const moduleBox = (obj, isSense) => {
                     {enterBtn( obj.status !=='END'? true:false, obj.id, obj.persona.id )}
                 </div>
             </div>
-            {!isSense?deleteBtn(obj.id):null}
+            {!isSense?deleteBtn(link, obj.id, setDeleteLounge):null}
         </div>
     );
 }
+
+export const defaultText = "라운지 참여 내역이 ";

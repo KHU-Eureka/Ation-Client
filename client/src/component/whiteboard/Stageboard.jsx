@@ -6,37 +6,28 @@ import axios from 'axios';
 import { Layer, Stage } from 'react-konva';
 import { nanoid } from 'nanoid';
 
+import { AttrContextStore as AttrContextImgStore } from '../ideation/store/AttrContext';
 import { AttrContextStore } from './store/AttrContext';
 import { useFetch } from '../state';
-import { isTrue, afterTransformer, createObj } from './state';
+import { isTrue, createObj } from './state';
 
-import Pen from './Pen';
-import Shape from './Shape';
-import Letter from './Letter';
-import Postit from './Postit';
-import Image from './Image';
-import Pin from './Pin';
 import Elements from './Elements';
 
+import bin from '../../assets/svg/board_bin.svg';
+
 function Stageboard(props) {
-    const { setText, text, imgSrc, pinObject, setIsEditing, isEditing } = props;
-
+    const { setText, text, imgSrc, pinObject, setIsEditing } = props;
     const attrStore = useContext(AttrContextStore);
-
+    const attrImgStore = useContext(AttrContextImgStore);
     const { state } = useLocation();
-
     const cookies = new Cookies();
-
     const stageRef = useRef();
-    const textRef = useRef();
-
-    const mode = useSelector((state)=> state.mode);
-    // const attrStore.detailMode = useSelector((state)=> state.detail_mode);
 
     const [boardObjectList, setBoardObjectList] = useState([]);
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentObject, setCurrentObject] = useState();
     const [selectedObject, setSelectedObject] = useState(null);
+    const [exportImg, setExportImg] = useState();
 
     const whiteboard = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
 
@@ -47,6 +38,73 @@ function Stageboard(props) {
         }
     }, [whiteboard])
 
+    function dataURItoBlob(dataURI) {
+        let byteString = window.atob(dataURI.split(',')[1]);
+        let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+        let ab = new ArrayBuffer(byteString.length);
+        let ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++)
+        {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        let bb = new Blob([ab], { "type": mimeString });
+        return bb;
+    }
+
+    const imgExportHandler = async () => {
+        const token = cookies.get('token');
+        const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/image/${state.ideationId}`, exportImg)
+        attrImgStore.setThumbnail(response.data);
+    }
+
+    useEffect(() => {
+        console.log(exportImg)
+        if(exportImg !== undefined) {
+            imgExportHandler();
+            attrStore.setMode('choice');
+        }
+    }, [exportImg])
+
+    function readImage (dataUrl) {
+        var blob = dataURItoBlob(dataUrl);
+        var formData = new FormData();
+        formData.append('ideationImg', blob);
+        setExportImg(formData);
+    }
+
+    useEffect(() => {
+        if(attrStore.mode === 'export') {
+            const dataURL = stageRef.current.toDataURL({ pixelRatio: 3 });
+            console.log(dataURL)
+            readImage(dataURL);
+        }
+    }, [attrStore.mode])
+
+    function textEditHandler(e) {
+        attrStore.setText(e.target.value);
+        console.log(attrStore.text);
+    };
+
+    useEffect(() => {
+        if(document.querySelector('textarea')) {
+            document.querySelector('textarea').addEventListener('keydown', textEditHandler);
+            return () => document.querySelector('textarea').removeEventListener('change', textEditHandler);
+        }
+    }, [])
+
+    function textOutClickHandler() {
+        const textArea = document.querySelector('textarea');
+        const stageNode = document.querySelector('.stageboard-container');
+        attrStore.setText(textArea.value);
+        stageNode.removeChild(textArea);
+        console.log(attrStore.text);
+        let lastObj = boardObjectList[boardObjectList.length - 1];
+        lastObj.property.text = attrStore.text;
+        setIsEditing(true);
+    }
+    
+
     const mouseDownHandler = ({ target }) => {
         setIsDrawing(true);
         if(target === stageRef.current) {
@@ -54,39 +112,46 @@ function Stageboard(props) {
             switch(attrStore.mode) {
                 case 'pen':
                     if(attrStore.detailMode === 'pen') {
-                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
                     } else if(attrStore.detailMode === 'highlight') {
-                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
-                    } else if(attrStore.detailMode === 'eraser') {
-                        setCurrentObject(target);
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
                     }
                     break;
                 case 'shape':
                     if(attrStore.detailMode === 'rect') {
-                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
                     } else if(attrStore.detailMode === 'tri') {
-                        setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'tri', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
                     } else if(attrStore.detailMode === 'circle') {
-                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
+                    } else if(attrStore.detailMode === 'arrow') {
+                        setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {color: attrStore.color, width: attrStore.width})]);
                     } 
-                    // else if(attrStore.detailMode === 'line') {
-                    //     setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'shape', detailType: 'line', points: [pos.x, pos.y, 0, 0], property: { content: null } }]);
-                    // }
                     break;
                 case 'text':
-                    if(document.querySelector('textarea')) {
-                        const textareaStyle = document.querySelector('textarea').style;
-                        if(text === '') {
-                            setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y)]);
-                            textareaStyle.display = 'inline';
-                            textareaStyle.position = 'absolute';
-                            textareaStyle.top = pos.y + 'px';
-                            textareaStyle.left = pos.x + 'px';
-                        } else {
-                            boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
-                            textareaStyle.display = 'none';
-                        }
-                    }
+                    setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {text: attrStore.text})]);
+                    const stageNode = document.querySelector('.stageboard-container');
+                    const textArea = document.createElement('textarea');
+                    textArea.setAttribute('autofocus', true);
+                    textArea.setAttribute('style', `display: inline-block; position: absolute; top: ${pos.y + 95}px; left: ${pos.x + 290}px; border: 0.5px solid #D7D2C8; max-width: 100px;`);
+                    stageNode.appendChild(textArea);
+                    textArea.onChange = function textEditHandler(e) {
+                        console.log("asdf")
+                        attrStore.setText(e.target.value);
+                        console.log(attrStore.text)
+                    };
+                    // if(document.querySelector('textarea')) {
+                    //     const textareaStyle = document.querySelector('textarea').style;
+                    //     if(text === '') {
+                    //         textareaStyle.display = 'inline';
+                    //         textareaStyle.position = 'absolute';
+                    //         textareaStyle.top = pos.y + 'px';
+                    //         textareaStyle.left = pos.x + 'px';
+                    //     } else {
+                    //         boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
+                    //         textareaStyle.display = 'none';
+                    //     }
+                    // }
                     break;
                 case 'postit':
                     if(document.querySelector('textarea')) {
@@ -105,6 +170,10 @@ function Stageboard(props) {
                     }
                     break;
                 case 'choice':
+                    if(document.querySelector('textarea') && target !== document.querySelector('textarea')) {
+                        textOutClickHandler();
+                        // window.addEventListener('click', textOutClickHandler);
+                    }
                     for(var obj of boardObjectList) {
                         if(obj.id === selectedObject && obj.type === 'text') {
                             const textareaStyle = document.querySelector('textarea').style;
@@ -123,13 +192,8 @@ function Stageboard(props) {
             const pos = target.getStage().getPointerPosition();
             let lastObj = boardObjectList[boardObjectList.length - 1];
             if(attrStore.mode === 'pen') {
-                if(attrStore.detailMode === 'eraser') {
-                    setCurrentObject(target);
-                    if(currentObject.constructor.name === 'Line') {
-                        currentObject.destroy();
-                    }
-                } else {
-                    lastObj.property.points = lastObj.property.points.concat([pos.x, pos.y]);
+                if(attrStore.detailMode !== 'eraser') {
+                    lastObj.property.points = lastObj.property.points.concat([pos.x-lastObj.property.x, pos.y - lastObj.property.y]);
                 }
             } else if(attrStore.mode === 'shape') {
                 if(attrStore.detailMode === 'rect') {
@@ -141,7 +205,21 @@ function Stageboard(props) {
                     } else {
                         lastObj.property.radius = (lastObj.property.x - pos.x)/2;
                     }
-                }
+                } else if(attrStore.detailMode === 'tri') {
+                    let x = 0;
+                    let y = 0;
+                    if((lastObj.property.y - pos.y) < 0) {
+                        x = (pos.x - lastObj.property.x) /2;
+                        y = (lastObj.property.y - pos.y)/2;
+                        lastObj.property.points = [x, y, 0, -y, -x, y];
+                    } else {
+                        x = (lastObj.property.x - pos.x)/2;
+                        y = (lastObj.property.y - pos.y)/2;
+                        lastObj.property.points = [x, y, 0, -y, -x, y];
+                    }
+                } else if(attrStore.detailMode === 'arrow') {
+                    lastObj.property.points = [0, 0, pos.x - lastObj.property.x, pos.y - lastObj.property.y];
+                } 
             }
             boardObjectList.splice(boardObjectList.length - 1, 1, lastObj);
             setBoardObjectList(boardObjectList.concat());
@@ -149,7 +227,7 @@ function Stageboard(props) {
     }
 
     const mouseUpHandler = () => {
-        if(attrStore.mode === 'shape' || attrStore.mode === 'image') {
+        if(attrStore.mode === 'shape' || attrStore.mode === 'image' || attrStore.mode === 'text') {
             attrStore.setMode('choice');
         }
         setIsDrawing(false);
@@ -157,7 +235,8 @@ function Stageboard(props) {
 
     const dropHandler = (e) => {
         e.preventDefault();
-        setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pin', detailType: null, points: [e.nativeEvent.offsetX, e.nativeEvent.offsetY], property: { content: pinObject } }]);
+        setBoardObjectList([...boardObjectList, { id: nanoid(), type: 'pin', detailType: null, property: { x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY, content: pinObject } }]);
+        attrStore.setMode('choice');
     }
 
     const dragOverHandler = (e) => {
@@ -167,19 +246,29 @@ function Stageboard(props) {
     useEffect(() => {
         if(attrStore.mode === 'image') {
             setBoardObjectList([...boardObjectList, { ...createObj(attrStore.mode, attrStore.detailMode), image: imgSrc }]);
+            attrStore.setMode('choice');
         }
     }, [imgSrc])
 
     const contextMenuHandler = (e) => {
         e.evt.preventDefault();
-        if(e.target === stageRef.current) return;
+        if(e.target === stageRef.current) {
+            const menuDoc = document.querySelector('.menu-Container');
+            if(menuDoc.classList.contains('menu-display')) {
+                menuDoc.classList.remove('menu-display');
+            }
+            console.log(e.target);
+            return;
+        }
 
         setCurrentObject(e.target);
-        const menuStyle = document.querySelector('.menu-Container').style;
+        const menuDoc = document.querySelector('.menu-Container');
+        const menuStyle = menuDoc.style;
         const pos = e.target.getStage().getPointerPosition();
-        menuStyle.display = 'initial';
-        menuStyle.top = `${pos.y + 4}px`;
-        menuStyle.left = `${pos.x + 4}px`;
+        menuDoc.classList.add('menu-display');
+        menuStyle.display = 'inline-flex';
+        menuStyle.top = `${pos.y + 50}px`;
+        menuStyle.left = `${pos.x + 350}px`;
     }
 
     const clickHandler = (e) => {
@@ -187,6 +276,12 @@ function Stageboard(props) {
         menuStyle.display = 'none';
         if(e.target === e.target.getStage()) {
             setSelectedObject(null);
+        }
+        if(attrStore.detailMode === 'eraser' && e.target.constructor.name === 'Line') {
+            if(e.target.attrs.globalCompositeOperation === 'source-over') {
+                const temp = boardObjectList.filter((i) => i.id !== e.target.attrs.id);
+                setBoardObjectList(temp);
+            }
         }
     }
 
@@ -222,7 +317,7 @@ function Stageboard(props) {
 
     useEffect(() => {
         //오브젝트 리스트 길이가 1 증가하고 && 그 타입이 텍스트라면, selectedobject를 그것의 id로 설정
-        if(mode === 'text') {
+        if(attrStore.mode === 'text') {
             let lastObj = boardObjectList[boardObjectList.length - 1];
             setSelectedObject(lastObj.id);
         }
@@ -230,7 +325,7 @@ function Stageboard(props) {
 
     return (
         <>
-        <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler}>
+        <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler} style={{position: 'relative'}}>
             <Stage ref={stageRef} width={1607} height={window.innerHeight-20} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
                 <Layer>
                     {boardObjectList && boardObjectList.map( (obj, i) => <Elements key={i} type={obj.type} obj={obj}
@@ -251,7 +346,10 @@ function Stageboard(props) {
             </Stage>
         </div>
         <div className='menu-Container' style={{ display: 'none', position: 'absolute', background: 'white' }}>
-            <div className='delete-button' onClick={deleteHandler}>Delete</div>
+            <div className='delete-button' onClick={deleteHandler}>
+                <img src={bin} style={{marginRight: '4px'}}/>
+                <span>삭제</span>
+            </div>
         </div>
         </>
     );

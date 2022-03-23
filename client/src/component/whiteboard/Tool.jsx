@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { useDispatch  } from 'react-redux';
+import axios from 'axios';
 
 import Persona from '../pin/Persona';
 import Pin from '../pin/Pin';
 import Color from './Color';
+import { Width } from './Width';
 
 import { AttrContextStore } from './store/AttrContext';
 import { clickUIPrevHandler, clickUIChangeHandler } from '../state';
@@ -25,10 +27,9 @@ import rect from "../../assets/svg/detailTool/rect.svg";
 import circle from "../../assets/svg/detailTool/circle.svg";
 import tri from "../../assets/svg/detailTool/tri.svg";
 import arrow from "../../assets/svg/detailTool/arrow.svg";
-import line from "../../assets/svg/detailTool/line.svg";
-import roundRect from "../../assets/svg/detailTool/roundRect.svg";
 import shapeLine from "../../assets/svg/detailTool/shapeLine.svg";
 import shapeColor from "../../assets/svg/detailTool/shapeColor.svg";
+import exportImg from "../../assets/svg/importImg.svg";
 
 function Tool(props) {
     const { setText, setImgSrc, setPinObject } = props;
@@ -43,6 +44,7 @@ function Tool(props) {
     const imgRef = useRef();
     const pinRef = useRef();
     const choiceRef = useRef();
+    const exportRef = useRef();
 
     const penContainer = useRef();
     const shapeContainer = useRef();
@@ -58,6 +60,7 @@ function Tool(props) {
     const d_rect = useRef();
     const d_circle = useRef();
     const d_tri = useRef();
+    const d_arrow = useRef();
     const d_shapeColor = useRef();
     const d_shapeWidth = useRef();
 
@@ -65,7 +68,6 @@ function Tool(props) {
     const penWidthRef = useRef();
     const shapeColorRef = useRef();
     const shapeWidthRef = useRef();
-    const postitColorRef = useRef();
 
     const detailToolStyle_prev = {
         display: 'none',
@@ -88,6 +90,9 @@ function Tool(props) {
     const detailStyle_new = {
         background: '#BEBBB9',
     }
+    const cursorStyle = {
+        cursor: 'default',
+    }
 
     const mainToolOnStyle = (target, boxTarget) => {
         if(boxTarget) {
@@ -95,6 +100,8 @@ function Tool(props) {
         }
         clickUIChangeHandler(modeStyle_new, target.current);
         clickUIChangeHandler(imgStyle_new, target.current.querySelector('img'));
+        const stageNode = document.querySelector('.stageboard-container');
+        stageNode.style = cursorStyle;
     }
 
     const attrOffStyle = () => {
@@ -146,12 +153,17 @@ function Tool(props) {
                 break;
             case 'text':
                 mainToolOnStyle(textRef);
+                const stageNode = document.querySelector('.stageboard-container');
+                stageNode.style.cursor = 'text';
                 break;
             case 'image':
                 mainToolOnStyle(imgRef);
                 break;
             case 'pin':
                 mainToolOnStyle(pinRef, pinContainer);
+                break;
+            case 'export':
+                mainToolOnStyle(exportRef);
                 break;
             default:
                 mainToolOnStyle(choiceRef);
@@ -176,6 +188,11 @@ function Tool(props) {
             case 'tri':
                 subToolOnStyle(d_tri);
                 break;
+            case 'arrow':
+                subToolOnStyle(d_arrow);
+                break;
+            default:
+                break;
             }
     }, [attrStore.mode, attrStore.detailMode])
 
@@ -199,6 +216,9 @@ function Tool(props) {
             } else if(target.classList.contains('Choice')) {
                 attrStore.setMode('choice');
                 attrStore.setDetailMode('');
+            } else if(target.classList.contains('Export')) {
+                attrStore.setMode('export');
+                attrStore.setDetailMode('');
             }
         } else {
             attrStore.setMode('image');
@@ -220,6 +240,7 @@ function Tool(props) {
                 clickUIChangeHandler(imgStyle_new, d_penColor.current.querySelector('img'));
             } else if(target.classList.contains('penWidth')) {
                 attrOffStyle();
+                clickUIChangeHandler(detailToolStyle_new, penWidthRef.current);
                 clickUIChangeHandler(detailStyle_new, d_penWidth.current);
                 clickUIChangeHandler(imgStyle_new, d_penWidth.current.querySelector('img'));
             }
@@ -230,6 +251,8 @@ function Tool(props) {
                 attrStore.setDetailMode('circle');
             } else if(target.classList.contains('tri')) {
                 attrStore.setDetailMode('tri');
+            } else if(target.classList.contains('arrow')) {
+                attrStore.setDetailMode('arrow');
             } else if(target.classList.contains('shapeColor')) {
                 attrOffStyle();
                 clickUIChangeHandler(detailToolStyle_new, shapeColorRef.current);
@@ -237,6 +260,7 @@ function Tool(props) {
                 clickUIChangeHandler(imgStyle_new, d_shapeColor.current.querySelector('img'));
             } else if(target.classList.contains('shapeWidth')) {
                 attrOffStyle();
+                clickUIChangeHandler(detailToolStyle_new, shapeWidthRef.current);
                 clickUIChangeHandler(detailStyle_new, d_shapeWidth.current);
                 clickUIChangeHandler(imgStyle_new, d_shapeWidth.current.querySelector('img'));
             }
@@ -245,10 +269,17 @@ function Tool(props) {
 
     const readImage = ({ target }) => {
         const reader = new FileReader();
+        const formData = new FormData();
+        formData.append('image', target.files[0]);
         reader.readAsDataURL(target.files[0]);
-        reader.onload = function({ target }) {
-            setImgSrc(target.result);
+        reader.onload = async function({ target }) {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/image`, formData);
+            setImgSrc(response.data.value);
         }
+    }
+
+    const inputClickHandler = ({ target }) => {
+        target.value = '';
     }
 
     return (
@@ -266,19 +297,22 @@ function Tool(props) {
                         <Color/>
                     </div>
                     <div className='mode attr penWidth' ref={d_penWidth}><img className='attrImg penWidth' src={penWidth} /></div>
+                    <div className='attr-container width-container' id='penWidth' ref={penWidthRef} style={{display: 'none'}}>
+                        <Width type={'pen'} />
+                    </div>
                 </div>
             </div>
             <div className='main mode tool-container Shape' ref={shapeRef}><img className='mainToolImg Shape' src={tool_shape} /></div>
             <div className='detail-container shape-container' style={{display: 'none'}} ref={shapeContainer}>
                 <div className='shape-wrap-container'>
                     <div className='mode detail rect' ref={d_rect}><img className='detailImg rect' src={rect} /></div>
-                    {/* <div className='mode soft-rect'><img className='soft-rect' src={roundRect} /></div> */}
                     <div className='mode detail circle' ref={d_circle}><img className='detailImg circle' src={circle} /></div>
                     <div className='mode detail tri' ref={d_tri}><img className='detailImg tri' src={tri} /></div>
-                    {/* <div className='mode arrow'><img className='arrow' src={arrow} /></div> */}
-                    {/* <div className='mode line'><img className='line' src={line} /></div> */}
-                    <div className='mode line'></div>
+                    <div className='mode detail arrow' ref={d_arrow}><img className='detailImg arrow' src={arrow} /></div>
                     <div className='mode attr shapeLine' ref={d_shapeWidth}><img className='attrImg shapeWidth' src={shapeLine} /></div>
+                    <div className='attr-container shapeWidth-container' id='shapeWidth' ref={shapeWidthRef} style={{display: 'none'}}>
+                        <Width type={'shape'} />
+                    </div>
                     <div className='mode attr shapeColor' ref={d_shapeColor}><img className='attrImg shapeColor' src={shapeColor} /></div>
                     <div className='attr-container color-container' id='shape' ref={shapeColorRef} style={{display: 'none'}}>
                         <Color/>
@@ -296,7 +330,7 @@ function Tool(props) {
                 <label className="Image" htmlFor="input-file">
                     <img className='mainToolImg Image' src={tool_image} />
                 </label>
-                <input type='file' id="input-file" style={{display:"none"}} onChange={readImage}/>
+                <input type='file' id="input-file" style={{display:"none"}} onChange={readImage} onClick={inputClickHandler}/>
             </div>
             <div className='main mode tool-container Pin' ref={pinRef}><img className='mainToolImg Pin' src={tool_pin} /></div>
             <div className='detail-container pin-container' style={{display: 'none'}} ref={pinContainer}>
@@ -305,6 +339,7 @@ function Tool(props) {
                     <Pin setPinObject={setPinObject} />
                 </div>
             </div>
+            <div className='main mode tool-container Export' ref={exportRef}><img className='mainToolImg Export'src={exportImg} /></div>
         </div>
 
         </>

@@ -1,0 +1,16 @@
+@mixin scrollbar-lounge($h: 270px) {
+    width: 6px;
+}
+
+@mixin scrollbar-point-lounge($h: 270px) {
+    background: #8B8B8B;
+    border-radius: 100px;
+    height: $h;
+    width: 6px;
+    cursor: pointer;
+}
+
+@mixin scrollbar-track-lounge() {
+    background-color: transparent; 
+    width: 6px;
+}

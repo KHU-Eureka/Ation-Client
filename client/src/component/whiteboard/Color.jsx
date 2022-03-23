@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext } from 'react';
 
-import { clickUIPrevHandler, clickUIChangeHandler } from '../state';
 import { AttrContextStore } from './store/AttrContext';
 
 const ColorElem = ({ color }) => {

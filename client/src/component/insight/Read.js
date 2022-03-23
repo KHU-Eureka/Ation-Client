@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from "react-redux";
 
+import NonGraphic from "../views/NonGraphic";
 import Reco from "./Reco";
 import InsightLNB from "./InsightLNB"
 import Modal from "../modal/Modal";
@@ -269,6 +270,7 @@ function Read() {
             </div>
             <div className="Content-container">
                 <InsightLNB cate1={cate} cate={setCate} setInsight={setInsight} search={search} setCateId={setCateId}/>
+                {insight.length !== 0 ?
                 <div className="img-container">
                     <ul className="img-ul">
                     {insight.map(i => (
@@ -295,6 +297,7 @@ function Read() {
                     <PinUp open={modal2Open} pageNum={pageNum2} setPageNum={setPageNum2} close={closeModal2} header={prev} personaImg={personaImg} personaId={personaId} insightId={insightId} pinPosition={pinPosition}/>
                     </ul>
                 </div>
+                :<NonGraphic type={'insight'} isImg={true} mainText={'아직 추가된 인사이트가 '}/>}
             </div>
         </div>
         </>

@@ -6,18 +6,19 @@ function Letter(props) {
     const textRef = useRef();
     const transRef = useRef();
 
-    useEffect(() => {
-        if (isSelected) {
-            transRef.current.nodes([textRef.current]);
-            transRef.current.getLayer().batchDraw();
-        }
-      }, [isSelected]);
+    // useEffect(() => {
+    //     if (isSelected) {
+    //         transRef.current.nodes([textRef.current]);
+    //         transRef.current.getLayer().batchDraw();
+    //     }
+    //   }, [isSelected]);
 
     useEffect(() => {
-        console.log("qwerasdf")
-        if(document.querySelector('textarea').style.display === 'none' && isEditing === true) {
+        if(!document.querySelector('textarea') && isEditing === true) {
             textRef.current.show();
             setIsEditing(false);
+        } else {
+            textRef.current.hide();
         }
     }, [isEditing])
 
@@ -110,13 +111,12 @@ function Letter(props) {
             ref={textRef}
             {...textObj.property}
             onClick={textClickHandler}
-            onDblClick={textDBClickHandler} 
             draggable={mode==='choice'?true:false}
             onDragEnd={positionEditHandler}
             onTransformEnd={transformHandler}
             // onTransform={h}
         />
-        {isSelected &&
+        {mode === 'choice' && isSelected &&
         <Transformer ref={transRef} boundBoxFunc={boundBoxFunc} keepRatio />
         }
         </>

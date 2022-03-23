@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 
+import { clickUIChangeHandler } from '../state';
 import { ideationTitlePost } from './state';
 
 export default function OptionTitle(props) {
@@ -18,14 +19,24 @@ export default function OptionTitle(props) {
         setOpenOptionTitle(false);
     }
 
-    const completeClickHandler = () => {
-        ideationTitlePost(state.ideationId, title).then((data) => setChangeTitle(data.data));
-        setOpenOptionTitle(false);
+    const completeClickHandler = ({ currentTarget }) => {
+
+        const clickStyle = {
+            background: '#FE3400',
+            color: 'white',
+        }
+
+        ideationTitlePost(state.ideationId, title).then((data) => setChangeTitle(title));
+        clickUIChangeHandler(clickStyle, currentTarget);
     }
 
     const titleChangeHandler = ({ target }) => {
         setTitle(target.value);
     }
+
+    useEffect(() => {
+        setOpenOptionTitle(false);
+    }, [ChangeTitle])
 
     return(
         <>
@@ -36,7 +47,7 @@ export default function OptionTitle(props) {
                         <input className="inputTitle" value={title} onChange={titleChangeHandler} placeholder='제목을 입력해 주세요.'/>
                     </div>
                     <div>
-                        <button onClick={cancleClickHandler}>취소</button>
+                        <button className="cancelBtn" onClick={cancleClickHandler}>취소</button>
                         <button className="completeBtn" onClick={completeClickHandler}>완료</button>
                     </div>
                 </div>

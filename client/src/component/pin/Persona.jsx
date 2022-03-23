@@ -43,10 +43,10 @@ function Persona() {
     //...persona list import 관련
 
     //persona click 관련 ...
-    const personaStyleHandler = () => {
+    const personaStyleHandler = (target) => {
         const personaList = document.querySelectorAll('.persona-img');
         for(var i=0;i<personaList.length;i++) {
-            if(parseInt(personaList[i].getAttribute('id')) === clickedPersonaId) {
+            if(parseInt(personaList[i].getAttribute('id')) === target) {
                 personaList[i].style.border="1px solid #FE3400";
             } else {
                 personaList[i].style.border="0";
@@ -61,14 +61,27 @@ function Persona() {
 
     useEffect(() => {
         dispatch({type: 'CLICKED_PERSONA', data: clickedPersonaId});
-        personaStyleHandler();
-    }, [clickedPersonaId])
+        personaStyleHandler(clickedPersonaId !== null && clickedPersonaId !== 0?clickedPersonaId:activePersonaId);
+    }, [personas, activePersonaId, clickedPersonaId])
     //...persona click 관련
 
+    const activePersonaStyle = {
+        border: "1px solid #FE3400",
+    }
+    const inactivePersonaStyle = {
+        border: "none",
+    }
+
     return (
+        <>
+        {activePersonaId !== null &&
         <div className='Persona-Container'>
-            {personas.map( (persona, i) => <img className='persona-img' key={i} id={persona.id} src={persona.profileImgPath} width='33px' height='33px' onClick={personaClickHandler} />)}
+            {personas.map( (persona, i) => 
+            <img className='persona-img' key={i} id={persona.id} src={persona.profileImgPath} width='33px' height='33px' onClick={personaClickHandler} style={activePersonaId === persona.id?activePersonaStyle:inactivePersonaStyle}/>
+            )}
         </div>
+        }
+        </>
     );
 }
 

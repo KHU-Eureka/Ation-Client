@@ -101,6 +101,28 @@ export function clickUIChangeHandler(changeStyle, currentTarget) {
     for(let key in changeStyle) currentTarget.style[key] = changeStyle[key];
 }
 
-export async function loungeDeleteHandler(loungeId, personaId) {
-    
+export async function deleteHandler(url, id) {
+    try { 
+        const cookies = new Cookies();
+        const token = cookies.get('token');
+        const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/${url}/${id}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        return response;
+    } catch(err) { 
+        console.log(err);
+    }
+    return;
 }
+
+// export function lazyImageHandler(nameOfClass) {
+//     const target = Array.from(document.querySelectorAll(nameOfClass));
+
+//     function callback(items, observer) {
+//         items.forEach(item => {
+//             const fullImg = item.target.querySelector()
+//         })
+//     }
+// }

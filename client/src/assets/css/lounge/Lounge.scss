@@ -1,3 +1,5 @@
+@import '../scrollBar.scss';
+
 $COLOR1: #FE3400;
 $COLOR2: #352C23;
 $COLOR3: #FFFFFF;
@@ -172,26 +174,14 @@ $FONTSTYLE: 'normal';
     }
 }
 
-@mixin scrollbar-lounge($h: 270px) {
-    width: 6px;
-}
-
-@mixin scrollbar-point-lounge($h: 270px) {
-    background: #8B8B8B;
-    border-radius: 100px;
-    height: $h;
-    width: 6px;
-    cursor: pointer;
-}
-
-@mixin scrollbar-track-lounge() {
-    background-color: transparent; 
-    width: 6px;
-}
-
 .Lounge-Container {
     padding-top: 82px;
     display: flex;
+
+    .btn:hover {
+        background: #F5F5F5;
+        cursor: pointer;
+    }
 
     .MainLNB-Container {
         position: fixed;
@@ -203,16 +193,16 @@ $FONTSTYLE: 'normal';
             margin-left: 23.56px;
 
             .LoungeRoom-container {
-                background: #8995BD;
+                background: #ffffff;
                 width: 259.44px;
-                height: 214px;
+                height: 218px;
                 overflow-y: auto;
                 overflow-x: hidden;
 
                 .LoungeRoom-wrap-container {
                     margin-top: 8.5px;
                     width: 248.88px;
-                    height: 214px;
+                    height: 95%;
                 }
             }
     

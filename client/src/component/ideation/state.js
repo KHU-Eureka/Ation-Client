@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 

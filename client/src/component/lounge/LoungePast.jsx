@@ -9,17 +9,18 @@ function LoungePast() {
     //채연-라운지 종료 누르면 dispatch({type: 'LOUNGE_HISTORY', data: `history ${response.data}`})
     const history = useSelector((state) => state.loungeHistory);
     const [loungeList, setLoungeList] = useState();
+    const [deleteLounge, setDeleteLounge] = useState('');
 
     useMemo(() => {
         getApi(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/history`).then((data) => setLoungeList(data.data));
-    }, [history])
+    }, [history, deleteLounge])
 
     return (
         <article className="LoungePast-Container">
             <div className="main-title-container">
                 {title('참여했던 라운지')}
             </div>
-            <OrganismsRoom loungeList={loungeList} isSense={false} />
+            <OrganismsRoom loungeList={loungeList} isSense={false} link={'lounge/history'} setDeleteLounge={setDeleteLounge}/>
         </article>
     )
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import no_pin from "../../assets/svg/no_pin.svg";
-import '../../assets/css/mypage/NoPin.scss';
+import '../../assets/css/NonGraphic.scss';
 
 export default function NoPin({option}) {
     const navigation = useNavigate();
@@ -12,7 +12,7 @@ export default function NoPin({option}) {
     }
 
     return(
-        <div className="noAllPin-Container">
+        <div className="nonGraphic-Container">
             <div>
                 <img className="logo" src={no_pin}/>
             </div>

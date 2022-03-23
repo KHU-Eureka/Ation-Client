@@ -19,7 +19,7 @@ function Ideaition() {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/ideation`, 
             {
                 "personaId": activePersonaId,
-                "title": `아이디어${ideations.length+1}`,
+                "title": `아이디어${ideations[ideations.length - 1].id+1}`,
                 "whiteboard": "[]"
             }, 
             {
@@ -28,11 +28,11 @@ function Ideaition() {
                 }
             }
         );
-        navigation('/whiteboard', {state: { ideationId: response.data }});
+        navigation('/whiteboard', {state: { ideationId: String(response.data) }});
     }
 
     const ideationClickHandler = ({ target }) => {
-        navigation('/whiteboard', {state: { ideationId: parseInt(target.getAttribute('id')) }});
+        navigation('/whiteboard', {state: { ideationId: target.getAttribute('id') }});
     }
 
     return(

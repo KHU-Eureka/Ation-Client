@@ -3,5 +3,35 @@
     // height: 982px;
     // background: #F3F3F3;
     // float: right;
-    
+    .menu-display {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 81px;
+        height: auto;
+        min-height: 40px;
+        background: #FFFFFF;
+        border: 1px solid #BEBBB9;
+        box-sizing: border-box;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
+        border-radius: 10px;
+        font-family: 'Pretendard';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        color: #807A74;
+
+        .delete-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 74px;
+            height: 28px;
+            cursor: pointer;
+        }
+        .delete-button:hover {
+            background: #E7E6E5;
+            border-radius: 10px;
+        }
+    }
 }

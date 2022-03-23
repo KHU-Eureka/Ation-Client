@@ -11,7 +11,7 @@ export default function Elements(props) {
     const {type, isSelected, onSelect, setIsEditing, mode, obj, onChange, text, setText} = props;
 
     switch(type) {
-        case 'pen' || 'highlight':
+        case 'pen':
             return(<Pen isSelected={isSelected} penObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange} />);
         case 'shape':
             return(<Shape isSelected={isSelected} shapeObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange}/>);

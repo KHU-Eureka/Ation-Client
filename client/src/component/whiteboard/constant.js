@@ -18,6 +18,7 @@ export const DEFAULTS = {
         OPACITY: 1,
         WIDTH: 0,
         HEIGHT: 0,
+        POINTS: [0, 0],
     }, 
     HIGHLIGHT: {
         STROKE: "#000000",
@@ -37,6 +38,18 @@ export const DEFAULTS = {
       STROKE: "#000000",
       FILL: "#ffffff",
       RADIUS: 0,
+    },
+    TRI: {
+        STROKE: "#000000",
+        FILL: "#ffffff",
+        CLOSED: true,
+        POINTS: [0, 0, 0, 0, 0, 0],
+    },
+    ARROW: {
+        STROKE: "#000000",
+        POINTERLENGTH: 10,
+        POINTERWIDTH: 10,
+        POINTS: [0, 0, 0, 0],
     },
     TEXT: {
         CONTENT: "",

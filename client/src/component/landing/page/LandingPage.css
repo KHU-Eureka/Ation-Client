@@ -206,7 +206,11 @@
 .landing > .page5 > .sense-card-wrapper > .slot {
     position: absolute;
     left: 100%; top: 100px;
+    transform-origin: bottom;
 }
+
+.landing > .page5 > .sense-card-wrapper > .slot.sa { opacity: 1 !important; }
+.landing > .page5 > .sense-card-wrapper > .slot.sa.show { animation: 2s pullSlot; }
 
 .landing > .page5 > .sense-card-wrapper > .sense-card-background {
     width: 254px;

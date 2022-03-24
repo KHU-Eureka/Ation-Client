@@ -11,7 +11,7 @@ function LandingPage2 () {
 
     return (
         <div className="page2">
-            <div className="small-title">For who</div>
+            <div className="small-title sa sa-up">For who</div>
             <div className="who-wrapper">
                 {
                     whoList.map((who, idx)=> (

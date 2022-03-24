@@ -8,8 +8,8 @@ function LandingPage4 () {
 
     return (
         <div className="page4">
-            <div className="big-title">Make your persona</div>
-            <div className="title-description">
+            <div className="big-title sa sa-up" id="page4Title">Make your persona</div>
+            <div className="title-description sa sa-up" data-sa-trigger="#page4Title" data-sa-margin="500">
                 팀 에서도 어떤 역할을 맡는지에 따라 나의 성격과 능력의 감각은 달라지기 마련이에요. <br/>
                 여러분들의 페르소나를 활용해 자유롭게 소통해보세요!
             </div>

@@ -14,8 +14,8 @@ function LandingPage6() {
 
     return (
         <div className="page6">
-            <div className="big-title">Let's go Lounge</div>
-            <div className="title-description">
+            <div className="big-title sa sa-up" id="page6Title">Let's go Lounge</div>
+            <div className="title-description sa sa-up" data-sa-trigger="#page6Title" data-sa-margin="500">
                 당신의 인사이트에 대해 사람들과 함께 가볍게 이야기 나눠보세요! <br/>
                 그리고 마음이 맞는 사람을 발견했다면, 본격적으로 라운지에서 함께 아이디어를 발전시킬 수 있습니다.
             </div>

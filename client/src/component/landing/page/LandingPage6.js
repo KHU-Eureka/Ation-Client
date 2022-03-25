@@ -22,9 +22,11 @@ function LandingPage6() {
             <div className="speech-bubble-wrapper">
                 {
                     speechBubbleList.map((bubble, idx) => (
-                        <div className={idx%2 ? "speech-bubble sa sa-right" : "speech-bubble sa sa-left"} 
+                        <div key={idx}
+                        className={idx%2 ? "speech-bubble sa sa-right" : "speech-bubble sa sa-left"} 
                         id={`bubble${idx+1}`}
-                        data-sa-margin={(idx+1)*100}>
+                        data-sa-trigger="#page6Title"
+                        data-sa-margin={500 + (idx+1)*200}>
                             <img className="per-img" src={bubble.persona} alt="persona"/>
                             <img className="bubble-img" src={bubble.speechBubble} alt="speech bubble"/>
                         </div>

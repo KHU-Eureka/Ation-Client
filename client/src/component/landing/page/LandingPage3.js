@@ -16,17 +16,17 @@ function LandingPage3() {
                 <div className="sense-wrapper sa">
                     {
                         senseInfoList && senseInfoList.map((sense, idx)=> (
-                            <div className="sense-elem" id={sense.name}>{sense.svg}</div>
+                            <div className="sense-elem" id={sense.name} key={idx}>{sense.svg}</div>
                         ))
                     }
                     {
                         senseInfoList && senseInfoList.map((sense, idx)=> (
-                            <div className="sense-elem" id={sense.name}>{sense.svg}</div>
+                            <div className="sense-elem" id={sense.name} key={idx}>{sense.svg}</div>
                         ))
                     }
                     {
                         senseInfoList && senseInfoList.map((sense, idx)=> (
-                            <div className="sense-elem" id={sense.name}>{sense.svg}</div>
+                            <div className="sense-elem" id={sense.name} key={idx}>{sense.svg}</div>
                         ))
                     }
                 </div>

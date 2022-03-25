@@ -31,6 +31,7 @@
     height: 500px;
     overflow: hidden;
     position: relative;
+    top: 10px;
     margin-left: 46px;
 }
 .landing-cover .options-container > .shadow {
@@ -50,15 +51,6 @@
 
 /* slot animation 부분 */
 .landing-cover.sa { opacity: 1 !important; }
-/*
-.landing-cover.sa.show .options-wrapper {
-    animation: 3s rollRullet;
-}
-
-.landing-cover.sa.show .slot-wrapper > .slot {
-    animation: 3s pullSlot;
-}
-*/
 
 .landing-cover .options-wrapper > .option {
     text-align: right;
@@ -73,6 +65,7 @@
     flex-direction: column;
     margin-left: 55px;
     position: relative;
+    bottom: 30px;
 }
 .landing-cover .slot-wrapper > .slot {
     cursor: grab;
@@ -80,8 +73,9 @@
     background: transparent;
     border: none;
     transition: transform 0.5s;
+    padding: 0;
 }
-
+.landing-cover .slot-wrapper > .slot:focus{ outline: none; }
 .landing-cover .slot-wrapper > .text {
     width: 120px;
     font-weight: 700;
@@ -98,24 +92,16 @@
 .landing .-ation { width: 100% !important; height: auto !important; }
 
 .pull-slot {
-    animation: pullSlot2 3s;
+    animation: pullSlot 3s;
 }
 .roll-rullet {
-    animation: rollRullet2 3s;
+    animation: rollRullet 3s;
 }
 
 @keyframes pullSlot {
     50% { transform: rotateX(180deg); }
 }
-@keyframes pullSlot2 {
-    50% { transform: rotateX(180deg); }
-}
-
 @keyframes rollRullet {
-    0% {top: 0; }
-    100% {top: calc(-100px * 10);} /* 5 - 1바퀴 돎 / 10 - 2바퀴 돎 */
-}
-@keyframes rollRullet2 {
     0% {top: 0; }
     100% {top: calc(-100px * 10);} /* 5 - 1바퀴 돎 / 10 - 2바퀴 돎 */
 }

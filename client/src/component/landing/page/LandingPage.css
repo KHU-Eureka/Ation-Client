@@ -230,7 +230,7 @@
     border-radius: 20px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
     overflow: hidden;
-    transition: 0.2s;
+    transition: 0.4s;
 }
 .landing > .page5 > .sense-card-wrapper .sense-card > svg { width: 220px; height: 220px; position: absolute; }
 .landing > .page5 > .sense-card-wrapper .sense-card > svg > path { fill: #D7D2C8; }
@@ -243,8 +243,14 @@
 .landing > .page5 .sense-card#hand > svg { width: 250px; height: 250px; top: 0px; right: -40px; }
 .landing > .page5 .sense-card#ear > svg { width: 280px; height: 280px; bottom: -30px; right: -70px; }
 
-.landing > .page5 .sense-card.sa { opacity: 1; }
-.landing > .page5 .sense-card.sa.show { top: 0px !important; }
+.landing > .page5 .sense-card-wrapper.sa { opacity: 1; }
+.landing > .page5 .sense-card-wrapper.sa.show .sense-card { top: 0px !important; transition-delay: 0.5s; }
+/*
+.landing > .page5 .sense-card#eye { transition-delay: 0s; }
+.landing > .page5 .sense-card#nose { transition-delay: 0.8s; }
+.landing > .page5 .sense-card#hand { transition-delay: 0.3s; }
+.landing > .page5 .sense-card#ear { transition-delay: 1.2s; }
+*/
 
 /*
 @keyframes moveCards {

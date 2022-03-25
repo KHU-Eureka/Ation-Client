@@ -11,8 +11,8 @@ function LandingEnd() {
 
     return (
         <div className="landing-end">
-            <div className="title">Get inspiration, to ideation.</div>
-            <button className="lets-ation">
+            <div className="title sa sa-up" id="pageCoverTitle">Get inspiration, to ideation.</div>
+            <button className="lets-ation sa sa-up" data-sa-trigger="#pageCoverTitle" data-sa-margin="600">
                 Let's ation!
             </button>
             <div className="footer">
@@ -22,7 +22,7 @@ function LandingEnd() {
                 <div className="link-wrapper">
                     {
                         linkList.map((link, idx)=> (
-                            <a className="link-elem" href={link.link}>
+                            <a className="link-elem" href={link.link} key={idx}>
                                 { link.name }
                             </a>
                         ))

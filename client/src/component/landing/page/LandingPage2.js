@@ -11,11 +11,11 @@ function LandingPage2 () {
 
     return (
         <div className="page2">
-            <div className="small-title sa sa-up">For who</div>
+            <div className="small-title sa sa-up" id="page2Title">For who</div>
             <div className="who-wrapper">
                 {
                     whoList.map((who, idx)=> (
-                        <div className="who-card sa sa-up" data-sa-margin={(idx+1)*180} key={idx}>
+                        <div className="who-card sa sa-up" data-sa-trigger="#page2Title" data-sa-margin={350+(idx+1)*150} key={idx}>
                             <img src={who.image} alt="persona"/>
                             <div className="description">{ who.description }</div>
                         </div>

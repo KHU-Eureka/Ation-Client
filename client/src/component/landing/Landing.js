@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WelcomeModal from './WelcomeModal';
 import PersonaCompleteModal from './PersonaCreateCompleteModal';
+
 import LandingCover from './page/LandingCover';
 import LandingPage1 from './page/LandingPage1';
 import LandingPage2 from './page/LandingPage2';
@@ -11,7 +12,6 @@ import LandingPage4 from './page/LandingPage4';
 import LandingPage5 from './page/LandingPage5';
 import LandingPage6 from './page/LandingPage6';
 import LandingEnd from './page/LandingEnd';
-
 
 function Landing() {
     const { state } = useLocation();

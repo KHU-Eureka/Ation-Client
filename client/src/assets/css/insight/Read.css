@@ -1,0 +1,238 @@
+.Insight-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.Search-container {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    height: 48px;
+    margin-top: 216px;
+    margin-left: auto;
+    margin-right: auto;
+    /* min-width: 1360px; */
+    padding-left: 256px;
+}
+
+.search {
+    height: 48px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    border-bottom: 2px  solid #FE6740;
+    padding-left: 16px;
+    /* min-width: 1151px; */
+}
+
+.search:focus {
+    outline: none;
+}
+
+.search::placeholder {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+}
+
+.searchIcn-container {
+    position: absolute;
+    left: 1370px;
+}
+
+.search-icn {
+    /* position: absolute; */
+    /* margin-left: -260px; */
+    
+    cursor: pointer;
+}
+
+.search-btn {
+    width: 145px;
+    height: 37px;
+    border: 1px solid #FE6740;
+    box-sizing: border-box;
+    border-radius: 21.5px;
+    background-color: white;
+    margin-left: 55px;
+    margin-top: 5.5px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #FE3400;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 1600px) {
+    .Search-container {
+        width: 1360px;
+    }
+
+    .search {
+        width: 1151px;
+    }
+
+    .searchIcn-container {
+        left: 1370px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .Search-container {
+        width: 800px;
+    }
+
+    .search {
+        width: 600px;
+    }
+
+    .searchIcn-container {
+        left: 820px;
+    }
+}
+
+.Content-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    margin-top: 96px;
+    overflow-x: hidden;
+}
+
+.img-container {
+    display: inline-flex;
+    /* align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto; */
+    flex-direction: row;
+}
+
+.img-ul {
+    width: 100%;
+    /* min-width: 1360px; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    margin-top: 0px;
+    /* flex-grow: 1; */
+    padding-left: 0px;
+}
+
+.img-ul .img-li {
+    list-style: none;
+    margin-bottom: 180px;
+    /* margin-top: -25px; */
+    max-width: 670px;
+    margin-right: 20px;
+    width: auto;
+}
+
+.insight-box {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: -100px;
+    width: 670px;
+    height: 389px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.thumbnail-box {
+    /* width: 672.49px; */
+    width: 670px;
+    height: 300px;
+
+    background: #C4C4C4;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.pin-box {
+    position: absolute;
+    display: none;
+    background-color: transparent;
+    top: 24px;
+    left: 620px;
+}
+
+.pin-up {
+    display: inline;
+    cursor: pointer;
+}
+
+.insight-box .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 500px;
+    height: 21.27px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: #352C23;
+    margin-top: 25px;
+    margin-right: 0px;
+    margin-bottom: 18px;
+    margin-left: 0px;
+}
+
+.site-container {
+    position: absolute;
+    top: 320px;
+    left: 725px;
+    width: 70px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+    margin-left: -130px;
+}
+
+.insight-box .tag-container {
+    width: 500%;
+}
+
+.insight-box .tag {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #BEBBB9;
+    margin-right: 15.95px;
+    margin-top: 0px;
+}
+
+.Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .pin-circle {
+    float: right;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    /* margin-bottom: 8px; */
+    object-fit: cover;
+    margin-top: 13px;
+}
+
+.Insight-container > .Content-container > .img-container > .img-ul > .img-li > .insight-box > .site-container > .siteName {
+    font-size: 18px;
+    float: right;
+    margin-top: 14px;
+}

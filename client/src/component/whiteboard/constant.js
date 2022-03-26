@@ -54,11 +54,18 @@ export const DEFAULTS = {
     TEXT: {
         CONTENT: "",
         FONTSIZE: 20,
+        FONTFAMILY: 'Noto Sans',
+        FONTSTYLE: 'italic',
     },
     POSTIT: {
         CONTENT: "",
         FONTSIZE: 20,
+        FONTFAMILY: 'Noto Sans',
+        FONTSTYLE: 'italic',
         FILL: "#FFD600",
+        WIDTH: 200,
+        HEIGHT: 100,
+        BORDERRADIUS: 10,
     },
     IMG: {
         WIDTH: 300,

@@ -207,12 +207,12 @@ $FONTSTYLE: 'normal';
             }
     
             .LoungePin-Container {
-                margin-top: 65px;
+                margin-top: 40px;
                 @include lnb-title-lounge();
                 @include lnb-modulebox-lounge();
             }
             .LoungePast-Container {
-                margin-top: 50px;
+                margin-top: 40px;
                 @include lnb-title-lounge();
                 @include lnb-modulebox-lounge();
             }
@@ -301,22 +301,23 @@ $FONTSTYLE: 'normal';
             .OrganismsImg-Container {
                 position: relative;
                 overflow: hidden;
+                border-radius: 10px;
+                filter: drop-shadow(8px 8px 40px rgba(0, 0, 0, 0.15));
 
                 .slidebox-container {
                     position: absolute; 
                     left: 0;
-                    width: 2500px;
                     transition: left 0.5s ease-out;
                     padding-left: 18px;
                     padding-right: 18px;
                 }
 
                 .imgbox-container {
+                    @include imgbox-lounge(813px, 400px);
                     display: table;
                     float: left;
                     margin-right: 36px;
 
-                    @include imgbox-lounge(813px, 400px);
                     .imgbox-wrap-container {
                         @include imgbox-wrap-lounge(708.12px, 325px);
                         margin-top: 51px;

@@ -60,7 +60,6 @@ function Img(props) {
             onClick={() => {
                 if(mode === 'choice') {
                     onSelect();
-                    setIsEditing(true);
                 }
             }}
             draggable={mode === 'choice'?true:false}

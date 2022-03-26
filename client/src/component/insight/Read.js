@@ -257,7 +257,7 @@ function Read() {
     return (
         <>
         <div className="Insight-container">
-            <Reco userName={userName} auth={auth}/>
+            <Reco userName={userName} auth={auth} insight={insight}/>
             <div className="Search-container">
                 <div className="SearchBar-container">
                     <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>

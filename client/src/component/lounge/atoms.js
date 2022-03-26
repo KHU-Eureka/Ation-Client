@@ -120,7 +120,7 @@ export const deleteBtn = (url, id, setDeleteLounge) => {
 export const imgBox = (obj, isPin) => {
     return(
         <div className='imgbox-container' style={{position: 'relative', cursor: 'pointer', background: 'transparent'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
-            <img className='imgbox-container' src={obj.imgPath} style={{position: 'absolute', zIndex: '-1', top: '0px'}} loading='lazy' alt="..."/>
+            <img className='imgbox-container img' src={obj.imgPath} style={{position: 'absolute', zIndex: '-1', top: '0px'}} loading='lazy' alt="..."/>
             <div className='imgbox-wrap-container'>
                 <div className='header-container'>
                     {senseImg(obj.sense.name, 1)}

@@ -8,7 +8,7 @@ import Image from './Image';
 import Pin from './Pin';
 
 export default function Elements(props) {
-    const {type, isSelected, onSelect, setIsEditing, mode, obj, onChange, text, setText} = props;
+    const {type, isSelected, onSelect, setIsEditing, mode, obj, onChange, text, setText, isEditing} = props;
 
     switch(type) {
         case 'pen':
@@ -16,9 +16,9 @@ export default function Elements(props) {
         case 'shape':
             return(<Shape isSelected={isSelected} shapeObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange}/>);
         case 'text':
-            return(<Letter isSelected={isSelected} textObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange} text={text} setText={setText} />);
+            return(<Letter isSelected={isSelected} textObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange} text={text} setText={setText} isEditing={isEditing} isPost={false}/>);
         case 'postit':
-            return(<Postit isSelected={isSelected} postObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange}/>);
+            return(<Postit isSelected={isSelected} postObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange} isEditing={isEditing}/>);
         case 'image':
             return(<Image isSelected={isSelected} imgObj={obj} mode={mode} setIsEditing={setIsEditing} onSelect={onSelect} onChange={onChange}/>);
         case 'pin':

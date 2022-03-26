@@ -99,7 +99,6 @@ function Shape(props) {
                 onClick={() => {
                     mode === 'choice' &&
                     onSelect();
-                    setIsEditing(true);
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
@@ -111,7 +110,6 @@ function Shape(props) {
                 onClick={() => {
                     mode === 'choice' &&
                     onSelect();
-                    setIsEditing(true);
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
@@ -123,7 +121,6 @@ function Shape(props) {
                 onClick={() => {
                     mode === 'choice' &&
                     onSelect();
-                    setIsEditing(true);
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}
@@ -135,7 +132,6 @@ function Shape(props) {
                 onClick={() => {
                     mode === 'choice' &&
                     onSelect();
-                    setIsEditing(true);
                 }}
                 draggable={mode === 'choice' ? true:false}
                 onDragEnd={positionEditHandler}

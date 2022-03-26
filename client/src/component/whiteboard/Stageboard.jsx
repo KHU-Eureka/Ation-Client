@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
@@ -16,7 +15,7 @@ import Elements from './Elements';
 import bin from '../../assets/svg/board_bin.svg';
 
 function Stageboard(props) {
-    const { setText, text, imgSrc, pinObject, setIsEditing } = props;
+    const { setText, text, imgSrc, pinObject, setIsEditing, isEditing } = props;
     const attrStore = useContext(AttrContextStore);
     const attrImgStore = useContext(AttrContextImgStore);
     const { state } = useLocation();
@@ -59,7 +58,6 @@ function Stageboard(props) {
     }
 
     useEffect(() => {
-        console.log(exportImg)
         if(exportImg !== undefined) {
             imgExportHandler();
             attrStore.setMode('choice');
@@ -76,33 +74,11 @@ function Stageboard(props) {
     useEffect(() => {
         if(attrStore.mode === 'export') {
             const dataURL = stageRef.current.toDataURL({ pixelRatio: 3 });
-            console.log(dataURL)
             readImage(dataURL);
         }
     }, [attrStore.mode])
 
-    function textEditHandler(e) {
-        attrStore.setText(e.target.value);
-        console.log(attrStore.text);
-    };
-
-    useEffect(() => {
-        if(document.querySelector('textarea')) {
-            document.querySelector('textarea').addEventListener('keydown', textEditHandler);
-            return () => document.querySelector('textarea').removeEventListener('change', textEditHandler);
-        }
-    }, [])
-
-    function textOutClickHandler() {
-        const textArea = document.querySelector('textarea');
-        const stageNode = document.querySelector('.stageboard-container');
-        attrStore.setText(textArea.value);
-        stageNode.removeChild(textArea);
-        console.log(attrStore.text);
-        let lastObj = boardObjectList[boardObjectList.length - 1];
-        lastObj.property.text = attrStore.text;
-        setIsEditing(true);
-    }
+    
     
 
     const mouseDownHandler = ({ target }) => {
@@ -130,58 +106,27 @@ function Stageboard(props) {
                     break;
                 case 'text':
                     setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {text: attrStore.text})]);
-                    const stageNode = document.querySelector('.stageboard-container');
-                    const textArea = document.createElement('textarea');
-                    textArea.setAttribute('autofocus', true);
-                    textArea.setAttribute('style', `display: inline-block; position: absolute; top: ${pos.y + 95}px; left: ${pos.x + 290}px; border: 0.5px solid #D7D2C8; max-width: 100px;`);
-                    stageNode.appendChild(textArea);
-                    textArea.onChange = function textEditHandler(e) {
-                        console.log("asdf")
-                        attrStore.setText(e.target.value);
-                        console.log(attrStore.text)
-                    };
+                    setIsEditing(false);
+                    break;
+                case 'postit':
+                    setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {text: attrStore.text, color: attrStore.color})]);
+                    setIsEditing(false);
+                    break;
                     // if(document.querySelector('textarea')) {
                     //     const textareaStyle = document.querySelector('textarea').style;
                     //     if(text === '') {
+                    //         setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
                     //         textareaStyle.display = 'inline';
                     //         textareaStyle.position = 'absolute';
                     //         textareaStyle.top = pos.y + 'px';
                     //         textareaStyle.left = pos.x + 'px';
                     //     } else {
-                    //         boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
+                    //         let lastObj = boardObjectList[boardObjectList.length - 1];
+                    //         lastObj.property.text = text;
                     //         textareaStyle.display = 'none';
                     //     }
                     // }
-                    break;
-                case 'postit':
-                    if(document.querySelector('textarea')) {
-                        const textareaStyle = document.querySelector('textarea').style;
-                        if(text === '') {
-                            setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
-                            textareaStyle.display = 'inline';
-                            textareaStyle.position = 'absolute';
-                            textareaStyle.top = pos.y + 'px';
-                            textareaStyle.left = pos.x + 'px';
-                        } else {
-                            let lastObj = boardObjectList[boardObjectList.length - 1];
-                            lastObj.property.text = text;
-                            textareaStyle.display = 'none';
-                        }
-                    }
-                    break;
                 case 'choice':
-                    if(document.querySelector('textarea') && target !== document.querySelector('textarea')) {
-                        textOutClickHandler();
-                        // window.addEventListener('click', textOutClickHandler);
-                    }
-                    for(var obj of boardObjectList) {
-                        if(obj.id === selectedObject && obj.type === 'text') {
-                            const textareaStyle = document.querySelector('textarea').style;
-                            obj.property.text = text;
-                            textareaStyle.display = 'none';
-                            setIsEditing(true);
-                        }
-                    }
                     break;
             }
         }
@@ -227,7 +172,7 @@ function Stageboard(props) {
     }
 
     const mouseUpHandler = () => {
-        if(attrStore.mode === 'shape' || attrStore.mode === 'image' || attrStore.mode === 'text') {
+        if(attrStore.mode === 'shape' || attrStore.mode === 'text' || attrStore.mode === 'postit') {
             attrStore.setMode('choice');
         }
         setIsDrawing(false);
@@ -254,10 +199,7 @@ function Stageboard(props) {
         e.evt.preventDefault();
         if(e.target === stageRef.current) {
             const menuDoc = document.querySelector('.menu-Container');
-            if(menuDoc.classList.contains('menu-display')) {
-                menuDoc.classList.remove('menu-display');
-            }
-            console.log(e.target);
+            if(menuDoc.classList.contains('menu-display')) menuDoc.classList.remove('menu-display');
             return;
         }
 
@@ -274,9 +216,7 @@ function Stageboard(props) {
     const clickHandler = (e) => {
         const menuStyle = document.querySelector('.menu-Container').style;
         menuStyle.display = 'none';
-        if(e.target === e.target.getStage()) {
-            setSelectedObject(null);
-        }
+        if(e.target === e.target.getStage()) setSelectedObject(null);
         if(attrStore.detailMode === 'eraser' && e.target.constructor.name === 'Line') {
             if(e.target.attrs.globalCompositeOperation === 'source-over') {
                 const temp = boardObjectList.filter((i) => i.id !== e.target.attrs.id);
@@ -315,14 +255,6 @@ function Stageboard(props) {
         }
     }, [boardObjectList])
 
-    useEffect(() => {
-        //오브젝트 리스트 길이가 1 증가하고 && 그 타입이 텍스트라면, selectedobject를 그것의 id로 설정
-        if(attrStore.mode === 'text') {
-            let lastObj = boardObjectList[boardObjectList.length - 1];
-            setSelectedObject(lastObj.id);
-        }
-    }, [boardObjectList.length])
-
     return (
         <>
         <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler} style={{position: 'relative'}}>
@@ -330,17 +262,16 @@ function Stageboard(props) {
                 <Layer>
                     {boardObjectList && boardObjectList.map( (obj, i) => <Elements key={i} type={obj.type} obj={obj}
                     isSelected={isTrue(obj.id, selectedObject)}
-                            onSelect={ () => setSelectedObject(obj.id) }
-                            onChange={ (newAttrs) => {
-                                const objs = boardObjectList.slice();
-                                objs[i].property = newAttrs;
-                                setBoardObjectList(objs);
-                            }}
-                            setIsEditing={setIsEditing}
-                            mode={attrStore.mode}
-                            setText={setText} 
-                             text={text} 
-                            /> )}
+                    onSelect={ () => setSelectedObject(obj.id) }
+                    onChange={ (newAttrs) => {
+                        const objs = boardObjectList.slice();
+                        objs[i].property = newAttrs;
+                        setBoardObjectList(objs);
+                    }}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    mode={attrStore.mode}
+                    /> )}
                     
                 </Layer>
             </Stage>
@@ -356,6 +287,29 @@ function Stageboard(props) {
 }
 
 export default Stageboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -510,3 +464,75 @@ export default Stageboard;
                     //     />
                     // :obj.type === 'pin'?
                     //     <Pin key={i} pinObj={obj} /> */}
+
+
+
+
+                    // const stageNode = document.querySelector('.stageboard-container');
+                    // const textArea = document.createElement('textarea');
+                    // textArea.setAttribute('autofocus', true);
+                    // textArea.setAttribute('style', `display: inline-block; position: absolute; top: ${pos.y + 95}px; left: ${pos.x + 290}px; border: 0.5px solid #D7D2C8; max-width: 100px;`);
+                    // stageNode.appendChild(textArea);
+                    // textArea.onChange = function textEditHandler(e) {
+                    //     console.log("asdf")
+                    //     attrStore.setText(e.target.value);
+                    //     console.log(attrStore.text)
+                    // };
+                    // if(document.querySelector('textarea')) {
+                    //     const textareaStyle = document.querySelector('textarea').style;
+                    //     if(text === '') {
+                    //         textareaStyle.display = 'inline';
+                    //         textareaStyle.position = 'absolute';
+                    //         textareaStyle.top = pos.y + 'px';
+                    //         textareaStyle.left = pos.x + 'px';
+                    //     } else {
+                    //         boardObjectList.map( obj => obj.id === selectedObject?obj.property.text = text:null);
+                    //         textareaStyle.display = 'none';
+                    //     }
+                    // }
+
+                    // function textEditHandler(e) {
+    //     attrStore.setText(e.target.value);
+    //     console.log(attrStore.text);
+    // };
+
+    // useEffect(() => {
+    //     if(document.querySelector('textarea')) {
+    //         document.querySelector('textarea').addEventListener('keydown', textEditHandler);
+    //         return () => document.querySelector('textarea').removeEventListener('change', textEditHandler);
+    //     }
+    // }, [])
+
+    // function textOutClickHandler() {
+    //     const textArea = document.querySelector('textarea');
+    //     const stageNode = document.querySelector('.stageboard-container');
+    //     attrStore.setText(textArea.value);
+    //     stageNode.removeChild(textArea);
+    //     console.log(attrStore.text);
+    //     let lastObj = boardObjectList[boardObjectList.length - 1];
+    //     lastObj.property.text = attrStore.text;
+    //     setIsEditing(true);
+    // }
+
+    // for(var obj of boardObjectList) {
+                    //     if(obj.id === selectedObject && obj.type === 'text') {
+                    //         const textareaStyle = document.querySelector('textarea').style;
+                    //         obj.property.text = text;
+                    //         textareaStyle.display = 'none';
+                    //         setIsEditing(true);
+                    //     }
+                    // }
+
+
+                     // if(document.querySelector('textarea') && target !== document.querySelector('textarea')) {
+                    //     // textOutClickHandler();
+                    //     // window.addEventListener('click', textOutClickHandler);
+                    // }
+
+                    // useEffect(() => {
+    //     //오브젝트 리스트 길이가 1 증가하고 && 그 타입이 텍스트라면, selectedobject를 그것의 id로 설정
+    //     if(attrStore.mode === 'text') {
+    //         let lastObj = boardObjectList[boardObjectList.length - 1];
+    //         setSelectedObject(lastObj.id);
+    //     }
+    // }, [boardObjectList.length])

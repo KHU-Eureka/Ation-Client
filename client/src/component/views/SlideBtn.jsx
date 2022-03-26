@@ -10,19 +10,56 @@ const slideBtnStyle = {
     cursor: 'pointer',
 }
 
-function SlideCurrentDisplay(props) {
+export function SlideCurrentDisplay(props) {
     const { isCurrent } = props;
     return(
-        <>
-        {
-            isCurrent?<img src={slide_current} />:<img src={slide} />
+        <div style={{marginLeft: '8px'}}>
+        {isCurrent?<img src={slide_current} />:<img src={slide} />}
+        </div>
+    );
+}
+
+export function SlideBtn(props) {
+    const { slideList, slideWidth, slideMargin, setIdx, idx } = props;
+    const slideNum = slideList.length;
+
+    const movingSlide = (num) => {
+        if(slideList !== []) {
+            props.children.ref.current.querySelector('.slidebox-container').style.left = (-num * ( slideWidth + slideMargin )) + 'px';
+            setIdx(num);
         }
+    }
+
+    useEffect(() => {
+        if(slideNum !== 0) {
+            movingSlide(idx);
+        }
+    }, [idx])
+
+    const prevClickHandler = () => {
+        if (idx > 0) setIdx(idx - 1);
+    }
+
+    const nextClickHandler = () => {
+        if (idx < slideNum - 1) setIdx(idx + 1);
+    }
+
+    return(
+        <>
+        <div className='slideBtn-container' style={slideBtnStyle}>
+            <img src={prev} onClick={prevClickHandler} />
+                {props.children}
+            <img src={next} onClick={nextClickHandler} />
+        </div>
         </>
     );
 }
 
-export default function SlideBtn(props) {
-    // const slidebox = document.querySelector('.slidebox-container'); 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+ // const slidebox = document.querySelector('.slidebox-container'); 
     // const [slideboxList, setSlideboxList] = useState();
 
     // useEffect(() => {
@@ -35,7 +72,7 @@ export default function SlideBtn(props) {
     // const slideboxNum = slideboxList.length;
     // const slideWidth = 813;
     // const slideMargin = 16;
-    let currentIdx = 1; 
+    
     //const [currentIdx, setCurrentIdx] = useState(0);
 
     // useEffect( () => {
@@ -55,32 +92,3 @@ export default function SlideBtn(props) {
     //         let currentIdx = 0; 
     //     }
     // }, [props])
-
-
-    const movingSlide = (num) => {
-        if(props.children.ref.current.querySelector('.slidebox-container') !== null) {
-            props.children.ref.current.querySelector('.slidebox-container').style.left = (-num * (813+36)) + 'px';
-            currentIdx = num;
-        }
-    }
-
-    const prevClickHandler = () => {
-        if (currentIdx > 0) {
-            movingSlide(currentIdx - 1);
-        }
-    }
-
-    const nextClickHandler = () => {
-        if (currentIdx < 2) { 
-            movingSlide(currentIdx + 1); 
-        }
-    }
-
-    return(
-        <div className='slideBtn-container' style={slideBtnStyle}>
-            <img src={prev} onClick={prevClickHandler} />
-                {props.children}
-            <img src={next} onClick={nextClickHandler} />
-        </div>
-    );
-}

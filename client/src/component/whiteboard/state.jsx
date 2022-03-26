@@ -70,9 +70,14 @@ export const createObj = (mode, detail_mode, x, y, attr) => {
             break;
         case 'postit':
             obj.property = {
-                text: DEFAULTS.POSTIT.CONTENT,
+                text: attr.text,
                 fontSize: DEFAULTS.POSTIT.FONTSIZE,
+                fontFamily: DEFAULTS.TEXT.FONTFAMILY,
+                fontStyle: DEFAULTS.TEXT.FONTSTYLE,
                 fill: attr.color,
+                width: DEFAULTS.POSTIT.WIDTH,
+                height: DEFAULTS.POSTIT.HEIGHT,
+                cornerRadius: DEFAULTS.POSTIT.BORDERRADIUS,
                 x: x,
                 y: y,
             }
@@ -81,6 +86,8 @@ export const createObj = (mode, detail_mode, x, y, attr) => {
             obj.property = {
                 text: attr.text,
                 fontSize: DEFAULTS.TEXT.FONTSIZE,
+                fontFamily: DEFAULTS.TEXT.FONTFAMILY,
+                fontStyle: DEFAULTS.TEXT.FONTSTYLE,
                 x: x,
                 y: y,
             }
@@ -104,7 +111,6 @@ export const isTrue = (target1, target2) => {
 
 export const afterTransformer = (newAttrs, obj) => {
     obj.property = newAttrs;
-    console.log(obj)
     return obj;
 }
 

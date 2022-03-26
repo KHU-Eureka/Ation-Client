@@ -7,7 +7,7 @@ export default function AttrContext(props) {
     const [width, setWidth] = useState(1);
     const [mode, setMode] = useState('choice');
     const [detailMode, setDetailMode] = useState('');
-    const [text, setText] = useState('');
+    const [text, setText] = useState('텍스트를 입력하세요');
 
     const Attr = {
         color,

@@ -94,15 +94,11 @@ function PinAdd(props) {
 
     useEffect(() => {
         PersonaSetting();
-        // if(clickedPin) {
-        //     setAfterPinboardId(clickedPin.pinBoard.id);
-        //     setAfterTag(clickedPin.tagList);
-        // }
     }, [activePersonaId])
 
     useEffect(() => {
         pinboardImport();
-        console.log(clickedPersonaId, "asdf")
+        console.log('clickedPersonaId: ', clickedPersonaId)
     }, [pinBoardName, clickedPersonaId])
 
     useEffect(() => {
@@ -223,7 +219,6 @@ function PinAdd(props) {
                 if(parseInt(personaList[i].getAttribute('value')) === clickedPersonaId) {
                     personaList[i].style.border="1px solid #FE3400";
                 } else {
-                    console.log(clickedPersonaId, parseInt(personaList[i].getAttribute('value')))
                     personaList[i].style.border="0";
                 }
             }
@@ -367,7 +362,6 @@ function PinAdd(props) {
     async function readImage (e) {
         var formData = new FormData();
         formData.append('pinImg', e.target.files[0]);
-        console.log(formData);
         setChangeImgFormdata(formData);
         const reader = new FileReader();
         setPrevImgUrl(URL.createObjectURL(e.target.files[0]));
@@ -384,13 +378,11 @@ function PinAdd(props) {
         }
         );
         setPrevImgUrl(response.data.pinImgPath);
-        console.log(response.data.pinImgPath)
     }, [newPinId]);
 
     useEffect(() => {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
-        console.log(prevImgUrl.substring(5))
     }, [prevImgUrl])
     
     if(pinAddModalOpen) {

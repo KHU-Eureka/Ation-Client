@@ -1,0 +1,39 @@
+.room-edit .modal-content {
+    height: calc(100% - 185px);
+    width: calc(100% - 12px) !important;
+    margin-top: 95px;
+    margin-bottom: 90px;
+    margin-right: 12px;
+    overflow: auto;
+    display: block !important;
+}
+
+.room-edit .modal-content::-webkit-scrollbar { width: 6px; }
+.room-edit .modal-content::-webkit-scrollbar-thumb { width: 6px; background: #8B8B8B; border-radius: 100px; }
+
+.room-edit .modal-content .open-lounge { 
+    width: calc(100% - 58px);
+    padding: 10px 29px;
+}
+
+.room-edit .modal-content .room-title {
+    margin-top: 0px;
+}
+
+.room-edit .sense-elem input[type=checkbox] + label > svg {
+    width: 100%;
+    height: 100%;
+}
+.room-edit .sense-elem input[type=checkbox] + label > svg > path { fill: #FE3400; }
+.room-edit .sense-elem input[type=checkbox]:hover + label > svg > path,
+.room-edit .sense-elem input[type=checkbox]:checked + label > svg > path {
+    fill: white;
+}
+
+.room-edit .input-wrapper {
+    min-height: 90px;
+}
+
+.room-edit .cover-preview {
+    margin-right: 15px;
+}

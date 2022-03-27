@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaExchangeAlt } from 'react-icons/fa';
 import { HiOutlinePlus } from 'react-icons/hi';
@@ -11,13 +12,13 @@ import Alert from '../views/Alert';
 import '../../assets/css/mypage/mypage.css';
 import Idaition from "./Idaition";
 import Pinbox from "./Pinbox";
-import './MyPage.css';
+import '../../assets/css/mypage/PersonaCard.css';
 
-import eye from '../../asset/images/sense/눈_white.png';
-import nose from '../../asset/images/sense/코_white.png';
-import mouse from '../../asset/images/sense/입_white.png';
-import ears from '../../asset/images/sense/귀_white.png';
-import hand from '../../asset/images/sense/손_white.png';
+import eye from '../../assets/image/sense/눈_white.png';
+import nose from '../../assets/image/sense/코_white.png';
+import mouse from '../../assets/image/sense/입_white.png';
+import ears from '../../assets/image/sense/귀_white.png';
+import hand from '../../assets/image/sense/손_white.png';
 
 function MyPage() {
     const cookies = new Cookies();
@@ -78,7 +79,7 @@ function MyPage() {
     useLayoutEffect(() => {
         // 초기값 설정
         const getPersonaList = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST + '/api/persona', {
@@ -106,10 +107,10 @@ function MyPage() {
         }
 
         const getBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -127,7 +128,7 @@ function MyPage() {
     }, [])
 
     const changeActivePersona = async (personaId) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
@@ -180,7 +181,7 @@ function MyPage() {
 
     useEffect(() => { // background image 변경 시
         const postBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.post(
                     process.env.REACT_APP_SERVER_HOST+'/api/mypage/image', formData, {
@@ -235,7 +236,10 @@ function MyPage() {
                                     ? <div className="persona-profile">
                                         <div className="add-persona-btn"
                                             onClick={ goToAddPersona }
-                                        ><AiOutlinePlus/></div>
+                                        >
+                                            <HiOutlinePlus />
+                                            <div className="text">페르소나 추가</div>
+                                        </div>
                                     </div>
                                     /* persona가 있을 때 */
                                     : (activePersonaId === persona.id)

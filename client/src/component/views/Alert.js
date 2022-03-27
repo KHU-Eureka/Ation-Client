@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { BsCheck2 } from "react-icons/bs";
-import './Alert.css';
+import '../../assets/css/modal/Alert.css';
 
 function Alert(props) {
     let [time, setTime] = useState(0)

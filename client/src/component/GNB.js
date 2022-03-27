@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import "../assets/css/GNB.css";
 import logo from "../assets/svg/logo_main.svg";
 import bell from "../assets/svg/bell.svg";
-import profile from "../assets/svg/profile.svg";
 import defaultProfile from "../assets/svg/gnb_default_profile.svg";
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import GNBPopup from './views/GNBPopup';
+import OpenLounge from "./open_lounge/OpenLounge";
 
 function GNB() {
     const cookies = new Cookies();
@@ -26,39 +26,16 @@ function GNB() {
 
     // user 관련
     let [email, setEmail] = useState(""); 
-    let [url, setUrl] = useState("");
 
-    useEffect(() => {
-        console.log("menu",menu)
-    })
-
-    /*
-    useEffect(() => {
-        const target = localStorage.getItem('target');
-        if (target !== null) {
-            if(document.querySelector('.btn-li')) {
-                const btn = document.querySelectorAll('.btn-li');
-                for(var i = 0; i<btn.length; i++) {
-                    if(target === btn[i].firstChild.firstChild.className) {
-                        console.log(btn[i].firstChild);
-                        btn[i].firstChild.firstChild.style.color = '#352C23';
-                    }
-                }
-            }
-        }
-    }, [url])
-
-    useEffect(() => {
-        setUrl(window.location.href);
-    }, [url])
-    */
+    // open lounge 관련
+    let [showOpenLounge, setShowOpenLounge] = useState(false);
 
     useEffect(() => {
         const getEmail = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
-                    process.env.REACT_APP_SERVER_HOST+'/api/auth', {
+                    process.env.REACT_APP_SERVER_HOST+'/api/auth/user', {
                         headers: {
                             Authorization: "Bearer " + token
                         }
@@ -69,7 +46,6 @@ function GNB() {
                 console.log(err);
             }
         }
-
         if (auth) {
             getEmail();
         }
@@ -77,7 +53,7 @@ function GNB() {
 
     useEffect(() => {
         const getActivePersona = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST + '/api/persona/user', {
@@ -86,18 +62,21 @@ function GNB() {
                         }
                     }
                 )
-                dispatch({type: 'CHANGEPERSONA', data: res.data.id});
+                console.log(res);
                 dispatch({type: 'AUTH', data: true});
+                dispatch({type: 'CHANGEPERSONA', data: res.data.id});
                 setActivePersona(res.data);
             } catch (err) {
                 console.log(err);
             }
         } 
-        getActivePersona();
+        if (auth) {
+            getActivePersona();
+        }
     }, [auth, activePersonaId])
 
     const changeActivePersona = async (persona) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + persona.id, {},
@@ -113,29 +92,17 @@ function GNB() {
         }
     }
 
-    const colorHandler = (e) => {
-        if(document.querySelector('.Btn-container')) {
-            const btn = document.querySelectorAll('.btn-li');
-            for(var i = 0; i < btn.length; i++) {
-                btn[i].firstChild.firstChild.style.color = '#807A74';
-                console.log(btn[i].firstChild.firstChild)
-            }
-        }
-        e.target.style.color = '#352C23';
-        localStorage.setItem('target', e.target.className);
-    }
-
-
     return (
         <div className="GNB-container">
+            { showOpenLounge && <OpenLounge setShowOpenLounge={setShowOpenLounge}/> }
             <div className="gnb-flex-container">
             <div className="Logo-container">
-                <img className="logo" src={logo} />
+                <img className="logo" src={logo} alt="logo"/>
             </div>
             <div className="Btn-container">
                 <li className="btn-li">
                 <Link to="/lounge" style={{textDecoration: 'none'}}>
-                    <span className="lounge-btn" id={(menu==="rounge") ? "selected-menu" : null}>
+                    <span className="lounge-btn" id={(menu==="lounge") ? "selected-menu" : null}>
                         Lounge
                     </span>
                 </Link>
@@ -156,7 +123,8 @@ function GNB() {
                 </li>
             </div>
             <div className="Profile-container">
-                <button className="openlounge-btn">Open Lounge</button>
+                <button className="openlounge-btn"
+                onClick={()=>{setShowOpenLounge(true)}}>Open Lounge</button>
                 <img className="bell" src ={bell} width="30px" alt="bell" />
                 <img className="profile-persona" src ={(auth && activePersona && activePersona.profileImgPath) ? activePersona.profileImgPath : defaultProfile} alt="persona profile" width="30px"
                 onClick={()=>{setShowGNBPopup(true)}}

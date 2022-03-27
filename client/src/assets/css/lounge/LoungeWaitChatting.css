@@ -1,0 +1,259 @@
+.lw-chatting {
+    width: 90%;
+    height: 100%;
+    min-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lw-chatting > .title {
+    font-family: Trap;
+    font-weight: bold;
+    font-size: 38px;
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 20px;
+    color: #FE6740;
+}
+
+.lw-chatting > .description {
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    color: #BEBBB9;
+    margin-bottom: 20px;
+}
+
+.lw-chatting .today {
+    width: fit-content;
+    height: 25px;
+    /*
+    margin-top: 50px;
+    margin-bottom: 32px;
+    */
+    line-height: 25px;
+    padding: 0px 10px;
+    border: 1px solid #BEBBB9;
+    color: #BEBBB9;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 20px;
+    margin: 20px auto;
+}
+
+.lw-chatting > .chatting-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
+    position: relative;
+}
+
+.lw-chatting .chatting-wrapper .show-new-msg {
+    position: sticky;
+    bottom: 10px;
+    left: 50%;
+    font-size: 15px;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    background:   #807A7495;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    animation: showNewMsg 1s;
+    transition: 0.2s;
+}
+
+.lw-chatting .chatting-wrapper > .show-new-msg:hover {
+    transform: translate(-50%, 5px);
+}
+
+@keyframes showNewMsg {
+    0% {opacity: 0;}
+}
+
+.lw-chatting > .chatting-wrapper > .show-new-msg > svg { position: relative; top: 3px; }
+
+.lw-chatting > .chatting-wrapper  > #chatting-bottom {
+    position: relative;
+    bottom: 15px;
+}
+
+.lw-chatting > .chatting-wrapper::-webkit-scrollbar { width: 6px; }
+.lw-chatting > .chatting-wrapper::-webkit-scrollbar-thumb { width: 6px; background: #E7E6E5; }
+
+.lw-chatting > .chatting-wrapper > .chatting-elem {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.lw-chatting > .chatting-wrapper > .chatting-elem > .profile {
+    width: 41px; height: 41px;
+    border: 0.5px solid #E7E6E5;
+    border-radius: 10px;
+    margin-right: 23px;
+    object-fit: cover;
+}
+
+.lw-chatting > .chatting-wrapper  > .chatting-elem .nickname-time-wrapper {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 5px;
+}
+
+.lw-chatting > .chatting-wrapper > .chatting-elem .nickname {
+    font-weight: bold;
+    font-size: 18px;
+    color: #352C23;
+    margin-right: 13px;
+}
+
+.lw-chatting > .chatting-wrapper > .chatting-elem .time {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 18px;
+    color: #BEBBB9;
+}
+
+.lw-chatting  > .chatting-wrapper  > .chatting-elem .content {
+    max-width: 700px;
+    word-break: keep-all;
+    overflow: hidden;
+    font-weight: 500;
+    font-size: 18px;
+    color: #352C23;
+}
+
+.lw-chatting > .notice-wrapper {
+    width: 100%;
+    height: 100px;
+    flex-shrink: 0;
+    margin-top: 10px;
+    margin-bottom: 17px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.lw-chatting > .notice-wrapper > .notice {
+    width: 100%;
+    padding: 17px 30px;
+    background: #F5F5F5;
+    border: 1px solid #FFA48C;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+}
+
+.lw-chatting > .notice-wrapper > .notice > .tack {
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.lw-chatting > .notice-wrapper > .notice > .text {
+    font-weight: 500;
+    font-size: 18px;
+    color: #352C23;
+}
+
+.lw-chatting > .sample-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+
+.lw-chatting > .sample-wrapper::-webkit-scrollbar { height: 8px; }
+.lw-chatting > .sample-wrapper::-webkit-scrollbar-thumb {
+    height: 8px;
+    border-radius: 8px;
+    background: #E7E6E5;
+    cursor: pointer;
+}
+
+.lw-chatting > .sample-wrapper > .sample-text-wrapper {
+    display: flex;
+    padding-top: 3px;
+    padding-bottom: 10px;
+}
+
+.lw-chatting > .sample-wrapper .sample-text {
+    width: fit-content;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 17.5px;
+    padding: 0px 12px;
+    margin-right: 30px;
+    border: 1px solid #FE6740;
+    color: #FE6740;
+    font-weight: 500;
+    font-size: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.lw-chatting > .sample-wrapper .sample-text:hover {
+    /*background: #F5F5F5;*/
+    transform: translateY(-3px);
+}
+
+.lw-chatting .tack {
+    width: 22px; height: 22px;
+    object-fit: cover;
+}
+
+.lw-chatting > .text-wrapper {
+    width: calc(100% - 60px);
+    height: 55px;
+    padding: 0px 30px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    box-shadow: 1px 4px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 50px;
+    flex-shrink: 0;
+}
+
+.lw-chatting > .text-wrapper > .tack {
+    flex-shrink: 0;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.lw-chatting > .text-wrapper > input[type="text"],
+.lw-chatting > .text-wrapper > textarea {
+    border: none;
+    color: #352C23;
+    font-size: 18px;
+    font-weight: 500;
+    flex-grow: 1;
+    transition: 0.2s;
+}
+.lw-chatting > .text-wrapper > input[type="text"]:focus,
+.lw-chatting > .text-wrapper > textarea:focus { font-size: 17px; }
+
+.lw-chatting > .text-wrapper > .send-btn {
+    font-family: Pretendard;
+    font-weight: 500;
+    font-size: 18px;
+    border: none;
+    background: transparent;
+    color: #FE6740;
+    flex-shrink: 0;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: 0.2s;
+}
+
+.lw-chatting > .text-wrapper > .tack:hover,
+.lw-chatting > .text-wrapper > .send-btn:hover {
+    transform: translateY(3px);
+}

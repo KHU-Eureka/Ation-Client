@@ -1,0 +1,118 @@
+.form-wrapper {
+    display: flex;
+    width: 400px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+.form-wrapper .logo-img {
+    margin-top: 100px;
+    margin-bottom: 75px;
+    width: 160px;
+}
+
+.form-wrapper .logo {
+    font-family: Noto Serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 38px;
+    margin-top: 100px;
+    margin-bottom: 75px;
+    color: #FE3400;
+}
+
+.login .alert-msg {
+    position: absolute;
+    top: -50px;
+    right: 100px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 11px;
+    pointer-events: none;
+}
+
+.input-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.input-label {
+    color: #FE6740;
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.login-input {
+    width: 100%;
+    height: 35px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #FE6740;
+    transition: font-size 0.2s;
+}
+
+.login-input:focus-visible {
+    outline: 1px solid transparent;
+}
+
+.login .login-submit {
+    width: 100%;
+    height: 50px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 100px;
+    border: none;
+    background-color: #FE6740;
+    transition: 0.2s;
+    margin: 40px 0px;
+    position: relative;
+}
+
+.login-submit:hover {
+    background-color: #d85a3b;
+}
+
+/* login modal */
+.login .logo {
+    margin-top: 50px;
+}
+
+.login .modal-sub-title {
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+.login .sl-btn {
+    width: 400px; height: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #352C23;
+    border-radius: 100px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.login .sl-btn:hover { transform: translateY(3px); }
+.login .sl-btn > svg { margin-right: 10px; }
+
+.login .sl-btn#google {
+    border: 1px solid #E7E6E5;
+    margin-bottom: 10px;
+}
+
+.login .sl-btn#kakao {
+    background: #FEE500;
+    margin-bottom: 40px;
+}

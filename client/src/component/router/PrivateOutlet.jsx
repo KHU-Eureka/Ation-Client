@@ -20,12 +20,12 @@ export default function PrivateOutlet() {
     } 
     if (error) {
       dispatch({type: 'AUTH', data: false});
-      return <Navigate to="/login" />
+      return <Navigate to="/landing" />
       //return <Navigate to="/login" />
     } 
     if (auth.message==="Unathorized") { // 로그인 되지 않거나 유효하지 않은 유저라면,
       dispatch({type: 'AUTH', data: false});
-      return <Navigate to="/login" />
+      return <Navigate to="/landing" />
     } else { // 유효한 유저라면,
       dispatch({type: 'AUTH', data: true});
       return <Outlet /> ;

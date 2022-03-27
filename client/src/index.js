@@ -13,6 +13,7 @@ import App from './App';
 
 let initialState = {
   auth: false,
+  showLoginModal: false,
   activePersonaId: null,
   clickedPersonId: 0,
   menu: null,
@@ -38,6 +39,9 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case 'AUTH':
       tempState.auth = action.data;
+      break;
+    case 'LOGIN':
+      tempState.showLoginModal = action.data;
       break;
     case 'CHANGEPERSONA':
       tempState.activePersonaId = action.data;
@@ -89,10 +93,10 @@ function reducer(state = initialState, action) {
 let store = createStore(reducer)
 
 ReactDOM.render(
-  <React.StrictMode>
+ 
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  ,
   document.getElementById('root')
 );

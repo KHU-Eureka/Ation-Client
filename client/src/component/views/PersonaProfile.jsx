@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import OpenLounge from '../open_lounge/OpenLounge';
 import { useFetch, clickUIChangeHandler, clickUIPrevHandler } from '../state';
 import { BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE } from '../lounge/atomStyleSheet';
 
@@ -16,6 +18,7 @@ export default function PersonaProfile(props) {
     const { isLoungeHome } = props;
     const activePersonaId = useSelector((state) => state.activePersonaId);
     const personaInfo = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/persona/${activePersonaId}`, activePersonaId);
+    let [showOpenLounge, setShowOpenLounge] = useState(false);
     const senseInfoList = [
         { id: 1, name: "눈", svg: eye },
         { id: 2, name: "코", svg: nose },
@@ -49,13 +52,16 @@ export default function PersonaProfile(props) {
     }
 
     const loungeOpenClickHandler = ({ target }) => {
-        const btnDoc = document.querySelectorAll('.btn');
-        clickUIChangeHandler(BTN_CLICKSTYLE, target);
-        clickUIChangeHandler(BTN_CLICKOUTSTYLE, btnDoc);
+        //clickUIChangeHandler(BTN_CLICKSTYLE, target);
+        setShowOpenLounge(true);
+        //const btnDoc = document.querySelectorAll('.btn');
+        //clickUIPrevHandler(BTN_CLICKOUTSTYLE, btnDoc);
     }
   
 
     return (
+        <>
+        { showOpenLounge && <OpenLounge setShowOpenLounge={setShowOpenLounge}/> }
         <div className='PersonaProfile-Container' style={{width: '250px', height: isLoungeHome?'149px':'88.38px'}}>
             <div className="title" style={{...titleStyle}}>활동 중인 페르소나</div>
                 {/* <div className="content-wrapper" width='181.83px' height='51.38px' style={{}}> */}
@@ -81,9 +87,11 @@ export default function PersonaProfile(props) {
                 {/* </div> */}
                 {isLoungeHome?
                 <div className='btn-container'>
-                    <button className='btn' onClick={loungeOpenClickHandler}>Open Lounge</button>
+                    <button className='btn' id={showOpenLounge && 'click-style'} 
+                    onClick={loungeOpenClickHandler}>Open Lounge</button>
                 </div>
                 :null}
         </div>
+        </>
     );
 }

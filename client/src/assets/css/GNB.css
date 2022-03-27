@@ -96,6 +96,21 @@
     color: #807A74;
 }
 
+.Profile-container .login-btn {
+    width: 80px;
+    height: 36px;
+    border-radius: 20px;
+    font-family: Pretendard;
+    font-weight: 500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background: #FE3400;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.Profile-container .login-btn:focus-visible {outline: none;}
+
 .openlounge-btn {
     width: 154px;
     height: 36px;

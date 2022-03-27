@@ -117,6 +117,7 @@ function LoungeRoom () {
                         }
                     }
                 )
+                console.log('room info : ', res.data);
                 setRoomInfo(res.data);
                 setMemberList(res.data.memberList);
                 setAdmin(res.data.memberList.find((elem)=>elem.admin).persona);

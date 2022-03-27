@@ -27,15 +27,19 @@ function Stageboard(props) {
     const [currentObject, setCurrentObject] = useState();
     const [selectedObject, setSelectedObject] = useState(null);
     const [exportImg, setExportImg] = useState();
+    // const [whiteboard, setWhiteboard] = useState();
 
-    const whiteboard = useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
+    const whiteboard = useFetch(state && `${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
 
     useEffect(() => {
+        // if(state) {
+        //     setWhiteboard(useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`));
+        // }
         if(whiteboard !== undefined){
             const boardItem = JSON.parse(whiteboard.whiteboard);
             setBoardObjectList(boardItem);
         }
-    }, [whiteboard])
+    }, [])
 
     function dataURItoBlob(dataURI) {
         let byteString = window.atob(dataURI.split(',')[1]);

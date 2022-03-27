@@ -84,10 +84,13 @@ export async function enterLounge(target, loungeId, personaId) {
                     Authorization: "Bearer " + token
                 }
             });
+            console.log(`/lounge-room/${loungeId}`);
+            window.location.replace(`/lounge-room/${loungeId}`);
         } catch(err) {
             console.log(err.message);
+            console.log(`/lounge-room/${loungeId}`);
+            window.location.replace(`/lounge-room/${loungeId}`);
         }
-        window.location.replace(`/lounge-room/${loungeId}`);
     }
 }
 

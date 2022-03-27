@@ -43,3 +43,8 @@
     font-size: 15px;
     color: #FE3400;
 }
+
+.PersonaProfile-Container .btn-container .btn#click-style {
+    background: #FE3400 !important;
+    color: white !important;
+}

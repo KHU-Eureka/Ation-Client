@@ -32,64 +32,18 @@ function LoungeRoomHandler() {
         }
     }
 
-    /*
-    useEffect(()=> {
-        const getRoomInfo = async () => { // 메세지가 온 방의 정보를 받아옴
-            const token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}`, {
-                        headers: {
-                            Authorization: {
-                                Bearer: 'Bearer ' + token
-                            }
-                        }
-                    }
-                )
-                setRoomInfo(res.data);
-                getPersonaId(res.data);
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        const getPersonaId = async (currRoom) => { // 그 방에 존재하는 나의 persona id를 알아냄
-            const token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    `${process.env.REACT_APP_SERVER_HOST}/api/lounge/current`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                )
-                const myCurrRoomList = res.data;
-                for (let room of myCurrRoomList) {
-                    if (room.lounge.id === currRoom.id) {
-                        setPersonaId(room.persona.id);
-                        break;
-                    }
-                }
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        getRoomInfo();
-    }, [currRoomId])
-    */
-
     const receiveMessage = (msg) => {
         if (msg.status) {
             switch(msg.status) {
                 case 'START':
-                    setCurrRoomId(8); // setCurrRoomId(msg.id);
+                    console.log(msg);
+                    setCurrRoomId(msg.loungeId); // setCurrRoomId(msg.id);
                     setShowLoungeStartModal(true) // start modal을 띄움
-                    setCurrWaitingInfo(waitingRoomList.find(elem=>elem.id===currRoomId));
-                    dispatch({type: 'DEL_WAITING', data: currRoomId}); // 대기 목록에서 삭제시킴 => 구독 취소
+                    setCurrWaitingInfo(waitingRoomList.find(elem=>elem.id===msg.loungeId));
+                    dispatch({type: 'DEL_WAITING', data: msg.loungeId}); // 대기 목록에서 삭제시킴 => 구독 취소
                     break;
                 case 'END':
-                    dispatch({type: 'DEL_WAITING', data: currRoomId});
+                    dispatch({type: 'DEL_WAITING', data: msg.loungeId});
                     break;
                 default:
             }

@@ -126,9 +126,16 @@ function GNB() {
                 <button className="openlounge-btn"
                 onClick={()=>{setShowOpenLounge(true)}}>Open Lounge</button>
                 <img className="bell" src ={bell} width="30px" alt="bell" />
-                <img className="profile-persona" src ={(auth && activePersona && activePersona.profileImgPath) ? activePersona.profileImgPath : defaultProfile} alt="persona profile" width="30px"
-                onClick={()=>{setShowGNBPopup(true)}}
-                />
+                {
+                    auth
+                    ? <img className="profile-persona" src ={(auth && activePersona && activePersona.profileImgPath) ? activePersona.profileImgPath : defaultProfile} alt="persona profile" width="30px"
+                    onClick={()=>{setShowGNBPopup(true)}}
+                    />
+                    : <button className="login-btn" onClick={()=>{dispatch({type: 'LOGIN', data: true})}}>
+                        Log In
+                    </button>
+                }
+
                 { 
                 (auth && showGNBPopup) &&
                 <GNBPopup email={email} showGNBPopup={showGNBPopup} setShowGNBPopup={setShowGNBPopup} activePersona={activePersona} changeActivePersona={changeActivePersona}></GNBPopup> 

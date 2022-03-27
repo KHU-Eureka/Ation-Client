@@ -1,0 +1,45 @@
+.PersonaProfile-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 103px;
+}
+
+.PersonaProfile-Container .nickname {
+    max-width: 160px;
+    font-weight: bold;
+    font-size: 21px;
+    color: #352C23;
+    margin-bottom: 8px;
+
+    word-wrap: break-word;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    /* overflow: hidden; */
+    word-break: keep-all;
+    -webkit-line-clamp: 1;
+}
+
+.PersonaProfile-Container .sense-elem {
+    width: 15px; height: 15px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.PersonaProfile-Container .btn-container {
+    display: flex;
+}
+
+.PersonaProfile-Container .btn-container .btn {
+    width: 240px;
+    height: 37px;
+    background: #FFFFFF;
+    border: 1px solid #FE3400;
+    box-sizing: border-box;
+    border-radius: 50px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    color: #FE3400;
+}

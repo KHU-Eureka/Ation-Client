@@ -14,6 +14,7 @@ import App from './App';
 let initialState = {
   auth: false,
   activePersonaId: null,
+  clickedPersonId: 0,
   menu: null,
   waitingRoomList: [], // 속성: id, personaId, title
   senseInfoList: [
@@ -22,7 +23,14 @@ let initialState = {
     { id: 3, svg: <Mouth/>, name: 'mouth' },
     { id: 4, svg: <Hand/>, name: 'hand' },
     { id: 5, svg: <Ear/>, name: 'ear' },
-  ]
+  ],
+  mode: "",
+  detail_mode: "",
+  loungeCreate: "",
+  loungePinup: "",
+  loungeLive: "",
+  loungeHistory: "",
+  loungeWait: "",
 }
 
 function reducer(state = initialState, action) {
@@ -33,6 +41,9 @@ function reducer(state = initialState, action) {
       break;
     case 'CHANGEPERSONA':
       tempState.activePersonaId = action.data;
+      break;
+    case 'CLICKED_PERSONA':
+      tempState.clickedPersonId = action.data;
       break;
     case 'MENU':
       tempState.menu = action.data;
@@ -48,6 +59,26 @@ function reducer(state = initialState, action) {
     case 'DEL_WAITING': // waiting 삭제 => unready했을 때
       tempState.waitingRoomList = tempState.waitingRoomList.filter(elem=>elem.id!==action.data);
       console.log('del data: ', action.data);
+    case 'MODE':
+      tempState.mode = action.data;
+      break;
+    case 'DETAIL_MODE':
+      tempState.detail_mode = action.data;
+      break;
+    case 'LOUNGE_CREATE':
+      tempState.loungeCreate = action.data;
+      break;
+    case 'LOUNGE_PINUP':
+      tempState.loungePinup = action.data;
+      break;
+    case 'LOUNGE_LIVE':
+      tempState.loungeLive = action.data;
+      break;
+    case 'LOUNGE_HISTORY':
+      tempState.loungeHistory = action.data;
+      break;
+    case 'LOUNGE_WAIT':
+      tempState.loungeWait = action.data;
       break;
     default:
       break;

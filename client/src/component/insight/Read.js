@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useDispatch } from "react-redux";
 
+import NonGraphic from "../views/NonGraphic";
 import Reco from "./Reco";
 import InsightLNB from "./InsightLNB"
 import Modal from "../modal/Modal";
@@ -20,7 +21,7 @@ function Read() {
     let dispatch = useDispatch();
     const [pageNum, setPageNum] = useState(1);
     const [pageNum2, setPageNum2] = useState(1);
-    const [insight, setInsight] = useState(null);
+    const [insight, setInsight] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [search, setSearch] = useState("");
@@ -56,6 +57,9 @@ function Read() {
     // menu setting
     useEffect(()=> {
         dispatch({type: 'MENU', data: 'insight'})
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [])
 
     const PersonaSetting = async () => {
@@ -93,7 +97,7 @@ function Read() {
         if(!token || token === '') {
             setAuth(false);
         } else {
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth', {
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth/user', {
                 headers: {
                     Authorization: "Bearer " + token
                 }
@@ -106,9 +110,13 @@ function Read() {
     useEffect(() => {
         PersonaSetting();
         fetchUserName();
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [])
 
     useEffect( async () => {
+        
         console.log(cate);
         if(cate !== "전체") {
             let cateList = [];
@@ -117,7 +125,7 @@ function Read() {
               );
             console.log(cate);
             for (var i of response.data) { 
-               if(cate === i.insightMainCategory.name) {
+               if(cate === i.mainCategory.name) {
                 cateList.push(i);
                }
               }
@@ -127,9 +135,22 @@ function Read() {
             const response = await axios.get(
                 process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
-            setInsight(response.data);
+            console.log( response.data);
+            await setInsight(response.data);
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
       }, [cate]);
+
+    //   useEffect( async () => {
+    //     const response = await axios.get(
+    //         process.env.REACT_APP_SERVER_HOST + '/api/insight'
+    //       );
+    //     console.log(response.data);
+    //     await setInsight(response.data);
+    //       console.log(insight)
+    //   }, [insight])
 
     const imgClickHandler = async(e) => {
         const token = localStorage.getItem('token');
@@ -225,6 +246,9 @@ function Read() {
             setCate("전체");
             setAddTrue(false);
         }
+        return () => {
+            console.log("cleanUp 함수");
+          };
     }, [addTrue])
   
     if (loading) return <div>로딩중..</div>;
@@ -233,7 +257,7 @@ function Read() {
     return (
         <>
         <div className="Insight-container">
-            <Reco userName={userName} auth={auth}/>
+            <Reco userName={userName} auth={auth} insight={insight}/>
             <div className="Search-container">
                 <div className="SearchBar-container">
                     <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
@@ -246,19 +270,20 @@ function Read() {
             </div>
             <div className="Content-container">
                 <InsightLNB cate1={cate} cate={setCate} setInsight={setInsight} search={search} setCateId={setCateId}/>
+                {insight.length !== 0 ?
                 <div className="img-container">
                     <ul className="img-ul">
                     {insight.map(i => (
                     <li key={i.id} className="img-li">
                         <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
-                            {auth?<div className="pin-box">
+                            <div className="pin-box">
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
-                            </div>:<></>}
+                            </div>
                             <p className="title" id={i.id}>{i.title}</p>
                             <div className="tag-container">
-                            <span className="tag" id={i.id}> #{i.insightMainCategory.name}</span>
-                            {i.insightSubCategoryList.map(tag => (
+                            <span className="tag" id={i.id}> #{i.mainCategory.name}</span>
+                            {i.subCategoryList.map(tag => (
                                 <span className="tag" id={i.id}> #{tag.name}</span>
                             ))}
                             </div>
@@ -272,6 +297,7 @@ function Read() {
                     <PinUp open={modal2Open} pageNum={pageNum2} setPageNum={setPageNum2} close={closeModal2} header={prev} personaImg={personaImg} personaId={personaId} insightId={insightId} pinPosition={pinPosition}/>
                     </ul>
                 </div>
+                :<NonGraphic type={'insight'} isImg={true} mainText={'아직 추가된 인사이트가 '}/>}
             </div>
         </div>
         </>

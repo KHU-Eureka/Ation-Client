@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import SockJsClient from 'react-stomp';
 import axios from 'axios';
 
-import LoungeBoard from "../lounge_board/LoungeBoard";
 import LoungeWaitSideBar from "../lounge_wait/LoungeWaitSideBar";
 import LoungeWaitChatting from "../lounge_wait/LoungeWaitChatting";
 import LoungeActiveSideBar from "../lounge_active/LoungeActiveSideBar";
@@ -13,6 +12,7 @@ import RoomInfoModal from "../modal/RoomInfoModal";
 
 import "../../assets/css/lounge/LoungeRoom.css";
 import RoomEditModal from "../modal/RoomEditModal";
+import Whiteboard from "../whiteboard/Whiteboard";
 
 function LoungeRoom () {
     const $websocket = useRef(null);
@@ -106,61 +106,6 @@ function LoungeRoom () {
         }
     }
 
-    /*
-    useEffect(()=> { // 들어올 권한이 있는 방인지 검사
-        var myRoomInfo = [];
-
-        const getMyActiveRoom = async () => {
-            const token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    `${process.env.REACT_APP_SERVER_HOST}/api/lounge/current`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                )
-                myRoomInfo = myRoomInfo.concat(res.data);
-                getMyWaitingRoom();
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        const getMyWaitingRoom = async () => {
-            const token = localStorage.getItem('token');
-            try {
-                const res = await axios.get(
-                    `${process.env.REACT_APP_SERVER_HOST}/api/lounge/wait`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    }
-                )
-                myRoomInfo = myRoomInfo.concat(res.data);
-                isItMyRoom();
-            } catch(err) {
-                console.log(err);
-            }
-        }
-
-        const isItMyRoom = () => {
-            let goOutside = true;
-            for (let room of myRoomInfo) {
-                if (room.lounge.id === id*1) { // 내가 속해있는 방이라면
-                    goOutside = false;
-                    if (activePersonaId !== room.persona.id) { // 속해있는 방이지만, 다른 페르소나로 속해있다면
-                        changeActivePersona(room.persona.id);
-                    }
-                }
-            }
-            if (goOutside) { // 내가 속해있는 방이 아니라면, 방을 나가도록 함
-                navigate('/lounge', { state: {alert:{title: "해당 방에 접근 권한이 없습니다.", subtitle: "다른 방을 이용해주세요 :)"}}})
-            }
-        }
-        getMyActiveRoom();
-    }, [])*/
-
     useEffect(()=> {
         const getRoomInfo = async () => {
             const token = localStorage.getItem('token');
@@ -243,10 +188,10 @@ function LoungeRoom () {
                 {
                     roomInfo && ( roomInfo.status === "OPEN"
                     ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
-                    : <LoungeBoard /> )
+                    : <Whiteboard /> )
                 }
             </div>
-
+            
         </div>
     )
 }

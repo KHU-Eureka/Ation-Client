@@ -6,7 +6,6 @@ import "../../assets/css/mypage/pinbox.css";
 import plus from "../../assets/svg/plus.svg";
 import search from "../../assets/svg/search.svg";
 import bin from "../../assets/svg/bin.svg";
-import circle from "../../assets/svg/circle.svg";
 import edit from "../../assets/svg/edit.svg";
 
 import PinEdit from "./PinEdit";
@@ -14,6 +13,7 @@ import PinAdd from "./PinAdd";
 import PinBoardAdd from "./PinBoardAdd";
 import PinBoardEdit from "./PinBoardEdit";
 import Delete from "./Delete";
+import NoPin from "./NoPin";
 
 function Pinbox(props) {
     const cookies = new Cookies;
@@ -343,6 +343,7 @@ function Pinbox(props) {
         </div>
         <div className="InsightContent-container">
             {viewOption === 0?
+            allPin.length!==0?
             <div>
             <ul className="allPin-content">
                 {allPin.map( pin => (
@@ -377,6 +378,10 @@ function Pinbox(props) {
                 <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'핀 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
             </div>:
+            <div className="allPin-content">
+                <NoPin option={'핀이'}/>
+            </div>:
+            pinboard.length!==0?
             <>
             <ul className="pinBoard-content">
             {pinboard.map( board => (
@@ -398,6 +403,7 @@ function Pinbox(props) {
             </ul>
             <PinBoardEdit pinBoardEditModalOpen={pinBoardEditModalOpen} closePinBoardEditModal={closePinBoardEditModal} BoardEditPosition={BoardEditPosition} clickedPinBoardID={clickedPinBoardID} setAddTrue={setAddTrue}/>
             <Delete DeleteOpen={DeleteBoardOpen} closeDeleteModal={closeDeleteBoardModal} title={'핀보드'} description={'보드'} deletePinId={deletePinBoardId} setAddTrue={setAddTrue}/>
+            
             <ul className="pinItem-content">
                 {pins.length!==0?pins.map( pin => (
                 <li className="pin-item" key={pin.id} id={pin.id}>
@@ -425,14 +431,11 @@ function Pinbox(props) {
                         </div>
                     </div>
                 </li>
-                )):
-                <div className="noPinsPinBoard">
-                    아직 핀이 존재하지 않아요!
-                </div>}
+                )):<NoPin option={'핀이'}/>}
                 <PinEdit pinEditModalOpen={pinEditModalOpen} closeEditModal={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/>
                 <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'인사이트 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
-            </>}
+            </>:<NoPin option={'보드가'}/>}
         </div>
      </>
     );

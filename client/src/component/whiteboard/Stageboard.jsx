@@ -52,7 +52,7 @@ function Stageboard(props) {
     }
 
     const imgExportHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/image/${state.ideationId}`, exportImg)
         attrImgStore.setThumbnail(response.data);
     }
@@ -234,7 +234,7 @@ function Stageboard(props) {
     }
 
     useEffect( async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const stringObjectList = JSON.stringify(boardObjectList);
         console.log(stringObjectList)
         if(stringObjectList !== "[]") {

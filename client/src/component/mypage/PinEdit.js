@@ -39,7 +39,7 @@ function PinEdit(props) {
     }, [pinEditModalOpen])
 
     const PersonaSetting = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(
             process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
@@ -69,7 +69,7 @@ function PinEdit(props) {
     }
 
     const pinboardImport = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board?personaId=${clickedPersonaId}`, {
             headers: {
                 Authorization: "Bearer " + token
@@ -120,7 +120,7 @@ function PinEdit(props) {
     }
 
     const closeBtnClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.put(process.env.REACT_APP_SERVER_HOST + `/api/pin/${clickedPin.id}`,
         {
             "pinBoardId": afterPinboardId,
@@ -163,7 +163,7 @@ function PinEdit(props) {
     }
 
     const pinboardCreateClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.post(
             process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
             {
@@ -184,7 +184,7 @@ function PinEdit(props) {
 
     const pinboardCreateSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
         const response = await axios.post(
             process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
             {

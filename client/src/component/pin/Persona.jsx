@@ -16,7 +16,7 @@ function Persona() {
     //persona list import 관련 ...
     const personaSettingHandler = async () => {
         try {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_HOST}/api/persona/`, 
                 {

@@ -19,7 +19,7 @@ function Ideaition() {
     const [idx, setIdx] = useState(0);
 
     const ideationAddHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/ideation`, 
             {
                 "personaId": activePersonaId,

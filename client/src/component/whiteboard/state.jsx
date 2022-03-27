@@ -123,7 +123,7 @@ export const afterTransformer = (newAttrs, obj) => {
     // };
     
     // export const useObjs = createStore(() => {
-    //     const initialState = JSON.parse(localStorage.getItem('board'));
+    //     const initialState = JSON.parse(locallocalStorage.getItem('board'));
       
     //     return { ...baseState, objs: initialState ?? {} };
     // });

@@ -45,7 +45,7 @@ function Create() {
     }
 
     const postPersona = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         try {
             const res = await axios.post(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona', 
@@ -93,7 +93,7 @@ function Create() {
     }
 
     const postProfileImg = async (personaId) => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         try {
             await axios.post(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -112,7 +112,7 @@ function Create() {
     }
 
     const firstPersonaAction = async (personaId) => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         try {
             // Active persona를 생성한 페르소나로 변경하고
             await axios.put(
@@ -133,7 +133,7 @@ function Create() {
 
     useEffect(()=> { // 신규 유저인지 파악
         const getPersonaLength = async () => {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona', {

@@ -18,7 +18,7 @@ function Search(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.code === 'Enter') {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/pin/search?keyword=${searchInput}&personaId=${pId}`, 
                 {
                     headers: {

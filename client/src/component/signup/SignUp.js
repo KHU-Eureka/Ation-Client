@@ -35,10 +35,10 @@ function SignUp() {
             setShowAlert(true)
         } else if (name.length === 0 ) {
             setAlertTitle("이름을 입력해주세요.")
-            setAlertSubtitle("")
+            setAlertSubtitle("이름은 필수 입력 항목입니다")
             setShowAlert(true)
         } else if (password !== passwordCheck) {
-            setAlertTitle("비밀번호가 다릅니다.")
+            setAlertTitle("비밀번호가 일치하지 않습니다.")
             setAlertSubtitle("비밀번호를 확인해주세요")
             setShowAlert(true)
         } else if (password.length < 3) {

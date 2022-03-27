@@ -18,11 +18,10 @@ import Delete from "./Delete";
 function Pinbox(props) {
     const cookies = new Cookies;
 
-    const {activePersonaId, EditModalClose} = props;
+    const {activePersonaId} = props;
 
     const [pinboard, setPinboard] = useState([]);
     const [allPin, setAllPin] = useState([]);
-    // const [pinboardId, setPinboardId] = useState(0);
     const [viewOption, setViewOption] = useState(0);
     const [pinSearch, setPinSearch] = useState("");
     const [clickedPin, setClickedPin] = useState();
@@ -100,7 +99,7 @@ function Pinbox(props) {
     //...modal7
 
     const PinBoardImport = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board/?personaId=${activePersonaId}`,{
             headers: {
                 Authorization: "Bearer " + token
@@ -120,9 +119,13 @@ function Pinbox(props) {
     }
 
     const allPinHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         if(searchTrue) {
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                });
             setAllPin(response.data);
         } else {
             const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin?personaId=${activePersonaId}`,{
@@ -133,7 +136,6 @@ function Pinbox(props) {
             setAllPin(response.data);
         }
         setViewOption(0);
-        // setSearchTrue(false);
     }
 
     useEffect(() => {
@@ -150,12 +152,13 @@ function Pinbox(props) {
         PinBoardImport();
     }, [activePersonaId, viewOption, searchTrue]);
 
-    // useEffect(() => {
-    //     allPinHandler();
-    // }, [input])
-
     const searchBtnClickHandler = async () => {
-        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
         setAllPin(response.data);
         setViewOption(0);
         setSearchTrue(true);
@@ -200,7 +203,7 @@ function Pinbox(props) {
     }
 
     const pinClickHandler = async (e) => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         let doc = "";
         if(e.target.className === "Mypin-item" || e.target.className === "pin-img") {
             console.log(e.target.parentNode);
@@ -234,13 +237,13 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            const token = cookies.get('token');
-            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            });
-            setAllPin(response.data);
+            // const token = localStorage.getItem('token');
+            // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
+            //     headers: {
+            //         Authorization: "Bearer " + token
+            //     }
+            // });
+            // setAllPin(response.data);
             setViewOption(0);
             setSearchTrue(true);
         }
@@ -249,7 +252,7 @@ function Pinbox(props) {
     const pinEditHandler = async (e) => {
         e.stopPropagation();
         console.log(e.target);
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const pinId = e.target.getAttribute('id');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${pinId}`, {
             headers: {
@@ -261,12 +264,6 @@ function Pinbox(props) {
         openEditModal();
     }
 
-    // useEffect(() => {
-    //     if(EditModalClose) {
-    //         setPinEditModalOpen(false);
-    //     }
-    // }, [EditModalClose]);
-
     const pinAddClickHandler = async () => {
         if(viewOption === 0) {
             openAddModal();
@@ -277,7 +274,7 @@ function Pinbox(props) {
 
     const pinBoardItemClickHandler = async (e) => {
         if(e.target.className!=='Mypin-edit2' && e.target.className!=='pin-del2') {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const pinBoardId = e.currentTarget.getAttribute("id");
             document.querySelector(".pin-board-name").style.display="flex";
             document.querySelector(".pin-board-name").innerHTML = e.currentTarget.querySelector(".pinBoard-name").innerHTML;
@@ -329,7 +326,7 @@ function Pinbox(props) {
      <>
         <div className="PinTool-container" >
             <div className="LeftTool">
-                <span className="all-pin" onClick={allPinHandler}>모든 PIN</span>
+                <span className="all-pin" onClick={searchTrue?() => {window.location.reload();window.scrollTop = window.scrollTo(0,0);}:allPinHandler}>모든 PIN</span>
                 <span className="pin-board" onClick={pinBoardClickHandler}>PIN Board
                     <div className="pin-board-name"></div>
                 </span>
@@ -377,7 +374,7 @@ function Pinbox(props) {
                 </li>
                 ))}
                 <PinEdit pinEditModalOpen={pinEditModalOpen} closeEditModal={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/>
-                <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'인사이트 카드'} description={'카드'} deletePinId={deletePinId}/>
+                <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'핀 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
             </div>:
             <>

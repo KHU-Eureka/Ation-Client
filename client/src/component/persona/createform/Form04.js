@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import eye_white from '../../../asset/images/sense/눈_white.png';
-import eye_color from '../../../asset/images/sense/눈_color.png';
-import nose_white from '../../../asset/images/sense/코_white.png';
-import nose_color from '../../../asset/images/sense/코_color.png';
-import mouse_white from '../../../asset/images/sense/입_white.png';
-import mouse_color from '../../../asset/images/sense/입_color.png';
-import ears_white from '../../../asset/images/sense/귀_white.png';
-import ears_color from '../../../asset/images/sense/귀_color.png';
-import hand_white from '../../../asset/images/sense/손_white.png';
-import hand_color from '../../../asset/images/sense/손_color.png';
+import eye_white from '../../../assets/image/sense/눈_white.png';
+import eye_color from '../../../assets/image/sense/눈_color.png';
+import nose_white from '../../../assets/image/sense/코_white.png';
+import nose_color from '../../../assets/image/sense/코_color.png';
+import mouse_white from '../../../assets/image/sense/입_white.png';
+import mouse_color from '../../../assets/image/sense/입_color.png';
+import ears_white from '../../../assets/image/sense/귀_white.png';
+import ears_color from '../../../assets/image/sense/귀_color.png';
+import hand_white from '../../../assets/image/sense/손_white.png';
+import hand_color from '../../../assets/image/sense/손_color.png';
 
 
 function Form04(props) {
@@ -68,7 +68,7 @@ function Form04(props) {
     }
 
     return (
-        <div style={{width:'100%'}}>
+        <div className="persona-create-page">
 
             <div className="input-wrapper" style={{marginBottom: '0px'}}>
                 <label htmlFor="job" style={{marginBottom: '8px'}}>
@@ -90,13 +90,14 @@ function Form04(props) {
                     {
                         senseInfoList.map( function(sense, idx) {
                             return(
-                                <div className="checkbox-elem" key={ idx }>
+                                <div className="checkbox-elem"
+                                style={{ width: sense.width }}
+                                key={ idx }>
                                     <input
                                         id={ sense.senseId }
                                         value={ sense.senseId }
                                         name="sense"
                                         type="checkbox"
-                                        style={{ width: sense.width }}
                                         checked={props.senseIdList.includes(sense.senseId) ? true : false}
                                         onClick={ (e)=>{changeHandler(e.currentTarget.checked, sense.senseId) }}
                                     />

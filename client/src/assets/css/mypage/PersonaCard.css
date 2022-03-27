@@ -1,0 +1,176 @@
+.background-img {
+    width: 100%;
+    height: 460px;
+    padding-top: 80px;
+    background-color: #E7E6E5;
+    top: 0px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 80px;
+    transition: 0.2s;
+}
+
+.background-img #background-image-label {
+    color: #807A74;
+    font-size: 30px;
+    position: absolute;
+    top: 470px;
+    right: 5%;
+    cursor: pointer;
+}
+
+.profile-wrapper {
+    width: 950px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    top: 140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.persona-profile {
+    width: 280px;
+    height: 300px;
+    background-color: #E7E6E5;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-image 0.5s;
+}
+
+.persona-profile .card-contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-contents .card-header,
+.card-contents .card-footer {
+    width: 100%;
+}
+
+.card-header .card-font {
+    color: white;
+    font-weight: 700;
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.card-header .persona-name {
+    margin-top: 34px;
+    font-size: 26px;
+    
+}
+
+.card-header .persona-job {
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+.card-footer .sense-wrapper {
+    margin: 10px 16px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.sense-wrapper .sense-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.persona-profile .card-hover {
+    width: 100%;
+    height: 100%;
+    background-color: #807A7450;
+    border-radius: 10px;
+    color: #ffffff70;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.persona-profile .card-hover:hover {
+    opacity: 1;
+}
+
+.card-hover .content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.content-wrapper .content-button {
+    width: 52px;
+    margin: 0px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.content-button .button-icon {
+    color: white;
+    font-size: 40px;
+}
+
+.content-button .button-text {
+    color: white;
+    font-size: 15px;
+}
+
+#active-persona-profile {
+    width: 300px;
+    height: 422px;
+}
+
+.pin-box-content {
+    height: 10000px;
+}
+
+.add-persona-btn {
+    width: 100%; height: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-persona-btn > .text { opacity: 0; font-size: 15px; margin-top: 5px; transition: 0.2s; }
+
+.add-persona-btn:hover > .text { opacity: 1; }
+
+.add-persona-btn:hover {
+    background-color: #807A7450;
+}
+
+.active-persona-change .card-wrapper:first-child {
+    animation: 1s leftPersonaMove;
+}
+
+.active-persona-change .card-wrapper:nth-child(2) {
+    z-index: 3;
+}
+
+.active-persona-change .card-wrapper:last-child {
+    animation: 1s rightPersonaMove;
+}
+
+@keyframes leftPersonaMove {
+    50% { transform: translateX(calc(100% + 35px)); }
+}
+
+@keyframes rightPersonaMove {
+    50% { transform: translateX(calc(-35px - 100%)); }
+}

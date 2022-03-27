@@ -211,10 +211,10 @@
     background: #F5F5F5;
 }
 
-.page1 {
+.modal .page1 {
     position: absolute;
     z-index: 99;
-    top: 1130px;
+    top: 50px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -227,10 +227,10 @@
     border-radius: 18px;
 }
 
-.page2 {
+.modal .page2 {
     position: absolute;
     z-index: 99;
-    top: 1130px;
+    top: 50px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -243,11 +243,11 @@
     border-radius: 18px;
 }
 
-.page3 {
+.modal .page3 {
     display: inline-block;
     position: absolute;
     z-index: 99;
-    top: 1130px;
+    top: 50px;
     animation: modal-show .3s;
     margin:0 auto;
     width: 321px;
@@ -455,6 +455,7 @@
     background-repeat: no-repeat;
     background-position: 10px;
     cursor: pointer;
+    margin-right: 8px;
 }
 
 .page3 > .tag-length {
@@ -599,12 +600,12 @@
     background-color: #F5F5F5;
 }
 
-.filebox .upload-file {
+.page3 .filebox .upload-file {
     display: inline-block;
     vertical-align: middle;
 }
 
-.filebox label {
+.page3  .filebox label {
     display: inline-block;
     vertical-align: middle;
     background-color: transparent; 
@@ -623,7 +624,7 @@
     cursor: pointer;
 }
 
-.filebox input[type="file"] {
+.page3 .filebox input[type="file"] {
     position: absolute;
     width: 0;
     height: 0;
@@ -632,7 +633,7 @@
     border: 0;
 }
 
-.upload-file {
+.page3 .upload-file {
     border: 1px solid #807A74;
     box-sizing: border-box;
     border-radius: 11.5px;
@@ -662,4 +663,22 @@
     position: absolute;
     top: 58.7%;
     left: 43.7%;
+}
+
+.page3 .fail_logo {
+    margin-top: 20px;
+    margin-left: 130px;
+}
+
+.page3 > .header-title2 {
+    margin-top: 25px;
+    padding-bottom: 0px;
+    margin-left: 85px;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 21px;
+    line-height: 21px;
+    color: #352C23;
+    cursor: default;
 }

@@ -1,0 +1,21 @@
+.lounge-room {
+    padding-top: 82px;
+    width: 100%;
+    height: calc(100vh - 82px);
+    display: flex;
+    background: #F3F3F3;
+}
+
+.lounge-room .left-content {
+    width: 290px;
+    height: 100%;
+    background: #E7E6E5;
+}
+
+.lounge-room .right-content {
+    width: calc(100% - 290px - 16px); /* left-contet width와 margin left, right을 빼줌 */
+    height: calc(100% - 16px);
+    margin: 8px;
+    border-radius: 10px;
+    background-color: white;
+}

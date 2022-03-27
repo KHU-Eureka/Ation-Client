@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { useDispatch } from "react-redux";
 
-import GNB from "../GNB";
 import Reco from "./Reco";
 import InsightLNB from "./InsightLNB"
 import Modal from "../modal/Modal";
@@ -17,6 +17,7 @@ import "../../assets/css/insight/Read.css";
 
 function Read() {
     const cookies = new Cookies();
+    let dispatch = useDispatch();
     const [pageNum, setPageNum] = useState(1);
     const [pageNum2, setPageNum2] = useState(1);
     const [insight, setInsight] = useState(null);
@@ -31,6 +32,7 @@ function Read() {
     const [userName, setUserName] = useState("");
     const [pinPosition, setpinPosition] = useState([]);
     const [addTrue, setAddTrue] = useState(false);
+    const [auth, setAuth] = useState(false);
 
     //modal...
     const [modalOpen, setModalOpen] = useState(false);
@@ -51,8 +53,13 @@ function Read() {
     }
     //...modal2
 
+    // menu setting
+    useEffect(()=> {
+        dispatch({type: 'MENU', data: 'insight'})
+    }, [])
+
     const PersonaSetting = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(
             process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
@@ -82,14 +89,18 @@ function Read() {
     }
 
     const fetchUserName = async () => {
-        const token = cookies.get('token');
-        const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth', {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        });
-        setUserName(response.data.name);
-        console.log(response);
+        const token = localStorage.getItem('token');
+        if(!token || token === '') {
+            setAuth(false);
+        } else {
+            const response = await axios.get(process.env.REACT_APP_SERVER_HOST + '/api/auth', {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+            setUserName(response.data.name);
+            setAuth(true);
+        }
     }
 
     useEffect(() => {
@@ -121,7 +132,7 @@ function Read() {
       }, [cate]);
 
     const imgClickHandler = async(e) => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         if(e.target.className !== 'pin') {
             let temp = e.target.getAttribute('id');
             const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {
@@ -222,9 +233,11 @@ function Read() {
     return (
         <>
         <div className="Insight-container">
-            <Reco userName={userName}/>
+            <Reco userName={userName} auth={auth}/>
             <div className="Search-container">
-                <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
+                <div className="SearchBar-container">
+                    <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
+                </div>
                 <div className="searchIcn-container">
                     <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
                 </div>
@@ -239,9 +252,9 @@ function Read() {
                     <li key={i.id} className="img-li">
                         <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
-                            <div className="pin-box">
+                            {auth?<div className="pin-box">
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
-                            </div>
+                            </div>:<></>}
                             <p className="title" id={i.id}>{i.title}</p>
                             <div className="tag-container">
                             <span className="tag" id={i.id}> #{i.insightMainCategory.name}</span>

@@ -13,7 +13,7 @@ function Reco(props) {
     const imgSet = async () => {
         setRecoList([]);
         const getRandom = (min, max) => Math.random() * (max - min) + min;
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const reco = [];
         const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/recommend/view-matrix`,{
             headers: {
@@ -57,7 +57,7 @@ function Reco(props) {
             <div className="recoTitle-Container">
                 <div className="title-container">
                     <p className="title1">지금의 컨텐츠가, 당신의 영감으로</p>
-                    <p className="title2">{props.userName}님에게 추천하는 오늘의 인사이트</p>
+                    {props.auth?<p className="title2">{props.userName}님에게 추천하는 오늘의 인사이트</p>:<></>}
                 </div>
                 {/* <div className="recoBtn-container" onClick={slotCilckHandler}>
                     <span>슬롯을 당겨 랜덤으로 인사이트를 얻어보세요!</span>

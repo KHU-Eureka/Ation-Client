@@ -1,0 +1,287 @@
+/* Scroll Animation (sa, 스크롤 애니메이션) */
+.sa {
+    opacity: 0;
+    transition: all .5s ease;
+}
+
+/* 아래에서 위로 페이드 인 */
+.sa-up {
+    transform: translate(0, 100px);
+}
+/* 위에서 아래로 페이드 인 */
+.sa-down {
+    transform: translate(0, -100px);
+}
+/* 왼쪽에서 오른쪽으로 페이드 인 */
+.sa-right {
+    transform: translate(-100px, 0);
+}
+/* 오른쪽에서 왼쪽으로 페이드 인 */
+.sa-left {
+    transform: translate(100px, 0);
+}
+
+.sa.show {
+    opacity: 1;
+    transform: none;
+}
+
+.landing .small-title {
+    font-weight: 700;
+    font-size: 26px;
+    color: #FE3400;
+}
+
+.landing .big-title {
+    margin-top: 66px;
+    font-weight: 700;
+    font-size: 72px;
+    font-family: 'Trap';
+    color: #352C23;
+}
+
+.landing .title-description {
+    font-weight: 400;
+    font-size: 24px;
+    margin-top: 70px;
+    color: #352C23;
+}
+
+.landing > .page1 {
+    padding-top: 317px;
+    padding-bottom: 408px;
+    text-align: center;
+}
+
+.landing > .page1 > .logo {
+    width: 330px;
+    height: auto;
+    margin-bottom: 80px;
+}
+
+.landing > .page2 {
+    padding-bottom: 400px;
+    text-align: center;
+}
+
+.landing > .page2 > .who-wrapper {
+    width: fit-content;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.landing > .page2 > .who-wrapper > .who-card {
+    width: calc(460px - 90px);
+    height: calc(390.78px - 240px);
+    padding: 0px 45px;
+    padding-top: 240px;
+    background: #FE6740;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.25);
+    border-radius: 50px 50px 50px 0px;  
+    position: relative;
+    margin-right: 60px;
+    margin-top: 177px;
+}
+
+.landing > .page2 > .who-wrapper > .who-card:last-child { margin-right: 0; }
+
+.landing > .page2 > .who-wrapper > .who-card > img {
+    width: 280px;
+    position: absolute;
+    left: calc(50% - 140px);
+    bottom: 194.78px;
+}
+
+.landing > .page2 > .who-wrapper > .who-card > .description {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    color: white;
+    line-height: 46px;
+}
+
+.landing > .page3 {
+    text-align: center;
+}
+
+.landing > .page3 > .sense-viewer {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    margin-top: 195px;
+    margin-bottom: 252px;
+    position: relative;
+}
+
+.landing > .page3 .sense-wrapper {
+    display: flex;
+    position: absolute;
+    left: -30px; top: 0;
+    transition: 1s; 
+}
+.landing > .page3 .sense-wrapper > .sense-elem { margin-right: 50px; }
+.landing > .page3 .sense-wrapper > .sense-elem > svg {
+    width: 200px;
+    height: 200px;
+}
+.landing > .page3 .sense-wrapper > .sense-elem > svg > path { fill: #E7E6E5; }
+
+.landing > .page3 .sense-wrapper.sa.show {
+    left: -200px;
+}
+.landing > .page3 .sense-wrapper > .sense-elem > svg > path { transition: 1s; transition-delay: 1s; }
+.landing > .page3 .sense-wrapper.sa.show #eye > svg > path { fill: #FE3400; }
+
+.landing > .page4 {
+    width: 100%;
+    height: 665px;
+    padding-top: 147px;
+    margin-bottom: 600px;
+    text-align: center;
+    background: #F5F5F5;
+    position: relative;
+}
+
+.landing > .page4 > .persona-wrapper {
+    width: calc(840px);
+    height: 380px;
+    position: absolute;
+    bottom: -150px;
+    left: calc(50% - 420px);
+}
+
+.landing > .page4 > .persona-wrapper > img { width: 300px; height: 300px; position: absolute; z-index: 1; }
+.landing > .page4 > .persona-wrapper > img:first-of-type { left: 0; top: 10px; }
+.landing > .page4 > .persona-wrapper > img:last-of-type { right: 10px; top: 10px; }
+.landing > .page4 > .persona-wrapper > img:nth-of-type(2) { 
+    width: 380px; height: 380px; 
+    left: calc(50% - 190px);
+}
+
+.landing > .page4 .sense-elem {position: absolute;}
+
+/* 눈 */
+.landing > .page4 .sense-elem#eye { left: -120px; top: -50px; } /* 위치 */
+.landing > .page4 .sense-elem#eye > svg { width: 270px; height: 270px; } /* 크기 */
+.landing > .page4 .sense-elem#eye > svg > path { fill: #FE3400; } /* 색상 */
+
+/* 코 */
+.landing > .page4 .sense-elem#nose { left: 120px; bottom: -50px; } /* 위치 */
+.landing > .page4 .sense-elem#nose > svg { width: 165px; height: 165px; } /* 크기 */
+.landing > .page4 .sense-elem#nose > svg > path { fill: rgba(254, 52, 0, 0.6); } /* 색상 */
+
+/* 입 */
+.landing > .page4 .sense-elem#mouth { right: 120px; bottom: -50px; } /* 위치 */
+.landing > .page4 .sense-elem#mouth > svg { width: 217px; height: 217px; } /* 크기 */
+.landing > .page4 .sense-elem#mouth > svg > path { fill: #FE340033; } /* 색상 */
+
+/* 귀 */
+.landing > .page4 .sense-elem#ear { right: -60px; top: -50px; } /* 위치 */
+.landing > .page4 .sense-elem#ear > svg { width: 180px; height: 180px; } /* 크기 */
+.landing > .page4 .sense-elem#ear > svg > path { fill: #FE3400; } /* 색상 */
+
+/* 손 */
+.landing > .page4 .sense-elem#hand { left: 250px; top: -50px; } /* 위치 */
+.landing > .page4 .sense-elem#hand > svg { width: 122px; height: 122px; } /* 크기 */
+.landing > .page4 .sense-elem#hand > svg > path { fill: #FE340033; } /* 색상 */
+
+.landing > .page4 .sense-elem { transform: scale(0); }
+.landing > .page4 .sense-elem.sa.show { transform: scale(1); }
+
+.landing > .page5 {
+    text-align: center;
+    margin-bottom: 400px;
+}
+
+.landing > .page5 > .sense-card-wrapper {
+    width: fit-content;
+    display: flex;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 135px;
+}
+
+.landing > .page5 > .sense-card-wrapper > .slot {
+    position: absolute;
+    left: 100%; top: 100px;
+    transform-origin: bottom;
+}
+
+.landing > .page5 > .sense-card-wrapper > .slot.sa { opacity: 1 !important; }
+.landing > .page5 > .sense-card-wrapper > .slot.sa.show { animation: 2s pullSlot; }
+
+.landing > .page5 > .sense-card-wrapper > .sense-card-background {
+    width: 254px;
+    height: 352px;
+    background: #FE3400;
+    border: 1px solid #FE3400;
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.landing > .page5 > .sense-card-wrapper .sense-card {
+    width: 100%; height: 100%;
+    position: absolute;
+    background: #F5F5F5;
+    border-radius: 20px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.1));
+    overflow: hidden;
+    transition: 0.4s;
+}
+.landing > .page5 > .sense-card-wrapper .sense-card > svg { width: 220px; height: 220px; position: absolute; }
+.landing > .page5 > .sense-card-wrapper .sense-card > svg > path { fill: #D7D2C8; }
+
+.landing > .page5 > .sense-card-wrapper > .sense-card-background:nth-child(2n+1) > .sense-card {top: 30px;}
+.landing > .page5 > .sense-card-wrapper > .sense-card-background:nth-child(2n) > .sense-card {top: -30px;}
+
+.landing > .page5 .sense-card#eye > svg { left: -30px; bottom: 20px; }
+.landing > .page5 .sense-card#nose > svg { width: 300px; height: 300px; top: -50px; right: 20px; }
+.landing > .page5 .sense-card#hand > svg { width: 250px; height: 250px; top: 0px; right: -40px; }
+.landing > .page5 .sense-card#ear > svg { width: 280px; height: 280px; bottom: -30px; right: -70px; }
+
+.landing > .page5 .sense-card-wrapper.sa { opacity: 1; }
+.landing > .page5 .sense-card-wrapper.sa.show .sense-card { top: 0px !important; transition-delay: 0.5s; }
+/*
+.landing > .page5 .sense-card#eye { transition-delay: 0s; }
+.landing > .page5 .sense-card#nose { transition-delay: 0.8s; }
+.landing > .page5 .sense-card#hand { transition-delay: 0.3s; }
+.landing > .page5 .sense-card#ear { transition-delay: 1.2s; }
+*/
+
+/*
+@keyframes moveCards {
+    100% { top: 0px; }
+}
+
+.page5 .sense-card {
+    animation: moveCards 2s infinite;
+}
+*/
+
+.landing .page6 {
+    text-align: center;
+    padding-bottom: 460px;
+}
+
+.landing .page6 > .speech-bubble-wrapper {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 135px;
+}
+
+.landing .page6 .speech-bubble { position: relative; }
+.landing .page6 .speech-bubble > .bubble-img { width: 1162px; }
+.landing .page6 .speech-bubble > .per-img {
+    width: 220px; height: 220px;
+    position: absolute;
+}
+
+/* persona image 위치 조정 */
+.landing .page6 .speech-bubble#bubble1 > .per-img { left: -100px; top: 0px; }
+.landing .page6 .speech-bubble#bubble2 > .per-img { right: -110px; top: 20px; }
+.landing .page6 .speech-bubble#bubble3 > .per-img { left: 70px; top: -10px; }

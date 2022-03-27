@@ -211,7 +211,7 @@
     background: #F5F5F5;
 }
 
-.page1 {
+.modal .page1 {
     position: absolute;
     z-index: 99;
     top: 50px;
@@ -227,7 +227,7 @@
     border-radius: 18px;
 }
 
-.page2 {
+.modal .page2 {
     position: absolute;
     z-index: 99;
     top: 50px;
@@ -243,7 +243,7 @@
     border-radius: 18px;
 }
 
-.page3 {
+.modal .page3 {
     display: inline-block;
     position: absolute;
     z-index: 99;

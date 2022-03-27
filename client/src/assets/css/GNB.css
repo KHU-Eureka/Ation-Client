@@ -105,7 +105,14 @@
     line-height: 18px;
     text-align: center;
     color: #FE3400;
+    cursor: pointer;
+    transition: 0.2s;
 }
+
+.openlounge-btn:hover {
+    background: #FE3400;
+    color: white;
+}  
 
 .bell {
     margin-left: 25px;

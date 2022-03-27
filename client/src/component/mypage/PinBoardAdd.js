@@ -32,7 +32,7 @@ function PinBoardAdd(props) {
     }
 
     const closeBtnClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin-board', {
                 "name": pinBoardName,
                 "personaId": activePersonaId

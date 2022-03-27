@@ -5,16 +5,16 @@ import { useNavigate, useLocation } from 'react-router';
 import { MdCloudUpload } from 'react-icons/md';
 import { BsCheck2 } from 'react-icons/bs';
 
-import eye_white from '../../asset/images/sense/눈_white.png';
-import eye_color from '../../asset/images/sense/눈_color.png';
-import nose_white from '../../asset/images/sense/코_white.png';
-import nose_color from '../../asset/images/sense/코_color.png';
-import mouse_white from '../../asset/images/sense/입_white.png';
-import mouse_color from '../../asset/images/sense/입_color.png';
-import ears_white from '../../asset/images/sense/귀_white.png';
-import ears_color from '../../asset/images/sense/귀_color.png';
-import hand_white from '../../asset/images/sense/손_white.png';
-import hand_color from '../../asset/images/sense/손_color.png';
+import eye_white from '../../assets/image/sense/눈_white.png';
+import eye_color from '../../assets/image/sense/눈_color.png';
+import nose_white from '../../assets/image/sense/코_white.png';
+import nose_color from '../../assets/image/sense/코_color.png';
+import mouse_white from '../../assets/image/sense/입_white.png';
+import mouse_color from '../../assets/image/sense/입_color.png';
+import ears_white from '../../assets/image/sense/귀_white.png';
+import ears_color from '../../assets/image/sense/귀_color.png';
+import hand_white from '../../assets/image/sense/손_white.png';
+import hand_color from '../../assets/image/sense/손_color.png';
 
 function Edit() {
     const cookies = new Cookies(); 
@@ -94,7 +94,7 @@ function Edit() {
 
 
     const validationCheck = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         const temp = tempNickName;
         try {
             const res = await axios.get(
@@ -255,7 +255,7 @@ function Edit() {
         if (personaId != null) {
             // persona  정보를 받아옴
             const getPersona = async () => {
-                const token = cookies.get('token');
+                const token = localStorage.getItem('token');
                 try {
                     const res = await axios.get(
                         process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
@@ -292,7 +292,7 @@ function Edit() {
     }, [personaId])
 
     const editPersona = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
@@ -326,7 +326,7 @@ function Edit() {
     }
 
     const postProfileImg = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         try {
             await axios.post(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -342,7 +342,7 @@ function Edit() {
     }
 
     const changeActivePersona = async (personaId) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
@@ -358,7 +358,7 @@ function Edit() {
     }
 
     const deletePersona = async () => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.delete(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {

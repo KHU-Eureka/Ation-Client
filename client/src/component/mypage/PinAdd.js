@@ -51,7 +51,7 @@ function PinAdd(props) {
     }, [pinAddModalOpen]);
 
     const PersonaSetting = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(
             process.env.REACT_APP_SERVER_HOST + '/api/persona',
             {
@@ -82,7 +82,7 @@ function PinAdd(props) {
 
     const pinboardImport = async () => {
         if(clickedPersonaId !== null) {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board?personaId=${clickedPersonaId}`, {
                 headers: {
                     Authorization: "Bearer " + token
@@ -150,7 +150,7 @@ function PinAdd(props) {
                     setPageNum(3);
                 } else if(e.target.classList.contains('next-btn') && tagList.length !== 0) {
                     try {
-                        const token = cookies.get('token');
+                        const token = localStorage.getItem('token');
                         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
                             "pinBoardId": pinBoardId,
                             "tagList": tagList,
@@ -167,7 +167,7 @@ function PinAdd(props) {
                     }
                 } else if(e.target.className === 'skip-btn') {
                     try {
-                        const token = cookies.get('token');
+                        const token = localStorage.getItem('token');
                         const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
                             "pinBoardId": pinBoardId,
                             "tagList": [],
@@ -270,7 +270,7 @@ function PinAdd(props) {
     }
 
     const pinboardCreateClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.post(
             process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
             {
@@ -290,7 +290,7 @@ function PinAdd(props) {
 
     const pinboardCreateSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.post(
                 process.env.REACT_APP_SERVER_HOST + '/api/pin-board',
                 {
@@ -316,7 +316,7 @@ function PinAdd(props) {
     }, [pinBoardName]);
 
     // const ModalAddCloseHandler = async () => {
-    //     const token = cookies.get('token');
+    //     const token = localStorage.getItem('token');
     //     const response = await axios.post(process.env.REACT_APP_SERVER_HOST + '/api/pin', {
     //             "pinBoardId": pinBoardId,
     //             "tagList": tagList,
@@ -369,7 +369,7 @@ function PinAdd(props) {
     }
 
     useEffect( async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${newPinId}`,
         {
             headers: {

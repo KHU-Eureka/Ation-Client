@@ -78,7 +78,7 @@ function MyPage() {
     useLayoutEffect(() => {
         // 초기값 설정
         const getPersonaList = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST + '/api/persona', {
@@ -106,7 +106,7 @@ function MyPage() {
         }
 
         const getBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/auth', {
@@ -127,7 +127,7 @@ function MyPage() {
     }, [])
 
     const changeActivePersona = async (personaId) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST + '/api/persona/user/' + personaId, {},
@@ -180,7 +180,7 @@ function MyPage() {
 
     useEffect(() => { // background image 변경 시
         const postBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.post(
                     process.env.REACT_APP_SERVER_HOST+'/api/mypage/image', formData, {

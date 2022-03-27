@@ -90,7 +90,7 @@ function MyPersona ({match}) {
 
     useLayoutEffect(() => {
         const getBackgroundImg = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 const res = await axios.get(
                     process.env.REACT_APP_SERVER_HOST+'/api/auth', {
@@ -136,7 +136,7 @@ function MyPersona ({match}) {
 
     // 닉네임의 중복성을 검사함
     const nicknameValidationCheck = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         const temp = tempNickName;
         try {
             const res = await axios.get(
@@ -307,7 +307,7 @@ function MyPersona ({match}) {
             if (personaId != null) {
                 // persona  정보를 받아옴
                 const getPersona = async () => {
-                    const token = cookies.get('token');
+                    const token = localStorage.getItem('token');
                     try {
                         const res = await axios.get(
                             process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
@@ -379,7 +379,7 @@ function MyPersona ({match}) {
         }
     
         const editPersona = async () => {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             try {
                 await axios.put(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
@@ -413,7 +413,7 @@ function MyPersona ({match}) {
         }
     
         const postProfileImg = async () => {
-            var token = cookies.get('token');
+            var token = localStorage.getItem('token');
             try {
                 await axios.post(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -429,7 +429,7 @@ function MyPersona ({match}) {
         }
     
         const changeActivePersona = async (personaId) => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.put(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
@@ -446,7 +446,7 @@ function MyPersona ({match}) {
         }
     
         const deletePersona = async () => {
-            const token = cookies.get('token')
+            const token = localStorage.getItem('token')
             try {
                 await axios.delete(
                     process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {

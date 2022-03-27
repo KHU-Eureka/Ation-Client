@@ -16,7 +16,7 @@ function Reco(props) {
 
     const slideSetting = async () => {
         const cookies = new Cookies;
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         let temp = [];
         for(let i=0; i<4; i++) {
             const recoResponse = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/recommend`, {
@@ -31,7 +31,7 @@ function Reco(props) {
 
     const imgSet = async () => {
         if(props.auth) {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             try {
                 const recoResponse = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/recommend`, {
                     headers: {

@@ -99,7 +99,7 @@ function Pinbox(props) {
     //...modal7
 
     const PinBoardImport = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin-board/?personaId=${activePersonaId}`,{
             headers: {
                 Authorization: "Bearer " + token
@@ -119,7 +119,7 @@ function Pinbox(props) {
     }
 
     const allPinHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         if(searchTrue) {
             const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
                     headers: {
@@ -153,7 +153,7 @@ function Pinbox(props) {
     }, [activePersonaId, viewOption, searchTrue]);
 
     const searchBtnClickHandler = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
             headers: {
                 Authorization: "Bearer " + token
@@ -203,7 +203,7 @@ function Pinbox(props) {
     }
 
     const pinClickHandler = async (e) => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         let doc = "";
         if(e.target.className === "Mypin-item" || e.target.className === "pin-img") {
             console.log(e.target.parentNode);
@@ -237,7 +237,7 @@ function Pinbox(props) {
 
     const pinSearchHandler = async (e) => {
         if(e.key === 'Enter') {
-            // const token = cookies.get('token');
+            // const token = localStorage.getItem('token');
             // const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/search?keyword=${pinSearch}&personaId=${activePersonaId}`, {
             //     headers: {
             //         Authorization: "Bearer " + token
@@ -252,7 +252,7 @@ function Pinbox(props) {
     const pinEditHandler = async (e) => {
         e.stopPropagation();
         console.log(e.target);
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const pinId = e.target.getAttribute('id');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${pinId}`, {
             headers: {
@@ -274,7 +274,7 @@ function Pinbox(props) {
 
     const pinBoardItemClickHandler = async (e) => {
         if(e.target.className!=='Mypin-edit2' && e.target.className!=='pin-del2') {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const pinBoardId = e.currentTarget.getAttribute("id");
             document.querySelector(".pin-board-name").style.display="flex";
             document.querySelector(".pin-board-name").innerHTML = e.currentTarget.querySelector(".pinBoard-name").innerHTML;

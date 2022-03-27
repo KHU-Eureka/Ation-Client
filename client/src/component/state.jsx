@@ -10,7 +10,7 @@ export function useFetch(url, deps) {
     const [data, setData] = useState(); 
 
     useEffect( async () => { 
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         try {
             const response = await axios.get(url, {
                 headers: {
@@ -31,7 +31,7 @@ export function useFetch(url, deps) {
 
 export async function getApi(url) {
     const cookies = new Cookies();
-    const token = cookies.get('token');
+    const token = localStorage.getItem('token');
 
     try {
         const response = await axios.get(url, {
@@ -52,7 +52,7 @@ export function LoungePinup(props) {
 
     const pinClickHandler = async () => {
         const cookies = new Cookies();
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
     
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/pin/${loungeId}`, {}, {
@@ -76,7 +76,7 @@ export function LoungePinup(props) {
 export async function enterLounge(target, loungeId, personaId) {
     if(target.className !== 'pin') {
         const cookies = new Cookies();
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
     
         try {
             const response = await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/${loungeId}/enter/${personaId}`, {}, {
@@ -104,7 +104,7 @@ export function clickUIChangeHandler(changeStyle, currentTarget) {
 export async function deleteHandler(url, id) {
     try { 
         const cookies = new Cookies();
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         const response = await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/api/${url}/${id}`, {
             headers: {
                 Authorization: "Bearer " + token

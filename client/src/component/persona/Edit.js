@@ -94,7 +94,7 @@ function Edit() {
 
 
     const validationCheck = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         const temp = tempNickName;
         try {
             const res = await axios.get(
@@ -255,7 +255,7 @@ function Edit() {
         if (personaId != null) {
             // persona  정보를 받아옴
             const getPersona = async () => {
-                const token = cookies.get('token');
+                const token = localStorage.getItem('token');
                 try {
                     const res = await axios.get(
                         process.env.REACT_APP_SERVER_HOST+'/api/persona/' + personaId, {
@@ -292,7 +292,7 @@ function Edit() {
     }, [personaId])
 
     const editPersona = async () => {
-        const token = cookies.get('token');
+        const token = localStorage.getItem('token');
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, 
@@ -326,7 +326,7 @@ function Edit() {
     }
 
     const postProfileImg = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         try {
             await axios.post(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/image/' + personaId, formData, 
@@ -342,7 +342,7 @@ function Edit() {
     }
 
     const changeActivePersona = async (personaId) => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.put(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + personaId, {},
@@ -358,7 +358,7 @@ function Edit() {
     }
 
     const deletePersona = async () => {
-        const token = cookies.get('token')
+        const token = localStorage.getItem('token')
         try {
             await axios.delete(
                 process.env.REACT_APP_SERVER_HOST+'/api/persona/'+personaId, {

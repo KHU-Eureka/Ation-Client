@@ -19,7 +19,7 @@ function Pin(props) {
 
     const pinSettingHandler = async (target) => {
         try {
-            const token = cookies.get('token');
+            const token = localStorage.getItem('token');
             const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/pin?personaId=${target}`,
                 {
                     headers: {

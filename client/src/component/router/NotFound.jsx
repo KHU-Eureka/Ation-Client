@@ -7,7 +7,7 @@ import { Cookies } from 'react-cookie';
 export default function NotFound() {
     const dispatch = useDispatch();
     const cookies = new Cookies();
-    var token = cookies.get('token');
+    var token = localStorage.getItem('token');
   
     const { data: auth, error, isPending } = useAsync({
       promiseFn: isValidUser,

@@ -46,7 +46,7 @@ function Form01(props) {
 
 
     const validationCheck = async () => {
-        var token = cookies.get('token');
+        var token = localStorage.getItem('token');
         const temp = tempNickName;
         try {
             const res = await axios.get(

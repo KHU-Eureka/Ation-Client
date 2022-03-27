@@ -1,20 +1,19 @@
 import { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import './LoungeStartModal.css';
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
 import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.svg';
 import loungeStart from '../../assets/image/lounge_start.png';
 
 function LoungeStartModal(props) {
-
-    const { roomTitle, startRoom, exitRoom, setShowModal } = props;
-    //let [time, setTime] = useState(10);
+    const { roomId, roomTitle, exitRoom, setShowModal } = props;
+    const navigate = useNavigate();
     let [sec, setSec] = useState(10);
     const time = useRef(10);
     const timerId = useRef(null);
 
     useEffect(()=> {
         timerId.current = setInterval(()=>{
-            console.log("hello")
             setSec(time.current);
             time.current -= 1; // 1초씩 count down
         }, 1000)
@@ -23,9 +22,9 @@ function LoungeStartModal(props) {
 
     useEffect(()=> {
         if (time.current < 0) { // 10초가 모두 지난다면
-            console.log('time out')
             clearInterval(timerId.current)
-            startRoom() // 방을 시작시키고,
+            // startRoom() // 방을 시작시키고,
+            navigate(`/lounge-room/${roomId}`) // 해당 방으로 이동하게 함
             setShowModal(false) // modal창 닫음
         }
     }, [time.current])

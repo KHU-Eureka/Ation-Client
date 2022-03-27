@@ -10,7 +10,7 @@
     background-color: white;
     position: fixed;
     top: 0;
-    z-index: 5;
+    z-index: 50;
 }
 
 .gnb-flex-container {
@@ -45,11 +45,13 @@
     margin-bottom: 85px;
 }
 
-.Btn-container {
-    position: absolute;
-    left: calc(50% - 145px);
+.GNB-container .Btn-container {
+    /* position: absolute;
+    left: calc(50% - 145px); */
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     /* margin-left: 400px; */
     font-family: Pretendard;
     font-style: normal;
@@ -62,7 +64,12 @@
 
 .btn-li {
     list-style: none;
-    margin-left: 53px;
+    /* margin-left: 53px; */
+}
+
+.GNB-container .insight-btn {
+    padding-left: 53px;
+    padding-right: 53px;
 }
 
 .Profile-container {
@@ -88,6 +95,21 @@
 .mypage-btn {
     color: #807A74;
 }
+
+.Profile-container .login-btn {
+    width: 80px;
+    height: 36px;
+    border-radius: 20px;
+    font-family: Pretendard;
+    font-weight: 500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background: #FE3400;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.Profile-container .login-btn:focus-visible {outline: none;}
 
 .openlounge-btn {
     width: 154px;

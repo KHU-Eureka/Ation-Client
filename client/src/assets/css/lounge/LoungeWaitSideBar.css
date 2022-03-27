@@ -116,6 +116,7 @@
     display: flex;
     align-items: center;
     animation: 0.7s showGNBPopup;
+    z-index: 1;
 }
 
 .lounge-room .lounge-sidebar .alert-block > .icon {

@@ -12,7 +12,6 @@ import "../../assets/css/lounge/LoungeWaitChatting.css";
 
 function LoungeWaitChatting(props) {
     const $websocket = useRef(null); // socket
-    const cookies = new Cookies();
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const [chattingBottom, isChattingBottom] = useInView();
     const { roomInfo, setRoomInfo } = props;

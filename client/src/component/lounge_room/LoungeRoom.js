@@ -1,23 +1,23 @@
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import SockJsClient from 'react-stomp';
 import axios from 'axios';
 
-import LoungeBoard from "../lounge_board/LoungeBoard";
 import LoungeWaitSideBar from "../lounge_wait/LoungeWaitSideBar";
 import LoungeWaitChatting from "../lounge_wait/LoungeWaitChatting";
 import LoungeActiveSideBar from "../lounge_active/LoungeActiveSideBar";
-import LoungeStartModal from "../modal/LoungeStartModal";
 import RoomInfoModal from "../modal/RoomInfoModal";
 
 import "../../assets/css/lounge/LoungeRoom.css";
 import RoomEditModal from "../modal/RoomEditModal";
+import Whiteboard from "../whiteboard/Whiteboard";
 
 function LoungeRoom () {
     const $websocket = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const { id } = useParams(); // room id
 
@@ -33,21 +33,6 @@ function LoungeRoom () {
         let temp = {...roomInfo};
         temp.status = 'START';
         setRoomInfo(temp);
-    }
-
-    const exitRoom = async () => {
-        const token = localStorage.getItem('token');
-        try {
-            await axios.put(
-                `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/ready/${activePersonaId}`, {
-                  headers: {
-                    Authorization: `Bearer ${token}`
-                  }
-                }
-            )
-        } catch(err) {
-            console.log(err)
-        }
     }
 
     const receiveRoomStatusMsg = (msg) => {
@@ -79,7 +64,7 @@ function LoungeRoom () {
         } else if (msg.status) { // 만약 방 정보에 관한 거라면
             switch(msg.status) {
             case 'START':
-                setShowLoungeStartModal(true) // start modal을 띄움
+                startRoom(); // 방 상태를 전환시킴
                 break;
             case 'END':
                 // lounge 페이지로 이동시킴
@@ -94,10 +79,7 @@ function LoungeRoom () {
         const findMyInfo = memberList.find((elem)=>elem.persona.id===activePersonaId);
         if (findMyInfo) { // 멤버 목록 중에 내가 있다면 -> 내 정보를 저장
             setMyInfo(findMyInfo);
-        } else {
-            // 멤버 list에 내 목록이 없다면 -> 방에 접근 권한이 없다면 -> lounge 페이지로 이동
-            navigate('/lounge', { state: {alert:{title: "해당 방에 접근 권한이 없습니다.", subtitle: "다른 방을 이용해주세요 :)"}}})
-        }        
+        }    
     }
 
     useEffect(()=> {
@@ -107,6 +89,23 @@ function LoungeRoom () {
         }
     }, [activePersonaId, memberList])
 
+    const changeActivePersona = async (id) => {
+        const token = localStorage.getItem('token')
+        try {
+            await axios.put(
+                process.env.REACT_APP_SERVER_HOST+'/api/persona/user/' + id, {},
+                {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }
+            )
+            dispatch({type: 'CHANGEPERSONA', data: id})
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(()=> {
         const getRoomInfo = async () => {
             const token = localStorage.getItem('token');
@@ -114,21 +113,54 @@ function LoungeRoom () {
                 const res = await axios.get(
                     `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${id}`, {
                         headers: {
-                            Authorization: {
-                                Bearer: 'Bearer ' + token
-                            }
+                            Authorization: 'Bearer ' + token
                         }
                     }
                 )
+                console.log('room info : ', res.data);
                 setRoomInfo(res.data);
                 setMemberList(res.data.memberList);
                 setAdmin(res.data.memberList.find((elem)=>elem.admin).persona);
-
+                isItMyRoom(res.data);
             } catch(err) {
                 navigate('/lounge', { state: {alert:{title: "존재하지 않는 방입니다.", subtitle: "다른 방을 이용해주세요 :)"}}})
                 console.log(err);
             }
         }
+
+        const isItMyRoom = async (roomInfo) => {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await axios.get(
+                    `${process.env.REACT_APP_SERVER_HOST}/api/persona`, {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
+                    }
+                )
+
+                let personaIdList = [];
+                for (let persona of res.data) {
+                    personaIdList.push(persona.id);
+                }
+
+                let goOutside = true;
+                for (let member of roomInfo.memberList) {
+                    if (personaIdList.includes(member.persona.id)) {
+                        goOutside = false;
+                        changeActivePersona(member.persona.id);
+                        break;
+                    }
+                }
+
+                if (goOutside) {
+                    navigate('/lounge', { state: {alert:{title: "해당 방에 접근 권한이 없습니다.", subtitle: "다른 방을 이용해주세요 :)"}}});
+                }
+            } catch(err) {
+                console.log(err);
+            }
+        }
+
         getRoomInfo();
     }, [])
 
@@ -149,22 +181,18 @@ function LoungeRoom () {
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo && ( roomInfo.status === "OPEN"
-                    ? <LoungeWaitSideBar roomInfo={roomInfo} setRoomInfo={setRoomInfo} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
-                    : <LoungeActiveSideBar roomInfo={roomInfo} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
+                    ? <LoungeWaitSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
+                    : <LoungeActiveSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
                 }
             </div>
             <div className="right-content">
-                {   /* lounge room 시작 count down 모달창*/
-                    roomInfo && showLoungeStartModal && 
-                    <LoungeStartModal roomTitle={roomInfo.title} exitRoom={exitRoom} setShowModal={setShowLoungeStartModal} startRoom={startRoom}/> 
-                }
                 {
                     roomInfo && ( roomInfo.status === "OPEN"
                     ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
-                    : <LoungeBoard /> )
+                    : <Whiteboard /> )
                 }
             </div>
-
+            
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
-import SockJsClient from 'react-stomp';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios';
 import RoomSetting from "../lounge_active/RoomSetting";
 import { ReactComponent as BracketLeft } from '../../assets/svg/bracket_left.svg';
@@ -8,7 +7,6 @@ import { ReactComponent as BracketRight } from '../../assets/svg/bracket_right.s
 import exclamation from '../../assets/image/exclamation.png';
 import { BiChevronDown } from 'react-icons/bi';
 import { BsCheck2 } from 'react-icons/bs';
-import { AiOutlineExclamation } from 'react-icons/ai';
 import "../../assets/css/lounge/LoungeWaitSideBar.css";
 
 import { ReactComponent as Crown } from '../../assets/svg/crown.svg';
@@ -19,8 +17,9 @@ import ear from '../../assets/svg/sense/ear.svg';
 import hand from '../../assets/svg/sense/hand.svg';
 
 function LoungeWaitSideBar(props) {
-    const { roomInfo, setRoomInfo, admin, myInfo, setShowRoomInfoModal } = props;
+    const { roomInfo, memberList, admin, myInfo, setShowRoomInfoModal } = props;
     const activePersonaId = useSelector(state=>state.activePersonaId);
+    const dispatch = useDispatch();
     let alertRef = useRef();
 
     const senseInfoList = [
@@ -65,6 +64,7 @@ function LoungeWaitSideBar(props) {
               }
             }
           )
+          dispatch({type: 'DEL_WAITING', data: roomInfo.id});
         } else { // unready인 상태였으면 => ready 시킴
           await axios.put(
             `${process.env.REACT_APP_SERVER_HOST}/api/lounge/${roomInfo.id}/ready/${activePersonaId}`, {
@@ -73,6 +73,8 @@ function LoungeWaitSideBar(props) {
               }
             }
           )
+          let waitingData = {id: roomInfo.id, personaId: activePersonaId, title: roomInfo.title};
+          dispatch({type: 'ADD_WAITING', data: waitingData});
         }
       } catch(err) {
         console.log(err)
@@ -80,14 +82,14 @@ function LoungeWaitSideBar(props) {
     }
     
     useEffect(()=> { // 방장이 방을 시작 할 수 있는지 구하기
-      if (roomInfo && roomInfo.limitMember) {
-        const readyMember = roomInfo.memberList.filter((elem)=>elem.ready).length
+      if (roomInfo && memberList) {
+        const readyMember = memberList.filter((elem)=>elem.ready).length
         if (readyMember * 3 >= roomInfo.limitMember) setCanStart(true)
         else setCanStart(false)
       } else {
         setCanStart(true)
       }
-    }, [roomInfo.memberList, roomInfo.limitMember])
+    }, [memberList, roomInfo])
     
     const clickAlertBlockOutside = (e) => {
       if (!alertRef.current.contains(e.target)) {
@@ -180,7 +182,7 @@ function LoungeWaitSideBar(props) {
             }
             <div className="member-wrapper column">
                 {
-                    roomInfo.memberList && roomInfo.memberList.map((member, idx) => (
+                    memberList && memberList.map((member, idx) => (
                         !member.admin && (
                         <div className="member-persona row">
                             <img src={member.persona.profileImgPath} alt="profile"/>

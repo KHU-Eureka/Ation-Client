@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import { IoChevronBack, IoClose } from 'react-icons/io5';
@@ -11,7 +11,7 @@ import LoungeCreateStatus from './LoungeCreateStatus';
 import './OpenLounge.css';
 
 function OpenLounge(props) {
-    const cookies = new Cookies();
+    const dispatch = useDispatch();
     const modalInside = useRef();
     const activePersonaId = useSelector((state)=>state.activePersonaId)
 
@@ -35,6 +35,10 @@ function OpenLounge(props) {
     let [success, setSuccess] = useState(false);
     let [loungeId, setLoungeId] = useState(null);
 
+    const addWaitingRoom = () => {
+        let waitingRoomInfo = { id: loungeId, personaId: activePersonaId, title: title };
+        dispatch({type: 'ADD_WAITING', data: waitingRoomInfo});
+    }
 
     const clickOutside = (e) => {
         if (!modalInside.current.contains(e.target)) {
@@ -87,6 +91,7 @@ function OpenLounge(props) {
             setLoungeId(res.data)
             setWaiting(false)
             setSuccess(true) // 라운지 생성 성공
+            addWaitingRoom() // 라운지 대기 목록에 추가함
         } catch(err) {
             console.log(err);
         }

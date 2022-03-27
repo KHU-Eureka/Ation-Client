@@ -94,15 +94,10 @@ function PinAdd(props) {
 
     useEffect(() => {
         PersonaSetting();
-        // if(clickedPin) {
-        //     setAfterPinboardId(clickedPin.pinBoard.id);
-        //     setAfterTag(clickedPin.tagList);
-        // }
     }, [activePersonaId])
 
     useEffect(() => {
         pinboardImport();
-        //console.log(clickedPersonaId, "asdf")
     }, [pinBoardName, clickedPersonaId])
 
     useEffect(() => {
@@ -223,7 +218,6 @@ function PinAdd(props) {
                 if(parseInt(personaList[i].getAttribute('value')) === clickedPersonaId) {
                     personaList[i].style.border="1px solid #FE3400";
                 } else {
-                    console.log(clickedPersonaId, parseInt(personaList[i].getAttribute('value')))
                     personaList[i].style.border="0";
                 }
             }
@@ -367,7 +361,6 @@ function PinAdd(props) {
     async function readImage (e) {
         var formData = new FormData();
         formData.append('pinImg', e.target.files[0]);
-        console.log(formData);
         setChangeImgFormdata(formData);
         const reader = new FileReader();
         setPrevImgUrl(URL.createObjectURL(e.target.files[0]));
@@ -384,13 +377,11 @@ function PinAdd(props) {
         }
         );
         setPrevImgUrl(response.data.pinImgPath);
-        console.log(response.data.pinImgPath)
     }, [newPinId]);
 
     useEffect(() => {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
-        console.log(prevImgUrl.substring(5))
     }, [prevImgUrl])
     
     if(pinAddModalOpen) {
@@ -503,27 +494,3 @@ function PinAdd(props) {
 }
 
 export default PinAdd;
-
-
-// return (
-    // (pinAddModalOpen?
-    // <div className="ModalAdd-Container" ref={modalAdd}>
-    //     <div className="Url-container">
-    //         <input className="url-input" value={urlValue} onChange={urlInputChange} placeholder="URL을 입력해주세요."/>
-    //     </div>
-    //     <div className="PinBoard-container">
-    //         {pinboard.map( board => (
-    //             <p className="board-name" id={board.id} onClick={pinBoardClickHandler}>{board.name}</p>
-    //         ))}
-    //     </div>
-    //     <div className="Tag-container">
-    //         <div className="tag-after"></div>
-    //         {tagList.length!==2?<input className="tag-before" value={tagValue} onChange={tagChangeHandler} onKeyPress={tagInputSubmitHandler} maxlength='8'/>:null}
-    //     </div>
-    //         {/* {tagList.length===2?<p>최대 2개까지 추가할 수 있습니다</p>:null} */}
-    //     <div className="Close-container">
-    //         <button className="close-btn" onClick={ModalAddCloseHandler}>저장</button>
-    //     </div>
-    // </div>
-    // :null)
-    // );

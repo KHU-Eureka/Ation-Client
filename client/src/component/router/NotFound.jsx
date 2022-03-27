@@ -20,11 +20,11 @@ export default function NotFound() {
     } 
     if (error) { // 에러 발생 시 login으로 이동
       dispatch({type: 'AUTH', data: false});
-      return <Navigate to="/login" />
+      // return <Navigate to="/login" />
     } 
-    if (auth.message==="Unathorized") { // 유효하지 않은 유저라면
+    if (auth !== undefined && auth.message==="Unathorized") { // 유효하지 않은 유저라면
       dispatch({type: 'AUTH', data: false});
-      return <Navigate to="/login" />
+      return <Navigate to="/landing" />
     } else { // 로그인 된 유저라면
       dispatch({type: 'AUTH', data: true});
       return <Navigate to="/mypage" /> ;

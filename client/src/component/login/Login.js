@@ -1,16 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/image/logo.png';
 import { ReactComponent as Logo } from '../../assets/svg/logo.svg';
 import { ReactComponent as Google } from '../../assets/svg/google.svg';
 import { ReactComponent as Kakao } from '../../assets/svg/kakao.svg';
 import '../../assets/css/Login.css';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+    const login = useRef();
+    const dispatch = useDispatch();
+
+    const closeLoginModal = (e) => {
+        if (!login.current.contains(e.target)) {
+            dispatch({type: 'LOGIN', data: false});
+        }
+    }
+
+    useEffect(()=> {
+        document.addEventListener('click', closeLoginModal)
+
+        return (()=> {
+            document.removeEventListener('click', closeLoginModal)
+        })
+    }, [])
 
     return (
         <form className="modal-background login">
-            <div className="modal-wrapper">
+            <div className="modal-wrapper" ref={login}>
                 <div className="modal-content">
                     <Logo className="logo"/>
                     <div className="modal-sub-title">

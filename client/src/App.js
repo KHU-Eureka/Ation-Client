@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import GNB from "./component/GNB";
 
@@ -16,12 +16,15 @@ import InsightRead from "../src/component/insight/Read";
 import InsightCreate from "../src/component/insight/Create";
 
 /* Lounge 관련 */
-import Lounge from "../src/component/lounge/Lounge";
+import Lounge from "../src/component/lounge/Main";
 import LoungeRoom from "./component/lounge_room/LoungeRoom";
+import LoungeRoomHandler from "./component/lounge_room/LoungeRoomHandler";
 
+/* Login 관련 */
 import Login from "../src/component/login/Login";
 import LoginLoading from "./component/login/LoginLoading";
 import SignUp from "../src/component/signup/SignUp";
+
 import MyPage from "../src/component/mypage/MyPage";
 import Landing from "../src/component/landing/Landing";
 
@@ -29,19 +32,26 @@ import Landing from "../src/component/landing/Landing";
 import "./assets/css/App.css";
 import "./assets/css/input/Input.css";
 import "./assets/css/modal/ModalBig.css";
+import Whiteboard from "./component/whiteboard/Whiteboard";
+
+import Ideation from "./component/ideation/Ideation";
 
 // font
 import "./assets/font/trap/Trap.css";
+import { useSelector } from "react-redux";
 
 function App() {
+  const showLoginModal = useSelector(state=>state.showLoginModal);
+
   // login이 되어있지 않다면 -> public page가 모두 보임 / privated가 모두 보이지 않음
   // login이 되어있다면 -> public과 private가 모두 보임 / public이고 restricted인 페이지는 안보임
 
   return (
     <div className="App">
-      
       {/* <NavigationBar /> */}
       <Router>
+        { showLoginModal && <Login /> }
+        <LoungeRoomHandler/>
         <GNB />
         <Routes>        
 
@@ -61,6 +71,10 @@ function App() {
 
           <Route path="/mypage" element={<PrivateOutlet/>}>
             <Route exact path="" element={<MyPage/>} />
+          </Route>
+
+          <Route path="/whiteboard" element={<PrivateOutlet/>}>
+            <Route exact path="" element={<Ideation/>} />
           </Route>
 
           {/* Rounge Pages */}

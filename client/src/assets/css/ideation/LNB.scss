@@ -1,0 +1,140 @@
+@import '../scrollBar.scss';
+
+.ideation-page-Container {
+
+    .lnb-container {
+        position: fixed;
+        background: #E7E6E5;
+        width: 297.01px;
+        height: 100%;
+
+        .ideation-list {
+            width: 263px;
+            height: 312px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            margin-top: -7px;
+
+            .ideation-list-wrap {
+                width: 100%;
+                height: 312px;
+                margin-top: 7px;
+
+            .moduleBox-container {
+                position: relative;
+                display: flex;
+                border-radius: 10px;
+                width: 240px;
+                height: 55px;
+                margin-bottom: 18px;
+                cursor: pointer;
+                
+                .moduleBox-wrap-container {
+                    width: 196px;
+                    height: 40px;
+                    text-overflow: ellipsis;
+                    display: flex;
+                    margin-top: 8px;
+                    margin-left: 8px;
+    
+                    .middle-container {
+                        display: flex;
+                        justify-content: space-between;
+                        flex-direction: column;
+                        height: 35px;
+                        margin-left: 19px;
+                    }
+                }
+
+                .delete-btn {
+                    position: absolute;
+                    top: -7px;
+                    left: 220px;
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+    }
+
+            .OptionTitle-container {
+                display: flex;
+                background: #FFFFFF;
+                mix-blend-mode: normal;
+                box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.07);
+                border-radius: 10px;
+                width: 291px;
+                height: 173px;
+                z-index: 99;
+
+                .OptionTitle-wrap-container {
+                    margin-top: 54px;
+                    margin-left: 18px;
+                    width: 255px;
+                    height: 98px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: flex-end;
+
+                    .inputTitle {
+                        width: 255px;
+                        border-top: none;
+                        border-left: none;
+                        border-right: none;
+                        padding-bottom: 8px;
+                        border-bottom: 1px solid #807A74;
+                    }
+    
+                    .inputTitle::placeholder {
+                        font-family: 'Pretendard';
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 15px;
+                        color: #BEBBB9;
+                    }
+
+                    button {
+                        width: 76px;
+                        height: 37px;
+                        background: #FFFFFF;
+                        border: 1px solid #BEBBB9;
+                        box-sizing: border-box;
+                        border-radius: 50px;
+                        margin-left: 7px;
+
+                        font-family: 'Pretendard';
+                        font-style: normal;
+                        font-weight: 700;
+                        font-size: 15px;
+                        align-items: center;
+                        color: #BEBBB9;
+                        cursor: pointer;
+                    }
+
+                    button:hover {
+                        background: #F5F5F5;
+                    }
+
+                    .completeBtn {
+                        border: 1px solid #FE3400;
+                        color: #FE3400;
+                    }
+                }
+
+            }
+
+    }
+}
+
+.ideation-page-Container .ideation-list::-webkit-scrollbar {
+    @include scrollbar-lounge($h: 100px);
+}
+
+.ideation-page-Container .ideation-list::-webkit-scrollbar-thumb {
+    @include scrollbar-point-lounge($h: 100px);
+}
+
+.ideation-page-Container .ideation-list::-webkit-scrollbar-track {
+    @include scrollbar-track-lounge();
+}

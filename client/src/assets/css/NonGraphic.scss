@@ -1,0 +1,32 @@
+.nonGraphic-Container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: transparent;
+    cursor: default;
+
+    .description {
+        font-family: Pretendard;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 38px;
+        color: #BEBBB9;
+    }
+
+    .btn {
+        padding: 8px 20px;
+        width: 400px;
+        height: 50px;
+        background: #FE3400;
+        border-radius: 100px;
+        border: #FE3400;
+        font-family: Pretendard;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        color: #FFFFFF;
+        cursor: pointer;
+    }
+}

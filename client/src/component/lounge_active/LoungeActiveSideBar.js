@@ -24,7 +24,7 @@ import axios from 'axios';
 function LoungeActiveSideBar(props) {
     const $websocket = useRef(null); // socket
     const emojiPickerRef = useRef();
-    const { roomInfo, admin, myInfo, setShowRoomInfoModal } = props;
+    const { roomInfo, memberList, admin, myInfo, setShowRoomInfoModal } = props;
     const [chattingBottom, isChattingBottom] = useInView();
     const activePersonaId = useSelector(state=>state.activePersonaId);
     const senseInfoList = [
@@ -122,7 +122,7 @@ function LoungeActiveSideBar(props) {
         setText(text+emojiObject.emoji);
         document.getElementById('chatting-user-input').focus();
         setShowEmojiPicker(false);
-    };
+    }
 
     const receiveMessage = (msg) => {
         if (msg.persona) { // 일반 메세지라면
@@ -187,7 +187,7 @@ function LoungeActiveSideBar(props) {
     }, [roomInfo])
 
     const closeEmojiPicker = (e) => {
-        if (showEmojiPicker && !emojiPickerRef.current.contains(e.target)) {
+        if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target)) {
             setShowEmojiPicker(false);
         }
     }
@@ -262,7 +262,7 @@ function LoungeActiveSideBar(props) {
                     <div className="title">참여 중인 멤버</div>
                     <div className="member-wrapper column">
                         {
-                            roomInfo.memberList && roomInfo.memberList.map((member, idx) => (
+                            memberList && memberList.map((member, idx) => (
                                 <div className="member-persona row">
                                     <img src={member.persona.profileImgPath} alt="profile"/>
                                     <div className="column grow">
@@ -324,7 +324,7 @@ function LoungeActiveSideBar(props) {
                         }
                         <div id="chatting-bottom" ref={chattingBottom}></div>
                     </div>
-                    <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}} autocomplete="off">
+                    <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}} autoComplete="off">
                         <input 
                             id="chatting-user-input"
                             type="text"

@@ -29,8 +29,10 @@ function OrganismsCate() {
     const scrollHandler = ( {target} ) => {
         const scroll = parseInt(target.scrollingElement.scrollTop);
         const loungeRecentElem = document.querySelector('.OrganismsCate-Container');
-        if(scroll > 680) {
+        if(scroll > 680 && scroll < 690) {
             console.log(loungeRecentElem.style)
+            
+        } else if(scroll > 690) {
             loungeRecentElem.style.position = 'fixed';
             loungeRecentElem.style.top = '55px';
             loungeRecentElem.style.zIndex = '99';

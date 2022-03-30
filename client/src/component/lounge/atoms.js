@@ -1,4 +1,5 @@
 import { LoungePinup, enterLounge, clickUIPrevHandler, clickUIChangeHandler, deleteHandler } from '../state';
+import { useSelector } from 'react-redux';
 
 import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER, BTN_HOVERSTYLE, BTN_HOVEROUTSTYLE, BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE, MODULE_HOVEROUTSTYLE, MODULE_HOVERSTYLE } from './atomStyleSheet';
 
@@ -117,9 +118,10 @@ export const deleteBtn = (url, id, setDeleteLounge) => {
     );
 }
 
-export const imgBox = (obj, isPin) => {
+export const ImgBox = ({ obj, isPin }) => {
+    const activePersonaId = useSelector((state) => state.activePersonaId);
     return(
-        <div className='imgbox-container' style={{position: 'relative', cursor: 'pointer', background: 'transparent'}} onClick={ ({target}) => enterLounge(target, obj.id, obj.persona.id) }>
+        <div className='imgbox-container' style={{position: 'relative', cursor: 'pointer', background: 'transparent'}} onClick={ ({target}) => enterLounge(target, obj.id, activePersonaId) }>
             <img className='imgbox-container img' src={obj.imgPath} style={{position: 'absolute', zIndex: '-1', top: '0px'}} loading='lazy' alt="..."/>
             <div className='imgbox-wrap-container'>
                 <div className='header-container'>

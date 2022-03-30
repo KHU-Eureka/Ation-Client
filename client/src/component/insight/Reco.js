@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
@@ -9,6 +10,7 @@ import reco from "../../assets/svg/reco.svg";
 function Reco(props) {
     const {insight} = props;
     const cookies = new Cookies;
+    const dispatch = useDispatch();
     const [RecoList, setRecoList] = useState([]);
     const [slideReco, setSlideReco] = useState([]);
     const [slotNum, setSlotNum] = useState(0);
@@ -38,6 +40,7 @@ function Reco(props) {
     }
 
     useEffect(()=> {
+        console.log(props.auth);
         slot.current.addEventListener('load', removeAnimation);
         slot.current.addEventListener('focus', rollTheRullet);
         slot.current.addEventListener('blur', removeRulletAnimation);
@@ -51,7 +54,6 @@ function Reco(props) {
             if (pullSlot) {
                 setSec(time.current);
                 time.current -= 1;
-                console.log(time.current);
             }
         }, 1000)
         return () => clearInterval(timer.current)
@@ -59,25 +61,15 @@ function Reco(props) {
 
     useEffect(()=> {
         if (time.current <= 0) { // 3초가 모두 지난다면
-            console.log('time out');
             clearInterval(timer.current);
             document.activeElement.blur();
         }
     }, [time.current])
 
     const slideSetting = async () => {
-        const cookies = new Cookies;
         const token = localStorage.getItem('token');
-        console.log("asdf")
         let temp = [];
         for(let i=0; i<4; i++) {
-            // const recoResponse = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/recommend`, {
-            //     headers: {
-            //         Authorization: "Bearer " + token
-            //     }
-            // });
-            // temp.push(recoResponse.data);
-            
             temp.push(RecoList);
         }
         setSlideReco(temp);
@@ -103,17 +95,18 @@ function Reco(props) {
     }
 
     const slotCilckHandler = () => {
-        setSlotNum(slotNum + 1);
-        setPullSlot(true);
+        if(props.auth) {
+            setSlotNum(slotNum + 1);
+            setPullSlot(true);
+        } else {
+            dispatch({type: 'LOGIN', data: true});
+        }
     }
 
     useEffect(() => {
         imgSet();
-        slideSetting();
-        console.log(slotNum);
         if(props.auth) {
             slideSetting();
-            console.log(slideReco.length)
         }
     }, [slotNum]);
 
@@ -140,7 +133,7 @@ function Reco(props) {
             {/* 이미지 div */}
             <div className="recoImg-container" ref={rullet}>
                 {idx.map( i => 
-                <div className="slide-container">
+                <div className={props.auth ? 'slide-container':'nonSlide'}>
                     <div className="slide-wrap-container">
                         <div className="recoImg" id={i} style={RecoList[i] === undefined?{background: 'rgba(115, 115, 115, 0.58)'}:{position: 'relative', background: 'rgba(115, 115, 115, 0.58)'}} onClick={RecoList[i] !== undefined?insightClickHandler:null}>
                             {RecoList[i] !== undefined &&

@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import { Layer, Stage } from 'react-konva';
 import { nanoid } from 'nanoid';
 
 import { AttrContextStore as AttrContextImgStore } from '../ideation/store/AttrContext';
 import { AttrContextStore } from './store/AttrContext';
-import { useFetch } from '../state';
+import { useFetch, getApi } from '../state';
 import { isTrue, createObj } from './state';
 
 import Elements from './Elements';
@@ -15,11 +14,10 @@ import Elements from './Elements';
 import bin from '../../assets/svg/board_bin.svg';
 
 function Stageboard(props) {
-    const { setText, text, imgSrc, pinObject, setIsEditing, isEditing } = props;
+    const { roomInfo, imgSrc, pinObject, setIsEditing, isEditing } = props;
     const attrStore = useContext(AttrContextStore);
     const attrImgStore = useContext(AttrContextImgStore);
     const { state } = useLocation();
-    const cookies = new Cookies();
     const stageRef = useRef();
 
     const [boardObjectList, setBoardObjectList] = useState([]);
@@ -27,19 +25,22 @@ function Stageboard(props) {
     const [currentObject, setCurrentObject] = useState();
     const [selectedObject, setSelectedObject] = useState(null);
     const [exportImg, setExportImg] = useState();
-    // const [whiteboard, setWhiteboard] = useState();
-
-    const whiteboard = useFetch(state && `${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
+    const [whiteboard, setWhiteboard] = useState();
 
     useEffect(() => {
-        // if(state) {
-        //     setWhiteboard(useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`));
-        // }
-        if(whiteboard !== undefined){
-            const boardItem = JSON.parse(whiteboard.whiteboard);
-            setBoardObjectList(boardItem);
+        if(state !== null) {
+            if(state.ideationId) {
+                getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`).then((data) => setWhiteboard(data.data.whiteboard));
+            }
+    
+            if(whiteboard !== undefined){
+                //화이트보드 JSON 형태로 가져오는 부분 !
+                const boardItem = JSON.parse(whiteboard);
+                setBoardObjectList(boardItem);
+                console.log(whiteboard);
+            }
         }
-    }, [])
+    }, [state, whiteboard])
 
     function dataURItoBlob(dataURI) {
         let byteString = window.atob(dataURI.split(',')[1]);
@@ -116,20 +117,6 @@ function Stageboard(props) {
                     setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, {text: attrStore.text, color: attrStore.color})]);
                     setIsEditing(false);
                     break;
-                    // if(document.querySelector('textarea')) {
-                    //     const textareaStyle = document.querySelector('textarea').style;
-                    //     if(text === '') {
-                    //         setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
-                    //         textareaStyle.display = 'inline';
-                    //         textareaStyle.position = 'absolute';
-                    //         textareaStyle.top = pos.y + 'px';
-                    //         textareaStyle.left = pos.x + 'px';
-                    //     } else {
-                    //         let lastObj = boardObjectList[boardObjectList.length - 1];
-                    //         lastObj.property.text = text;
-                    //         textareaStyle.display = 'none';
-                    //     }
-                    // }
                 case 'choice':
                     break;
             }
@@ -239,6 +226,7 @@ function Stageboard(props) {
 
     useEffect( async () => {
         const token = localStorage.getItem('token');
+        //화이트보드 String 형태로 api에 저장하는 부분 !
         const stringObjectList = JSON.stringify(boardObjectList);
         console.log(stringObjectList)
         if(stringObjectList !== "[]") {
@@ -291,6 +279,23 @@ function Stageboard(props) {
 }
 
 export default Stageboard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -540,3 +545,19 @@ export default Stageboard;
     //         setSelectedObject(lastObj.id);
     //     }
     // }, [boardObjectList.length])
+
+
+    // if(document.querySelector('textarea')) {
+                    //     const textareaStyle = document.querySelector('textarea').style;
+                    //     if(text === '') {
+                    //         setBoardObjectList([...boardObjectList, createObj(attrStore.mode, attrStore.detailMode, pos.x, pos.y, attrStore.color)]);
+                    //         textareaStyle.display = 'inline';
+                    //         textareaStyle.position = 'absolute';
+                    //         textareaStyle.top = pos.y + 'px';
+                    //         textareaStyle.left = pos.x + 'px';
+                    //     } else {
+                    //         let lastObj = boardObjectList[boardObjectList.length - 1];
+                    //         lastObj.property.text = text;
+                    //         textareaStyle.display = 'none';
+                    //     }
+                    // }

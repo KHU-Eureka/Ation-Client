@@ -5,7 +5,7 @@ import Stageboard from './Stageboard';
 import Tool from './Tool';
 import '../../assets/css/whiteboard/Whiteboard.scss';
 
-function Whiteboard() {
+function Whiteboard({ roomInfo, setRoomInfo }) {
     const [imgSrc, setImgSrc] = useState('');
     const [pinObject, setPinObject] = useState();
     const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +13,7 @@ function Whiteboard() {
     return (
         <AttrContext>
             <div className='Whiteboard-Container'>
-                <Stageboard imgSrc={imgSrc} pinObject={pinObject} isEditing={isEditing} setIsEditing={setIsEditing}/>
+                <Stageboard roomInfo={roomInfo} setRoomInfo={setRoomInfo} imgSrc={imgSrc} pinObject={pinObject} isEditing={isEditing} setIsEditing={setIsEditing}/>
                 <Tool onClick={() => setIsEditing(false)} setImgSrc={setImgSrc} setPinObject={setPinObject} />
             </div>
         </AttrContext>

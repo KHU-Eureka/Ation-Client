@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import pin from '../assets/svg/pin.svg';
 
 export function useFetch(url, deps) { 
-    const cookies = new Cookies();
     const [data, setData] = useState(); 
 
     useEffect( async () => { 
@@ -18,11 +17,12 @@ export function useFetch(url, deps) {
                 }
             });
             setData(response.data);
+            console.log("Asdf")
         } catch(err) {
             console.log(err);
         }
         return () => {
-            console.log('useEffect clean up')
+            
         }
     }, [url, deps]);
 
@@ -68,7 +68,7 @@ export function LoungePinup(props) {
     
 
     return(
-        <img className='pin' src={pin} onClick={pinClickHandler}/>
+        <img className='pin' src={pin} onClick={pinClickHandler} style={{zIndex: '-1'}}/>
     );
 
 }

@@ -191,6 +191,7 @@ $FONTSTYLE: 'normal';
         width: 297.01px;
         height: 100%;
         box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.1);
+        z-index: 30;
 
         .MainLNB-wrap-Container {
             margin-left: 23.56px;
@@ -229,6 +230,8 @@ $FONTSTYLE: 'normal';
 
         .LoungeLive-Container {
             margin-left: 54px;
+            margin-right: 54px;
+            margin-bottom: 103px;
 
             .LoungeRoom-container {
                 @include flex-center-lounge();
@@ -300,7 +303,7 @@ $FONTSTYLE: 'normal';
         }
 
         .LoungeWait-Container {
-            z-index: -1;
+            margin-bottom: 103px;
             
             .OrganismsImg-Container {
                 position: relative;
@@ -333,7 +336,6 @@ $FONTSTYLE: 'normal';
         }
 
         .LoungeRecent-Container {
-            margin-top: 103px;
 
             .OrganismsCate-Container {
                 margin-top: $SIZE1;

@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-.search-btn {
+.Insight-container .search-btn {
     width: 145px;
     height: 37px;
     border: 1px solid #FE6740;
@@ -238,4 +238,11 @@
     font-size: 18px;
     float: right;
     margin-top: 14px;
+}
+
+.nonItem {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }

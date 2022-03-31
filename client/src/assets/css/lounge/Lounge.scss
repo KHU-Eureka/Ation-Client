@@ -237,65 +237,68 @@ $FONTSTYLE: 'normal';
                 width: 411px;
                 height: 446px;
                 border-radius: 10px;
-                overflow-y: scroll;
-
-                .LoungeRoom-wrap-container {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                    align-items: center;
-                    width: 367.23px;
+                
+                .LoungeRoom-scroll-container {
+                    @include flex-center-lounge();
+                    width: 95%;
                     height: 358px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
 
-                    .modulebox-container {
-                        @include module-lounge();
-                        background: #FFFFFF;
-                        margin-bottom: 18px;
+                    .LoungeRoom-wrap-container {
+                        width: 367.23px;
+                        height: 358px;
+                        
     
-                        .modulebox-wrap-container {
-                            @include  module-lounge-wrap();
-
-                            .left-container {
-                                display: flex;
-                                justify-content: center;
-                                width: 48px;
-                                height: 32px;
-
-                                .senseImg {
-                                    width: 100%;
-                                    height: 100%;
-                                }
-                            }
-
-                            .middle-container {
-                                width: 179px;
-                                float: left;
-
-                                .title {
-                                    width: 100%;
-                                    text-overflow: ellipsis;
-                                    font-family: Pretendard;
-                                    font-style: normal;
-                                    font-weight: 500;
-                                    font-size: 15px;
-                                    color: #352C23;
+                        .modulebox-container {
+                            @include module-lounge();
+                            background: #FFFFFF;
+                            margin-bottom: 18px;
+        
+                            .modulebox-wrap-container {
+                                @include  module-lounge-wrap();
+    
+                                .left-container {
+                                    display: flex;
+                                    justify-content: center;
+                                    width: 48px;
+                                    height: 32px;
+    
+                                    .senseImg {
+                                        width: 100%;
+                                        height: 100%;
+                                    }
                                 }
     
-                                .tag {
-                                    width: 109.59px;
-                                    text-overflow: ellipsis;
-                                    font-family: Pretendard;
-                                    font-style: normal;
-                                    font-weight: 500;
-                                    font-size: 11px;
-                                    color: #BEBBB9;
-                                    margin-right: 5px;
+                                .middle-container {
+                                    width: 179px;
+                                    float: left;
+    
+                                    .title {
+                                        width: 100%;
+                                        text-overflow: ellipsis;
+                                        font-family: Pretendard;
+                                        font-style: normal;
+                                        font-weight: 500;
+                                        font-size: 15px;
+                                        color: #352C23;
+                                    }
+        
+                                    .tag {
+                                        width: 109.59px;
+                                        text-overflow: ellipsis;
+                                        font-family: Pretendard;
+                                        font-style: normal;
+                                        font-weight: 500;
+                                        font-size: 11px;
+                                        color: #BEBBB9;
+                                        margin-right: 5px;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-
             }
         }
 
@@ -398,14 +401,14 @@ $FONTSTYLE: 'normal';
 
 
 
-.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar {
+.Lounge-Container .LoungeLive-Container .LoungeRoom-scroll-container::-webkit-scrollbar {
     @include scrollbar-lounge();
 }
 
-.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar-thumb {
+.Lounge-Container .LoungeLive-Container .LoungeRoom-scroll-container::-webkit-scrollbar-thumb {
     @include scrollbar-point-lounge();
 }
 
-.Lounge-Container .LoungeLive-Container .LoungeRoom-container::-webkit-scrollbar-track {
+.Lounge-Container .LoungeLive-Container .LoungeRoom-scroll-container::-webkit-scrollbar-track {
     @include scrollbar-track-lounge();
 }

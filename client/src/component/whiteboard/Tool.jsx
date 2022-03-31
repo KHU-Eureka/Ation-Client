@@ -226,6 +226,9 @@ function Tool(props) {
             } else if(target.classList.contains('Export')) {
                 attrStore.setMode('export');
                 attrStore.setDetailMode('');
+            } else if(target.classList.contains('Choice')) {
+                attrStore.setMode('choice');
+                attrStore.setDetailMode('');
             }
         } else {
             attrStore.setMode('image');

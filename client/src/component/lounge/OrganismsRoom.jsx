@@ -12,10 +12,12 @@ function OrganismsRoom(props) {
         { loungeList !== undefined?
         <div className="LoungeRoom-container" style={loungeList.length === 0 ? DEFAULT_BG_STYLE:null}>
             {loungeList.length !== 0?
-            <div className="LoungeRoom-wrap-container">
-                {loungeList.map( lounge =>
-                    <Modulebox obj={lounge.lounge} isSense={isSense} link={link} setDeleteLounge={setDeleteLounge} /> 
-                )}
+            <div className="LoungeRoom-scroll-container">
+                <div className="LoungeRoom-wrap-container">
+                    {loungeList.map( lounge =>
+                        <Modulebox obj={lounge.lounge} isSense={isSense} link={link} setDeleteLounge={setDeleteLounge} /> 
+                    )}
+                </div>
             </div>
             :isSense?<NonGraphic type={'lounge'} isImg={true} mainText={defaultText} />
             :<NonGraphic type={'lounge'} isImg={false} mainText={defaultText} />

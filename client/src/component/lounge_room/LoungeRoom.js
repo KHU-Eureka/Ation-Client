@@ -177,21 +177,21 @@ function LoungeRoom () {
                 ref={$websocket}
                 />
             }
-            <div className="left-content lounge-sidebar">
+            <aside className="left-content lounge-sidebar">
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo && ( roomInfo.status === "OPEN"
                     ? <LoungeWaitSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
                     : <LoungeActiveSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
                 }
-            </div>
-            <div className="right-content">
+            </aside>
+            <main className="right-content">
                 {
                     roomInfo && ( roomInfo.status === "OPEN"
                     ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
                     : <Whiteboard roomInfo={roomInfo} setRoomInfo={setRoomInfo} type={'lounge'}/> )
                 }
-            </div>
+            </main>
             
         </div>
     )

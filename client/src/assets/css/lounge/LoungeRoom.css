@@ -8,6 +8,8 @@
 }
 
 .lounge-room .left-content {
+    position: fixed;
+    z-index: 10;
     width: 290px;
     height: 100%;
     background: #E7E6E5;
@@ -19,4 +21,19 @@
     margin: 8px;
     border-radius: 10px;
     background-color: white;
+}
+
+.chatting-wrapper {
+    height: 731px;
+    overflow-y: auto;
+}
+/* .lounge-start {
+    position: fixed;
+    left: 0;
+    top: 0;
+} */
+
+.lounge-room .right-content {
+
+    margin-left: 298px;
 }

@@ -47,6 +47,10 @@ function Stageboard(props) {
     //화이트보드 받아오는 부분 !
     useEffect(()=> { 
         if(roomInfo !== undefined) {
+            // if(roomInfo.whiteboard !== null && roomInfo.whiteboard !== 'undefined') {
+            //     // const temp = JSON.parse(roomInfo.whiteboard);
+            //     // setBoardObjectList(temp);
+            // }
             const getLoungeBoard = async () => {
                 const token = localStorage.getItem('token')
                 try {
@@ -313,6 +317,7 @@ function Stageboard(props) {
         console.log("hihi", tempBoard);
         const msgObj = JSON.parse(tempBoard);
         setBoardObjectList(msgObj);
+        console.log(roomInfo)
     }
     useEffect(()=> {
         console.log('object list : ', boardObjectList);

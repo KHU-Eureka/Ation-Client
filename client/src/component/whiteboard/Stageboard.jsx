@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 
 import { AttrContextStore as AttrContextImgStore } from '../ideation/store/AttrContext';
 import { AttrContextStore } from './store/AttrContext';
-import { useFetch } from '../state';
+import { useFetch, getApi } from '../state';
 import { isTrue, createObj } from './state';
 
 import Elements from './Elements';
@@ -27,19 +27,22 @@ function Stageboard(props) {
     const [currentObject, setCurrentObject] = useState();
     const [selectedObject, setSelectedObject] = useState(null);
     const [exportImg, setExportImg] = useState();
-    // const [whiteboard, setWhiteboard] = useState();
-
-    const whiteboard = useFetch(state && `${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`);
+    const [whiteboard, setWhiteboard] = useState();
 
     useEffect(() => {
-        // if(state) {
-        //     setWhiteboard(useFetch(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`));
-        // }
-        if(whiteboard !== undefined){
-            const boardItem = JSON.parse(whiteboard.whiteboard);
-            setBoardObjectList(boardItem);
+        if(state.ideationId) {
+            getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/${state.ideationId}`).then((data) => setWhiteboard(data.data.whiteboard));
+        } else {
+            getApi(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/${state.loungeId}`).then((data) => setWhiteboard(data.data.whiteboard));
         }
-    }, [])
+
+        if(whiteboard !== undefined) {
+            //화이트보드 JSON 형태로 가져오는 부분 !
+            const boardItem = JSON.parse(whiteboard);
+            setBoardObjectList(boardItem);
+            console.log(whiteboard);
+        }
+    }, [whiteboard])
 
     function dataURItoBlob(dataURI) {
         let byteString = window.atob(dataURI.split(',')[1]);

@@ -2,11 +2,9 @@ import isValidUser from './isValidUser';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { useAsync } from "react-async";
-import { Cookies } from 'react-cookie';
 
 export default function PublicOutlet() {
     const dispatch = useDispatch();
-    const cookies = new Cookies();
     var token = localStorage.getItem('token');
   
     const { data: auth, error, isPending } = useAsync({

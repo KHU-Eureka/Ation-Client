@@ -7,7 +7,7 @@ function Pen(props) {
     const transRef = useRef();
 
     useEffect(() => {
-        console.log(isSelected)
+        // console.log(isSelected)
         if (mode === 'choice' && isSelected) {
             transRef.current.nodes([penRef.current]);
             transRef.current.getLayer().batchDraw();

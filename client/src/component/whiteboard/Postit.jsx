@@ -7,6 +7,7 @@ function Postit(props) {
     const { postObj, isSelected, onSelect, onChange, isEditing, setIsEditing, mode } = props;
     const postRef = useRef();
     const transRef = useRef();
+    const postTextRef = useRef();
 
     useEffect(() => {
         console.log(isEditing)
@@ -57,6 +58,18 @@ function Postit(props) {
         return newBox;
     }
 
+    // useEffect(() => {
+    //     if(postTextRef.current !== undefined) {
+    //         onChange(
+    //             {
+    //                 ...postObj.property,
+    //                 width: postTextRef.current.width() + 50, 
+    //                 height: postTextRef.current.height() + 70
+    //             }
+    //             )
+    //     }
+    // }, [postTextRef.current])
+
     return (
         <>
         <Group 
@@ -77,10 +90,12 @@ function Postit(props) {
                 width={postObj.property.width}
                 height={postObj.property.height}
                 cornerRadius={postObj.property.cornerRadius}
+                x={-22}
+                y={-35}
             />
 
             <Letter 
-                textObj={{property: {text: postObj.property.text, fontSize: postObj.property.fontSize, fontFamily: postObj.property.fontFamily, fontStyle: postObj.property.fontStyle}, id: postObj.id}} 
+                textObj={{property: {text: postObj.property.text, fontSize: postObj.property.fontSize, fontFamily: postObj.property.fontFamily, fontStyle: postObj.property.fontStyle,}, id: postObj.id}} 
                 isSelected={isSelected} 
                 onSelect={onSelect} 
                 onChange={onChange} 
@@ -89,6 +104,7 @@ function Postit(props) {
                 mode={mode}
                 isPost={true}
                 property={postObj.property}
+                postTextRef={postTextRef}
                 />
 
         </Group>

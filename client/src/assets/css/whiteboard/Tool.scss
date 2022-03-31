@@ -41,6 +41,17 @@
         box-sizing: border-box;
     }
 
+    .focus:hover {
+        background: #F24822 !important;
+        box-sizing: border-box;
+    }
+
+    .focusDetail:hover {
+        background: #BEBBB9 !important;
+        border: none !important;
+        box-sizing: border-box;
+    }
+
     img {
         cursor: pointer;
     }

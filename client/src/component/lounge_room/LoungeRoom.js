@@ -189,7 +189,7 @@ function LoungeRoom () {
                 {
                     roomInfo && ( roomInfo.status === "OPEN"
                     ? <LoungeWaitChatting roomInfo={roomInfo} setRoomInfo={setRoomInfo}/>
-                    : <Whiteboard roomInfo={roomInfo} setRoomInfo={setRoomInfo}/> )
+                    : <Whiteboard roomInfo={roomInfo} setRoomInfo={setRoomInfo} type={'lounge'}/> )
                 }
             </div>
             

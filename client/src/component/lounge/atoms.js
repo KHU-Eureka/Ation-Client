@@ -1,5 +1,6 @@
 import { LoungePinup, enterLounge, clickUIPrevHandler, clickUIChangeHandler, deleteHandler } from '../state';
 import { useSelector } from 'react-redux';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER, BTN_HOVERSTYLE, BTN_HOVEROUTSTYLE, BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE, MODULE_HOVEROUTSTYLE, MODULE_HOVERSTYLE } from './atomStyleSheet';
 

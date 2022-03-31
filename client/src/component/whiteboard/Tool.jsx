@@ -8,7 +8,7 @@ import Color from './Color';
 import { Width } from './Width';
 
 import { AttrContextStore } from './store/AttrContext';
-import { clickUIPrevHandler, clickUIChangeHandler } from '../state';
+import { clickUIPrevHandler, clickUIChangeHandler, clickClassListPrevHandler } from '../state';
 
 import '../../assets/css/whiteboard/Tool.scss';
 import tool_choice from '../../assets/svg/tool_choice.svg';
@@ -32,10 +32,9 @@ import shapeColor from "../../assets/svg/detailTool/shapeColor.svg";
 import exportImg from "../../assets/svg/importImg.svg";
 
 function Tool(props) {
-    const { setText, setImgSrc, setPinObject } = props;
+    const { type, setImgSrc, setPinObject } = props;
 
     const attrStore = useContext(AttrContextStore);
-    const dispatch = useDispatch();
 
     const penRef = useRef();
     const shapeRef = useRef();
@@ -102,6 +101,8 @@ function Tool(props) {
         clickUIChangeHandler(imgStyle_new, target.current.querySelector('img'));
         const stageNode = document.querySelector('.stageboard-container');
         stageNode.style = cursorStyle;
+
+        target.current.classList.add('focus')
     }
 
     const attrOffStyle = () => {
@@ -120,11 +121,15 @@ function Tool(props) {
         clickUIPrevHandler(detailToolStyle_prev, detailToolDoc);
         clickUIPrevHandler(modeStyle_prev, mainDoc);
         clickUIPrevHandler(imgStyle_prev, imgDoc);
+
+        clickClassListPrevHandler('focus', mainDoc)
     }
 
     const subToolOnStyle = (target) => {
         clickUIChangeHandler(detailStyle_new, target.current);
         clickUIChangeHandler(imgStyle_new, target.current.querySelector('img'));
+
+        target.current.classList.add('focusDetail')
     }
     
     const subToolOffStyle = () => {
@@ -132,6 +137,8 @@ function Tool(props) {
         const detailImgDoc = document.querySelectorAll('.detailImg');
         clickUIPrevHandler(modeStyle_prev, detailDoc);
         clickUIPrevHandler(imgStyle_prev, detailImgDoc);
+
+        clickClassListPrevHandler('focusDetail', detailDoc)
     }
 
     useEffect(() => {
@@ -339,7 +346,7 @@ function Tool(props) {
                     <Pin setPinObject={setPinObject} />
                 </div>
             </div>
-            <div className='main mode tool-container Export' ref={exportRef}><img className='mainToolImg Export'src={exportImg} /></div>
+            {type !== 'lounge' && <div className='main mode tool-container Export' ref={exportRef}><img className='mainToolImg Export'src={exportImg} /></div>}
         </div>
 
         </>

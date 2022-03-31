@@ -3,7 +3,7 @@ import { Group, Text, Transformer } from 'react-konva';
 import { TextArea } from './TextArea';
 
 function Letter(props) {
-    const { textObj, isSelected, onSelect, onChange, isEditing, setIsEditing, mode, isPost, property } = props;
+    const { postTextRef, textObj, isSelected, onSelect, onChange, isEditing, setIsEditing, mode, isPost, property } = props;
     const textRef = useRef();
     const transRef = useRef();
     const [isCursor, setIsCursor] = useState({});
@@ -72,7 +72,7 @@ function Letter(props) {
         <Group>
         <Text 
             id={textObj.id}
-            ref={textRef}
+            ref={ postTextRef ? postTextRef : textRef}
             {...textObj.property}
             onClick={mode === 'choice' ? onSelect : null}
             draggable={mode==='choice'?true:false}
@@ -93,8 +93,8 @@ function Letter(props) {
         {isEditing && isSelected &&
         <Group>
             <TextArea 
-            property={isPost?property:textObj.property}
-            textRef={textRef}
+            property={isPost ? property : textObj.property}
+            textRef={postTextRef ? postTextRef : textRef}
             onChange={onChange}
             onBlur={() => {
                 setIsEditing(false);

@@ -17,7 +17,6 @@ export function useFetch(url, deps) {
                 }
             });
             setData(response.data);
-            console.log("Asdf")
         } catch(err) {
             console.log(err);
         }
@@ -102,6 +101,10 @@ export function clickUIPrevHandler(prevStyle, prevElems) {
 
 export function clickUIChangeHandler(changeStyle, currentTarget) {
     for(let key in changeStyle) currentTarget.style[key] = changeStyle[key];
+}
+
+export function clickClassListPrevHandler(prevClass, prevElems) {
+    for(let i of prevElems) i.classList.remove(prevClass);
 }
 
 export async function deleteHandler(url, id) {

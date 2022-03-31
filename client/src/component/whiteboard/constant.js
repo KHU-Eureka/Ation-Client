@@ -54,14 +54,14 @@ export const DEFAULTS = {
     TEXT: {
         CONTENT: "",
         FONTSIZE: 20,
-        FONTFAMILY: 'Noto Sans',
-        FONTSTYLE: 'italic',
+        FONTFAMILY: 'Pretendard',
+        FONTSTYLE: 'normal',
     },
     POSTIT: {
         CONTENT: "",
         FONTSIZE: 20,
-        FONTFAMILY: 'Noto Sans',
-        FONTSTYLE: 'italic',
+        FONTFAMILY: 'Pretendard',
+        FONTSTYLE: 'normal',
         FILL: "#FFD600",
         WIDTH: 200,
         HEIGHT: 100,

@@ -23,7 +23,7 @@ function Ideaition() {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/api/ideation`, 
             {
                 "personaId": activePersonaId,
-                "title": ideations.length!==0?`아이디어${ideations[ideations.length - 1].id+1}`:'아이디어1',
+                "title": ideations.length!==0?`아이디어${ideations[ideations.length - 1].id+1}`:`첫번째 아이디어`,
                 "whiteboard": "[]"
             }, 
             {

@@ -35,7 +35,7 @@ function OrganismsCate() {
         } else if(scroll > 690) {
             loungeRecentElem.style.position = 'fixed';
             loungeRecentElem.style.top = '55px';
-            loungeRecentElem.style.zIndex = '99';
+            loungeRecentElem.style.zIndex = '20';
             loungeRecentElem.style.paddingTop = '30px';
             loungeRecentElem.style.paddingBottom = '30px';
             loungeRecentElem.style.width = '100%';

@@ -1,8 +1,13 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { Html } from "react-konva-utils";
 
 export const TextArea = ({ textRef, property, onBlur, onChange, cursorPosition }) => {
   const [style, setStyle] = useState();
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(property.text);
+  }, [])
 
   useLayoutEffect(() => {
     const textNode = textRef.current;
@@ -43,8 +48,9 @@ export const TextArea = ({ textRef, property, onBlur, onChange, cursorPosition }
         }}
         rotateEnabled={false}
         flipEnabled={false}
-        value={property.text}
+        value={value}
         onChange={(e) => {
+          setValue(e.target.value);
           onChange({
             ...property,
             text: e.target.value,

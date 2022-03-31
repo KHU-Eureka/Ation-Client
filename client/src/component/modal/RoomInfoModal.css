@@ -2,7 +2,7 @@
 .room-edit .modal-background {
     background: rgba(34, 34, 34, 0.63);
     backdrop-filter: none;
-    z-index: 10;
+    z-index: 11;
 }
 
 .room-info .modal-wrapper,

@@ -57,9 +57,12 @@ function Stageboard(props) {
                             }
                         }
                     )
-                    if(res.data.whiteboard !== null && res.data.whiteboard !== undefined) {
-                        const board = JSON.parse(res.data.whiteboard);
-                        setBoardObjectList([board]);
+                    if(res.data.whiteboard !== null && res.data.whiteboard !== "undefined") {
+                        console.log("please~~~~~~", res.data.whiteboard);
+                        let tempBoard = res.data.whiteboard.replaceAll('\'',`\"`);
+                        const board = JSON.parse(tempBoard);
+                        console.log("please~~~~~~", tempBoard);
+                        setBoardObjectList(board);
                     }
                 } catch(err) {
                     console.log(err)
@@ -288,19 +291,32 @@ function Stageboard(props) {
     }, [boardObjectList])
 
     const sendMessage = () => {
-        const stringObjectList = `${boardObjectList}`;
-        console.log("please", stringObjectList.replaceAll(`"`, `'`))
+        let stringObjectList = JSON.stringify(boardObjectList);
+        let string1 = "[]";
         try {
-            $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": ${stringObjectList}}`);
+            // $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": ${stringObjectList}}`);
+            if(stringObjectList !== '[]') {
+                let string1 = stringObjectList.replaceAll('\"',"\'");
+                $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": "${string1}"}`);
+                console.log(string1)
+            } else {
+                $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": "${string1}"}`);
+            }
         } catch(err) {
             console.log(err);
         }
     }
 
     const receiveMessage = (msg) => { 
-        console.log("msg", msg);
-        if(msg !== undefined) setBoardObjectList(msg.whiteboard);
+        console.log("msg : ",msg.whiteboard);
+        let tempBoard = msg.whiteboard.replaceAll('\'',`\"`);
+        console.log("hihi", tempBoard);
+        const msgObj = JSON.parse(tempBoard);
+        setBoardObjectList(msgObj);
     }
+    useEffect(()=> {
+        console.log('object list : ', boardObjectList);
+    }, [])
 
     return (
         <div>
@@ -315,7 +331,10 @@ function Stageboard(props) {
         <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler} style={{position: 'relative'}}>
             <Stage ref={stageRef} width={1607} height={window.innerHeight-20} onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
                 <Layer>
-                    {boardObjectList && boardObjectList.map( (obj, i) => <Elements key={i} type={obj.type} obj={obj}
+                    {
+                    boardObjectList &&
+                    boardObjectList.map( (obj, i) => 
+                    (obj.type && <Elements key={i} type={obj.type} obj={obj}
                     isSelected={isTrue(obj.id, selectedObject)}
                     onSelect={ () => setSelectedObject(obj.id) }
                     onChange={ (newAttrs) => {
@@ -327,7 +346,8 @@ function Stageboard(props) {
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     mode={attrStore.mode}
-                    /> )}
+                    /> ))
+                    }
                     
                 </Layer>
             </Stage>

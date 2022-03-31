@@ -71,6 +71,15 @@
     cursor: pointer;
 }
 
+.nonSlide {
+    position: relative;
+    overflow: hidden;
+    width: 25%;
+    height: 665px;
+    margin-right: 4px;
+    margin-top: 35px;
+}
+
 .reco-rotate .slide-container:nth-child(1) .slide-wrap-container {
     animation: rotate 3s;
     animation-delay: 0s;

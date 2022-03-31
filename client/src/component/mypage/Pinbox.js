@@ -378,7 +378,7 @@ function Pinbox(props) {
                 <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'핀 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
             </div>:
-            <div className="allPin-content">
+            <div className="noPin-content">
                 <NoPin option={'핀이'}/>
             </div>:
             pinboard.length!==0?
@@ -431,11 +431,12 @@ function Pinbox(props) {
                         </div>
                     </div>
                 </li>
-                )):<NoPin option={'핀이'}/>}
+                )):
+                <div className="noPin-content"><NoPin option={'핀이'}/></div>}
                 <PinEdit pinEditModalOpen={pinEditModalOpen} closeEditModal={closeEditModal} clickedPin={clickedPin} editPosition={editPosition}/>
                 <Delete DeleteOpen={DeleteOpen} closeDeleteModal={closeDeleteModal} title={'인사이트 카드'} description={'카드'} deletePinId={deletePinId}/>
             </ul>
-            </>:<NoPin option={'보드가'}/>}
+            </>:<div className="noPin-content"><NoPin option={'보드가'}/></div>}
         </div>
      </>
     );

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { SlideBtn, SlideCurrentDisplay } from '../views/SlideBtn';
 import { getApi } from '../state';
-import { imgBox, defaultText } from './atoms';
+import { ImgBox, defaultText } from './atoms';
 import { DEFAULT_BG_STYLE } from "./atomStyleSheet";
 
 import NonGraphic from '../views/NonGraphic';
@@ -37,7 +37,7 @@ function OrganismsImg() {
             <div className="slidebox-container" style={{width: `${849 * slideList.length}px`}}>
                 {loungeList.map( lounge => 
                 <>
-                    {imgBox(lounge.lounge)}
+                    <ImgBox obj={lounge.lounge} isPin={false}/>
                 </>    
                 )}
             </div>

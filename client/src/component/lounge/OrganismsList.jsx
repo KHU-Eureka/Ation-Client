@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import NonGraphic from "../views/NonGraphic";
 import { getApi } from '../state';
-import { imgBox } from './atoms';
+import { ImgBox } from './atoms';
 import { DEFAULT_BG_STYLE } from './atomStyleSheet';
 
 function OrganismsList(props) {
@@ -32,12 +32,12 @@ function OrganismsList(props) {
         <div className="OrganismsList-Container" style={{width: '1400px', height: '100%', marginTop: '36px'}}>
             {categoryLoungeList.map( lounge => 
             <>
-                {lounge.status !== 'END'?imgBox(lounge, true):null}
+                {lounge.status !== 'END'?<ImgBox obj={lounge} isPin={true}/>:null}
             </>)}
        </div>:
        <div className="OrganismsList-Container" style={{...DEFAULT_BG_STYLE, width: '612px', height: '346px', marginTop: '36px'}}>
             <div style={{marginTop: '73px'}}>
-                <NonGraphic type={'lounge'} isImg={true} mainText={'오픈된 라운지가 '} subContent={{type: 'btn', content: '라운지 오픈하기', link: ''}} />
+                <NonGraphic type={'lounge'} isImg={true} mainText={'오픈된 라운지가 '} subContent={{type: ''}} />
             </div>
         </div>
         :null}

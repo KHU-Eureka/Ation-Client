@@ -26,6 +26,14 @@
     margin-right: 15px;
 }
 
+
+/* .PersonaProfile-Container .sense-elem {
+    width: 20px; height: 20px;
+    object-fit: cover;
+    filter: invert(0.65) sepia(1) saturate(50) hue-rotate(355deg);
+    margin-right: 5px;
+} */
+
 .PersonaProfile-Container .btn-container {
     display: flex;
 }

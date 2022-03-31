@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import NonGraphic from "../views/NonGraphic";
 import Reco from "./Reco";
 import InsightLNB from "./InsightLNB"
-import Modal from "../modal/Modal";
 import Create from "./Create";
 import PinUp from "./PinUp";
 
@@ -58,7 +57,7 @@ function Read() {
     useEffect(()=> {
         dispatch({type: 'MENU', data: 'insight'})
         return () => {
-            console.log("cleanUp 함수");
+            
           };
     }, [])
 
@@ -143,15 +142,6 @@ function Read() {
           };
       }, [cate]);
 
-    //   useEffect( async () => {
-    //     const response = await axios.get(
-    //         process.env.REACT_APP_SERVER_HOST + '/api/insight'
-    //       );
-    //     console.log(response.data);
-    //     await setInsight(response.data);
-    //       console.log(insight)
-    //   }, [insight])
-
     const imgClickHandler = async(e) => {
         const token = localStorage.getItem('token');
         if(e.target.className !== 'pin') {
@@ -207,28 +197,6 @@ function Read() {
 
     const searchSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
-            // let searchInsight = []
-            // if(cate === '전체') {
-            //     const response = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
-            //       );
-            //     setInsight(response.data);
-            // } else {
-            //     const response = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/main-category/${cateId}`
-            //     );
-            //     const response2 = await axios.get(
-            //         `http://163.180.117.22:7218/api/insight/search?keyword=${search}`
-            //     );
-            //     for(var i of response.data) {
-            //         for(var j of response2.data) {
-            //             if(i.id === j.id) {
-            //                 searchInsight.push(j);
-            //             }
-            //         }
-            //     }
-            //     setInsight(searchInsight);
-            // }
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
               );
@@ -265,7 +233,7 @@ function Read() {
                 <div className="searchIcn-container">
                     <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
                 </div>
-                <button className="search-btn" onClick={()=> {setPageNum(1); openModal();}}>+ Insight</button>
+                <button className="search-btn" onClick={auth ? ()=> {setPageNum(1); openModal();}: () => {dispatch({type: 'LOGIN', data: true});}}>+ Insight</button>
                 <Create modalOpen={modalOpen} pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev} setAddTrue={setAddTrue}/>
             </div>
             <div className="Content-container">
@@ -277,9 +245,9 @@ function Read() {
                     <li key={i.id} className="img-li">
                         <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
-                            <div className="pin-box">
+                            {auth && <div className="pin-box">
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
-                            </div>
+                            </div>}
                             <p className="title" id={i.id}>{i.title}</p>
                             <div className="tag-container">
                             <span className="tag" id={i.id}> #{i.mainCategory.name}</span>
@@ -297,7 +265,10 @@ function Read() {
                     <PinUp open={modal2Open} pageNum={pageNum2} setPageNum={setPageNum2} close={closeModal2} header={prev} personaImg={personaImg} personaId={personaId} insightId={insightId} pinPosition={pinPosition}/>
                     </ul>
                 </div>
-                :<NonGraphic type={'insight'} isImg={true} mainText={'아직 추가된 인사이트가 '}/>}
+                :
+                <div className="nonItem">
+                    <NonGraphic type={'insight'} isImg={true} mainText={'아직 추가된 인사이트가 '}/>
+                </div>}
             </div>
         </div>
         </>

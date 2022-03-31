@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import { IoChevronBack, IoClose } from 'react-icons/io5';
 import Form01 from './createForm/Form01';
@@ -92,6 +91,7 @@ function OpenLounge(props) {
             setWaiting(false)
             setSuccess(true) // 라운지 생성 성공
             addWaitingRoom() // 라운지 대기 목록에 추가함
+            dispatch({type: 'LOUNGE_CREATE', data: res.data});
         } catch(err) {
             console.log(err);
         }

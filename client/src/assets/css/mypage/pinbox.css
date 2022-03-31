@@ -110,6 +110,7 @@
     list-style: none;
 }
 
+
 .pinBoard-content .pinBoard {
     list-style: none;
 }
@@ -127,6 +128,15 @@
     margin-right: auto;
     margin-top: 49px;
     padding-left: 160px;
+}
+
+.noPin-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 49px;
 }
 
 .pin-item {

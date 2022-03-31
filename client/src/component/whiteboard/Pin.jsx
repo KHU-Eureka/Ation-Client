@@ -1,6 +1,7 @@
 import React from 'react';
-import { Group, Rect } from 'react-konva';
+import { Group, Rect, Image, Path } from 'react-konva';
 import { Html } from 'react-konva-utils';
+import useImage from 'use-image';
 
 function UrlImage(props) {
     const { pinObj, mode, onSelect, onChange } = props;
@@ -80,7 +81,7 @@ function UrlImage(props) {
             onClick={ () => {mode === 'choice' && onSelect();}} 
             onDragEnd={positionEditHandler}>
         <Html>
-            <div style={{...flexCenterStyle, flexDirection: 'column'}}>
+            <div style={{...flexCenterStyle, flexDirection: 'column', zIndex: '10', webkitUserDrag: 'none'}} >
                 <img src={pinObj.property.content.pinImgPath} width='195px' height='110px' style={{webkitUserDrag: 'none'}}/>
                 <div style={flexCenterStyle}>
                     <div style={{marginTop: '11px'}}>
@@ -98,7 +99,9 @@ function UrlImage(props) {
                 </div>
             </div>
         </Html>
-        <Rect width={195} height={195} fill="#F5F5F5" stroke="#D7D2C8" strokeWidth={1} shadowColor='black' shadowBlur={10} shadowOpacity={0.2} zIndex={99}/>
+        <Rect width={195} height={195} fill="#F5F5F5" stroke="#D7D2C8" strokeWidth={1} shadowColor='black' shadowBlur={10} shadowOpacity={0.2} zIndex={20}/>
+        <Rect width={18} height={2} fill="#E7E6E5" x={87} y={187} zIndex={99}/>
+        <Rect width={18} height={2} fill="#E7E6E5" x={87} y={182} zIndex={999}/>
     </Group>
     </>
     );

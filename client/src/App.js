@@ -56,8 +56,10 @@ function App() {
         <Routes>        
 
           {/* Private Pages */}  
-          <Route path="/insight" element={<PrivateOutlet/>}>
+          <Route path="/insight" elem={<PublicOutlet/>}>
             <Route exact path="" element={<InsightRead/>} />
+          </Route>
+          <Route path="/insight" elem={<PrivateOutlet/>}>
             <Route exact path="create" element={<InsightCreate/>} />
           </Route>
 

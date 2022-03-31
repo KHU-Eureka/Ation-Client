@@ -62,7 +62,6 @@ $FONTSTYLE: 'normal';
         @include flex-center-lounge();
         width: 100px;
         height: 58.26px;
-        z-index: -1;
     }
 
     .main-container {
@@ -76,11 +75,9 @@ $FONTSTYLE: 'normal';
             font-size: $SIZE2;
             color: $COLOR3;
         }
-        z-index: -1;
     }
 
     .footer-container {
-        z-index: -1;
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -191,6 +188,7 @@ $FONTSTYLE: 'normal';
         width: 297.01px;
         height: 100%;
         box-shadow: 8px 8px 40px rgba(0, 0, 0, 0.1);
+        z-index: 30;
 
         .MainLNB-wrap-Container {
             margin-left: 23.56px;
@@ -229,6 +227,8 @@ $FONTSTYLE: 'normal';
 
         .LoungeLive-Container {
             margin-left: 54px;
+            margin-right: 54px;
+            margin-bottom: 103px;
 
             .LoungeRoom-container {
                 @include flex-center-lounge();
@@ -300,7 +300,7 @@ $FONTSTYLE: 'normal';
         }
 
         .LoungeWait-Container {
-            z-index: -1;
+            margin-bottom: 103px;
             
             .OrganismsImg-Container {
                 position: relative;
@@ -322,6 +322,8 @@ $FONTSTYLE: 'normal';
                     float: left;
                     margin-right: 36px;
 
+                    
+
                     .imgbox-wrap-container {
                         @include imgbox-wrap-lounge(708.12px, 325px);
                         margin-top: 51px;
@@ -333,7 +335,6 @@ $FONTSTYLE: 'normal';
         }
 
         .LoungeRecent-Container {
-            margin-top: 103px;
 
             .OrganismsCate-Container {
                 margin-top: $SIZE1;
@@ -361,13 +362,11 @@ $FONTSTYLE: 'normal';
                     @include imgbox-lounge();
                     position: relative;
                     margin-right: 88px;
-                    // z-index: -1;
 
                     .imgbox-wrap-container {
                         @include imgbox-wrap-lounge();
                         margin-top: 49px;
                         margin-left: 40px;
-                        z-index: -1;
 
                         @include imgbox-content-lounge();
                      }

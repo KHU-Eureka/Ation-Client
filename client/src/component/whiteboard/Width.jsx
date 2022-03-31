@@ -6,11 +6,11 @@ import { AttrContextStore } from "./store/AttrContext";
 
 const attrWidth = [
     { px: 0, style: '20px'},
-    { px: 1, style: '4px'},
-    { px: 2, style: '8px'},
-    { px: 3, style: '12px'},
-    { px: 4, style: '16px'},
-    { px: 5, style: '20px'},
+    { px: 3, style: '4px'},
+    { px: 4, style: '8px'},
+    { px: 5, style: '12px'},
+    { px: 6, style: '16px'},
+    { px: 7, style: '20px'},
 ]
 
 const PenW = ({ w }) => {

@@ -2,20 +2,20 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { Cookies } from "react-cookie";
 import axios from "axios";
 
-import image1 from '../../../assets/image/lounge/image 188.png';
-import image2 from '../../../assets/image/lounge/image 189.png';
-import image3 from '../../../assets/image/lounge/image 190.png';
-import image4 from '../../../assets/image/lounge/image 191.png';
-import image5 from '../../../assets/image/lounge/image 192.png';
-import image6 from '../../../assets/image/lounge/image 193.png';
-import image7 from '../../../assets/image/lounge/image 194.png';
-import image8 from '../../../assets/image/lounge/image 195.png';
-import image9 from '../../../assets/image/lounge/image 196.png';
-import image10 from '../../../assets/image/lounge/image 197.png';
-import image11 from '../../../assets/image/lounge/image 198.png';
-import image12 from '../../../assets/image/lounge/image 199.png';
-import image13 from '../../../assets/image/lounge/image 200.png';
-import image14 from '../../../assets/image/lounge/image 201.png';
+import image1 from '../../../assets/image/lounge/image 188.jpg';
+import image2 from '../../../assets/image/lounge/image 189.jpg';
+import image3 from '../../../assets/image/lounge/image 190.jpg';
+import image4 from '../../../assets/image/lounge/image 191.jpg';
+import image5 from '../../../assets/image/lounge/image 192.jpg';
+import image6 from '../../../assets/image/lounge/image 193.jpg';
+import image7 from '../../../assets/image/lounge/image 194.jpg';
+import image8 from '../../../assets/image/lounge/image 195.jpg';
+import image9 from '../../../assets/image/lounge/image 196.jpg';
+import image10 from '../../../assets/image/lounge/image 197.jpg';
+import image11 from '../../../assets/image/lounge/image 198.jpg';
+import image12 from '../../../assets/image/lounge/image 199.jpg';
+import image13 from '../../../assets/image/lounge/image 200.jpg';
+import image14 from '../../../assets/image/lounge/image 201.jpg';
 
 function Form04(props) {
     const cookies = new Cookies();
@@ -48,7 +48,6 @@ function Form04(props) {
         }
         getLoungImgList();
     }, [])
-    
 
     return (
         <div className="form04 show-modal-content">
@@ -72,7 +71,7 @@ function Form04(props) {
                                             onChange={(e)=>{setImageId(image.id);}}
                                         />
                                         <label htmlFor={image.id}>
-                                            <img src={image.imgPath} alt="background"></img>
+                                            <img src={image.imgPath} alt="background" loading="lazy"></img>
                                         </label>
                                     </div>
                                 ))

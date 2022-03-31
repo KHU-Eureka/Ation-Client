@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import pin from '../assets/svg/pin.svg';
 
 export function useFetch(url, deps) { 
-    const cookies = new Cookies();
     const [data, setData] = useState(); 
 
     useEffect( async () => { 
@@ -22,7 +21,7 @@ export function useFetch(url, deps) {
             console.log(err);
         }
         return () => {
-            console.log('useEffect clean up')
+            
         }
     }, [url, deps]);
 
@@ -68,7 +67,7 @@ export function LoungePinup(props) {
     
 
     return(
-        <img className='pin' src={pin} onClick={pinClickHandler}/>
+        <img className='pin' src={pin} onClick={pinClickHandler} style={{zIndex: '-1'}}/>
     );
 
 }
@@ -102,6 +101,10 @@ export function clickUIPrevHandler(prevStyle, prevElems) {
 
 export function clickUIChangeHandler(changeStyle, currentTarget) {
     for(let key in changeStyle) currentTarget.style[key] = changeStyle[key];
+}
+
+export function clickClassListPrevHandler(prevClass, prevElems) {
+    for(let i of prevElems) i.classList.remove(prevClass);
 }
 
 export async function deleteHandler(url, id) {

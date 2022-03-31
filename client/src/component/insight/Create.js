@@ -27,7 +27,6 @@ function Create(props) {
     const [loading, setLoading] = useState(false);
 
     const CreateInsightCloseHandler = async ({ target }) => {
-        console.log(modalCreate.current);
         if(target.className!=='create-btn2') {
             if(target.className!=='complete-btn' && target.className!=='tag' && target.className!=='close' && target.className!=='skip-btn') {
                 if(modalOpen && !modalCreate.current.contains(target) && target.className!=='create-btn' && target.className!=='prev' && target.className!=='close' && target.className!=='complete-btn') {
@@ -54,7 +53,7 @@ function Create(props) {
             }
         } else {
             return () => {
-                console.log("cleanUp 함수");
+            
               };
         }
     }, [modalOpen]);
@@ -76,6 +75,7 @@ function Create(props) {
                             });
                             setInsightId(response.data);
                             setInsightTrue(response.status);
+                            console.log(response.data)
                         } catch(err) {
                             setInsightTrue(400);
                         }
@@ -104,8 +104,6 @@ function Create(props) {
                 }
             } 
         } else {
-            console.log(pageNum);
-            console.log(modalOpen);
             setMainCategory(0);
             setMainCategoryName("");
             setUrl("");
@@ -135,7 +133,7 @@ function Create(props) {
         );
         setPrevImgUrl(response.data.imgPath);
         return () => {
-            console.log("cleanUp 함수");
+          
           };
     }, [InsightId]);
 
@@ -167,7 +165,6 @@ function Create(props) {
         setClickedSubCategory([]);
         setMainCategory(e.target.value);
         setMainCategoryName(e.target.innerHTML);
-        console.log(e.target);
         const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/category/sub?mainCategoryId=${e.target.value}`);
         setSubCategory(response.data);
         const cateBtn = document.querySelectorAll('.category-btn');
@@ -178,10 +175,7 @@ function Create(props) {
     }
 
     const tagChangeHandler = (e) => {
-        console.log(hashtagLength+"asdf")
-        console.log(hashtag);
         if(hashtagLength < 2){
-            console.log(e.target.value);
             setTag(e.target.value);
         } else {
             e.preventDefault();
@@ -195,13 +189,11 @@ function Create(props) {
             for(var i=0;i<cateBtn.length;i++) {
                 if(!ClickedSubCategory.includes(cateBtn[i].getAttribute('id'))) {
                     cateBtn[i].classList.remove('cateBtn2-clicked');
-                    console.log(ClickedSubCategory);
                 }
             }
             e.target.classList.add('cateBtn2-clicked');
         }
         if(ClickedSubCategory.includes(e.target.getAttribute('id'))) {
-            console.log("asdf")
             setClickedSubCategory(ClickedSubCategory.filter( cate => cate!==e.target.getAttribute('id')));
             e.target.classList.remove('cateBtn2-clicked');
         }
@@ -210,18 +202,12 @@ function Create(props) {
     useEffect(() => {
         if(pageNum===1) {
             if(document.querySelector('.create-btn') && url === "") {
-                // document.querySelector('.create-btn').style.color="#FFA48C";
-                // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
                 document.querySelector('.create-btn').classList.add('noPlayBtn');
             }
         } else if(pageNum===2) {
             if(mainCategory === 0) {
-                // document.querySelector('.create-btn').style.color="#FFA48C";
-                // document.querySelector('.create-btn').style.border="1px solid #FFA48C";
                 document.querySelector('.create-btn').classList.add('noPlayBtn');
             } else {
-                // document.querySelector('.create-btn').style.color="#FE3400";
-                // document.querySelector('.create-btn').style.border="1px solid #FE3400";
                 document.querySelector('.create-btn').classList.remove('noPlayBtn');
             }
             const cateBtn = document.querySelectorAll('.category-btn');
@@ -243,37 +229,30 @@ function Create(props) {
             }
         } else if(pageNum===4) {
             if(document.querySelector('.create-btn2') && hashtag.length === 0) {
-                // document.querySelector('.create-btn2').style.color="#FFA48C";
-                // document.querySelector('.create-btn2').style.border="1px solid #FFA48C";
                 document.querySelector('.create-btn2').classList.add('noPlayBtn');
             } else if(hashtag.length !== 0) {
-                // document.querySelector('.create-btn2').style.color="#FE3400";
-                // document.querySelector('.create-btn2').style.border="1px solid #FE3400";
                 document.querySelector('.create-btn2').classList.remove('noPlayBtn');
             }
         }
         return () => {
-            console.log("cleanUp 함수");
+            
           };
     }, [modalOpen, url, pageNum, mainCategory, hashtag])
 
     async function readImage (e) {
         var formData = new FormData();
         formData.append('insightImg', e.target.files[0]);
-        console.log(formData);
         setChangeImgFormdata(formData);
         const reader = new FileReader();
         setPrevImgUrl(URL.createObjectURL(e.target.files[0]));
         reader.readAsDataURL(e.target.files[0]);
-        // console.log(reader.readAsDataURL(e.target.files[0]));
     }
 
     useEffect(() => {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
-        console.log(prevImgUrl.substring(5))
         return () => {
-            console.log("cleanUp 함수");
+
           };
     }, [prevImgUrl])
 
@@ -298,7 +277,7 @@ function Create(props) {
             document.querySelector('.tag-length').style.display="none";
         }
         return () => {
-            console.log("cleanUp 함수");
+           
           };
     }, [hashtag])
     

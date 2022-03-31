@@ -67,7 +67,7 @@ function Stageboard(props) {
             }
             getLoungeBoard();
         }
-    }, [])
+    }, [whiteboard])
 
     function dataURItoBlob(dataURI) {
         let byteString = window.atob(dataURI.split(',')[1]);
@@ -327,6 +327,9 @@ function Stageboard(props) {
         console.log(msgObj)
         setBoardObjectList(msgObj);
     }
+    useEffect(()=> {
+        console.log('object list : ', boardObjectList);
+    }, [])
 
     return (
         <div>
@@ -335,13 +338,16 @@ function Stageboard(props) {
             url="http://ation-server.seohyuni.com/ws"
             topics={[`/lounge/${roomInfo.id}/whiteboard/receive`, 
                     `/lounge/${roomInfo.id}/whiteboard/send`,]}
-            onMessage={msg => { receiveMessage(msg) }} 
+            onMessage={msg => { receiveMessage(msg); }} 
             ref={$websocket}
         />}
         <div className="stageboard-container" onDrop={dropHandler} onDragOver={dragOverHandler} style={{position: 'relative'}}>
             <Stage ref={stageRef} width={1607} height={window.innerHeight-20} onMouseDown={attrStore.mode !== 'choice' && mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler} onContextMenu={contextMenuHandler} onClick={clickHandler}>
                 <Layer>
-                    {boardObjectList && boardObjectList.map( (obj, i) => <Elements key={i} type={obj.type} obj={obj}
+                    {
+                    boardObjectList &&
+                    boardObjectList.map( (obj, i) => 
+                    (obj.type && <Elements key={i} type={obj.type} obj={obj}
                     isSelected={isTrue(obj.id, selectedObject)}
                     onSelect={ () => setSelectedObject(obj.id) }
                     onChange={ (newAttrs) => {
@@ -353,7 +359,8 @@ function Stageboard(props) {
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     mode={attrStore.mode}
-                    /> )}
+                    /> ))
+                    }
                     
                 </Layer>
             </Stage>

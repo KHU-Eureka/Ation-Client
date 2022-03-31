@@ -74,17 +74,14 @@ export function LoungePinup(props) {
 
 export async function enterLounge(target, loungeId, personaId) {
     if(target.className !== 'pin') {
-        const cookies = new Cookies();
         const token = localStorage.getItem('token');
-        console.log(loungeId, personaId)
-    
         try {
             const response = await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/${loungeId}/enter/${personaId}`, {}, {
                 headers: {
                     Authorization: "Bearer " + token
                 }
             });
-            console.log(`/lounge-room/${loungeId}`);
+            console.log("response: ", response);
             window.location.replace(`/lounge-room/${loungeId}`);
         } catch(err) {
             // window.location.replace(`/lounge-room/${loungeId}`);

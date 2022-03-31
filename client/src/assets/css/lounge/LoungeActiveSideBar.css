@@ -225,6 +225,7 @@
     left: 210px;
     bottom: 135px;
     animation: showEmojiPicker 0.5s;
+    z-index: 100;
 }
 
 @keyframes showEmojiPicker {

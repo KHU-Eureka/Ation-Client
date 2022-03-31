@@ -57,9 +57,10 @@ function Stageboard(props) {
                             }
                         }
                     )
-                    if(res.data.whiteboard !== null && res.data.whiteboard !== undefined) {
-                        const board = JSON.parse(res.data.whiteboard);
-                        setBoardObjectList([board]);
+                    if(res.data.whiteboard !== null && res.data.whiteboard !== "undefined") {
+                        console.log(res.data);
+                        // const board = JSON.parse(res.data.whiteboard);
+                        // setBoardObjectList([board]);
                     }
                 } catch(err) {
                     console.log(err)
@@ -288,17 +289,20 @@ function Stageboard(props) {
     }, [boardObjectList])
 
     const sendMessage = () => {
-        const stringObjectList = JSON.stringify(boardObjectList);
-        console.log(stringObjectList)
+        let stringObjectList = JSON.stringify(boardObjectList);
+        let string1 = stringObjectList.replaceAll("\'",'\"');
+        console.log(string1)
         try {
-            $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": ${stringObjectList}}`);
+            $websocket.current.sendMessage(`/lounge/${roomInfo.id}/whiteboard/receive`, `{"whiteboard": "${stringObjectList}"}`);
         } catch(err) {
             console.log(err);
         }
     }
 
     const receiveMessage = (msg) => { 
-        if(msg !== undefined) setBoardObjectList(msg.whiteboard);
+        const msgObj = JSON.parse(msg.whiteboard);
+        console.log(msgObj, roomInfo);
+        if(msg !== undefined) setBoardObjectList(msgObj);
     }
 
     return (

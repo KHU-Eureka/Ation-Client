@@ -67,7 +67,7 @@ export function LoungePinup(props) {
     
 
     return(
-        <img className='pin' src={pin} onClick={pinClickHandler} style={{zIndex: '-1'}}/>
+        <img className='pin' src={pin} onClick={pinClickHandler}/>
     );
 
 }
@@ -76,6 +76,7 @@ export async function enterLounge(target, loungeId, personaId) {
     if(target.className !== 'pin') {
         const cookies = new Cookies();
         const token = localStorage.getItem('token');
+        console.log(loungeId, personaId)
     
         try {
             const response = await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/${loungeId}/enter/${personaId}`, {}, {
@@ -86,9 +87,7 @@ export async function enterLounge(target, loungeId, personaId) {
             console.log(`/lounge-room/${loungeId}`);
             window.location.replace(`/lounge-room/${loungeId}`);
         } catch(err) {
-            console.log(err.message);
-            console.log(`/lounge-room/${loungeId}`);
-            window.location.replace(`/lounge-room/${loungeId}`);
+            // window.location.replace(`/lounge-room/${loungeId}`);
         }
     }
 }

@@ -65,7 +65,8 @@
                 border-radius: 10px;
                 width: 291px;
                 height: 173px;
-                z-index: 99;
+                z-index: 99999;
+                cursor: default;
 
                 .OptionTitle-wrap-container {
                     margin-top: 54px;
@@ -119,6 +120,7 @@
                     .completeBtn {
                         border: 1px solid #FE3400;
                         color: #FE3400;
+                        cursor: pointer;
                     }
                 }
 

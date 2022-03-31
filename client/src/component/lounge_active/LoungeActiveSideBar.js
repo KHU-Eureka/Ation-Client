@@ -324,7 +324,7 @@ function LoungeActiveSideBar(props) {
                         }
                         <div id="chatting-bottom" ref={chattingBottom}></div>
                     </div>
-                    <form className="text-wrapper" id="text-form" onSubmit={(e)=>{sendChatting(e)}} autoComplete="off">
+                    <form className={admin && admin.id === activePersonaId?"text-wrapper text-wrapper-with-finish":"text-wrapper"} id="text-form" onSubmit={(e)=>{sendChatting(e)}} autoComplete="off">
                         <input 
                             id="chatting-user-input"
                             type="text"

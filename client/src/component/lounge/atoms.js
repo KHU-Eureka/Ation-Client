@@ -1,5 +1,6 @@
 import { LoungePinup, enterLounge, clickUIPrevHandler, clickUIChangeHandler, deleteHandler } from '../state';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import { HEADER_STYLE, MAINTITLE_STYLE, MEMBERNUM_STYLE, LEADERNAME_STYLE, LEADERIMG_STYLE, VALIDBTN_STYLE_ENTER, INVALIDBTN_STYLE_ENTER, BTN_HOVERSTYLE, BTN_HOVEROUTSTYLE, BTN_CLICKSTYLE, BTN_CLICKOUTSTYLE, MODULE_HOVEROUTSTYLE, MODULE_HOVERSTYLE } from './atomStyleSheet';
@@ -100,11 +101,25 @@ const enterBtn = (isValid, loungeId, personaId) => {
         isValid && clickUIChangeHandler(BTN_HOVEROUTSTYLE, target);
     }
 
-    const clickStyleHandler = ({ target }) => {
+    const clickStyleHandler = async ({ target }) => {
         if(isValid) {
             clickUIPrevHandler(BTN_CLICKOUTSTYLE, btnDoc);
             clickUIChangeHandler(BTN_CLICKSTYLE, target);
-            enterLounge(loungeId, personaId);
+    
+            if(target.className !== 'pin') {
+                const token = localStorage.getItem('token');
+                try {
+                    const response = await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/lounge/${loungeId}/enter/${personaId}`, {}, {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    });
+                    console.log(`/lounge-room/${loungeId}`);
+                    window.location.replace(`/lounge-room/${loungeId}`);
+                } catch(err) {
+                    // window.location.replace(`/lounge-room/${loungeId}`);
+                }
+            }
         }
     }
 
@@ -145,6 +160,7 @@ export const ImgBox = ({ obj, isPin }) => {
 }
 //backgroundImage: `url(${obj.imgPath})`, 
 export const Modulebox = ({ obj, isSense, link, setDeleteLounge }) => {
+    const activePersonaId = useSelector((state) => state.activePersonaId);
     
     const hoverStyleHandler = ({ currentTarget }) => {
         currentTarget.querySelector('.delete-btn').style.display = 'inline';
@@ -169,7 +185,7 @@ export const Modulebox = ({ obj, isSense, link, setDeleteLounge }) => {
                     {tag(obj.mainCategory.name, obj.subCategoryList)}
                 </div>
                 <div className='right-container'>
-                    {enterBtn( obj.status !=='END'? true:false, obj.id, obj.persona.id )}
+                    {enterBtn( obj.status !=='END'? true:false, obj.id, activePersonaId )}
                 </div>
             </div>
             {!isSense?deleteBtn(link, obj.id, setDeleteLounge):null}

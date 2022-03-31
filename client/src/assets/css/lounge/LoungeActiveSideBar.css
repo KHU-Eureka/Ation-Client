@@ -188,7 +188,7 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    margin-bottom: 80px;
+    margin-bottom: 118px;
     margin-top: 20px;
 }
 
@@ -202,6 +202,11 @@
     color: #352C23;
     transition: 0.2s;
 }
+
+.lounge-start .text-wrapper-with-finish {
+    margin-bottom: 26px !important;
+}
+
 .lounge-start .text-wrapper > input[type=text]:focus { font-size: 14px; }
 .lounge-start .text-wrapper > input[type=text]::placeholder { color: #BEBBB9; }
 
@@ -236,7 +241,7 @@
     font-family: Pretendard;
     box-shadow: 1px 8px 20px rgba(0, 0, 0, 0.07);
     border-radius: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 118px;
     flex-shrink: 0;
     cursor: pointer;
     transition: 0.2s;

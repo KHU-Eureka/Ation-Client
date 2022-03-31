@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { BiChevronDown } from 'react-icons/bi';
 
 import OptionTitle from './OptionTitle';
 
@@ -35,8 +36,8 @@ export default function IdeationTitle(props) {
     return(
         <div className='IdeationTitle-container' style={IdeationStyle}>
             {ideationTitle(title)}
-            <img onClick={selectBtnClickHandler} src={selectBtn} />
-            <OptionTitle openOptionTitle={openOptionTitle} setOpenOptionTitle={setOpenOptionTitle} setChangeTitle={setChangeTitle} ChangeTitle={ChangeTitle}/>
+            <BiChevronDown className="down-icon" onClick={selectBtnClickHandler}/>
+            {openOptionTitle && <OptionTitle setOpenOptionTitle={setOpenOptionTitle} setChangeTitle={setChangeTitle} ChangeTitle={ChangeTitle}/>}
         </div>
     );
 }

@@ -147,7 +147,6 @@ function PinEdit(props) {
           })
         if(window.event.keyCode === 13) {
             if(afterTag.length < 5) {
-                console.log(afterTag.length);
                 setAfterTag( prev => [...prev, tagValue]);
                 setTagValue("");
             }
@@ -207,7 +206,6 @@ function PinEdit(props) {
     useEffect(() => {
         if(document.querySelector('.PinBoard-Container')) {
             document.querySelector('.PinBoard-Container').scrollTop = PinboardScroll;
-            console.log(document.querySelector('.PinBoard-Container').scrollTop, document.querySelector('.PinBoard-Container').scrollHeight)
         }
     }, [PinboardScroll]);
     

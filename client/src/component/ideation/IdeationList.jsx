@@ -20,7 +20,7 @@ function IdeationList(props) {
     const [deleteIdeation, setDeleteIdeation] = useState('');
 
     useEffect(() => {
-        getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation?personaId=${activePersonaId}`).then((data) => {console.log(data.data);setIdeationList(data.data);});
+        getApi(`${process.env.REACT_APP_SERVER_HOST}/api/ideation?personaId=${activePersonaId}`).then((data) => {setIdeationList(data.data);});
     }, [activePersonaId, ChangeTitle, attrStore.thumbnail, deleteIdeation])
 
     return(

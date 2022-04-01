@@ -47,7 +47,6 @@ function PinUP(props) {
     }, [open])
 
     const pinboardImport = async () => {
-        console.log(persona)
         const token = localStorage.getItem('token');
         const response = await axios.get(
             `${process.env.REACT_APP_SERVER_HOST}/api/pin-board/?personaId=${persona}`,
@@ -63,9 +62,6 @@ function PinUP(props) {
     const personaImgClickHandler = (e) => {
         setPinBoardId(0);
         setPersona(e.target.getAttribute("value"));
-        // setClickPersonaImg(e.target.getAttribute("src"))
-        console.log(e.target.getAttribute("src"));
-        console.log(e.target.getAttribute("value"));
         const persona_img = document.querySelectorAll('.persona-img');
         for(var i=0;i<persona_img.length;i++) {
             persona_img[i].classList.remove('clickedPersona');
@@ -193,7 +189,6 @@ function PinUP(props) {
     async function readImage (e) {
         var formData = new FormData();
         formData.append('pinImg', e.target.files[0]);
-        console.log(formData);
         setChangeImgFormdata(formData);
         const reader = new FileReader();
         setPrevImgUrl(URL.createObjectURL(e.target.files[0]));
@@ -213,7 +208,6 @@ function PinUP(props) {
     useEffect(() => {
         const previewImage = document.getElementsByClassName("upload-file");
         previewImage.src = prevImgUrl.substring(5);
-        console.log(prevImgUrl.substring(5))
     }, [prevImgUrl]);
 
     useEffect(() => {

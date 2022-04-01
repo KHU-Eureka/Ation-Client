@@ -42,7 +42,6 @@ function LandingCover() {
             if (pullSlot) {
                 setSec(time.current);
                 time.current -= 1;
-                console.log(time.current);
             }
         }, 1000)
         return () => clearInterval(timer.current)

@@ -40,7 +40,6 @@ function Reco(props) {
     }
 
     useEffect(()=> {
-        console.log(props.auth);
         slot.current.addEventListener('load', removeAnimation);
         slot.current.addEventListener('focus', rollTheRullet);
         slot.current.addEventListener('blur', removeRulletAnimation);

@@ -168,15 +168,12 @@ function Pinbox(props) {
         if(!document.querySelector(".clickDel")) {
             let doc = "";
             if(e.target.className === "Mypin-item" || e.target.className === "pin-img") {
-                console.log(e.target.parentNode);
                 doc = e.target.parentNode;
             } else if(e.target.className === "pin-name" || e.target.className === "pin-title") {
-                console.log(e.target.parentNode.parentNode);
                 doc = e.target.parentNode.parentNode;
             } else if(e.target.className === 'Mypin-tag') {
                 doc = e.target.parentNode.parentNode.parentNode.parentNode;
             } else {
-                console.log(e.target.parentNode.parentNode.parentNode);
                 doc = e.target.parentNode.parentNode.parentNode;
             }
             doc.querySelector(".pin-img").style.filter="grayscale(60%)";
@@ -187,15 +184,12 @@ function Pinbox(props) {
     const pinMouseOutHandler = (e) => {
         let doc = "";
         if(e.target.className === "Mypin-item" || e.target.className === "pin-img") {
-            console.log(e.target.parentNode);
             doc = e.target.parentNode;
         } else if(e.target.className === "pin-name" || e.target.className === "pin-title") {
-            console.log(e.target.parentNode.parentNode);
             doc = e.target.parentNode.parentNode;
         } else if(e.target.className === 'Mypin-tag') {
             doc = e.target.parentNode.parentNode.parentNode.parentNode;
         } else {
-            console.log(e.target.parentNode.parentNode.parentNode);
             doc = e.target.parentNode.parentNode.parentNode;
         }
         doc.querySelector(".pin-img").style.filter="grayscale(0%)";
@@ -206,13 +200,10 @@ function Pinbox(props) {
         const token = localStorage.getItem('token');
         let doc = "";
         if(e.target.className === "Mypin-item" || e.target.className === "pin-img") {
-            console.log(e.target.parentNode);
             doc = e.target.parentNode;
         } else if(e.target.className === "pin-name" || e.target.className === "pin-title") {
-            console.log(e.target.parentNode.parentNode);
             doc = e.target.parentNode.parentNode;
         } else {
-            console.log(e.target.parentNode.parentNode.parentNode);
             doc = e.target.parentNode.parentNode.parentNode;
         }
         const pinId = doc.getAttribute("id");
@@ -251,7 +242,6 @@ function Pinbox(props) {
 
     const pinEditHandler = async (e) => {
         e.stopPropagation();
-        console.log(e.target);
         const token = localStorage.getItem('token');
         const pinId = e.target.getAttribute('id');
         const response = await axios.get(process.env.REACT_APP_SERVER_HOST + `/api/pin/${pinId}`, {

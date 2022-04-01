@@ -44,7 +44,6 @@ function Stageboard(props) {
 
     //화이트보드 받아오는 부분 !
     useEffect(()=> { 
-        console.log(boardObjectList)
         if(roomInfo !== undefined) {
             const getLoungeBoard = async () => {
                 const token = localStorage.getItem('token')
@@ -284,7 +283,6 @@ function Stageboard(props) {
         //화이트보드 String 형태로 api에 저장하는 부분 !
         const stringObjectList = JSON.stringify(boardObjectList);
         if(state !== null) {
-            console.log(stringObjectList)
             if(stringObjectList !== "[]") {
                 try {
                     await axios.put(`${process.env.REACT_APP_SERVER_HOST}/api/ideation/whiteboard/${state.ideationId}`,
@@ -324,12 +322,8 @@ function Stageboard(props) {
     const receiveMessage = (msg) => { 
         let tempBoard = msg.whiteboard.replaceAll('\'',`\"`);
         const msgObj = JSON.parse(tempBoard);
-        console.log(msgObj)
         setBoardObjectList(msgObj);
     }
-    useEffect(()=> {
-        console.log('object list : ', boardObjectList);
-    }, [])
 
     return (
         <div>

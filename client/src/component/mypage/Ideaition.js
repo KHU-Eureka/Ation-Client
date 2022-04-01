@@ -47,12 +47,10 @@ function Ideaition() {
             while(i <= slideDoc.length) {
                 if(i === 1 || i % 11 === 0) {
                     temp.push(slideDoc[i]);
-                    console.log(i)
                 }
                 i++;
             }
             setSlideList(temp);
-            console.log(slideList)
         }
     }, [ideations])
 

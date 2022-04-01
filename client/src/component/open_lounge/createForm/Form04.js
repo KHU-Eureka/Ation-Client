@@ -40,7 +40,6 @@ function Form04(props) {
                         }
                     }
                 )
-                console.log(res.data);
                 setLoungeImgList(res.data)
             } catch(err) {
                 console.log(err)

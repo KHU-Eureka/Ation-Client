@@ -53,7 +53,6 @@ function reducer(state = initialState, action) {
       tempState.menu = action.data;
       break;
     case 'WAITING_ROOM':
-      console.log('dispatch data: ', action.data);
       tempState.waitingRoomList = action.data;
       break;
     case 'ADD_WAITING': // waiting 추가 => ready했을 때

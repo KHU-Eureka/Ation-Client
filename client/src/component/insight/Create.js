@@ -75,7 +75,6 @@ function Create(props) {
                             });
                             setInsightId(response.data);
                             setInsightTrue(response.status);
-                            console.log(response.data)
                         } catch(err) {
                             setInsightTrue(400);
                         }

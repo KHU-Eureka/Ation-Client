@@ -34,16 +34,6 @@ function RoomEditModal(props) {
     // subCategory 선택 개수 제한 메세지
     let [showAlertMsg, setShowAlertMsg] = useState(false);
 
-    useEffect(()=> {
-        console.log(roomInfo.imgPath.split('/').slice(-1)[0].split('-')[1].split('.')[0]);
-        //[roomInfo.imgPath.split('/').lastIndexOf()].split('-')[1].split('.')[0]
-        console.log("imageId: ",imageId)
-        console.log("imgPath : ",loungeImgList.find((elem)=>elem.id===imageId*1))
-        for(let i of loungeImgList) {
-            console.log(i.id);
-        }
-    }, [loungeImgList, imageId])
-
     const updateRoomInfo = async () => {
         const token = localStorage.getItem('token');
         try {
@@ -98,7 +88,6 @@ function RoomEditModal(props) {
                 setSubCategoryIdList([...subCategoryIdList, id])
             }
         } else {
-            console.log(subCategoryIdList)
             setSubCategoryIdList(subCategoryIdList.filter((elem) => elem !== id))
         }
     }
@@ -163,7 +152,6 @@ function RoomEditModal(props) {
                         }
                     }
                 )
-                console.log(res.data);
                 setLoungeImgList(res.data)
             } catch(err) {
                 console.log(err)
@@ -171,10 +159,8 @@ function RoomEditModal(props) {
         }
 
         const getSubCategoryIdList = () => {
-            console.log("subCategoryList", roomInfo.subCategoryList)
             var tempList = [];
             for(var subCategory of roomInfo.subCategoryList) {
-                console.log(subCategory.id);
                 tempList.push(subCategory.id);
             }
             setSubCategoryIdList(tempList);

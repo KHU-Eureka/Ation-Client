@@ -5,7 +5,6 @@ function Modal(props) {
     const {open, close, header, pageNum, setPageNum} = props;
 
     useEffect(() => {
-        console.log(pageNum);
     }, [pageNum]);
 
     const onclickHandler = () => {

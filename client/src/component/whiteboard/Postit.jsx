@@ -10,7 +10,6 @@ function Postit(props) {
     const postTextRef = useRef();
 
     useEffect(() => {
-        console.log(isEditing)
         if (isSelected) {
             transRef.current.nodes([postRef.current]);
             transRef.current.getLayer().batchDraw();
@@ -38,7 +37,6 @@ function Postit(props) {
         const scaleY = node.scaleY();
         node.scaleX(1);
         node.scaleY(1);
-        console.log(node)
         onChange(
             {
                 ...postObj.property,

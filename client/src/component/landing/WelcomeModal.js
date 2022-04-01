@@ -4,7 +4,6 @@ import { VscClose } from 'react-icons/vsc';
 import character from '../../assets/image/character.png';
 
 function WelcomeModal(props) {
-    console.log(props);
     const navigation = useNavigate();
 
     const goToCreatePersona = () => {

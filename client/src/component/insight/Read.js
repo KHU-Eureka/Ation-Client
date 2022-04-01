@@ -110,35 +110,29 @@ function Read() {
         PersonaSetting();
         fetchUserName();
         return () => {
-            console.log("cleanUp 함수");
           };
     }, [])
 
     useEffect( async () => {
         
-        console.log(cate);
         if(cate !== "전체") {
             let cateList = [];
             const response = await axios.get(
                 process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
-            console.log(cate);
             for (var i of response.data) { 
                if(cate === i.mainCategory.name) {
                 cateList.push(i);
                }
               }
             await setInsight(cateList);
-            console.log(cateList);
         } else {
             const response = await axios.get(
                 process.env.REACT_APP_SERVER_HOST + '/api/insight'
               );
-            console.log( response.data);
             await setInsight(response.data);
         }
         return () => {
-            console.log("cleanUp 함수");
           };
       }, [cate]);
 
@@ -152,12 +146,10 @@ function Read() {
                 }
             });
             window.open(response.data.url);
-            console.log(e.target);
         }
     }
 
     const searchHandler = (e) => {
-        console.log(e.target.value);
         setSearch(e.target.value);
     }
 
@@ -165,7 +157,6 @@ function Read() {
         const response = await axios.get(
             `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
           );
-          console.log(response.data);
         setInsight(response.data);
     }
 
@@ -200,7 +191,6 @@ function Read() {
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
               );
-              console.log(response.data);
             setInsight(response.data);
         }
     }
@@ -215,7 +205,6 @@ function Read() {
             setAddTrue(false);
         }
         return () => {
-            console.log("cleanUp 함수");
           };
     }, [addTrue])
   

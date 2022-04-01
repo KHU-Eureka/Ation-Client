@@ -51,7 +51,7 @@ function InsightLNB(props) {
             }
         }
         return () => {
-            console.log("cleanUp 함수");
+
           };
     }, [cate1])
 

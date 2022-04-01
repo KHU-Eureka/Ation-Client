@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import NonGraphic from "../views/NonGraphic";
 import Reco from "./Reco";
@@ -16,8 +16,8 @@ import search_insight from "../../assets/svg/search_insight.svg";
 import "../../assets/css/insight/Read.css";
 
 function Read() {
-    const cookies = new Cookies();
     let dispatch = useDispatch();
+    const activePersonaId = useSelector((state) => state.activePersonaId);
     const [pageNum, setPageNum] = useState(1);
     const [pageNum2, setPageNum2] = useState(1);
     const [insight, setInsight] = useState([]);
@@ -55,7 +55,8 @@ function Read() {
 
     // menu setting
     useEffect(()=> {
-        dispatch({type: 'MENU', data: 'insight'})
+        dispatch({type: 'MENU', data: 'insight'});
+        document.body.scrollTop = window.scrollTo(0,0);
         return () => {
             
           };
@@ -137,15 +138,19 @@ function Read() {
       }, [cate]);
 
     const imgClickHandler = async(e) => {
-        const token = localStorage.getItem('token');
-        if(e.target.className !== 'pin') {
-            let temp = e.target.getAttribute('id');
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            });
-            window.open(response.data.url);
+        if(activePersonaId !== null) {
+            const token = localStorage.getItem('token');
+            if(e.target.className !== 'pin') {
+                let temp = e.target.getAttribute('id');
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/${temp}`, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                });
+                window.open(response.data.url);
+            }
+        } else {
+            dispatch({type: 'LOGIN', data: true});
         }
     }
 
@@ -153,11 +158,15 @@ function Read() {
         setSearch(e.target.value);
     }
 
-    const searchClickHandler = async() => {
+    const seachControl = async () => {
         const response = await axios.get(
             `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
           );
         setInsight(response.data);
+    }
+
+    const searchClickHandler = async() => {
+        seachControl();
     }
 
     const imgMouseOverHandler = (e) => {
@@ -188,10 +197,7 @@ function Read() {
 
     const searchSubmitHandler = async (e) => {
         if(e.key === 'Enter') {
-            const response = await axios.get(
-                `${process.env.REACT_APP_SERVER_HOST}/api/insight/search?keyword=${search}`
-              );
-            setInsight(response.data);
+            seachControl();
         }
     }
 
@@ -214,7 +220,7 @@ function Read() {
     return (
         <>
         <div className="Insight-container">
-            <Reco userName={userName} auth={auth} insight={insight}/>
+            <Reco userName={userName}/>
             <div className="Search-container">
                 <div className="SearchBar-container">
                     <input className="search" value={search} onChange={searchHandler} onKeyPress={searchSubmitHandler} placeholder="영감을 얻고 싶은 키워드를 검색해 보세요!"></input>
@@ -222,7 +228,7 @@ function Read() {
                 <div className="searchIcn-container">
                     <img className="search-icn" type="button" onClick={searchClickHandler} src={search_insight}></img>
                 </div>
-                <button className="search-btn" onClick={auth ? ()=> {setPageNum(1); openModal();}: () => {dispatch({type: 'LOGIN', data: true});}}>+ Insight</button>
+                <button className="search-btn" onClick={activePersonaId !== null ? ()=> {setPageNum(1); openModal();}: () => {dispatch({type: 'LOGIN', data: true});}}>+ Insight</button>
                 <Create modalOpen={modalOpen} pageNum={pageNum} setPageNum={setPageNum} close={closeModal} header={prev} setAddTrue={setAddTrue}/>
             </div>
             <div className="Content-container">
@@ -232,9 +238,9 @@ function Read() {
                     <ul className="img-ul">
                     {insight.map(i => (
                     <li key={i.id} className="img-li">
-                        <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={imgMouseOverHandler} onMouseOut={imgMouseOutHandler}>
+                        <div className="insight-box" id={i.id} onClick={imgClickHandler} onMouseOver={activePersonaId !== null ? imgMouseOverHandler : null} onMouseOut={activePersonaId !== null ? imgMouseOutHandler : null}>
                             <img className="thumbnail-box" id={i.id} src={i.imgPath} />
-                            {auth && <div className="pin-box">
+                            {activePersonaId !== null && <div className="pin-box">
                                 <img className="pin" src={pin} id={i.id} onClick={pinClickHandler}/>
                             </div>}
                             <p className="title" id={i.id}>{i.title}</p>

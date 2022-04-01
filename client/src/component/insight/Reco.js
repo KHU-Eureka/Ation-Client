@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 
@@ -8,9 +8,8 @@ import clickBtn from "../../assets/svg/insightRecoBtn.svg";
 import reco from "../../assets/svg/reco.svg";
 
 function Reco(props) {
-    const {insight} = props;
-    const cookies = new Cookies;
     const dispatch = useDispatch();
+    const activePersonaId = useSelector((state) => state.activePersonaId);
     const [RecoList, setRecoList] = useState([]);
     const [slideReco, setSlideReco] = useState([]);
     const [slotNum, setSlotNum] = useState(0);
@@ -75,7 +74,7 @@ function Reco(props) {
     }
 
     const imgSet = async () => {
-        if(props.auth) {
+        if(activePersonaId !== null) {
             const token = localStorage.getItem('token');
             try {
                 const recoResponse = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/api/insight/recommend`, {
@@ -94,7 +93,7 @@ function Reco(props) {
     }
 
     const slotCilckHandler = () => {
-        if(props.auth) {
+        if(activePersonaId !== null) {
             setSlotNum(slotNum + 1);
             setPullSlot(true);
         } else {
@@ -104,7 +103,7 @@ function Reco(props) {
 
     useEffect(() => {
         imgSet();
-        if(props.auth) {
+        if(activePersonaId !== null) {
             slideSetting();
         }
     }, [slotNum]);
@@ -120,7 +119,7 @@ function Reco(props) {
             <div className="recoTitle-Container">
                 <div className="title-container">
                     <p className="title1">지금의 컨텐츠가, 당신의 영감으로</p>
-                    {props.auth?<p className="title2">{props.userName}님에게 추천하는 오늘의 인사이트</p>:<></>}
+                    {activePersonaId !== null?<p className="title2">{props.userName}님에게 추천하는 오늘의 인사이트</p>:<></>}
                 </div>
                 <div className="recoBtn-container">
                     <span className="recoBtn-title">슬롯을 당겨 랜덤으로<br/>인사이트를 얻어보세요!</span>
@@ -132,7 +131,7 @@ function Reco(props) {
             {/* 이미지 div */}
             <div className="recoImg-container" ref={rullet}>
                 {idx.map( i => 
-                <div className={props.auth ? 'slide-container':'nonSlide'}>
+                <div className={activePersonaId !== null ? 'slide-container':'nonSlide'}>
                     <div className="slide-wrap-container">
                         <div className="recoImg" id={i} style={RecoList[i] === undefined?{background: 'rgba(115, 115, 115, 0.58)'}:{position: 'relative', background: 'rgba(115, 115, 115, 0.58)'}} onClick={RecoList[i] !== undefined?insightClickHandler:null}>
                             {RecoList[i] !== undefined &&

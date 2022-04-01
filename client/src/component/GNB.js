@@ -97,7 +97,7 @@ function GNB() {
             { showOpenLounge && <OpenLounge setShowOpenLounge={setShowOpenLounge}/> }
             <div className="gnb-flex-container">
             <div className="Logo-container">
-                <img className="logo" src={logo} alt="logo"/>
+                <img className="logo" src={logo} alt="logo" onClick={() => { window.location.replace(`/landing`); }} style={{cursor: 'pointer'}}/>
             </div>
             <div className="Btn-container">
                 <li className="btn-li">

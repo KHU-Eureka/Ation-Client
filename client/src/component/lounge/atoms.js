@@ -144,7 +144,7 @@ export const ImgBox = ({ obj, isPin }) => {
                 </div>
                 <div className='main-container'>
                     {title(obj.title)}
-                    {member(obj.totalMember, obj.limitMember)}
+                    {member(obj.memberList.length, obj.limitMember)}
                 </div>
                 <div className='footer-container'>
                     {tag(obj.mainCategory.name, obj.subCategoryList)}

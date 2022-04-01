@@ -8,11 +8,12 @@ import axios from 'axios';
 import LoungeWaitSideBar from "../lounge_wait/LoungeWaitSideBar";
 import LoungeWaitChatting from "../lounge_wait/LoungeWaitChatting";
 import LoungeActiveSideBar from "../lounge_active/LoungeActiveSideBar";
+import Whiteboard from "../whiteboard/Whiteboard";
 import RoomInfoModal from "../modal/RoomInfoModal";
+import RoomEditModal from "../modal/RoomEditModal";
+import ToReadyModal from "./ToReadyModal";
 
 import "../../assets/css/lounge/LoungeRoom.css";
-import RoomEditModal from "../modal/RoomEditModal";
-import Whiteboard from "../whiteboard/Whiteboard";
 
 function LoungeRoom () {
     const $websocket = useRef(null);
@@ -25,14 +26,52 @@ function LoungeRoom () {
     let [memberList, setMemberList] = useState(null);
     let [ admin, setAdmin ] = useState(null); // 방장
     let [ myInfo, setMyInfo ] = useState(null); // 내 정보
-    let [showLoungeStartModal, setShowLoungeStartModal] = useState(false);
+
+    // modal 관련
     let [showRoomInfoModal, setShowRoomInfoModal] = useState(false);
     let [showRoomEditModal, setShowRoomEditModal] = useState(false);
 
-    const startRoom = async () => {
-        let temp = {...roomInfo};
-        temp.status = 'START';
-        setRoomInfo(temp);
+    // timer 관련
+    const timer = useRef(null);
+    const time = useRef(10);
+    const [sec, setSec] = useState(10);
+    let [showToReady, setShowToReady] = useState(false);
+
+    useEffect(()=> {
+        if (showToReady) { 
+            setSec(10); time.current = 10;
+        }
+        timer.current = setInterval(()=>{
+            if (showToReady) {
+                setSec(time.current);
+                time.current -= 1;
+            }
+        }, 1000)
+        return () => clearInterval(timer.current)
+    }, [showToReady])
+
+    useEffect(()=> {
+        if (time.current <= 0) { // 10초가 모두 지난다면
+            console.log('time out');
+            clearInterval(timer.current)
+
+            // 1) 내가 준비를 하지 않은 사람이라면
+            console.log("myInfo : ",myInfo);
+            if (!myInfo.ready && !myInfo.admin) {
+                navigate('/lounge', { state: {alert:{title: "레디하지 않아 방에서 퇴장되었습니다.", subtitle: "다른 방을 탐색해보세요!", show: true}}})
+            } else { // 2) 내가 준비를 했던 사람이라면
+                let temp = {...roomInfo};
+                temp.status = 'START';
+                temp.memberList = temp.memberList.filter(member => member.ready);
+                setRoomInfo(temp);
+                setMemberList(temp.memberList);
+            }
+            setShowToReady(false);
+        }
+    }, [time.current])
+
+    const startRoomHandler = async () => {
+        setShowToReady(true); // 로그인 하라는 모달 띄우기
     }
 
     const receiveRoomStatusMsg = (msg) => {
@@ -42,29 +81,24 @@ function LoungeRoom () {
             switch(msg.status) {
               case 'ENTER':
                 let addMember = { admin: false, ready: false, persona: msg.persona };
-                //temp.memberList = [...temp.memberList, addMember];
                 tempMemberList = [...memberList, addMember];
                 break;
               case 'EXIT':
-                //temp.memberList = temp.memberList.filter(elem=>elem.persona.id !== msg.persona.id);
                 tempMemberList = tempMemberList.filter(elem=>elem.persona.id !== msg.persona.id);
                 break;
               case 'READY':
-                //temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
                 tempMemberList.find(elem=>elem.persona.id===msg.persona.id).ready = true;
                 break;
               case 'UNREADY':
-                //temp.memberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
                 tempMemberList.find(elem=>elem.persona.id===msg.persona.id).ready = false;
                 break;
               default:
             }
             setMemberList(tempMemberList);
-            //setRoomInfo(temp);
         } else if (msg.status) { // 만약 방 정보에 관한 거라면
             switch(msg.status) {
             case 'START':
-                startRoom(); // 방 상태를 전환시킴
+                startRoomHandler(); // 방 상태를 전환시킴
                 break;
             case 'END':
                 // lounge 페이지로 이동시킴
@@ -166,6 +200,7 @@ function LoungeRoom () {
 
     return (
         <div className="lounge-room">
+            { showToReady &&  <ToReadyModal sec={sec}/> }
             { showRoomInfoModal && <RoomInfoModal roomInfo={roomInfo} setShowRoomInfoModal={setShowRoomInfoModal} isAdmin={admin.id===activePersonaId} admin={admin} setShowModal={setShowRoomInfoModal} setShowRoomEditModal={setShowRoomEditModal}/> }
             { showRoomEditModal && <RoomEditModal roomInfo={roomInfo} setRoomInfo={setRoomInfo} setShowModal={setShowRoomEditModal}/> }
             {/* rounge room status 관련 socket */}
@@ -181,7 +216,7 @@ function LoungeRoom () {
                 {
                     /* room의 상태가 open인 상태라면.. */
                     roomInfo && ( roomInfo.status === "OPEN"
-                    ? <LoungeWaitSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowLoungeStartModal={setShowLoungeStartModal} setShowRoomInfoModal={setShowRoomInfoModal}/>
+                    ? <LoungeWaitSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>
                     : <LoungeActiveSideBar roomInfo={roomInfo} memberList={memberList} admin={admin} myInfo={myInfo} setShowRoomInfoModal={setShowRoomInfoModal}/>)
                 }
             </aside>

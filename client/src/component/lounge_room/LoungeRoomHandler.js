@@ -11,9 +11,6 @@ function LoungeRoomHandler() {
     const waitingRoomList = useSelector(state=>state.waitingRoomList);
     let [socketTopics, setSocketTopics] = useState([]);
     let [showLoungeStartModal, setShowLoungeStartModal] = useState(false);
-    let [currRoomId, setCurrRoomId] = useState(8);
-    let [roomInfo, setRoomInfo] = useState({});
-    let [personaId, setPersonaId] = useState(0);
     let [currWaitingInfo, setCurrWaitingInfo] = useState({title: ''});
 
     const exitRoom = async () => {
@@ -34,16 +31,15 @@ function LoungeRoomHandler() {
 
     const receiveMessage = (msg) => {
         if (msg.status) {
+            let cuurrRoomId = msg.loungeId;
             switch(msg.status) {
                 case 'START':
-                    console.log(msg);
-                    setCurrRoomId(msg.loungeId); // setCurrRoomId(msg.id);
                     setShowLoungeStartModal(true) // start modal을 띄움
-                    setCurrWaitingInfo(waitingRoomList.find(elem=>elem.id===msg.loungeId));
-                    dispatch({type: 'DEL_WAITING', data: msg.loungeId}); // 대기 목록에서 삭제시킴 => 구독 취소
+                    setCurrWaitingInfo(waitingRoomList.find(elem=>elem.id===cuurrRoomId));
+                    dispatch({type: 'DEL_WAITING', data: cuurrRoomId}); // 대기 목록에서 삭제시킴 => 구독 취소
                     break;
                 case 'END':
-                    dispatch({type: 'DEL_WAITING', data: msg.loungeId});
+                    dispatch({type: 'DEL_WAITING', data: cuurrRoomId}); // 대기 목록에서 삭제시킴 => 구독 취소
                     break;
                 default:
             }

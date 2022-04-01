@@ -18,6 +18,8 @@ function Landing() {
 
     let [welcomeModal, showWelcomeModal] = useState(false);
     let [name, setName] = useState("");
+
+    const closeWelcome = () => {
         showWelcomeModal(false);
     }
 

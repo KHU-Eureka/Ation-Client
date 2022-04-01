@@ -34,8 +34,8 @@ function OpenLounge(props) {
     let [success, setSuccess] = useState(false);
     let [loungeId, setLoungeId] = useState(null);
 
-    const addWaitingRoom = () => {
-        let waitingRoomInfo = { id: loungeId, personaId: activePersonaId, title: title };
+    const addWaitingRoom = (roomId) => {
+        let waitingRoomInfo = { id: roomId, personaId: activePersonaId, title: title };
         dispatch({type: 'ADD_WAITING', data: waitingRoomInfo});
     }
 
@@ -90,7 +90,7 @@ function OpenLounge(props) {
             setLoungeId(res.data)
             setWaiting(false)
             setSuccess(true) // 라운지 생성 성공
-            addWaitingRoom() // 라운지 대기 목록에 추가함
+            addWaitingRoom(res.data) // 라운지 대기 목록에 추가함
             dispatch({type: 'LOUNGE_CREATE', data: res.data});
         } catch(err) {
             console.log(err);

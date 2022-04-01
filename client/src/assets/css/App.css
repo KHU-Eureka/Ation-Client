@@ -61,6 +61,7 @@
 	src: local('Pretendard Thin'), url('../font/woff2/Pretendard-Thin.woff2') format('woff2'), url('../font/woff/Pretendard-Thin.woff') format('woff');
 }
 
+/* init */
 body {
   margin: 0px;
   font-family: Pretendard;
@@ -69,3 +70,5 @@ body {
 ::selection {
 	background-color: #FE340030;
 }
+
+button:focus-visible { outline: none; }
